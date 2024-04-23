@@ -1,0 +1,285 @@
+/* navbar */
+header.App_header {
+  margin: 0 30px;
+  position: relative;
+  z-index: 999999;
+}
+
+.navbar {
+  background-color: #fffffff5;
+  padding: 20px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+  min-height: 70px;
+  font-family: var(--primary-font);
+  max-width: 1700px;
+  margin: 0 auto;
+  box-shadow: 0px 0px 10px 5px rgba(155, 154, 197, 0.15);
+  margin-top: 20px;
+  border-radius: 17px;
+}
+
+
+/* logo  */
+.logo {
+}
+
+/* ul  */
+.navMenu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 60px;
+  margin-bottom: 0;
+  padding: 0;
+}
+
+.navLink {
+  color: var(--purple-light);
+  font-weight: 700;
+  font-size: 18px;
+  text-decoration: none;
+}
+
+.navLink:hover {
+  color: var(--purple-normal);
+}
+
+.hamburger {
+  display: none;
+}
+
+.host_and_signin {
+  padding-right: 25px;
+}
+
+.logo img {
+  width: 100%;
+  max-width: 240px;
+}
+
+/* global button one */
+button.global_button_one {
+  padding: 15px 40px;
+  border: none;
+  outline: none;
+  position: relative;
+  z-index: 1;
+  border-radius: 55px;
+  background: var(--linear-gradient-border);
+  cursor: pointer;
+  color: var(--purple-normal);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+button.global_button_one:hover {
+  color: #fff;
+}
+
+button.global_button_one::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  top: 4px;
+  bottom: 4px;
+  border-radius: 55px;
+  background-color: white;
+  z-index: -1;
+  transition: 200ms;
+}
+button.global_button_one::after {
+  content: attr(data);
+  font-size: 16px;
+  background: var(--linear-gradient-border);
+  color: transparent;
+  transition: 200ms;
+}
+button.global_button_one:hover::before {
+  opacity: 0;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+}
+button.global_button_one:hover::after {
+  color: transparent;
+}
+
+
+
+/* media queries */
+
+@media screen and (max-width: 1146px) {
+  .navbar {
+    padding: 20px 20px;
+    gap: 15px;
+  }
+
+  .navMenu {
+    gap: 20px;
+  }
+
+  .navLink {
+    font-size: 16px;
+  }
+
+  .host_and_signin {
+    padding-right: 10px;
+  }
+
+  .logo img {
+    width: 100%;
+    max-width: 180px;
+  }
+
+  button.global_button_one {
+    padding: 10px 25px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .logo img {
+    width: 100%;
+    max-width: 140px;
+  }
+
+  .navbar {
+    padding: 15px 20px;
+  }
+}
+
+@media screen and (max-width: 780px) {
+  .navbar {
+    padding: 15px 15px;
+  }
+
+  /* hamburger */
+  .hamburger {
+    display: block;
+    cursor: pointer;
+    order: 3;
+  }
+
+  .bar {
+    background-color: #6c6c6c;
+    width: 23px;
+    height: 3px;
+    display: block;
+    margin: 4px;
+    border-radius: 37px;
+    -webkit-transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
+  }
+
+  /* adding active class to the bars  */
+  .hamburger.active .bar:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger.active .bar:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+  .hamburger.active .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  /* navMenu */
+
+  .navMenu {
+    position: absolute;
+    z-index: -1;
+    flex-direction: column;
+    gap: 0;
+    top: -20px;
+    left: -140%;
+    text-align: start;
+    width: 113%;
+    transition: 0.7s ease-in-out;
+    background: transparent;
+    backdrop-filter: blur(50px);
+    padding: 10px;
+    height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+
+  .navMenu.active {
+    left: -30px;
+  }
+
+  .navMenu li {
+    margin: 16px 0;
+  }
+
+  .global_button_one {
+    display: none;
+  }
+
+  .nav_btn {
+    display: block;
+    margin-top: 50px;
+  }
+
+  .logo {
+    order: 2;
+    display: flex;
+    align-items: center;
+  }
+
+  header.App_header {
+    margin: 0 22px;
+  }
+
+  .navLink {
+    font-size: 24px;
+  }
+
+  .navbtn_div {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+  }
+
+}
+
+@media screen and (max-width: 576px) {
+  .navMenu {
+    width: 122%;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .navMenu {
+    width: 122%;
+    padding-left: 30px;
+    padding-right: 10px;
+  }
+
+  .navbar {
+    padding: 15px 15px;
+    gap: 10px;
+  }
+
+  .logo img {
+    max-width: 105px;
+  }
+
+  .bar {
+    width: 21px;
+    margin: 3px;
+  }
+
+  .hamburger.active .bar:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  .hamburger.active .bar:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+}
