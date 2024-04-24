@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import EventCard from "./EventCard";
 import styles from "./events.module.css";
 
-const URL = "http://bounce.extrasol.co.uk/api/attenders/events";
+const URL = "https://bounce.extrasol.co.uk/api/attenders/events";
 
 const EventList = ({ limit }) => {
   const [events, setEvents] = useState([]);

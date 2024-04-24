@@ -106,6 +106,43 @@
   border-radius: 20px;
 }
 
+.event_main_img {
+  position: relative;
+}
+
+.category_main {
+  position: absolute;
+  bottom: 45px;
+  left: 45px;
+  background: #ef5da8;
+  color: #fff;
+  padding: 10px 30px;
+  border-radius: 100px;
+}
+
+.category_main h5 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.heart_icon{
+  position: absolute;
+  bottom: 45px;
+  right: 45px;
+  height: 82px;
+  width: 82px;
+  background-color: #BEBBDD;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100px;
+}
+
+.heart_icon img{
+  width: 42px;
+  height: 42px;
+}
+
 .event_detail_content {
   width: 100%;
   max-width: 1730px;
@@ -123,7 +160,7 @@
   padding: 40px;
   margin-top: 44px;
   border-radius: 20px;
-  box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2), 0 0px 7px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 0px 10px 0 #9b9ac573;
   color: black;
   backdrop-filter: blur(20px);
 }
@@ -195,13 +232,56 @@
 
 .cart_description p {
   font-size: 28px;
-  font-weight: 500;
+  font-weight: 400;
   color: #777777;
   display: flex;
   align-items: center;
   gap: 15px;
   margin-bottom: 10px;
 }
+
+.hashtags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.hashtags span {
+  font-size: 18px;
+  color: black;
+  padding: 10px 30px;
+  background: #e0dff9;
+  border-radius: 100px;
+}
+
+.description_heading h2 {
+  font-size: 48px;
+  color: #000;
+  margin-top: 67px;
+}
+
+.description_heading p {
+  font-size: 20px;
+  font-weight: 500;
+  color: #000;
+  margin-top: 20px;
+  font-family: var(--primary-font);
+  width: 100%;
+  max-width: 635px;
+}
+
+.ticket_detail{
+  text-align: center;
+  font-family: var(--secondary-font);
+}
+
+.ticket_detail h3{
+  font-size: 48px;
+  color: #000;
+  font-weight: 600;
+}
+
 
 @media (max-width: 1300px) {
   .eventsGrid {

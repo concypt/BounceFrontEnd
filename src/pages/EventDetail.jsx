@@ -6,7 +6,7 @@ import Footer from "../components/Footer";
 import styles from "../components/events.module.css";
 import moment from "moment";
 
-const URL = "http://bounce.extrasol.co.uk/api/attenders/event-detail";
+const URL = "https://bounce.extrasol.co.uk/api/attenders/event-detail";
 
 const EventDetail = () => {
   const { eventId } = useParams();
@@ -45,12 +45,20 @@ const EventDetail = () => {
       <Navbar />
       <div className={`${styles.event_detail} bounce_bg_circle`}>
         <div className={styles.event_detail_content}>
-          <img
-            className={styles.eventImg}
-            src="https://images.unsplash.com/photo-1584391889471-9603788c366c"
-            alt="San Francisco"
-          />
-          <div className={styles.row}>
+          <div className={styles.event_main_img}>
+            <img
+              className={styles.eventImg}
+              src="https://images.unsplash.com/photo-1584391889471-9603788c366c"
+              alt="San Francisco"
+            />
+            <div className={styles.category_main}>
+              <h5 className={styles.category_name}>{event.category.name}</h5>
+            </div>
+            <div className={styles.heart_icon}>
+              <img src="/images/heart.svg" alt="" />
+            </div>
+          </div>
+          <div className="row">
             <div className="col-6">
               <div className={styles.details}>
                 <h2>{event.name}</h2>
@@ -81,7 +89,6 @@ const EventDetail = () => {
                     </a>
                   </div>
                 </div>
-                <h3>{event.category.name}</h3>
                 <div className={styles.cart_description}>
                   <p className={styles.event_date}>
                     <img
@@ -110,10 +117,25 @@ const EventDetail = () => {
                     {event.address}
                   </p>
                 </div>
-                <p>Description: {event.description}</p>
+                <div className={styles.hashtags}>
+                  {event.hasTag.map((tag, index) => (
+                    <span key={index}>{tag} </span>
+                  ))}
+                </div>
+                <div className={styles.description_heading}>
+                  <h2>About the event</h2>
+                  <p>Description: {event.description}</p>
+                </div>
               </div>
             </div>
-            <div className="col-6"></div>
+            <div className="col-6">
+              <div className={styles.details}>
+                <div className={styles.ticket_detail}>
+                  <h3>Tickets available</h3>
+                  <p>{event.ticket[0].price}</p>
+                </div>
+              </div>
+            </div>
           </div>
           {/* Add more event details as needed */}
         </div>
