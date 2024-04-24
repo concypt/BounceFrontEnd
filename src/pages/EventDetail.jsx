@@ -81,11 +81,11 @@ const EventDetail = () => {
                     </a>
                   </div>
                 </div>
-                <h3>{event.category}</h3>
+                <h3>{event.category.name}</h3>
                 <div className={styles.cart_description}>
                   <p className={styles.event_date}>
                     <img
-                      src="../public/images/calender.svg"
+                      src="/images/calender.svg"
                       className={styles.description_img}
                       alt=""
                     />{" "}
@@ -94,7 +94,7 @@ const EventDetail = () => {
                   <p>
                     {" "}
                     <img
-                      src="../public/images/clock_grey.svg"
+                      src="/images/clock_grey.svg"
                       className={styles.description_img}
                       alt=""
                     />{" "}
@@ -103,7 +103,7 @@ const EventDetail = () => {
                   <p>
                     {" "}
                     <img
-                      src="../public/images/location_grey.svg"
+                      src="/images/location_grey.svg"
                       className={styles.description_img}
                       alt=""
                     />{" "}

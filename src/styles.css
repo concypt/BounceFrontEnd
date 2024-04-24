@@ -91,12 +91,12 @@ a.global-link-arrow::after {
 }
 
 .bounce_bg_circle {
-  background-image: url("../public/images/header.jpg");
+  background-image: url("/images/header.jpg");
   background-repeat: no-repeat;
   margin-top: -140px;
 }
 
-.header{
+.header {
   padding-bottom: 600px;
 }
 
@@ -706,9 +706,6 @@ li.answer {
   padding: 0 30px;
 }
 
-
-
-
 @media screen and (max-width: 1440px) {
   .promote_div {
     gap: 60px;
@@ -897,7 +894,6 @@ li.answer {
     display: flex;
     justify-content: center;
   }
-
 }
 
 @media screen and (max-width: 567px) {
