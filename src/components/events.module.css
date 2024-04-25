@@ -10,7 +10,7 @@
   max-width: 1670px;
   margin: 0 auto;
   justify-content: space-between;
-  padding-top: 100px;
+  padding-top: 250px;
 }
 
 .eventCard {
@@ -72,6 +72,10 @@
 
 .eventCardDetails {
   padding: 18px 28px;
+  min-height: 295px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .eventCardDetails span.time,
@@ -125,20 +129,20 @@
   font-size: 18px;
 }
 
-.heart_icon{
+.heart_icon {
   position: absolute;
   bottom: 45px;
   right: 45px;
   height: 82px;
   width: 82px;
-  background-color: #BEBBDD;
+  background-color: #bebbdd;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 100px;
 }
 
-.heart_icon img{
+.heart_icon img {
   width: 42px;
   height: 42px;
 }
@@ -189,12 +193,15 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
 .event_circle_img {
   display: flex;
   align-items: center;
   gap: 30px;
+  flex-wrap: wrap;
 }
 
 .event_circle_img a {
@@ -249,16 +256,17 @@
 
 .hashtags span {
   font-size: 18px;
-  color: black;
-  padding: 10px 30px;
+  color: #000;
+  padding: 0 30px;
   background: #e0dff9;
   border-radius: 100px;
+  line-height: 50px;
 }
 
 .description_heading h2 {
   font-size: 48px;
   color: #000;
-  margin-top: 67px;
+  margin-top: 57px;
 }
 
 .description_heading p {
@@ -271,17 +279,41 @@
   max-width: 635px;
 }
 
-.ticket_detail{
+.ticket_detail {
   text-align: center;
   font-family: var(--secondary-font);
 }
 
-.ticket_detail h3{
+.ticket_detail h3 {
   font-size: 48px;
   color: #000;
   font-weight: 600;
 }
 
+.ticket_detail p {
+  font-size: 22px;
+  color: #777777;
+  margin-top: 25px;
+}
+
+.ticket_detail .ticket_text {
+  font-size: 18px;
+}
+
+@media (max-width: 1440px) {
+  .details h2 {
+    font-size: 42px;
+    line-height: 47px;
+  }
+
+  .event_circle_img a {
+    font-size: 24px;
+  }
+
+  .event_circle_img {
+    gap: 15px;
+  }
+}
 
 @media (max-width: 1300px) {
   .eventsGrid {
@@ -295,6 +327,9 @@
   .eventsGrid {
     row-gap: 40px;
   }
+  .event_detail_content .eventImg {
+    height: 500px;
+  }
 }
 
 @media (max-width: 767px) {
@@ -306,6 +341,63 @@
     margin: 0 auto;
     width: 95%;
     margin-bottom: 40px;
+  }
+
+  .details h2 {
+    font-size: 30px;
+    line-height: 38px;
+  }
+
+  .event_detail_card {
+    padding: 20px 25px;
+    margin-top: 25px;
+  }
+
+  .cart_description p {
+    font-size: 24px;
+  }
+
+  .description_img {
+    width: 28px;
+    height: 28px;
+  }
+
+  .details {
+    padding: 25px;
+  }
+
+  .heart_icon {
+    top: 22px;
+    right: 22px;
+    height: 48px;
+    width: 48px;
+  }
+
+  .heart_icon img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .category_main {
+    bottom: 22px;
+    left: 22px;
+    padding: 7px 16px;
+  }
+
+  .category_main h5 {
+    font-size: 14px;
+  }
+
+  .event_detail_content .eventImg {
+    height: 450px;
+  }
+
+  .description_heading h2 {
+    margin-top: 40px;
+  }
+
+  .ticket_detail h3 {
+    font-size: 35px;
   }
 }
 
@@ -357,6 +449,69 @@
   .eventCategoryButton {
     left: 15px;
   }
+
+  .event_detail_content .eventImg {
+    height: 250px;
+  }
+
+  .details h2 {
+    font-size: 24px;
+    line-height: 30px;
+  }
+
+  .description_heading p {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .event_circle_img img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .details {
+    margin-top: 25px;
+  }
+
+  .event_detail {
+    padding-top: 180px;
+  }
+
+  .hashtags span {
+    font-size: 16px;
+    padding: 8px 26px;
+  }
+
+  .cart_description p {
+    font-size: 18px;
+    gap: 10px;
+  }
+
+  .description_img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .event_circle_img a {
+    font-size: 22px;
+  }
+
+  .event_circle_img p {
+    font-size: 18px;
+  }
+
+  .ticket_detail h3 {
+    font-size: 24px;
+  }
+
+  .ticket_detailp {
+    font-size: 22px;
+    margin-top: 10px;
+  }
+
+  .cart_description {
+    margin-top: 25px;
+  }
 }
 
 @media (max-width: 400px) {
@@ -366,5 +521,14 @@
 
   .eventImg {
     height: 160px;
+  }
+
+  .event_detail_card {
+    padding: 15px 15px;
+    margin-top: 20px;
+  }
+
+  .details {
+    padding: 20px;
   }
 }

@@ -34,21 +34,23 @@ const EventList = ({ limit }) => {
   return (
     <div>
       {loading ? (
-        <div>Loading...</div>
+        <div className="loading">Loading...</div>
       ) : events.length === 0 ? (
         <div>No events available</div>
       ) : (
-        <div className="container-fluid">
-          <div className={styles.eventsGrid}>
-            {limit
-              ? events
-                  .slice(0, limit)
-                  .map((event, index) => (
+        <div className="bounce_bg_circle">
+          <div className="container-fluid">
+            <div className={styles.eventsGrid}>
+              {limit
+                ? events
+                    .slice(0, limit)
+                    .map((event, index) => (
+                      <EventCard key={event.id} event={event} />
+                    ))
+                : events.map((event, index) => (
                     <EventCard key={event.id} event={event} />
-                  ))
-              : events.map((event, index) => (
-                  <EventCard key={event.id} event={event} />
-                ))}
+                  ))}
+            </div>
           </div>
         </div>
       )}

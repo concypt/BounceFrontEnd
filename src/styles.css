@@ -54,6 +54,7 @@ a {
 .header_div h1 {
   font-size: 62px;
   font-family: var(--secondary-font);
+  line-height: 79px;
   font-weight: 800 !important;
   text-transform: uppercase;
   background: -webkit-linear-gradient(
@@ -94,14 +95,19 @@ a.global-link-arrow::after {
   background-image: url("/images/header.jpg");
   background-repeat: no-repeat;
   margin-top: -140px;
+  background-position: center;
+}
+
+.home_events .bounce_bg_circle {
+  background-image: none;
 }
 
 .header {
-  padding-bottom: 600px;
+  padding-bottom: 800px;
 }
 
 .event_div {
-  margin-top: -347px;
+  margin-top: -600px;
 }
 
 .home_events {
@@ -706,6 +712,50 @@ li.answer {
   padding: 0 30px;
 }
 
+/* not found */
+.not_found {
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.not_found h1 {
+  text-align: center;
+  font-size: 48px;
+  font-family: var(--secondary-font);
+  font-weight: 800 !important;
+  background: -webkit-linear-gradient(
+    -50deg,
+    #98cde4 0%,
+    #bf7fff 50%,
+    #8482ff 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-stroke: 6px transparent;
+  color: #fff !important;
+  letter-spacing: 4px;
+  text-transform: none;
+  text-shadow: 0px 3px 14px #bf7fff, 0px 7px 24px #8482ff;
+  margin-top: 90px;
+}
+
+.loading {
+  text-align: center;
+  font-size: 40px;
+  font-weight: 600;
+  margin-top: 40px;
+  text-shadow: 0px 3px 14px #bf7fff, 0px 7px 24px #8482ff;
+  background: -webkit-linear-gradient(
+    -50deg,
+    #98cde4 0%,
+    #bf7fff 50%,
+    #8482ff 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-stroke: 6px transparent;
+  color: #fff !important;
+}
 @media screen and (max-width: 1440px) {
   .promote_div {
     gap: 60px;
@@ -779,6 +829,12 @@ li.answer {
 
   .blank_section {
     padding-top: 120px;
+  }
+
+  .blank_section .blank_img {
+    max-width: 100%;
+    height: 400px;
+    object-fit: cover;
   }
 }
 
@@ -866,6 +922,7 @@ li.answer {
 
   .header_div h1 {
     font-size: 40px;
+    line-height: 51px;
   }
 
   .header_div {
@@ -886,13 +943,17 @@ li.answer {
   }
 
   .header {
-    padding-bottom: 450px;
+    padding-bottom: 100px;
   }
 
   .navbtn_div {
     width: 90%;
     display: flex;
     justify-content: center;
+  }
+
+  .event_div {
+    margin-top: 80px;
   }
 }
 
@@ -903,6 +964,7 @@ li.answer {
 
   .header_div h1 {
     font-size: 32px;
+    line-height: 42px;
   }
 
   .name_div {
@@ -925,6 +987,7 @@ li.answer {
 
   .header_div h1 {
     font-size: 26px;
+    line-height: 36px;
   }
 
   .name_div {
