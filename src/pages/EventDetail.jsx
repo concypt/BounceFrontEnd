@@ -10,7 +10,7 @@ const URL = "https://bounce.extrasol.co.uk/api/attenders/event-detail";
 
 const EventDetail = () => {
   const { eventId } = useParams();
-  console.log("Event ID:", eventId); // Logging event ID to console
+  // console.log("Event ID:", eventId);
   const [event, setEvent] = useState(null);
 
   useEffect(() => {
@@ -140,6 +140,7 @@ const EventDetail = () => {
               <div className={styles.details}>
                 <div className={styles.ticket_detail}>
                   <h3>Tickets available</h3>
+
                   {/* <p>Starting from {event.ticket[0].price} + £1.80 fee</p> */}
                   {event.ticket[0].absorbe_fees === 0 ? (
                     <>
@@ -170,6 +171,8 @@ const EventDetail = () => {
                       <span>Request my link</span>
                     </a>
                   </div>
+
+                  {/* <p>{event.ticket[0].price}</p> */}
                 </div>
               </div>
             </div>
