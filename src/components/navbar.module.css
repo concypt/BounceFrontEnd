@@ -12,18 +12,18 @@ header.App_header {
   justify-content: space-between;
   align-items: center;
   gap: 40px;
-  min-height: 70px;
+  min-height: 107px;
   font-family: var(--primary-font);
   max-width: 1700px;
   margin: 0 auto;
   box-shadow: 0px 0px 10px 5px rgba(155, 154, 197, 0.15);
-  margin-top: 20px;
+  margin-top: 37px;
   border-radius: 17px;
 }
 
-
 /* logo  */
 .logo {
+  margin-bottom: 10px;
 }
 
 /* ul  */
@@ -31,15 +31,16 @@ header.App_header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 60px;
   margin-bottom: 0;
   padding: 0;
+  width: calc(100% - 241px - 300px - 80px);
+  max-width: 547px;
 }
 
 .navLink {
   color: var(--purple-light);
   font-weight: 700;
-  font-size: 18px;
+  font-size: 24px;
   text-decoration: none;
 }
 
@@ -53,16 +54,39 @@ header.App_header {
 
 .host_and_signin {
   padding-right: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 300px;
+}
+
+.loginBtn {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--purple-normal);
+  position: relative;
+}
+.loginBtn:hover {
+  text-decoration: none;
+}
+.loginBtn::after {
+  content: "";
+  width: 10px;
+  height: 12px;
+  position: absolute;
+  background-image: url(images/right-arrow.svg);
+  top: 9px;
+  right: -20px;
 }
 
 .logo img {
   width: 100%;
-  max-width: 240px;
+  max-width: 241px;
 }
 
 /* global button one */
 button.global_button_one {
-  padding: 15px 40px;
+  padding: 13px 44px;
   border: none;
   outline: none;
   position: relative;
@@ -71,7 +95,7 @@ button.global_button_one {
   background: var(--linear-gradient-border);
   cursor: pointer;
   color: var(--purple-normal);
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
 }
 
@@ -109,14 +133,14 @@ button.global_button_one:hover::after {
   color: transparent;
 }
 
-
-
 /* media queries */
 
 @media screen and (max-width: 1146px) {
   .navbar {
     padding: 20px 20px;
     gap: 15px;
+    min-height: 90px;
+    margin-top: 27px;
   }
 
   .navMenu {
@@ -129,6 +153,7 @@ button.global_button_one:hover::after {
 
   .host_and_signin {
     padding-right: 10px;
+    width: 250px;
   }
 
   .logo img {
@@ -147,6 +172,14 @@ button.global_button_one:hover::after {
     max-width: 140px;
   }
 
+  .host_and_signin {
+    width: 235px;
+  }
+
+  .navMenu {
+    width: calc(100% - 140px - 250px - 30px);
+  }
+
   .navbar {
     padding: 15px 20px;
   }
@@ -155,6 +188,7 @@ button.global_button_one:hover::after {
 @media screen and (max-width: 780px) {
   .navbar {
     padding: 15px 15px;
+    min-height: 50px;
   }
 
   /* hamburger */
@@ -162,6 +196,8 @@ button.global_button_one:hover::after {
     display: block;
     cursor: pointer;
     order: 3;
+    width: 23px;
+    margin-left: calc(33% - 23px);
   }
 
   .bar {
@@ -217,6 +253,11 @@ button.global_button_one:hover::after {
     margin: 16px 0;
   }
 
+  .host_and_signin {
+    width: 33%;
+    padding-right: 0;
+  }
+
   .global_button_one {
     display: none;
   }
@@ -227,9 +268,11 @@ button.global_button_one:hover::after {
   }
 
   .logo {
+    width: 33%;
     order: 2;
     display: flex;
     align-items: center;
+    flex-direction: column;
   }
 
   header.App_header {
@@ -245,7 +288,6 @@ button.global_button_one:hover::after {
     display: flex;
     justify-content: center;
   }
-
 }
 
 @media screen and (max-width: 576px) {

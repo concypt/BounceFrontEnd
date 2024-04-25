@@ -47,8 +47,8 @@ function Navbar() {
           </ul>
           <div className={styles.host_and_signin}>
             <button className={styles.global_button_one}>Host an event</button>
-            <a href="/login" className="global-link-arrow">
-              <u>Sign In</u>
+            <a href="/login" className={styles.loginBtn}>
+              Sign In
             </a>
           </div>
           <div
