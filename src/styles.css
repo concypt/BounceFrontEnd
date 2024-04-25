@@ -95,7 +95,7 @@ a.global-link-arrow::after {
   background-image: url("/images/header.jpg");
   background-repeat: no-repeat;
   margin-top: -140px;
-  background-position: center;
+  background-position-x: center;
 }
 
 .home_events .bounce_bg_circle {
