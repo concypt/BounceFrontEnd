@@ -40,6 +40,11 @@ const EventDetail = () => {
     return <div>Loading...</div>;
   }
 
+  // Assuming $setting and $item are objects with properties org_commission and price respectively
+  const adminPercentage = (100 - event.org_commission) / 100;
+  const netPrice = event.ticket[0].price / (1 + adminPercentage);
+  const adminFee = event.ticket[0].price - netPrice;
+
   return (
     <>
       <Navbar />
@@ -59,7 +64,7 @@ const EventDetail = () => {
             </div>
           </div>
           <div className="row">
-            <div className="col-6">
+            <div className="col-md-12 col-lg-6">
               <div className={styles.details}>
                 <h2>{event.name}</h2>
                 <div className={styles.event_detail_card}>
@@ -118,21 +123,53 @@ const EventDetail = () => {
                   </p>
                 </div>
                 <div className={styles.hashtags}>
-                  {event.hasTag.map((tag, index) => (
-                    <span key={index}>{tag} </span>
-                  ))}
+                  {event.hasTag &&
+                    event.hasTag.length > 0 &&
+                    event.hasTag.map((tag, index) => (
+                      <span key={index}>{tag} </span>
+                    ))}
                 </div>
+
                 <div className={styles.description_heading}>
                   <h2>About the event</h2>
                   <p>Description: {event.description}</p>
                 </div>
               </div>
             </div>
-            <div className="col-6">
+            <div className="col-md-12 col-lg-6">
               <div className={styles.details}>
                 <div className={styles.ticket_detail}>
                   <h3>Tickets available</h3>
-                  <p>{event.ticket[0].price}</p>
+                  {/* <p>Starting from {event.ticket[0].price} + £1.80 fee</p> */}
+                  {event.ticket[0].absorbe_fees === 0 ? (
+                    <>
+                      £ {netPrice.toFixed(2)}
+                      <p className="fee_text">+ £{adminFee.toFixed(2)} Fee</p>
+                    </>
+                  ) : (
+                    <>£ {event.ticket[0].price}</>
+                  )}
+
+                  <div className="header_btn">
+                    <a href="#" className="global_button_one">
+                      {" "}
+                      <span>Secure your ticket</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div className={styles.details}>
+                <div className={styles.ticket_detail}>
+                  <h3>Promote this event</h3>
+                  <p className={styles.ticket_text}>
+                    Earn 10% of every ticket <br /> purchased through your link.
+                  </p>
+                  <div className="header_btn">
+                    <a href="#" className="global_button_one">
+                      {" "}
+                      <span>Request my link</span>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>

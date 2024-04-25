@@ -14,12 +14,12 @@ const Footer = () => {
                 </a>
                 <div className={styles.address}>
                   <h3>Address:</h3>
-                  <p>Level 1, 12 Sample St, Sydney NSW 2000</p>
+                  <p>BOUNCE INC LTD 7 Bell Yard London WC2A 2JR</p>
                 </div>
                 <div className={`${styles.address} ${styles.contact}`}>
                   <h3>Contact:</h3>
                   <a href="#">1800 123 4567</a>
-                  <a href="#">info@relume.io</a>
+                  <a href="#">Info@bounce.live</a>
                 </div>
                 <div className={`${styles.address} ${styles.contact}`}>
                   <div className={styles.social_icons}>
@@ -46,19 +46,19 @@ const Footer = () => {
               <div className={styles.list_items}>
                 <ul>
                   <li>
-                    <a href="#">link one</a>
+                    <a href="#">Home</a>
                   </li>
                   <li>
-                    <a href="#">link two</a>
+                    <a href="#">Events</a>
                   </li>
                   <li>
-                    <a href="#">link three</a>
+                    <a href="#">Explore Categories</a>
                   </li>
                   <li>
-                    <a href="#">link four</a>
+                    <a href="#">Blog</a>
                   </li>
                   <li>
-                    <a href="#">link five</a>
+                    <a href="#">Contact</a>
                   </li>
                 </ul>
               </div>
@@ -67,19 +67,16 @@ const Footer = () => {
               <div className={styles.list_items}>
                 <ul>
                   <li>
-                    <a href="#">link six</a>
+                    <a href="#">Privacy Policy</a>
                   </li>
                   <li>
-                    <a href="#">link seven</a>
+                    <a href="#">Terms and Conditions</a>
                   </li>
                   <li>
-                    <a href="#">link eight</a>
+                    <a href="#">Cookie Policy</a>
                   </li>
                   <li>
-                    <a href="#">link nine</a>
-                  </li>
-                  <li>
-                    <a href="#">link ten</a>
+                    <a href="#">About Us</a>
                   </li>
                 </ul>
               </div>

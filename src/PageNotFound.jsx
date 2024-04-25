@@ -6,7 +6,9 @@ function PageNotFound() {
   return (
     <>
       <Navbar />
-      <h1>Error 404: Not found</h1>
+      <div className="not_found bounce_bg_circle">
+        <h1>Error 404: Not found</h1>
+      </div>
       <Footer />
     </>
   );
