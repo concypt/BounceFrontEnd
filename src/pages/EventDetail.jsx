@@ -53,7 +53,7 @@ const EventDetail = () => {
           <div className={styles.event_main_img}>
             <img
               className={styles.eventImg}
-              src="https://images.unsplash.com/photo-1584391889471-9603788c366c"
+              src={event.image}
               alt="San Francisco"
             />
             <div className={styles.category_main}>
