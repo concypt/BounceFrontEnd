@@ -114,6 +114,7 @@ a.global-link-arrow::after {
   background-image: url(images/tranparentimg.png);
   background-repeat: no-repeat;
   background-position: center;
+  background-position-y: 75%;
 }
 
 .event_heading {

@@ -1,0 +1,228 @@
+.loginBg {
+  background: url(images/loginBg.jpg);
+  height: 100vh;
+  font-family: var(--primary-font);
+}
+
+.loginRow {
+  height: 100%;
+}
+
+.loginLeft {
+  padding: 40px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.loginContent {
+  width: 100%;
+  max-width: 540px;
+  color: #fff;
+}
+
+.loginContent h2 {
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 25px;
+}
+
+.loginContent p {
+  font-size: 18px;
+}
+
+.loginContent a {
+  color: #fff;
+  font-size: 18px;
+}
+
+.loginForm {
+  background: #0000008a;
+  backdrop-filter: blur(25px);
+  height: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #fff;
+  position: relative;
+}
+
+.loginForm h2 {
+  font-size: 48px;
+  font-weight: 700;
+}
+
+.formsSection {
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.inputFields {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.loginForm input {
+  height: 46px;
+  width: 100%;
+  padding: 0 43px;
+  color: #8897ae;
+  font-size: 16px;
+  border: 1px solid #afbaca;
+  border-radius: 6px;
+  outline: none;
+}
+
+.loginForm input::placeholder {
+  color: #8897ae;
+  font-size: 16px;
+  line-height: normal;
+}
+
+.inputImgs {
+  position: absolute;
+  left: 19px;
+  height: 15px;
+  width: 15px;
+}
+
+.loginButton {
+  background-image: var(--linear-gradient-border);
+  border-radius: 40px;
+  box-sizing: border-box;
+  color: #fff;
+  display: block;
+  height: 54px;
+  letter-spacing: 1px;
+  margin: 0 auto;
+  padding: 4px;
+  position: relative;
+  text-decoration: none;
+  text-transform: uppercase;
+  width: 100%;
+  z-index: 2;
+  border: none;
+  transition: 0.5s ease;
+}
+
+.loginButton:hover span {
+  background: white;
+}
+
+.loginButton:hover {
+  color: #7e79ff;
+}
+
+.loginButton span {
+  font-family: var(--primary-font);
+  align-items: center;
+  background: transparent;
+  border-radius: 40px;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  transition: background 0.5s ease;
+  width: 100%;
+  font-size: 18px;
+  font-weight: normal;
+  text-transform: math-auto;
+}
+
+.header_btn {
+  margin-top: 35px;
+}
+
+.forgetDiv {
+  text-align: right;
+  margin-top: 6px;
+}
+
+.forgetDiv a {
+  color: #fff;
+  font-size: 12px;
+}
+
+.conditionsText {
+  position: absolute;
+  bottom: 20px;
+  left: 30px;
+}
+
+.conditionsText p {
+  font-size: 18px;
+  margin-bottom: 0;
+}
+
+.conditionsText a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.secondLogo {
+  display: none;
+}
+
+.createAccount {
+  display: none;
+  font-size: 18px;
+}
+
+@media screen and (max-width: 992px) {
+  .loginLeft {
+    padding: 15px;
+  }
+  .loginContent h2 {
+    font-size: 42px;
+    line-height: 44px;
+  }
+  .logiLogo img {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .loginRow {
+    background: #0000008a;
+    backdrop-filter: blur(25px);
+  }
+  .loginForm {
+    background: transparent;
+    backdrop-filter: none;
+    align-items: center;
+    padding: 0 20px;
+  }
+  .firstCol {
+    display: none;
+  }
+  .secondLogo {
+    display: block;
+    position: absolute;
+    top: 140px;
+  }
+  .secondLogo img {
+    width: 100%;
+    max-width: 222px;
+  }
+  .loginForm h2 {
+    font-size: 32px;
+  }
+  .inputFields {
+    margin-top: 20px;
+  }
+  .terms {
+    display: none;
+  }
+  .conditionsText .createAccount {
+    display: block;
+    text-decoration: underline;
+  }
+  .conditionsText {
+    left: unset;
+  }
+}

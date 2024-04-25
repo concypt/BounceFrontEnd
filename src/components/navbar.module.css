@@ -234,7 +234,7 @@ button.global_button_one:hover::after {
     text-align: start;
     width: 113%;
     transition: 0.7s ease-in-out;
-    background: transparent;
+    background: #ffffff9e;
     backdrop-filter: blur(50px);
     padding: 10px;
     height: 100vh;

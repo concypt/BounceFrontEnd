@@ -11,7 +11,7 @@ function EventCard({ event }) {
     <div className={styles.eventCard}>
       <Link to={`/events/${event.id}`}>
         <div className={styles.eventCardImage}>
-          <img
+          <img 
             className={styles.eventImg}
             src={event.image}
             alt="Event image"

@@ -12,11 +12,11 @@ function Home() {
           <h1>Exclusive live music events brought to you by Bounce.</h1>
           <div className="users">
             <div className="user_imgs">
-              <img src="../images/first_img.png" alt="" />
-              <img src="../images/second.png" alt="" />
-              <img src="../images/third.png" alt="" />
-              <img src="../images/fourth.png" alt="" />
-              <img src="../images/fifth.png" alt="" />
+              <img src="../images/userOne.svg" alt="" />
+              <img src="../images/userTwo.svg" alt="" />
+              <img src="../images/userThree.svg" alt="" />
+              <img src="../images/userFour.svg" alt="" />
+              <img src="../images/userFive.svg" alt="" />
               <div className="user_count">
                 <p>268+</p>
               </div>
