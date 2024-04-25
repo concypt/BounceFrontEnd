@@ -7,6 +7,7 @@ import Register from "./components/Auth/Register";
 import Login from "./components/Auth/Login";
 import ForgotPasswordRequest from "./components/Auth/ForgotPasswordRequest";
 import ForgotPasswordReset from "./components/Auth/ForgotPasswordReset";
+import HostProfile from "./components/Dashboard/HostProfile.jsx";
 import "./styles.css";
 import "./global.css";
 import "./js/main.js";
@@ -22,6 +23,7 @@ function App() {
           <Route path="/events/:eventId" element={<EventDetail />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/host-profile" element={<HostProfile />}></Route>
           <Route
             path="/forgot-password-request"
             element={<ForgotPasswordRequest />}
