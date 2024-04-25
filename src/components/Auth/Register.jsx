@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate instead of useHistory
+import { useNavigate } from "react-router-dom";
+import styles from "./auth.module.css";
 
 const RegisterPage = () => {
   const navigate = useNavigate(); // Initialize useNavigate
