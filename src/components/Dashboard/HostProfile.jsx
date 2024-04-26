@@ -53,7 +53,7 @@ const HostProfile = ({ limit }) => {
                 : profile.first_name + " " + profile.last_name}
             </h2>
             <img src={profile.imagePath} alt="" />
-            {/* Check if events exists before mapping over them */}
+            {/* Check if events exists before mapssping over them */}
             <div className={styles.eventsGrid}>
               {profile.events &&
                 profile.events.map((event) => (
