@@ -2,6 +2,14 @@
   background: url(images/loginBg.jpg);
   height: 100vh;
   font-family: var(--primary-font);
+  overflow-x: hidden;
+}
+
+.registerbg {
+  background: url(images/register.jpg);
+  height: 100vh;
+  font-family: var(--primary-font);
+  overflow-x: hidden;
 }
 
 .loginRow {
@@ -172,6 +180,37 @@
   font-size: 18px;
 }
 
+/* registerpage */
+
+.loginForm .registerSection {
+  max-width: 400px;
+}
+
+.twoFields {
+  display: flex;
+  gap: 15px;
+}
+
+.registerSection .inputFields {
+  margin-top: 15px;
+}
+
+.error {
+  margin-top: 30px;
+  color: #e98787;
+}
+
+.success{
+  margin-top: 30px;
+}
+
+.resetText{
+  font-size: 14px;
+}
+
+.formsSection .resetPassword{
+  font-size: 44px;
+}
 @media screen and (max-width: 992px) {
   .loginLeft {
     padding: 15px;
@@ -224,5 +263,11 @@
   }
   .conditionsText {
     left: unset;
+  }
+}
+
+@media screen and (max-width: 487px) {
+  .secondLogo {
+    top: 80px;
   }
 }

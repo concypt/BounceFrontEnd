@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import styles from "../components/events.module.css";
 import moment from "moment";
 
+
 const URL = "https://bounce.extrasol.co.uk/api/attenders/event-detail";
 
 const EventDetail = () => {
