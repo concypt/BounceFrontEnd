@@ -47,21 +47,65 @@ const HostProfile = ({ limit }) => {
         <div className="bounce_bg_circle">
           <div className="container-fluid">
             <Navbar />
-            <h2>
-              {profile.name
-                ? profile.name
-                : profile.first_name + " " + profile.last_name}
-            </h2>
-            <img src={profile.imagePath} alt="" />
+            <div className={styles.hostProfile}>
+              <div className={styles.profilePath}>
+                <img src={profile.imagePath} alt="" />
+                <h1>
+                  {profile.name
+                    ? profile.name
+                    : profile.first_name + " " + profile.last_name}
+                </h1>
+              </div>
+              <div className={styles.hostCard}>
+                <div className="row">
+                  <div className="col-lg-6">
+                    <h2>About</h2>
+                    <p className={styles.hostText}>
+                      Here is a bio about GVO Events.
+                    </p>
+                  </div>
+                  <div className="col-lg-6">
+                    <h2>Followers</h2>
+                    <div className={`users ${styles.hostUser}`}>
+                      <div className="user_imgs">
+                        <img src="../images/userOne.svg" alt="" />
+                        <img src="../images/userTwo.svg" alt="" />
+                        <img src="../images/userThree.svg" alt="" />
+                        <img src="../images/userFour.svg" alt="" />
+                        <img src="../images/userFive.svg" alt="" />
+                        <div className="user_count">
+                          <p>268+</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="header_btn">
+                      <a
+                        href="#"
+                        className={`global_button_one ${styles.followBtn}`}
+                      >
+                        {" "}
+                        <span>Follow</span>
+                      </a>
+                    </div>
+                    <p className={styles.hostText}>
+                      Follow to receive the latest updates and new event
+                      announcements by email!
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
             {/* Check if events exists before mapssping over them */}
+          </div>
+          <div className={styles.gvoEvents}>
             <div className={styles.eventsGrid}>
               {profile.events &&
                 profile.events.map((event) => (
                   <EventCard key={event.id} event={event} />
                 ))}
             </div>
-            <Footer />
           </div>
+          <Footer />
         </div>
       )}
     </div>
