@@ -19,6 +19,8 @@
   border-radius: 18px;
   overflow: hidden;
   background: #f9f9f9;
+  position: relative;
+  padding-bottom: 70px;
 }
 
 .eventCard h2 {
@@ -28,6 +30,11 @@
   font-weight: 700;
   color: #242424;
   margin: 0;
+  overflow: hidden;
+  text-overflow: clip;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 
 .eventCardImage {
@@ -39,7 +46,7 @@
   object-fit: cover;
   font-size: 32px;
   line-height: 36px;
-  height: 275px;
+  min-height: 275px;
 }
 
 .eventCategoryButton {
@@ -72,10 +79,6 @@
 
 .eventCardDetails {
   padding: 18px 28px;
-  min-height: 295px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }
 
 .eventCardDetails span.time,
@@ -100,7 +103,8 @@
 
 .ticketsFindMore {
   display: flex;
-  margin-top: 20px;
+  position: absolute;
+  bottom: 23px;
 }
 
 /* event-detail */
@@ -411,7 +415,7 @@
   }
 
   .eventImg {
-    height: 200px;
+    min-height: 200px;
   }
 
   .eventCardDetails {
@@ -523,7 +527,7 @@
   }
 
   .eventImg {
-    height: 160px;
+    min-height: 160px;
   }
 
   .event_detail_card {
