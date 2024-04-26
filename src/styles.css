@@ -494,6 +494,10 @@ button.global_button_one:hover {
   line-height: normal;
   text-transform: capitalize;
   transition: 0.7s;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: space-between;
 }
 
 .accordian_main {
@@ -549,10 +553,11 @@ button.global_button_one:hover {
 }
 
 .expand-bar {
-  position: absolute;
-  top: 50%;
-  right: 0;
-  transition: all 0.5s ease;
+  display: block;
+  width: 18px;
+  height: 2px;
+  background-color: #000;
+  position: relative;
 }
 
 .expand-bar,
@@ -560,13 +565,13 @@ button.global_button_one:hover {
   width: 18px;
   height: 2px;
   background-color: #000;
+  transition: all 0.5s ease;
 }
 
 .expand-bar:after {
   content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
+  position: relative;
+  display: block;
   transform: rotate(90deg);
   transition: all 0.5s ease;
 }
@@ -757,6 +762,8 @@ li.answer {
   -webkit-text-stroke: 6px transparent;
   color: #fff !important;
 }
+
+
 @media screen and (max-width: 1440px) {
   .promote_div {
     gap: 60px;
@@ -956,6 +963,14 @@ li.answer {
   .event_div {
     margin-top: 80px;
   }
+
+  .accordion_section {
+    padding-top: 130px;
+  }
+
+  .faqs {
+    margin-bottom: 40px;
+  }
 }
 
 @media screen and (max-width: 567px) {
@@ -1037,5 +1052,14 @@ li.answer {
   .promote_checks {
     gap: 20px;
     margin-top: 10px;
+  }
+
+  .promote_btn span {
+    font-size: 16px;
+  }
+
+  .global_button_one {
+    height: 48px;
+    width: 210px;
   }
 }

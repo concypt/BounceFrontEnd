@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./auth.module.css";
+import LoadingBar from "react-top-loading-bar";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -152,7 +153,7 @@ const LoginPage = () => {
                   </div>
                 </div>
                 <div className={styles.header_btn}>
-                  <button className={styles.loginButton}>
+                  <button className={styles.loginButton} type="submit">
                     {" "}
                     <span>Sign in</span>
                   </button>

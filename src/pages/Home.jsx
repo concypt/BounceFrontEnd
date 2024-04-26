@@ -3,6 +3,8 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Slider from "../components/Slider";
 import EventList from "../components/EventList";
+
+
 function Home() {
   return (
     <>
