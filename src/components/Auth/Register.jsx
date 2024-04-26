@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./auth.module.css";
+import LoadingBar from "react-top-loading-bar";
 
 const RegisterPage = () => {
   const navigate = useNavigate(); // Initialize useNavigate
@@ -84,77 +85,143 @@ const RegisterPage = () => {
   };
 
   return (
-    <div>
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>First Name:</label>
-          <input
-            type="text"
-            name="first_name"
-            value={formData.first_name}
-            onChange={handleChange}
-            required
-          />
+    <div className={styles.registerbg}>
+      <div className={`row ${styles.loginRow}`}>
+        <div className={`col-md-6 col-lg-6 ${styles.firstCol}`}>
+          <div className={styles.loginLeft}>
+            <div className={styles.logiLogo}>
+              <a href="#">
+                <img src="images/whiteLogo.svg" alt="" />
+              </a>
+            </div>
+            <div className={styles.loginContent}>
+              <h2>Got an account?</h2>
+              <p>
+                Attend, promote and host events all from one place on Bounce,
+                the all in one ticketing platforn.
+              </p>
+              <a href="#">Login</a>
+            </div>
+          </div>
         </div>
-        <div>
-          <label>Last Name:</label>
-          <input
-            type="text"
-            name="last_name"
-            value={formData.last_name}
-            onChange={handleChange}
-            required
-          />
+
+        <div className="col-md-6 col-lg-6">
+          <div className={styles.loginForm}>
+            <div className={styles.secondLogo}>
+              <a href="#">
+                <img src="images/whiteLogo.svg" alt="" />
+              </a>
+            </div>
+            <div className={`${styles.formsSection} ${styles.registerSection}`}>
+              <h2>Sign Up</h2>
+              <form onSubmit={handleSubmit}>
+                <div className={styles.twoFields}>
+                  <div className={styles.inputFields}>
+                    <input
+                      type="text"
+                      name="first_name"
+                      value={formData.first_name}
+                      onChange={handleChange}
+                      required
+                      placeholder="First Name"
+                    />
+                    <img
+                      src="images/name.svg"
+                      className={styles.inputImgs}
+                      alt=""
+                    />
+                  </div>
+                  <div className={styles.inputFields}>
+                    <input
+                      type="text"
+                      name="last_name"
+                      value={formData.last_name}
+                      onChange={handleChange}
+                      required
+                      placeholder="Last Name"
+                    />
+                    <img
+                      src="images/name.svg"
+                      className={styles.inputImgs}
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <div className={styles.inputFields}>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    placeholder="Email"
+                  />
+                  <img
+                    src="images/mailIcon.svg"
+                    className={styles.inputImgs}
+                    alt=""
+                  />
+                </div>
+                <div className={styles.inputFields}>
+                  <input
+                    type="phone"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    required
+                    placeholder="Phone"
+                  />
+                  <img
+                    src="images/phone.png"
+                    className={styles.inputImgs}
+                    alt=""
+                  />
+                </div>
+                <div className={styles.inputFields}>
+                  <input
+                    type="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                    placeholder="Password"
+                  />
+                  <img
+                    src="images/lock.svg"
+                    className={styles.inputImgs}
+                    alt=""
+                  />
+                </div>
+                <div className={styles.inputFields}>
+                  <input
+                    type="password"
+                    name="password_confirmation"
+                    value={formData.password_confirmation}
+                    onChange={handleChange}
+                    required
+                    placeholder="Confirm Password"
+                  />
+                  <img
+                    src="images/lock.svg"
+                    className={styles.inputImgs}
+                    alt=""
+                  />
+                </div>
+                <div className={styles.header_btn}>
+                  <button className={styles.loginButton} type="submit">
+                    {" "}
+                    <span>Create account</span>
+                  </button>
+                </div>
+                {error && <div className="error">{error}</div>}
+                {registrationStatus === "success" && (
+                  <p>Registration successful! Redirecting...</p>
+                )}
+              </form>
+            </div>
+          </div>
         </div>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Phone:</label>
-          <input
-            type="phone"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Confirm Password:</label>
-          <input
-            type="password"
-            name="password_confirmation"
-            value={formData.password_confirmation}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <button type="submit" onClick={clearError}>
-          Create account
-        </button>
-        {error && <div className="error">{error}</div>}
-        {registrationStatus === "success" && (
-          <p>Registration successful! Redirecting...</p>
-        )}
-      </form>
+      </div>
     </div>
   );
 };
