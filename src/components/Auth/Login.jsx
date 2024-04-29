@@ -1,35 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./auth.module.css";
-import LoadingBar from "react-top-loading-bar";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState(null);
-  const [deviceToken, setDeviceToken] = useState(null);
-
-  //   useEffect(() => {
-  //     const requestNotificationPermission = async () => {
-  //       try {
-  //         // Request permission for notifications
-  //         await Notification.requestPermission();
-  //         // Get the device token (browser may manage this internally)
-  //         const registration = await navigator.serviceWorker.getRegistration();
-  //         if (registration) {
-  //           const subscription = await registration.pushManager.getSubscription();
-  //           if (subscription) {
-  //             const token = subscription.endpoint.split("/").slice(-1)[0];
-  //             setDeviceToken(token);
-  //           }
-  //         }
-  //       } catch (error) {
-  //         console.error("Error requesting notification permission:", error);
-  //       }
-  //     };
-
-  //     requestNotificationPermission();
-  //   }, []);
+  const [success, setSuccess] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -39,43 +16,46 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Append device token to formData
-      const formDataWithToken = {
-        ...formData,
-        device_token: "gsdgdgrt452345dwtegwdg334",
-      };
-
       const response = await fetch("https://bounce.extrasol.co.uk/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-        body: JSON.stringify(formDataWithToken), // Send formDataWithToken in the request body
+        body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
-        // Get error message from response
         const errorData = await response.json();
-        const errorMessage = "Invalid email or password. Please try again.";
-
-        // Check if there are any validation errors
-        if (errorData.errors) {
-          const errorMessages = Object.values(errorData.errors).flat();
-          setError(`Login failed: ${errorMessages.join(", ")}`);
-        } else {
-          // If there is no specific error message, display "Password incorrect"
-          setError(`Login failed: ${errorMessage || "Password incorrect"}`);
-        }
-        console.error("Login failed:", errorMessage);
+        setError(errorData.msg || "An error occurred. Please try again.");
+        setSuccess(false);
         return;
       }
 
-      // Login successful, navigate to dashboard or desired page
-      navigate("/");
+      const responseData = await response.json();
+      if (!responseData.success) {
+        setError(responseData.msg || "An error occurred. Please try again.");
+        setSuccess(false);
+        return;
+      }
+
+      // Login successful
+      setSuccess(true);
+      setError(null);
+
+      // Redirect to OTP verification page if status is not 1
+      if (responseData.data && responseData.data.status !== 1) {
+        navigate("/verification", {
+          state: { token: responseData.data.token },
+        });
+        return;
+      }
+
+      // Redirect to dashboard or desired page
+      // navigate("/dashboard");
     } catch (error) {
-      console.error("Login failed:", error);
       setError("An error occurred. Please try again later.");
+      setSuccess(false);
     }
   };
 
@@ -85,7 +65,7 @@ const LoginPage = () => {
         <div className={`col-md-6 col-lg-6 ${styles.firstCol}`}>
           <div className={styles.loginLeft}>
             <div className={styles.logiLogo}>
-              <a href="#">
+              <a href="/">
                 <img src="images/whiteLogo.svg" alt="" />
               </a>
             </div>
@@ -95,7 +75,7 @@ const LoginPage = () => {
                 Start attending incredible club nights, festivals and live music
                 events near you by signing up for a free account today.
               </p>
-              <a href="#">Sign up</a>
+              <a href="register">Sign up</a>
             </div>
           </div>
         </div>
@@ -149,7 +129,7 @@ const LoginPage = () => {
                     />
                   </div>
                   <div className={styles.forgetDiv}>
-                    <a href="#">Forgot password?</a>
+                    <a href="/forgot-password-request">Forgot password?</a>
                   </div>
                 </div>
                 <div className={styles.header_btn}>
@@ -158,7 +138,10 @@ const LoginPage = () => {
                     <span>Sign in</span>
                   </button>
                 </div>
-                {error && <div className="error">{error}</div>}
+                {error && <div className={styles.error}>{error}</div>}
+                {success && !error && (
+                  <div className={styles.success}>Login successful!</div>
+                )}
               </form>
             </div>
           </div>
