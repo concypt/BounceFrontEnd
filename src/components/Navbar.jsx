@@ -37,12 +37,11 @@ function Navbar() {
               </a>
             </li>
             <div className="navbtn_div">
-              <a
-                href=""
+              <button
                 className={`${styles.global_button_one} ${styles.nav_btn}`}
               >
                 Host an event
-              </a>
+              </button>
             </div>
           </ul>
           <div className={styles.host_and_signin}>

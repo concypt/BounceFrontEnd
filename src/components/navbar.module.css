@@ -235,7 +235,7 @@ button.global_button_one:hover::after {
     width: 113%;
     transition: 0.7s ease-in-out;
     background: #ffffff9e;
-    backdrop-filter: blur(50px);
+    backdrop-filter: blur(20px);
     padding: 10px;
     height: 100vh;
     display: flex;
@@ -264,7 +264,6 @@ button.global_button_one:hover::after {
 
   .nav_btn {
     display: block;
-    margin-top: 50px;
   }
 
   .logo {
@@ -281,12 +280,20 @@ button.global_button_one:hover::after {
 
   .navLink {
     font-size: 24px;
+    text-decoration: underline;
+    font-weight: 600;
+  }
+
+  .navLink:hover {
+    text-decoration: none;
   }
 
   .navbtn_div {
-    width: 90%;
+    width: 100%;
     display: flex;
     justify-content: center;
+    position: absolute;
+    bottom: 10vh;
   }
 }
 
@@ -304,12 +311,29 @@ button.global_button_one:hover::after {
   }
 
   .navbar {
-    padding: 15px 15px;
-    gap: 10px;
+    padding: 11px 15px;
+    gap: 0;
+  }
+
+  .logo {
+    margin-bottom: 0;
   }
 
   .logo img {
     max-width: 105px;
+  }
+
+  .loginBtn {
+    font-size: 15px;
+  }
+
+  .loginBtn::after {
+    width: 8px;
+    height: 10px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    top: 7px;
+    right: -14px;
   }
 
   .bar {

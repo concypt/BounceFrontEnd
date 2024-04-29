@@ -763,7 +763,6 @@ li.answer {
   color: #fff !important;
 }
 
-
 @media screen and (max-width: 1440px) {
   .promote_div {
     gap: 60px;
@@ -955,9 +954,10 @@ li.answer {
   }
 
   .navbtn_div {
-    width: 90%;
+    width: calc(100vw - 65px);
     display: flex;
-    justify-content: center;
+    position: absolute;
+    bottom: 10vh;
   }
 
   .event_div {
@@ -989,6 +989,10 @@ li.answer {
 
   .blank_grid {
     grid-template-columns: auto;
+  }
+
+  .navbtn_div {
+    justify-content: center;
   }
 }
 
