@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import EventCard from "./EventCard";
 import styles from "./events.module.css";
-import LoadingBar from "react-top-loading-bar";
 
 const URL = "https://bounce.extrasol.co.uk/api/attenders/events";
 
@@ -38,7 +37,6 @@ const EventList = ({ limit }) => {
 
   return (
     <div>
-      <LoadingBar progress={progress} color="#7e79ff" height={3} />
       <div className="bounce_bg_circle">
         <div className="container-fluid">
           <div className={styles.eventsGrid}>

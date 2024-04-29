@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./auth.module.css";
-import LoadingBar from "react-top-loading-bar";
 
 const RegisterPage = () => {
   const navigate = useNavigate(); // Initialize useNavigate
@@ -16,6 +15,8 @@ const RegisterPage = () => {
   });
   const [registrationStatus, setRegistrationStatus] = useState(null);
   const [error, setError] = useState(null);
+  const [token, setToken] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,7 +34,7 @@ const RegisterPage = () => {
       return;
     }
 
-    // Call your API endpoint to send the registration data
+    // Call API endpoint to register user
     try {
       const response = await fetch(
         "https://bounce.extrasol.co.uk/api/register",
@@ -47,31 +48,44 @@ const RegisterPage = () => {
         }
       );
 
-      console.log(response);
-
       // Check if response is not OK
       if (!response.ok) {
-        // Get error message from response
-        const errorData = await response.json();
-        const errorMessage = errorData.message || "Registration failed";
+        let errorMessage; // Define errorMessage variable here
 
-        // Check if there are any validation errors
-        if (errorData.errors) {
-          const errorMessages = Object.values(errorData.errors).flat();
-          setError(`Registration failed: ${errorMessages.join(", ")}`);
+        // Check if response status is 400 (Bad Request) or 422 (Unprocessable Entity)
+        if (response.status === 400 || response.status === 422) {
+          // Get error message from response
+          const errorData = await response.json();
+
+          // Check if there are any validation errors
+          if (errorData.errors) {
+            const errorMessages = Object.values(errorData.errors).flat();
+            errorMessage = `${errorMessages.join("<br>")}`;
+          } else {
+            errorMessage = `Client Error (${response.status}): Registration failed.`;
+          }
+        } else if (response.status >= 500) {
+          errorMessage = `Server Error (${response.status}): Registration failed.`;
         } else {
-          setError(`Registration failed: ${errorMessage}`);
+          errorMessage = `Unexpected Error (${response.status}): Registration failed.`;
         }
+        setError(errorMessage); // Set error message here
         console.error("Registration failed:", errorMessage);
         return;
       }
 
       // Registration successful
+      const responseData = await response.json();
+      const token = responseData.data.token;
+
+      console.log("Token:", token);
+      setToken(token); // Set the token in state
+
       setRegistrationStatus("success");
       console.log("Registration successful");
-      //   Redirect to another page after 2 seconds
+      // Redirect to another page after 2 seconds
       setTimeout(() => {
-        navigate("/login"); // Use navigate to redirect to login page
+        navigate("/verification", { state: { token } }); // Use navigate to redirect to verification page with token
       }, 2000);
     } catch (error) {
       setError("Error registering. Please try again later.");
@@ -90,7 +104,7 @@ const RegisterPage = () => {
         <div className={`col-md-6 col-lg-6 ${styles.firstCol}`}>
           <div className={styles.loginLeft}>
             <div className={styles.logiLogo}>
-              <a href="#">
+              <a href="/">
                 <img src="images/whiteLogo.svg" alt="" />
               </a>
             </div>
@@ -100,7 +114,7 @@ const RegisterPage = () => {
                 Attend, promote and host events all from one place on Bounce,
                 the all in one ticketing platforn.
               </p>
-              <a href="#">Login</a>
+              <a href="/login">Login</a>
             </div>
           </div>
         </div>
@@ -208,14 +222,23 @@ const RegisterPage = () => {
                   />
                 </div>
                 <div className={styles.header_btn}>
-                  <button className={styles.loginButton} type="submit">
-                    {" "}
-                    <span>Create account</span>
+                  <button
+                    className={styles.loginButton}
+                    type="submit"
+                    disabled={isSubmitting} // Disable button when isSubmitting is true
+                  >
+                    {isSubmitting ? (
+                      "Submitting..."
+                    ) : (
+                      <span>Create account</span>
+                    )}
                   </button>
                 </div>
-                {error && <div className="error">{error}</div>}
+                {error && <div className={styles.error}>{error}</div>}
                 {registrationStatus === "success" && (
-                  <p>Registration successful! Redirecting...</p>
+                  <p className={styles.success}>
+                    Registration successful! Redirecting...
+                  </p>
                 )}
               </form>
             </div>

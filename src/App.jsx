@@ -1,20 +1,35 @@
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Events from "./pages/Events";
-import EventDetail from "./pages/EventDetail.jsx";
+import EventDetail from "./pages/EventDetail";
 import PageNotFound from "./PageNotFound";
 import Register from "./components/Auth/Register";
+import Verification from "./components/Auth/Verification";
 import Login from "./components/Auth/Login";
 import ForgotPasswordRequest from "./components/Auth/ForgotPasswordRequest";
 import ForgotPasswordReset from "./components/Auth/ForgotPasswordReset";
-import HostProfile from "./components/Dashboard/HostProfile.jsx";
+import HostProfile from "./components/Dashboard/HostProfile";
+import LoadingBar from "react-top-loading-bar";
 import "./styles.css";
 import "./global.css";
 import "./js/main.js";
 
 function App() {
+  const [loadingComplete, setLoadingComplete] = useState(false);
+
+  // Set loading complete to true when the page has finished loading
+  window.onload = () => {
+    setLoadingComplete(true);
+  };
+
   return (
     <div>
+      <LoadingBar
+        color="#7e79ff"
+        height={3}
+        progress={loadingComplete ? 100 : 0}
+      />
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -22,8 +37,9 @@ function App() {
           <Route path="/events" element={<Events />} />
           <Route path="/events/:eventId" element={<EventDetail />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/verification" element={<Verification />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/host-profile" element={<HostProfile />}></Route>
+          <Route path="/host-profile" element={<HostProfile />} />
           <Route
             path="/forgot-password-request"
             element={<ForgotPasswordRequest />}
