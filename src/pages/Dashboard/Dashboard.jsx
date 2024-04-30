@@ -1,18 +1,15 @@
-import React, { useEffect, useState } from "react";
-import Header from "../components/Dashboard/Header";
-import Footer from "../components/Footer";
-import styles from "../..Dashboard/dasboard.module.css";
+import React from "react";
+import Header from "../../components/Dashboard/Header";
+import Sidebar from "../../components/Dashboard/Sidebar";
+import Footer from "../../components/Footer";
 
 function Dashboard() {
   return (
     <div>
-      {/* Render Navbar */}
-      <Header />
-
+      sssss
+      <Sidebar />
       {/* Render EventList component with the events data */}
-
       {/* Render Footer */}
-      <Footer />
     </div>
   );
 }
