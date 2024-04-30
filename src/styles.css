@@ -763,6 +763,26 @@ li.answer {
   color: #fff !important;
 }
 
+.rdrDateRangePickerWrapper {
+  position: absolute;
+  z-index: 1;
+  top: 52px;
+  box-shadow: 0 0px 10px 0 #9b9ac573;
+}
+
+.rdrCalendarWrapper {
+  width: 100%;
+  max-width: 600px;
+}
+
+.rdrDateDisplayWrapper {
+  display: none;
+}
+
+.rdrDefinedRangesWrapper {
+  display: none;
+}
+
 @media screen and (max-width: 1440px) {
   .promote_div {
     gap: 60px;
@@ -997,6 +1017,10 @@ li.answer {
 }
 
 @media screen and (max-width: 487px) {
+  .home_events .container-fluid {
+    padding: 0 20px;
+  }
+
   .party_imgs img {
     position: unset;
     height: 190px;

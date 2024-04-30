@@ -376,56 +376,137 @@
   padding-top: 65px;
 }
 
-/* ul {
-  counter-reset: checked;
+/* Main Filters */
+
+.mainFilters {
+  display: flex;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  margin-top: 60px;
+  justify-content: space-between;
 }
 
-li input:checked {
-  counter-increment: checked;
+.mainCheckbox {
+  width: 100%;
+  max-width: 350px;
+  text-align: center;
 }
 
-.count:after {
-  content: counter(checked);
+.locationDiv {
+  margin-top: 0;
+}
+
+.filters h2 {
+  font-size: 18px;
+  color: #000;
+  font-weight: 600;
+}
+
+.mainCheckForm {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 input[type="checkbox"] {
-  position: relative;
-  border: 2px solid #000;
-  background: #777777 !important;
-  border-radius: 2px;
-  background: none;
+  display: none;
+}
+
+label.checkboxTag {
+  display: inline-block;
+  background-color: #e5e8ee;
+  color: #000;
+  padding: 4px 12px;
+  margin: 0.25rem;
   cursor: pointer;
-  line-height: 0;
-  outline: 0;
-  padding: 0 !important;
-  vertical-align: text-top;
-  -webkit-appearance: none;
-  opacity: 0.5;
-  height: 70px;
-  width: 70px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 50px;
 }
 
-input[type="checkbox"]:hover {
-  opacity: 1;
+input[type="checkbox"]:checked + label.checkboxTag {
+  background-color: #4a4a4a;
+  color: #ffffff;
 }
 
-input[type="checkbox"]:checked {
-  background-color: #000;
-  opacity: 1;
+.dateRange {
+  text-align: center;
 }
 
-input[type="checkbox"]:before {
-  content: "Party";
-  color: #fff;
+.dateRange h2 {
+  margin-bottom: 20px;
+}
+
+.dateFields {
+  display: flex;
+  position: relative;
+  align-items: center;
+  gap: 8px;
+}
+
+.dateFields p {
+  margin: 0;
+}
+
+.dateFields input {
+  height: 40px;
+  width: 164px;
+  border: 1px solid #ececed;
+  padding: 0 10px;
+  border-radius: 8px;
+  color: #4f4b5c;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.dateFields p {
+  color: #4f4b5c;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+
+.locationFields h2 {
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.locationInputs {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  gap: 12px;
+}
+
+.locationInputs input,
+select {
+  height: 40px;
+  width: 180px;
+  border: none;
+  outline: none;
+  box-shadow: 0 2px 6px 0 #9b9ac573;
+  border-radius: 8px;
+  padding: 0 10px;
+  font-size: 14px;
+  color: #110C22;
+  font-weight: 600;
+}
+
+.locationInputs input {
+  padding-left: 30px;
+}
+
+.locationSearch {
+  position: relative;
+}
+
+.locationSearch img {
+  width: 19px;
+  height: 19px;
   position: absolute;
-  right: 50%;
-  top: 50%;
-  width: 4px;
-  height: 10px;
-  margin: -1px -1px 0 -1px;
-  z-index: 2;
-} */
-
+  left: 8px;
+  top: 11px;
+}
 @media (max-width: 1440px) {
   .details h2 {
     font-size: 42px;

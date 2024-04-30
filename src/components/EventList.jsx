@@ -37,8 +37,6 @@ const EventList = ({ limit }) => {
 
   return (
     <div>
-      <div className="bounce_bg_circle">
-      <LoadingBar progress={progress} color="#7e79ff" height={3} />
         <div className="container-fluid">
           <div className={styles.eventsGrid}>
             {limit
@@ -50,13 +48,9 @@ const EventList = ({ limit }) => {
               : events.map((event, index) => (
                   <EventCard key={event.id} event={event} />
                 ))}
-          </div>
-        </div>
-    </div>
+          </div>      </div>
     </div>
   );
-}
-
-
+};
 
 export default EventList;

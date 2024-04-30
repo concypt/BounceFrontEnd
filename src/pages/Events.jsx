@@ -3,8 +3,61 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import styles from "../components/events.module.css";
 import EventList from "../components/EventList";
+import { DateRangePicker } from "react-date-range";
+import "react-date-range/dist/styles.css"; // Main css file
+import "react-date-range/dist/theme/default.css"; // Theme css file
 
 function Events() {
+  const [categories, setCategories] = useState([]);
+  const [selectedCount, setSelectedCount] = useState(0);
+  const [dateRange, setDateRange] = useState([
+    {
+      startDate: new Date(),
+      endDate: null,
+      key: "selection",
+    },
+  ]);
+  const [showDatePicker, setShowDatePicker] = useState(false);
+
+  // Function to fetch categories from API
+  useEffect(() => {
+    // Simulate API call
+    fetch("https://bounce.extrasol.co.uk/api/attenders/categories")
+      .then((response) => response.json())
+      .then((data) => {
+        // Assuming the response contains a 'data' array with category objects
+        setCategories(data.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching categories:", error);
+      });
+  }, []);
+
+  // Function to update selected count
+  const updateSelectedCount = () => {
+    const selectedCheckboxes = document.querySelectorAll(
+      'input[type="checkbox"]:checked'
+    );
+    setSelectedCount(selectedCheckboxes.length);
+  };
+
+  // Function to handle date range change
+  const handleDateRangeChange = (ranges) => {
+    setDateRange([ranges.selection]);
+  };
+
+  // Function to handle form submission
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // Perform filtering based on selected categories and date range
+    // You can implement filtering logic here or call a separate function
+  };
+
+  // Function to toggle date picker visibility
+  const toggleDatePicker = () => {
+    setShowDatePicker(!showDatePicker);
+  };
+
   return (
     <div>
       {/* Render Navbar */}
@@ -13,7 +66,7 @@ function Events() {
         <div className={styles.filterFrame}>
           <div className={styles.filters}>
             <h1>Filter</h1>
-            <form action="/action_page.php" className={styles.searchDiv}>
+            <form onSubmit={handleSubmit} className={styles.searchDiv}>
               <input
                 className={styles.searchInput}
                 type="text"
@@ -23,52 +76,69 @@ function Events() {
               />
               <button type="submit">Search</button>
             </form>
-            {/* <ul>
-              <li>
-                <label htmlFor="box1">
-                  <input type="checkbox" name="" id="box1" />
-                  <span>Party</span>
-                </label>
-              </li>
-              <li>
-                <input type="checkbox" name="" id="box2" />
-                <label htmlFor="box2">Element 2</label>
-              </li>
-              <li>
-                <input type="checkbox" name="" id="box3" />
-                <label htmlFor="box3">Element 3</label>
-              </li>
-              <li>
-                <input type="checkbox" name="" id="box4" />
-                <label htmlFor="box4">Element 4</label>
-              </li>
-              <li>
-                <input type="checkbox" name="" id="box5" />
-                <label htmlFor="box5">Element 5</label>
-              </li>
-              <li>
-                <input type="checkbox" name="" id="box6" />
-                <label htmlFor="box6">Element 6</label>
-              </li>
-              <li>
-                <input type="checkbox" name="" id="box7" />
-                <label htmlFor="box7">Element 7</label>
-              </li>
-              <li>
-                <input type="checkbox" name="" id="box8" />
-                <label htmlFor="box8">Element 8</label>
-              </li>
-              <li>
-                <input type="checkbox" name="" id="box9" />
-                <label htmlFor="box9">Element 9</label>
-              </li>
-              <li>
-                <input type="checkbox" name="" id="box10" />
-                <label htmlFor="   ">Element 10</label>
-              </li>
-            </ul> */}
-
-            <div className={styles.count}>Checked checkboxes: </div>
+            <div className={styles.mainFilters}>
+              <div className={styles.mainCheckbox}>
+                <h2>
+                  Genres{" "}
+                  <span id="selectedCount">({selectedCount} selected)</span>
+                </h2>
+                <form id="categoryForm" className={styles.mainCheckForm}>
+                  {categories.map((category, index) => (
+                    <CheckboxTag
+                      key={index}
+                      id={`categoryCheckbox-${index}`}
+                      value={category.id} // Assuming 'id' is used as value
+                      label={category.name}
+                      updateSelectedCount={updateSelectedCount}
+                    />
+                  ))}
+                </form>
+              </div>
+              <div className={styles.locationFields}>
+                <h2>Location</h2>
+                <div className={styles.locationInputs}>
+                  <div className={styles.locationSearch}>
+                    <img src="images/location_grey.svg" alt="" />
+                    <input type="search" name="" />
+                  </div>
+                  <select name="cars" id="cars">
+                    <option value="" disabled selected>
+                      Within 40 miles
+                    </option>
+                    <option value="saab">Saab</option>
+                    <option value="opel">Opel</option>
+                    <option value="audi">Audi</option>
+                  </select>
+                </div>
+              </div>
+              <div className={styles.dateRange}>
+                <h2>Between these dates</h2>
+                <div onClick={toggleDatePicker} className={styles.dateFields}>
+                  <input
+                    type="text"
+                    placeholder="Start date"
+                    value={dateRange[0].startDate.toLocaleDateString()}
+                    readOnly
+                  />
+                  <p> To </p>
+                  <input
+                    type="text"
+                    placeholder="End date"
+                    value={dateRange[0].endDate?.toLocaleDateString()}
+                    readOnly
+                  />
+                  {showDatePicker && (
+                    <DateRangePicker
+                      onChange={handleDateRangeChange}
+                      months={2}
+                      ranges={dateRange}
+                      direction="horizontal"
+                      editableDateInputs={false}
+                    />
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -79,6 +149,23 @@ function Events() {
       </div>
       {/* Render Footer */}
       <Footer />
+    </div>
+  );
+}
+
+function CheckboxTag({ id, value, label, updateSelectedCount }) {
+  return (
+    <div>
+      <input
+        type="checkbox"
+        id={id}
+        name="categories"
+        value={value}
+        onChange={updateSelectedCount}
+      />
+      <label className={styles.checkboxTag} htmlFor={id}>
+        {label}
+      </label>
     </div>
   );
 }
