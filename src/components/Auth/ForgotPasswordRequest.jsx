@@ -37,8 +37,8 @@ const ForgotPasswordRequest = () => {
       setSuccess(true); // Set success state to true
       setInfoMessage(responseData.msg);
       setTimeout(() => {
-        navigate("/forgot-password-reset");
-      }, 2000);
+        navigate("/login");
+      }, 4000);
     } catch (error) {
       setError(error.message);
     } finally {
@@ -109,7 +109,7 @@ const ForgotPasswordRequest = () => {
                     disabled={isSubmitting} // Disable button during form submission
                   >
                     {isSubmitting ? (
-                      "Submitting..."
+                      "Sending..."
                     ) : (
                       <span>Get a reset code</span>
                     )}
@@ -118,7 +118,8 @@ const ForgotPasswordRequest = () => {
                 {error && <div className={styles.error}>{error}</div>}
                 {success && !error && (
                   <div className={styles.success}>
-                    Reset Code Sent Successfully
+                    New Password Send Successfully, Please check your email and
+                    login via new password.
                   </div>
                 )}
               </form>

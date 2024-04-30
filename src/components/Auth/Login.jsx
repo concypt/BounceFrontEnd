@@ -52,7 +52,7 @@ const LoginPage = () => {
       }
 
       // Redirect to dashboard or desired page
-      // navigate("/dashboard");
+      navigate("/");
     } catch (error) {
       setError("An error occurred. Please try again later.");
       setSuccess(false);

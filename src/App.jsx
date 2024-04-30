@@ -10,6 +10,7 @@ import Login from "./components/Auth/Login";
 import ForgotPasswordRequest from "./components/Auth/ForgotPasswordRequest";
 import ForgotPasswordReset from "./components/Auth/ForgotPasswordReset";
 import HostProfile from "./components/Dashboard/HostProfile";
+import Dashboard from "./pages/Dashboard/Dashboard";
 import LoadingBar from "react-top-loading-bar";
 import "./styles.css";
 import "./global.css";
@@ -40,6 +41,7 @@ function App() {
           <Route path="/verification" element={<Verification />} />
           <Route path="/login" element={<Login />} />
           <Route path="/host-profile" element={<HostProfile />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route
             path="/forgot-password-request"
             element={<ForgotPasswordRequest />}

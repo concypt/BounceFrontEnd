@@ -33,7 +33,8 @@ header.App_header {
   align-items: center;
   margin-bottom: 0;
   padding: 0;
-  width: calc(100% - 241px - 300px - 80px);
+  /* width: calc(100% - 241px - 300px - 80px); */
+  width: 90%;
   max-width: 547px;
 }
 
@@ -57,7 +58,7 @@ header.App_header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 300px;
+  /* width: 300px; */
 }
 
 .loginBtn {
@@ -65,10 +66,13 @@ header.App_header {
   font-weight: 700;
   color: var(--purple-normal);
   position: relative;
+  margin-left: 25px;
 }
+
 .loginBtn:hover {
   text-decoration: none;
 }
+
 .loginBtn::after {
   content: "";
   width: 10px;
@@ -135,6 +139,17 @@ button.global_button_one:hover::after {
 
 /* media queries */
 
+@media screen and (max-width: 1350px) {
+  .navMenu {
+    max-width: 400px;
+    width: 100%;
+  }
+
+  button.global_button_one {
+    padding: 13px 20px;
+  }
+}
+
 @media screen and (max-width: 1146px) {
   .navbar {
     padding: 20px 20px;
@@ -153,7 +168,7 @@ button.global_button_one:hover::after {
 
   .host_and_signin {
     padding-right: 10px;
-    width: 250px;
+    /* width: 250px; */
   }
 
   .logo img {
@@ -164,6 +179,15 @@ button.global_button_one:hover::after {
   button.global_button_one {
     padding: 10px 25px;
   }
+
+  .navMenu {
+    max-width: 300px;
+    width: 100%;
+  }
+
+  button.global_button_one {
+    padding: 13px 20px;
+  }
 }
 
 @media screen and (max-width: 992px) {
@@ -173,15 +197,34 @@ button.global_button_one:hover::after {
   }
 
   .host_and_signin {
-    width: 235px;
+    /* width: 235px; */
+  }
+
+  button.global_button_one {
+    padding: 6px 20px;
+    font-size: 14px;
+    padding-bottom: 10px;
   }
 
   .navMenu {
-    width: calc(100% - 140px - 250px - 30px);
+    /* width: calc(100% - 140px - 250px - 30px); */
+    max-width: 270px;
   }
 
   .navbar {
     padding: 15px 20px;
+  }
+
+  .loginBtn {
+    font-size: 16px;
+    margin-left: 15px;
+  }
+
+  .loginBtn::after {
+    width: 9px;
+    height: 12px;
+    top: 6px;
+    right: -15px;
   }
 }
 
@@ -189,6 +232,11 @@ button.global_button_one:hover::after {
   .navbar {
     padding: 15px 15px;
     min-height: 50px;
+  }
+
+  button.global_button_one {
+    padding: 13px 20px;
+    font-size: 18px;
   }
 
   /* hamburger */
@@ -295,6 +343,10 @@ button.global_button_one:hover::after {
     position: absolute;
     bottom: 10vh;
   }
+
+  .loginBtn {
+    margin-left: 0;
+  }
 }
 
 @media screen and (max-width: 576px) {
@@ -347,5 +399,24 @@ button.global_button_one:hover::after {
 
   .hamburger.active .bar:nth-child(3) {
     transform: translateY(-6px) rotate(-45deg);
+  }
+}
+
+@media screen and (max-width: 350px) {
+  header.App_header {
+    margin: 0 10px;
+  }
+
+  .navbar {
+    padding: 11px 10px;
+  }
+
+  .loginBtn {
+    font-size: 12px;
+  }
+
+  .loginBtn::after {
+    top: 4px;
+    right: -11px;
   }
 }
