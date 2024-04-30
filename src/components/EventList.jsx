@@ -39,7 +39,6 @@ const EventList = ({ limit }) => {
   return (
     <div>
       <LoadingBar progress={progress} color="#7e79ff" height={3} />
-      <div className="bounce_bg_circle">
         <div className="container-fluid">
           <div className={styles.eventsGrid}>
             {limit
@@ -53,7 +52,6 @@ const EventList = ({ limit }) => {
                 ))}
           </div>
         </div>
-      </div>
     </div>
   );
 };
