@@ -16,7 +16,7 @@ const Sidebar = () => {
   return (
     <div className={`${styles.sidebar} ${showMenu ? styles.showMenu : ""}`}>
       <div className={styles.logo}>
-        <img src="logo.png" alt="Logo" />
+        <img src="/images/dashboard/logo.svg" alt="Logo" />
       </div>
       <ul className={styles.links}>
         <li>

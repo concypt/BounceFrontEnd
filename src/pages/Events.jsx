@@ -54,7 +54,13 @@ function Events() {
   };
 
   // Function to toggle date picker visibility
-  const toggleDatePicker = () => {
+  const toggleDatePicker = (event) => {
+    // Check if the click event occurred inside the date picker
+    if (event.target.closest(".rdrDateRangeWrapper")) {
+      // Click occurred inside the date picker, do not toggle visibility
+      return;
+    }
+    // Click occurred outside the date picker, toggle visibility
     setShowDatePicker(!showDatePicker);
   };
 
@@ -81,6 +87,7 @@ function Events() {
                 <h2>
                   Genres{" "}
                   <span id="selectedCount">({selectedCount} selected)</span>
+                  <input type="checkbox" className={styles.smallCheckbox} />
                 </h2>
                 <form id="categoryForm" className={styles.mainCheckForm}>
                   {categories.map((category, index) => (
@@ -95,7 +102,10 @@ function Events() {
                 </form>
               </div>
               <div className={styles.locationFields}>
-                <h2>Location</h2>
+                <h2>
+                  Location{" "}
+                  <input type="checkbox" className={styles.smallCheckbox} />
+                </h2>
                 <div className={styles.locationInputs}>
                   <div className={styles.locationSearch}>
                     <img src="images/location_grey.svg" alt="" />
@@ -112,7 +122,10 @@ function Events() {
                 </div>
               </div>
               <div className={styles.dateRange}>
-                <h2>Between these dates</h2>
+                <h2>
+                  Between these dates{" "}
+                  <input type="checkbox" className={styles.smallCheckbox} />
+                </h2>
                 <div onClick={toggleDatePicker} className={styles.dateFields}>
                   <input
                     type="text"

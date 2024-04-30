@@ -772,7 +772,7 @@ li.answer {
 
 .rdrCalendarWrapper {
   width: 100%;
-  max-width: 600px;
+  max-width: 510px;
 }
 
 .rdrDateDisplayWrapper {
@@ -782,6 +782,7 @@ li.answer {
 .rdrDefinedRangesWrapper {
   display: none;
 }
+
 
 @media screen and (max-width: 1440px) {
   .promote_div {

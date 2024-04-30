@@ -163,6 +163,11 @@ const OTPVerificationPage = () => {
                       placeholder="Enter OTP"
                       disabled={loading} // Disable input during loading
                     />
+                    <img
+                      src="images/otp.png"
+                      className={styles.inputImgs}
+                      alt=""
+                    />
                   </div>
                   <div className={styles.forgetDiv}>
                     <button

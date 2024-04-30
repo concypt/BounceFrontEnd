@@ -385,6 +385,9 @@
   margin: 0 auto;
   margin-top: 60px;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 30px;
 }
 
 .mainCheckbox {
@@ -401,6 +404,10 @@
   font-size: 18px;
   color: #000;
   font-weight: 600;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  align-items: center;
 }
 
 .mainCheckForm {
@@ -465,7 +472,6 @@ input[type="checkbox"]:checked + label.checkboxTag {
   font-weight: 600;
 }
 
-
 .locationFields h2 {
   margin-bottom: 0;
   text-align: center;
@@ -488,7 +494,7 @@ select {
   border-radius: 8px;
   padding: 0 10px;
   font-size: 14px;
-  color: #110C22;
+  color: #110c22;
   font-weight: 600;
 }
 
@@ -506,6 +512,44 @@ select {
   position: absolute;
   left: 8px;
   top: 11px;
+}
+
+.smallCheckbox[type="checkbox"] {
+  position: relative;
+  border: 2px solid #7357ff;
+  border-radius: 6px;
+  background: none;
+  cursor: pointer;
+  line-height: 0;
+  margin: 0 0.6em 0 0;
+  outline: 0;
+  padding: 0 !important;
+  vertical-align: text-top;
+  height: 18px;
+  width: 18px;
+  -webkit-appearance: none;
+  opacity: 0.5;
+  display: block;
+}
+
+.smallCheckbox[type="checkbox"]:checked {
+  background-color: #7357ff;
+  box-shadow: 0 0px 4px 0 #7357ff;
+  opacity: 1;
+}
+
+.smallCheckbox[type="checkbox"]:before {
+  content: "";
+  position: absolute;
+  right: 50%;
+  top: 50%;
+  width: 5px;
+  height: 10px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  margin: -1px -1px 0 -1px;
+  transform: rotate(45deg) translate(-50%, -50%);
+  z-index: 2;
 }
 @media (max-width: 1440px) {
   .details h2 {
@@ -605,6 +649,10 @@ select {
 
   .ticket_detail h3 {
     font-size: 35px;
+  }
+
+  .filters {
+    padding: 25px 20px;
   }
 }
 
@@ -718,6 +766,27 @@ select {
 
   .cart_description {
     margin-top: 25px;
+  }
+
+  .dateFields,
+  .locationInputs,
+  .searchDiv {
+    flex-direction: column;
+  }
+
+  .locationInputs input,
+  select {
+    width: 100%;
+  }
+
+  .locationSearch,
+  .locationFields,
+  .dateRange {
+    width: 100%;
+  }
+
+  .dateFields input {
+    width: 100%;
   }
 }
 
