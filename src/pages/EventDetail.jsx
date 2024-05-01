@@ -4,21 +4,22 @@ import Eventliset from "../components/EventList";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import styles from "../components/events.module.css";
+import LoadingBar from "react-top-loading-bar";
 import moment from "moment";
-
 
 const URL = "https://bounce.extrasol.co.uk/api/attenders/event-detail";
 
 const EventDetail = () => {
   const { eventId } = useParams();
-  // console.log("Event ID:", eventId);
   const [event, setEvent] = useState(null);
+  const [loadingComplete, setLoadingComplete] = useState(false);
 
   useEffect(() => {
-    // Fetch event details based on eventId
     const fetchEventDetails = async () => {
       try {
-        const response = await fetch(`${URL}/${eventId}`); // Corrected URL construction
+        const response = await fetch(
+          `https://bounce.extrasol.co.uk/api/attenders/event-detail/${eventId}`
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch event details");
         }
@@ -26,19 +27,22 @@ const EventDetail = () => {
         setEvent(eventData.data);
       } catch (error) {
         console.error("Error fetching event details:", error);
+      } finally {
+        setLoadingComplete(true);
       }
     };
 
     fetchEventDetails();
-
-    // Cleanup function
-    return () => {
-      // Cleanup code if needed
-    };
   }, [eventId]);
 
   if (!event) {
-    return <div>Loading...</div>;
+    return (
+      <LoadingBar
+        color="#7e79ff"
+        height={3}
+        progress={loadingComplete ? 100 : 0}
+      />
+    );
   }
 
   // Assuming $setting and $item are objects with properties org_commission and price respectively
