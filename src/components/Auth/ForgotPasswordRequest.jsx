@@ -62,7 +62,7 @@ const ForgotPasswordRequest = () => {
                 Start attending incredible club nights, festivals and live music
                 events near you by signing up for a free account today.
               </p>
-              <a href="#">Back to login</a>
+              <a href="/login">Back to login</a>
             </div>
           </div>
         </div>
@@ -72,12 +72,12 @@ const ForgotPasswordRequest = () => {
               <p className={styles.terms}>
                 <a href="#">Terms </a> | <a href="#">Privacy</a>
               </p>
-              <a href="#" className={styles.createAccount}>
+              <a href="/login" className={styles.createAccount}>
                 Back to login
               </a>
             </div>
             <div className={styles.secondLogo}>
-              <a href="#">
+              <a href="/">
                 <img src="images/whiteLogo.svg" alt="" />
               </a>
             </div>

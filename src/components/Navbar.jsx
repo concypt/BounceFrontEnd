@@ -11,7 +11,7 @@ function Navbar() {
 
   useEffect(() => {
     // Check user's login status when component mounts
-    const userToken = localStorage.getItem("token"); // Assuming you store the token in localStorage
+    const userToken = localStorage.getItem("token");
     if (userToken) {
       setLoggedIn(true);
     }
@@ -55,6 +55,9 @@ function Navbar() {
           </ul>
           <div className={styles.host_and_signin}>
             <button className={styles.global_button_one}>Host an event</button>
+            {/* <a href="/login" className={styles.loginBtn}>
+              Sign In
+            </a> */}
             {loggedIn ? (
               <a href="/dashboard" className={styles.loginBtn}>
                 Dashboard

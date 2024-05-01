@@ -39,6 +39,9 @@ const LoginPage = () => {
         return;
       }
 
+      // Store the token in local storage
+      localStorage.setItem("token", responseData.data.token);
+
       // Login successful
       setSuccess(true);
       setError(null);
@@ -48,11 +51,12 @@ const LoginPage = () => {
         navigate("/verification", {
           state: { token: responseData.data.token },
         });
-        return;
+      } else {
+        // Redirect to dashboard or desired page
+        setTimeout(() => {
+          navigate("/dashboard");
+        }, 2000); // Redirect to dashboard page
       }
-
-      // Redirect to dashboard or desired page
-      navigate("/");
     } catch (error) {
       setError("An error occurred. Please try again later.");
       setSuccess(false);

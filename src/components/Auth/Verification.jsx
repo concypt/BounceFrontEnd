@@ -18,7 +18,7 @@ const OTPVerificationPage = () => {
     const token = location.state && location.state.token;
     if (!token) {
       // Handle case when token is not available
-      // navigate("/login"); // Redirect to login page
+      navigate("/login"); // Redirect to login page
     }
     console.log("token=>" + token);
   }, [location, navigate]);
@@ -61,6 +61,14 @@ const OTPVerificationPage = () => {
       // OTP verification successful
       setVerificationStatus("success");
 
+      // Clear the token from local storage
+      localStorage.removeItem("token");
+
+      // Redirect after 2 seconds only if verification is successful
+      const redirectTimer = setTimeout(() => {
+        navigate("/login"); // Redirect to home page
+      }, 3000);
+
       // Clean up timer to prevent memory leaks
       return () => clearTimeout(redirectTimer);
     } catch (error) {
@@ -73,19 +81,6 @@ const OTPVerificationPage = () => {
       setLoading(false);
     }
   };
-
-  // Redirect only when verification is successful
-  useEffect(() => {
-    if (verificationStatus === "success") {
-      // Redirect after 2 seconds only if verification is successful
-      const redirectTimer = setTimeout(() => {
-        navigate("/"); // Redirect to home page
-      }, 2000);
-
-      // Clean up timer to prevent memory leaks
-      return () => clearTimeout(redirectTimer);
-    }
-  }, [verificationStatus, navigate]);
 
   const handleResendOTP = async () => {
     // Clear previous errors
