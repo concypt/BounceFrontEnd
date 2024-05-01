@@ -9,7 +9,7 @@ import Verification from "./components/Auth/Verification";
 import Login from "./components/Auth/Login";
 import ForgotPasswordRequest from "./components/Auth/ForgotPasswordRequest";
 import ForgotPasswordReset from "./components/Auth/ForgotPasswordReset";
-import HostProfile from "./components/Dashboard/HostProfile";
+import HostProfile from "./components/HostProfile";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import LoadingBar from "react-top-loading-bar";
 import "./styles.css";

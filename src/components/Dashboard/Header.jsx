@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./sidebar.module.css"; // Assuming you have a CSS module for styling
+import styles from "./header.module.css"; // Assuming you have a CSS module for styling
 
 const Header = () => {
   const navigate = useNavigate();

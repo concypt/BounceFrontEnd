@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Dashboard/Header";
 import Sidebar from "../../components/Dashboard/Sidebar";
-import Footer from "../../components/Footer";
+import "./primaryStyles.css";
 
 function Dashboard() {
   const navigate = useNavigate(); // Import useNavigate
@@ -17,12 +17,11 @@ function Dashboard() {
   }, [navigate]);
 
   return (
-    <div>
+    <div className="dashboard">
       {/* Add your components here */}
       <Header />
       <Sidebar />
       {/* Render EventList component with the events data */}
-      <Footer />
     </div>
   );
 }

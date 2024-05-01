@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../Navbar";
-import Footer from "../Footer";
-import EventCard from "../EventCard";
-import styles from "./dashboard.module.css";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
+import EventCard from "./EventCard";
+import styles from "./hostProfile.module.css";
 
-const URL = "https://bounce.extrasol.co.uk/api/host/profile/21";
+const URL = "https://bounce.extrasol.co.uk/api/host/profile/3";
 
 const HostProfile = ({ limit }) => {
   const [profile, setProfile] = useState(null);
