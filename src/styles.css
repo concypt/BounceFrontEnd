@@ -783,7 +783,6 @@ li.answer {
   display: none;
 }
 
-
 @media screen and (max-width: 1440px) {
   .promote_div {
     gap: 60px;
@@ -955,6 +954,7 @@ li.answer {
 
   .header_div {
     padding-top: 210px !important;
+    padding: 0 20px;
   }
 
   .question {
@@ -987,10 +987,20 @@ li.answer {
 
   .accordion_section {
     padding-top: 130px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .promote_section {
+    padding: 80px 20px;
   }
 
   .faqs {
     margin-bottom: 40px;
+  }
+
+  .slider_section {
+    padding: 80px 20px;
   }
 }
 
@@ -1065,12 +1075,10 @@ li.answer {
   }
 
   .slider_section {
-    padding: 80px 30px;
     padding-bottom: 0;
   }
 
   .promote_section {
-    padding: 80px 30px;
     padding-bottom: 0;
   }
 

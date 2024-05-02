@@ -16,18 +16,18 @@ const Sidebar = () => {
   return (
     <div className={`${styles.sidebar} ${showMenu ? styles.showMenu : ""}`}>
       <div className={styles.logo}>
-        <img src="/images/dashboard/logo.svg" alt="Logo" />
+        <img src="/images/dashboard/dash-logo.svg" alt="Logo" />
       </div>
       <ul className={styles.links}>
         <li>
-          <a href="#">Link 1</a>
+          <a href="#">Attend</a>
         </li>
         <li>
-          <a href="#">Link 2</a>
+          <a href="#">Promote</a>
         </li>
         <li>
           <a href="#" onClick={toggleSublinks}>
-            Link 3
+            Host
           </a>
           <ul
             className={`${styles.sublinks} ${
@@ -35,13 +35,10 @@ const Sidebar = () => {
             }`}
           >
             <li>
-              <a href="#">Sublink 1</a>
+              <a href="#">Events</a>
             </li>
             <li>
-              <a href="#">Sublink 2</a>
-            </li>
-            <li>
-              <a href="#">Sublink 3</a>
+              <a href="#">Marketing</a>
             </li>
           </ul>
         </li>

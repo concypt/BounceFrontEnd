@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "../../components/Dashboard/Header";
 import Sidebar from "../../components/Dashboard/Sidebar";
 import "./primaryStyles.css";
+import "./comonStyles.css";
 
 function Dashboard() {
   const navigate = useNavigate(); // Import useNavigate

@@ -1,0 +1,16 @@
+* {
+  font-family: var(--primary-font);
+}
+
+.dashboard {
+  background-image: url(images/dashboard/gradient.jpg);
+  height: 100vh;
+  padding-left: 280px;
+  background-position: center;
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    padding-left: 100px;
+  }
+}

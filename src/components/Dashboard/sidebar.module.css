@@ -4,17 +4,19 @@
 }
 
 .sidebar {
-  width: 250px;
+  width: 280px;
   height: 100%;
   position: fixed;
   top: 0;
   left: 0;
-  background-color: #333;
+  background-color: transparent;
   padding: 20px;
   display: flex;
   flex-direction: column;
   transition: transform 0.3s ease;
   z-index: 1000; /* Ensure sidebar appears above other content */
+  padding: 40px 60px;
+  padding-right: 0;
 }
 
 .logo {
@@ -23,28 +25,37 @@
 
 .logo img {
   width: 100%;
-  max-width: 150px;
+  max-width: 236px;
 }
 
 .links {
   list-style-type: none;
   padding: 0;
+  margin-top: 50px;
 }
 
 .links li {
-  margin-bottom: 10px;
+  margin-bottom: 30px;
 }
 
 .links li a {
-  color: #fff;
+  color: #c5c5ff;
   text-decoration: none;
+  font-size: 24px;
+  font-weight: 600;
+  transition: 0.5s;
+}
+
+.links li a:hover {
+  color: #827dff;
 }
 
 .sublinks {
   list-style-type: none;
   padding: 0;
-  margin-top: 10px;
+  margin-top: 20px;
   display: none;
+  padding-left: 30px;
 }
 
 .sublinks.showSublinks {
@@ -56,7 +67,7 @@
 }
 
 .sublinks li a {
-  color: #ccc;
+  color: #c5c5ff;
   text-decoration: none;
 }
 
@@ -81,7 +92,10 @@
 
 @media (max-width: 768px) {
   .sidebar {
-    width: 70px;
+    width: 100px;
+    padding-left: 5px;
+    padding-right: 5px;
+    background: #7e79ff;
   }
 
   .showMenu .links {
@@ -90,11 +104,25 @@
 
   .showMenu .sublinks {
     display: block;
+    padding-left: 10px;
   }
 
   .hamburger {
     display: flex;
+    flex-direction: column;
     justify-content: flex-end;
     margin-bottom: 10px;
+  }
+  .links li a {
+    font-size: 16px;
+  }
+  .links li a:hover {
+    color: #fff;
+  }
+  .line {
+    margin: 2px 0;
+  }
+  .links li {
+    margin-bottom: 15px;
   }
 }
