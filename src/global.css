@@ -2,6 +2,30 @@
   background: #fff;
 }
 
+/* Override the default SweetAlert success icon color */
+.swal2-icon.swal2-success .swal2-success-ring {
+  border: 2px solid #7e79ff;
+}
+
+.swal2-icon.swal2-success [class^="swal2-success-line"] {
+  background-color: #7e79ff;
+}
+
+.swal2-icon.swal2-success.swal2-icon-show {
+  border-color: #7e79ff;
+  color: #7e79ff;
+}
+
+/* Override the default SweetAlert loading circle color */
+.swal2-icon.swal2-loading .swal2-loading-spinner {
+  border-top-color: #7e79ff; /* Change the border color */
+}
+
+/* Override the default SweetAlert success icon right circular line color */
+.swal2-icon.swal2-success .swal2-success-circular-line-right {
+  background-color: #7e79ff; /* Change the color */
+}
+
 .new-animated-preloader {
   display: flex;
   justify-content: center;

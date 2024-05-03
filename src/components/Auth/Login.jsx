@@ -53,9 +53,20 @@ const LoginPage = () => {
         });
       } else {
         // Redirect to dashboard or desired page
-        setTimeout(() => {
-          navigate("/dashboard");
-        }, 2000); // Redirect to dashboard page
+        const redirectEventPage = localStorage.getItem("redirectEventPage");
+        if (redirectEventPage) {
+          // Clear the stored URL
+          localStorage.removeItem("redirectEventPage");
+          // Navigate the user back to the original page
+          setTimeout(() => {
+            navigate(redirectEventPage);
+          }, 2000); // Redirect to follow
+        } else {
+          // If there's no stored URL, navigate the user to the default page
+          setTimeout(() => {
+            navigate("/dashboard");
+          }, 2000); // Redirect to dashboard page
+        }
       }
     } catch (error) {
       setError("An error occurred. Please try again later.");
