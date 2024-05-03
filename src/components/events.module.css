@@ -551,6 +551,7 @@ select {
   transform: rotate(45deg) translate(-50%, -50%);
   z-index: 2;
 }
+
 @media (max-width: 1440px) {
   .details h2 {
     font-size: 42px;

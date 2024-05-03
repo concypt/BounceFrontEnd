@@ -783,6 +783,10 @@ li.answer {
   display: none;
 }
 
+span.rdrYearPicker {
+  display: none;
+}
+
 @media screen and (max-width: 1440px) {
   .promote_div {
     gap: 60px;
