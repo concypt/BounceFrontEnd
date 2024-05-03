@@ -1,6 +1,9 @@
 .header {
   padding: 40px 100px;
   text-align: right;
+  position: fixed;
+  right: 0;
+  width: 100%;
 }
 
 .headerProfile {
@@ -105,5 +108,4 @@
   .header {
     padding: 30px 30px;
   }
-
 }

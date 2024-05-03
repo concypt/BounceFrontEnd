@@ -5,7 +5,8 @@
 .dashboard {
   background-image: url(images/dashboard/gradient.jpg);
   height: 100vh;
-  padding-left: 280px;
+  /* padding-left:  280px;
+  padding-right: 70px; */
   background-position: center;
 }
 
