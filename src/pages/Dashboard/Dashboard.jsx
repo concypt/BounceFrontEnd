@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Dashboard/Header";
 import Sidebar from "../../components/Dashboard/Sidebar";
@@ -7,6 +7,9 @@ import "./comonStyles.css";
 
 function Dashboard() {
   const navigate = useNavigate(); // Import useNavigate
+  const [showToast, setShowToast] = useState(false);
+  const fileInputRef = useRef(null);
+  const toast = document.getElementById("toast");
 
   useEffect(() => {
     // Check if token exists in local storage
@@ -16,6 +19,27 @@ function Dashboard() {
       navigate("/login");
     }
   }, [navigate]);
+
+  useEffect(() => {
+    function handleImageLoad() {
+      setShowToast(true);
+    }
+
+    const img = document.getElementById("img-preview");
+    if (img) {
+      img.addEventListener("load", handleImageLoad);
+    }
+
+    return () => {
+      if (img) {
+        img.removeEventListener("load", handleImageLoad);
+      }
+    };
+  }, []);
+
+  const handleFileInputChange = (e) => {
+    // Handle file input change here
+  };
 
   return (
     <div className="dashboard">
@@ -33,7 +57,7 @@ function Dashboard() {
             <input type="radio" id="button-2" name="tab" />
             <input type="radio" id="button-3" name="tab" />
             <input type="radio" id="button-4" name="tab" />
-            <ul>
+            <ul id="menu">
               <li>
                 <label htmlFor="button-1">Details</label>
               </li>
@@ -52,7 +76,23 @@ function Dashboard() {
               <div id="content">
                 <div id="tab-1">
                   <div className="left">
-                    <img src="images/base.svg" alt="" className="baseImg" />
+                    <div className="placeImg">
+                      <input
+                        id="file-input"
+                        type="file"
+                        ref={fileInputRef}
+                        onChange={handleFileInputChange}
+                      />
+                      <label htmlFor="file-input" className="inputImg">
+                        <img
+                          className="baseImg"
+                          id="img-preview"
+                          src="images/base.svg"
+                          alt=""
+                        />
+                      </label>
+                      {showToast && <div id="toast">Image Uploaded</div>}
+                    </div>
                     <div className="twoFields">
                       <div className="inputFields">
                         <input

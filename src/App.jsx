@@ -15,6 +15,7 @@ import LoadingBar from "react-top-loading-bar";
 import "./styles.css";
 import "./global.css";
 import "./js/main.js";
+import "./js/custom.js";
 
 function App() {
   const [loadingComplete, setLoadingComplete] = useState(false);

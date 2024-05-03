@@ -143,7 +143,7 @@ function Events() {
                   {showDatePicker && (
                     <DateRangePicker
                       onChange={handleDateRangeChange}
-                      months={2}
+                      months={1} // Display only one month per tab
                       ranges={dateRange}
                       direction="horizontal"
                       editableDateInputs={false}
