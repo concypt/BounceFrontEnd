@@ -40,7 +40,10 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/verification" element={<Verification />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/host-profile" element={<HostProfile />} />
+          <Route
+            path="/host-profile/:organisationId"
+            element={<HostProfile />}
+          />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route
             path="/forgot-password-request"
