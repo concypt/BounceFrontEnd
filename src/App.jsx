@@ -9,12 +9,13 @@ import Verification from "./components/Auth/Verification";
 import Login from "./components/Auth/Login";
 import ForgotPasswordRequest from "./components/Auth/ForgotPasswordRequest";
 import ForgotPasswordReset from "./components/Auth/ForgotPasswordReset";
-import HostProfile from "./components/Dashboard/HostProfile";
+import HostProfile from "./components/HostProfile";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import LoadingBar from "react-top-loading-bar";
 import "./styles.css";
 import "./global.css";
 import "./js/main.js";
+import "./js/custom.js";
 
 function App() {
   const [loadingComplete, setLoadingComplete] = useState(false);
@@ -40,7 +41,10 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/verification" element={<Verification />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/host-profile" element={<HostProfile />} />
+          <Route
+            path="/host-profile/:organisationId"
+            element={<HostProfile />}
+          />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route
             path="/forgot-password-request"

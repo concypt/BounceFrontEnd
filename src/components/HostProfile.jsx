@@ -1,20 +1,31 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../Navbar";
-import Footer from "../Footer";
-import EventCard from "../EventCard";
-import styles from "./dashboard.module.css";
+import { useParams, useLocation } from "react-router-dom";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
+import EventCard from "./EventCard";
+import styles from "./hostProfile.module.css";
+import LoadingBar from "react-top-loading-bar";
 
-const URL = "https://bounce.extrasol.co.uk/api/host/profile/21";
+const URL = "https://bounce.extrasol.co.uk/api/host/profile";
 
 const HostProfile = ({ limit }) => {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [loadingComplete, setLoadingComplete] = useState(false);
+  const { organisationId } = useParams();
+
+  // Get the location object using useLocation hook
+  const location = useLocation();
+  // Access the state object from location
+  const isFollowing = location.state && location.state.isFollowing;
+  // const { isFollowing } = location.state || {};
+  console.log("isFollowing:", isFollowing);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(URL);
+        const response = await fetch(`${URL}/${organisationId}`);
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
@@ -38,7 +49,11 @@ const HostProfile = ({ limit }) => {
   return (
     <div>
       {loading ? (
-        <div className="loading">Loading...</div>
+        <LoadingBar
+          color="#7e79ff"
+          height={3}
+          progress={loadingComplete ? 100 : 0}
+        />
       ) : error ? (
         <div className="error">{error}</div>
       ) : !profile ? (
@@ -80,11 +95,10 @@ const HostProfile = ({ limit }) => {
                     </div>
                     <div className="header_btn">
                       <a
-                        href="#"
+                        href="/"
                         className={`global_button_one ${styles.followBtn}`}
                       >
-                        {" "}
-                        <span>Follow</span>
+                        <span>{isFollowing ? "Unfollow" : "Follow"}</span>
                       </a>
                     </div>
                     <p className={styles.hostText}>

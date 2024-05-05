@@ -352,6 +352,7 @@ button.global_button_one:hover::after {
 @media screen and (max-width: 576px) {
   .navMenu {
     width: 122%;
+    max-width: unset;
   }
 }
 
