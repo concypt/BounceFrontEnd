@@ -207,8 +207,8 @@ button.global_button_one:hover::after {
   }
 
   .navMenu {
-    /* width: calc(100% - 140px - 250px - 30px); */
-    max-width: 270px;
+    width: calc(100% - 140px - 250px - 30px);
+    max-width: none;
   }
 
   .navbar {
@@ -223,7 +223,7 @@ button.global_button_one:hover::after {
   .loginBtn::after {
     width: 9px;
     height: 12px;
-    top: 6px;
+    top: 8px;
     right: -15px;
   }
 }
@@ -416,7 +416,7 @@ button.global_button_one:hover::after {
   }
 
   .loginBtn::after {
-    top: 4px;
+    top: 5px;
     right: -11px;
   }
 }
