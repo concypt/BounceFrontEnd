@@ -3,6 +3,7 @@ import { useParams, useLocation } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import EventCard from "./EventCard";
+import FollowUnfollowBtn from "./FollowUnfollowBtn";
 import styles from "./hostProfile.module.css";
 import LoadingBar from "react-top-loading-bar";
 
@@ -14,13 +15,6 @@ const HostProfile = ({ limit }) => {
   const [error, setError] = useState(null);
   const [loadingComplete, setLoadingComplete] = useState(false);
   const { organisationId } = useParams();
-
-  // Get the location object using useLocation hook
-  const location = useLocation();
-  // Access the state object from location
-  const isFollowing = location.state && location.state.isFollowing;
-  // const { isFollowing } = location.state || {};
-  console.log("isFollowing:", isFollowing);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,7 +70,7 @@ const HostProfile = ({ limit }) => {
                   <div className="col-lg-6">
                     <h2>About</h2>
                     <p className={styles.hostText}>
-                      Here is a bio about GVO Events.
+                      {profile.bio ? profile.bio : "No bio found..."}
                     </p>
                   </div>
                   <div className="col-lg-6">
@@ -93,14 +87,15 @@ const HostProfile = ({ limit }) => {
                         </div>
                       </div>
                     </div>
-                    <div className="header_btn">
+                    {/* <div className="header_btn">
                       <a
                         href="/"
                         className={`global_button_one ${styles.followBtn}`}
                       >
-                        <span>{isFollowing ? "Unfollow" : "Follow"}</span>
+                        <span>{isFollowing ? "Follow" : "Unfollow"}</span>
                       </a>
-                    </div>
+                    </div> */}
+                    <FollowUnfollowBtn />
                     <p className={styles.hostText}>
                       Follow to receive the latest updates and new event
                       announcements by email!

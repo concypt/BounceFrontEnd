@@ -49,8 +49,6 @@ function Events() {
   // Function to handle form submission
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Perform filtering based on selected categories and date range
-    // You can implement filtering logic here or call a separate function
   };
 
   // Function to toggle date picker visibility
@@ -111,8 +109,8 @@ function Events() {
                     <img src="images/location_grey.svg" alt="" />
                     <input type="search" name="" />
                   </div>
-                  <select name="cars" id="cars">
-                    <option value="" disabled selected>
+                  <select name="cars" id="cars" defaultValue="">
+                    <option value="" disabled>
                       Within 40 miles
                     </option>
                     <option value="saab">Saab</option>
