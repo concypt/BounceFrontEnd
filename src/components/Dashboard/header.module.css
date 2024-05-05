@@ -81,11 +81,14 @@
 }
 
 .dropdownMenu li a {
+  gap: 6px;
   font-size: 16px;
   color: #4f4b5c;
   text-decoration: none;
   font-weight: 600;
   line-height: normal;
+  display: flex;
+  align-items: center;
 }
 
 .dropdownMenu img {

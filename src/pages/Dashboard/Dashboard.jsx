@@ -2,8 +2,8 @@ import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Dashboard/Header";
 import Sidebar from "../../components/Dashboard/Sidebar";
-import "./primaryStyles.css";
-import "./comonStyles.css";
+import "./styles/primaryStyles.css";
+import "./styles/comonStyles.css";
 
 function Dashboard() {
   const navigate = useNavigate(); // Import useNavigate
@@ -77,6 +77,7 @@ function Dashboard() {
                 <div id="tab-1">
                   <div className="left">
                     <div className="placeImg">
+                      
                       <input
                         id="file-input"
                         type="file"

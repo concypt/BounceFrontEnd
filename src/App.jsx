@@ -11,6 +11,8 @@ import ForgotPasswordRequest from "./components/Auth/ForgotPasswordRequest";
 import ForgotPasswordReset from "./components/Auth/ForgotPasswordReset";
 import HostProfile from "./components/HostProfile";
 import Dashboard from "./pages/Dashboard/Dashboard";
+import Host from "./pages/Dashboard/Host";
+import Event from "./pages/Dashboard/Event";
 import LoadingBar from "react-top-loading-bar";
 import "./styles.css";
 import "./global.css";
@@ -54,6 +56,8 @@ function App() {
             path="/forgot-password-reset"
             element={<ForgotPasswordReset />}
           />
+          <Route path="/dashboard-host" element={<Host />} />
+          <Route path="/dashboard-event" element={<Event />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>

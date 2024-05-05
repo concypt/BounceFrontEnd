@@ -46,7 +46,32 @@
   transition: 0.5s;
 }
 
+.links li a::after {
+  content: "";
+  position: absolute;
+  height: 45px;
+  width: 13px;
+  color: #827dff;
+  background-color: #a6a5ff;
+  left: -20px;
+  transition: 0.5s;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
 .links li a:hover {
+  color: #827dff;
+}
+
+.links li a:hover::after {
+  left: 0;
+}
+
+.links li a:active::after {
+  left: 0;
+}
+
+.links li a:active {
   color: #827dff;
 }
 
@@ -175,6 +200,7 @@
     border: none;
     top: -9px;
     right: 9px;
+    color: #827dff;
   }
 }
 
