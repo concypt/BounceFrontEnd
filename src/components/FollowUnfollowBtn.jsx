@@ -152,6 +152,7 @@ const FollowUnfollowBtn = ({ organisationId }) => {
           onClick={handleFollow}
         >
           <span>{isFollowingState ? "Unfollow" : "Follow"}</span>
+          <div></div>
         </button>
       </div>
     </>
