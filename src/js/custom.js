@@ -25,17 +25,18 @@ $(document).ready(function () {
   });
 
   const fileInput = document.getElementById("file-input");
-  console.log(fileInput);
   const imagePreview = document.getElementById("img-preview");
   const toast = document.getElementById("toast");
-
-  fileInput.addEventListener("change", (e) => {
-    if (e.target.files.length) {
-      const src = URL.createObjectURL(e.target.files[0]);
-      imagePreview.src = src;
-      showToast();
-    }
-  });
+  //fileInput exists on page run
+  if (fileInput) {
+    fileInput.addEventListener("change", (e) => {
+      if (e.target.files.length) {
+        const src = URL.createObjectURL(e.target.files[0]);
+        imagePreview.src = src;
+        showToast();
+      }
+    });
+  }
 
   function showToast() {
     toast.classList.add("show");
