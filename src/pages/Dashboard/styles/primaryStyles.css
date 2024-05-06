@@ -17,10 +17,12 @@
   margin-right: 60px;
 }
 
-.tabSection h2 {
+.tabs h2 {
+  font-family: var(--secondary-font);
   font-size: 36px;
   margin: 0;
   color: #000;
+  font-weight: 600;
 }
 
 /* main tabs */
@@ -330,6 +332,81 @@ input[type="radio"] {
   width: 110px;
 }
 
+/* Host Page */
+
+.hostSection {
+  font-family: var(--secondary-font);
+  background: #fff;
+  padding: 40px 50px;
+  border-radius: 32px;
+  width: 100%;
+  max-width: 805px;
+  text-align: center;
+}
+
+.inputTextarea textarea {
+  margin-top: 51px;
+  font-size: 14px;
+  color: #4f4b5c;
+  padding: 10px;
+  border-radius: 8px;
+  border-color: #d9d8dc;
+  width: 100%;
+  height: 128px;
+}
+
+.lefFields {
+  width: 100%;
+  max-width: 320px;
+}
+
+.inputTextarea {
+  width: 100%;
+}
+
+.lefFields label {
+  --primary-font: "Outfit", sans-serif;
+  font-size: 14px;
+  color: #3d4a5c;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.lefFields .inputFields {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.lefFields .comapanyName {
+  padding: 0 14px;
+}
+
+.hostSection .twoFields {
+  display: flex;
+}
+
+.lefFields .inputFields img {
+  bottom: 14px;
+}
+
+.lefFields .inputFields {
+  margin-top: 11px;
+}
+
+.lefFields {
+  margin-top: 15px;
+}
+
+.hostSection .loginButton {
+  margin-top: 27px;
+  width: 100%;
+}
+
+@media (max-width: 1600px) {
+  .hostSection {
+    margin-right: 40px;
+  }
+}
 @media (max-width: 992px) {
   .tabSection {
     padding: 30px;
@@ -339,6 +416,13 @@ input[type="radio"] {
   }
   .tabSection {
     margin-top: 40px;
+  }
+  .hostSection .twoFields {
+    flex-wrap: wrap;
+  }
+  .lefFields {
+    width: 100%;
+    max-width: 100%;
   }
 }
 
@@ -357,6 +441,9 @@ input[type="radio"] {
     display: grid;
     grid-template-columns: auto auto;
     column-gap: 15px;
+  }
+  .hostSection {
+    margin-right: 0px;
   }
 }
 
@@ -391,5 +478,14 @@ input[type="radio"] {
   .baseImg {
     width: 90px;
     height: 90px;
+  }
+  .tabSection {
+    padding: 30px 20px;
+  }
+  .hostSection {
+    padding: 30px 20px;
+  }
+  .tabs h2 {
+    font-size: 26px;
   }
 }

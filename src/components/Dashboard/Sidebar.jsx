@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import styles from "./sidebar.module.css"; // Import module CSS
+import styles from "./sidebar.module.css";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -26,7 +27,9 @@ const Sidebar = () => {
       </div>
       <div className={`${styles.sidebar} ${showSidebar ? styles.active : ""}`}>
         <div className={styles.logo}>
-          <img src="/images/dashboard/dash-logo.svg" alt="Logo" />
+          <a href="/">
+            <img src="/images/dashboard/dash-logo.svg" alt="Logo" />
+          </a>
         </div>
         <button className={styles.closeBtn} onClick={closeSidebar}>
           &times; {/* Display a cross character */}
@@ -39,16 +42,18 @@ const Sidebar = () => {
             <a href="#">Promote</a>
           </li>
           <li>
-            <a href="#" onClick={toggleSublinks}>
+            <Link to={`/dashboard-host`} onClick={toggleSublinks}>
               Host
-            </a>
+            </Link>
             <ul
               className={`${styles.sublinks} ${
                 showSublinks ? styles.showSublinks : ""
               }`}
             >
               <li>
-                <a href="#">Events</a>
+                <Link to={`/dashboard-event`}>
+                  <a href="#">Events</a>
+                </Link>
               </li>
               <li>
                 <a href="#">Marketing</a>

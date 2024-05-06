@@ -1,6 +1,6 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import styles from "./header.module.css"; // Assuming you have a CSS module for styling
+import { Link, useNavigate } from "react-router-dom";
+import styles from "./header.module.css";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -26,8 +26,10 @@ const Header = () => {
         <img src="images/base.svg" alt="" />
         <ul className={`${styles.dropdownMenu} ${styles.dropdownMenu1}`}>
           <li>
-            <img src="images/dashboard/dashboardProfile.svg" alt="" />
-            <a href="#">Profile</a>
+            <Link to={`/dashboard`}>
+              <img src="images/dashboard/dashboardProfile.svg" alt="" />
+              <a href="">Profile</a>
+            </Link>
           </li>
           <li>
             <img src="images/dashboard/dashboardSetting.svg" alt="" />
