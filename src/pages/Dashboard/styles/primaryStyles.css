@@ -365,7 +365,7 @@ input[type="radio"] {
 }
 
 .lefFields label {
-  --primary-font: "Outfit", sans-serif;
+  font-family: var(--primary-font);
   font-size: 14px;
   color: #3d4a5c;
   font-weight: 500;
@@ -402,9 +402,128 @@ input[type="radio"] {
   width: 100%;
 }
 
+/* DataTables */
+
+.dataTables {
+  padding-left: 300px;
+  padding-right: 70px;
+  display: flex;
+  justify-content: space-between;
+  gap: 38px;
+  margin-top: 30px;
+}
+
+.tableOne {
+  background: #fff;
+  border: 1px solid #d8d8d8;
+  border-radius: 32px;
+  padding: 20px 35px;
+  width: 100%;
+}
+
+.tableOne .searchBar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.dataTables h2 {
+  font-family: var(--secondary-font);
+  font-size: 26px;
+  font-weight: 700;
+  color: #000;
+}
+
+.tableOne .searchBar input {
+  height: 40px;
+  width: 100%;
+  max-width: 261px;
+  background: #ececed;
+  border-radius: 8px;
+  border: none;
+  padding: 0 20px;
+}
+
+.tableOne .searchBar input::placeholder {
+  font-size: 14px;
+  font-weight: 500;
+  color: #4f4b5c;
+}
+
+.secondActionsDiv {
+  width: 100%;
+  max-width: 657px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.actionDiv {
+  background-image: url(images/action.png);
+  width: 100%;
+  background-size: cover;
+  border-radius: 32px;
+  text-align: center;
+  padding: 50px;
+}
+
+.earningsDiv {
+  font-family: var(--secondary-font);
+  background: #fff;
+  border-radius: 32px;
+  padding: 20px 50px;
+}
+
+.actionDiv .loginButton {
+  margin: 0 auto;
+  margin-top: 40px;
+  width: 257px;
+}
+
+.earningMain {
+  display: flex;
+  gap: 100px;
+  margin-top: 50px;
+  justify-content: center;
+}
+
+.earningMain p {
+  font-family: var(--secondary-font);
+  font-size: 18px;
+  color: #b9b9b9;
+  font-weight: 600;
+}
+
+.earningMain h3 {
+  font-family: var(--secondary-font);
+  font-size: 48px;
+  color: var(--linear-gradient-border);
+  background: var(--linear-gradient-border);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+}
+
 @media (max-width: 1600px) {
   .hostSection {
     margin-right: 40px;
+  }
+  .dataTables {
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 1440px) {
+  .dataTables {
+    flex-wrap: wrap;
+    padding-right: 30px;
+  }
+  .secondActionsDiv {
+    max-width: 100%;
+  }
+  .earningMain {
+   flex-wrap: wrap;
+   gap: 30px;
   }
 }
 @media (max-width: 992px) {
@@ -424,9 +543,15 @@ input[type="radio"] {
     width: 100%;
     max-width: 100%;
   }
+  .dataTables {
+    padding-right: 20px;
+  }
 }
 
 @media (max-width: 768px) {
+  .dataTables {
+    padding-right: 0px;
+  }
   .tabSection {
     margin-top: 40px;
     margin-right: 0;
