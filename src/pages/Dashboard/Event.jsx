@@ -5,17 +5,15 @@ import Sidebar from "../../components/Dashboard/Sidebar";
 import "./styles/primaryStyles.css";
 import "./styles/comonStyles.css";
 
-
 function EventDashboard() {
   return (
     <div className="dashboard">
       <div>
         <Header />
+        Mus
         <Sidebar />
       </div>
     </div>
   );
 }
 export default EventDashboard;
-
-
