@@ -33,13 +33,7 @@ $(document).ready(function () {
       if (e.target.files.length) {
         const src = URL.createObjectURL(e.target.files[0]);
         imagePreview.src = src;
-        showToast();
       }
     });
-  }
-
-  function showToast() {
-    toast.classList.add("show");
-    setTimeout(() => toast.classList.remove("show"), 3000);
   }
 });

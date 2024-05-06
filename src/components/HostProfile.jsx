@@ -87,15 +87,7 @@ const HostProfile = ({ limit }) => {
                         </div>
                       </div>
                     </div>
-                    {/* <div className="header_btn">
-                      <a
-                        href="/"
-                        className={`global_button_one ${styles.followBtn}`}
-                      >
-                        <span>{isFollowing ? "Follow" : "Unfollow"}</span>
-                      </a>
-                    </div> */}
-                    <FollowUnfollowBtn />
+                    <FollowUnfollowBtn organisationId={profile.id} />
                     <p className={styles.hostText}>
                       Follow to receive the latest updates and new event
                       announcements by email!
