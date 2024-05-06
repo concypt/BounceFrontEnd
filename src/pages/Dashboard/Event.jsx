@@ -10,6 +10,7 @@ function EventDashboard() {
     <div className="dashboard">
       <div>
         <Header />
+        sdsdf
         <Sidebar />
       </div>
     </div>
