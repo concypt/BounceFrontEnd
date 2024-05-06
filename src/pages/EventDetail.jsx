@@ -107,7 +107,7 @@ const EventDetail = () => {
                       <p>{event.organisation.followers.length} followers</p>
                     </div>
                   </div>
-                  <FollowUnfollowBtn />
+                  <FollowUnfollowBtn organisationId={event.organisation.id} />
                 </div>
                 <div className={styles.cart_description}>
                   <p className={styles.event_date}>

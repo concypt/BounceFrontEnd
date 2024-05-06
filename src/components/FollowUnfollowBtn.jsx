@@ -5,20 +5,16 @@ import LoadingBar from "react-top-loading-bar";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
-const FollowUnfollowBtn = () => {
-  const { eventId } = useParams();
+const FollowUnfollowBtn = ({ organisationId }) => {
+  // Accept organisationId as prop
   const navigate = useNavigate();
 
   const [event, setEvent] = useState(null);
   const [loadingComplete, setLoadingComplete] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isFollowingState, setIsFollowingState] = useState(null);
-  const { organisationId } = useParams();
   const location = useLocation();
   const token = localStorage.getItem("token");
-
-  console.log("eventID=>" + eventId);
-  console.log("organization=>" + organisationId);
 
   useEffect(() => {
     const fetchDataAndStoreArray = async () => {
@@ -45,7 +41,7 @@ const FollowUnfollowBtn = () => {
         console.log("Array stored in local storage:", followingArray);
 
         // Now that we have stored the array, let's update isFollowingState
-        const isFollowing = followingArray.includes(event?.organisation?.id);
+        const isFollowing = followingArray.includes(organisationId);
         setIsFollowingState(isFollowing);
       } catch (error) {
         console.error("Error fetching data and storing array:", error);
@@ -53,35 +49,37 @@ const FollowUnfollowBtn = () => {
     };
 
     fetchDataAndStoreArray();
-  }, [token, event?.organisation?.id]); // Ensure the effect runs whenever token or event.organisation.id changes
+  }, [token, organisationId]); // Ensure the effect runs whenever token or organisationId changes
 
   useEffect(() => {
-    if (eventId) {
+    if (organisationId) {
+      // Ensure organisationId is defined before fetching event details
       const fetchEventDetails = async () => {
         try {
           const response = await fetch(
-            `https://bounce.extrasol.co.uk/api/attenders/event-detail/${eventId}`
+            `https://bounce.extrasol.co.uk/api/host/profile/${organisationId}`
           );
 
           if (!response.ok) {
-            throw new Error("Failed to fetch event details");
+            throw new Error("Failed to fetch organisation details");
           }
 
           const eventData = await response.json();
           setEvent(eventData.data);
         } catch (error) {
-          console.error("Error fetching event details:", error);
+          console.error("Error fetching organisation details:", error);
         } finally {
           setLoadingComplete(true);
         }
       };
+
       fetchEventDetails();
     }
 
     if (token) {
       setIsLoggedIn(true);
     }
-  }, [eventId, token]);
+  }, [organisationId, token]);
 
   const toggleFollow = async (organizationId) => {
     try {
@@ -108,7 +106,7 @@ const FollowUnfollowBtn = () => {
 
   const handleFollow = () => {
     if (isLoggedIn) {
-      toggleFollow(event.organisation.id)
+      toggleFollow(organisationId)
         .then(() => {
           setIsFollowingState((prev) => !prev);
           Swal.fire({
@@ -152,7 +150,6 @@ const FollowUnfollowBtn = () => {
         <button
           className={`${styles.follow_btn} bgGlobalBtn borderGlobalBtn`}
           onClick={handleFollow}
-          disabled={!isLoggedIn || loadingComplete} // Disable button if not logged in or still loading
         >
           <span>{isFollowingState ? "Unfollow" : "Follow"}</span>
         </button>
