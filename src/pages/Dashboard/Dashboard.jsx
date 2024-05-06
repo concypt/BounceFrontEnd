@@ -9,7 +9,6 @@ function Dashboard() {
   const navigate = useNavigate(); // Import useNavigate
   const [showToast, setShowToast] = useState(false);
   const fileInputRef = useRef(null);
-  const toast = document.getElementById("toast");
 
   useEffect(() => {
     // Check if token exists in local storage
@@ -77,7 +76,6 @@ function Dashboard() {
                 <div id="tab-1">
                   <div className="left">
                     <div className="placeImg">
-                      
                       <input
                         id="file-input"
                         type="file"

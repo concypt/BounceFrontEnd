@@ -38,7 +38,7 @@ const FollowUnfollowBtn = ({ organisationId }) => {
         const responseData = await response.json();
         const followingArray = responseData.data.following;
         localStorage.setItem("storedArray", JSON.stringify(followingArray));
-        console.log("Array stored in local storage:", followingArray);
+        // console.log("Array stored in local storage:", followingArray);
 
         // Now that we have stored the array, let's update isFollowingState
         const isFollowing = followingArray.includes(organisationId);
@@ -49,7 +49,7 @@ const FollowUnfollowBtn = ({ organisationId }) => {
     };
 
     fetchDataAndStoreArray();
-  }, [token, organisationId]); // Ensure the effect runs whenever token or organisationId changes
+  }, [token, organisationId]);
 
   useEffect(() => {
     if (organisationId) {
@@ -146,13 +146,12 @@ const FollowUnfollowBtn = ({ organisationId }) => {
 
   return (
     <>
-      <div className={styles.follow_div}>
+      <div className="header_btn">
         <button
-          className={`${styles.follow_btn} bgGlobalBtn borderGlobalBtn`}
+          className={`global_button_one ${styles.followBtn}`}
           onClick={handleFollow}
         >
           <span>{isFollowingState ? "Unfollow" : "Follow"}</span>
-          <div></div>
         </button>
       </div>
     </>

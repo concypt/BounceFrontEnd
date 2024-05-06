@@ -36,10 +36,10 @@ const Sidebar = () => {
         </button>
         <ul className={styles.links}>
           <li>
-            <a href="#">Attend</a>
+            <Link to="">Attend</Link>
           </li>
           <li>
-            <a href="#">Promote</a>
+            <Link to="">Promote</Link>
           </li>
           <li>
             <Link to={`/dashboard-host`} onClick={toggleSublinks}>
@@ -51,12 +51,10 @@ const Sidebar = () => {
               }`}
             >
               <li>
-                <Link to={`/dashboard-event`}>
-                  <a href="#">Events</a>
-                </Link>
+                <Link to={`/dashboard-event`}>Events</Link>
               </li>
               <li>
-                <a href="#">Marketing</a>
+                <Link to="">Marketing</Link>
               </li>
             </ul>
           </li>
