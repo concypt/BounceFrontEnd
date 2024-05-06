@@ -13,7 +13,7 @@ import { Navigation, Pagination, Mousewheel, Keyboard } from "swiper/modules";
 
 export default function PartySlider() {
   return (
-    <Reveal width="100%" delay="0.9">
+    <Reveal width="100%" delay="0.2">
       <div className={styles.partyImagesWrapper}>
         <div className={styles.partyImagesContainer}>
           <div className={styles.partyImages}>

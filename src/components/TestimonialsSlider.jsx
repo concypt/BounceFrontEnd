@@ -18,7 +18,7 @@ export default function TestimonialsSlider() {
       <Swiper
         cssMode={true}
         navigation={true}
-        pagination={true}
+        pagination={false}
         mousewheel={true}
         keyboard={true}
         modules={[Navigation, Pagination, Mousewheel, Keyboard]}
@@ -35,17 +35,18 @@ export default function TestimonialsSlider() {
                 <img src="images/star.svg" alt="" />
               </div>
               <p>
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse varius enim in eros elementum tristique. Duis
-                cursus, mi quis viverra ornare, eros dolor interdum nulla, ut
-                commodo diam libero vitae erat."
+                "Bounce truly delivers an electrifying experience! The platform
+                seamlessly connects event hosts with eager attendees, fostering
+                an atmosphere of inclusivity and excitement. As an avid
+                event-goer, I've discovered some of the most thrilling live
+                music events through Bounce. Highly recommended!"
               </p>
               <div className="sliderlast_div">
                 <div className="name_div">
                   <img src="images/blank.png " alt="" />
                   <div className="slider_text">
-                    <h6>Name Surname</h6>
-                    <p>Position, Company name</p>
+                    <h6>Sarah Johnson</h6>
+                    <p>Marketing Manager, Groove Productions</p>
                   </div>
                   <div className="webflow_img">
                     <img src="images/webflow.svg" alt="" />
@@ -66,17 +67,17 @@ export default function TestimonialsSlider() {
                 <img src="images/star.svg" alt="" />
               </div>
               <p>
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse varius enim in eros elementum tristique. Duis
-                cursus, mi quis viverra ornare, eros dolor interdum nulla, ut
-                commodo diam libero vitae erat."
+                "Bounce has revolutionized the way we engage with our audience.
+                As a host, I've found their platform to be intuitive and
+                effective in reaching a diverse demographic. It's been a
+                game-changer for us!"
               </p>
               <div className="sliderlast_div">
                 <div className="name_div">
                   <img src="images/blank.png " alt="" />
                   <div className="slider_text">
-                    <h6>Name Surname</h6>
-                    <p>Position, Company name</p>
+                    <h6>David White</h6>
+                    <p>Events Coordinator, Vibe Events</p>
                   </div>
                   <div className="webflow_img">
                     <img src="images/webflow.svg" alt="" />
@@ -97,79 +98,18 @@ export default function TestimonialsSlider() {
                 <img src="images/star.svg" alt="" />
               </div>
               <p>
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse varius enim in eros elementum tristique. Duis
-                cursus, mi quis viverra ornare, eros dolor interdum nulla, ut
-                commodo diam libero vitae erat."
+                "I've had the pleasure of attending numerous events through
+                Bounce, and each one has exceeded my expectations. The
+                user-friendly interface makes it easy to discover and book
+                tickets, and I've never been disappointed. Kudos to the Bounce
+                team for creating such a dynamic platform!"
               </p>
               <div className="sliderlast_div">
                 <div className="name_div">
                   <img src="images/blank.png " alt="" />
                   <div className="slider_text">
-                    <h6>Name Surname</h6>
-                    <p>Position, Company name</p>
-                  </div>
-                  <div className="webflow_img">
-                    <img src="images/webflow.svg" alt="" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="swiper_slide">
-            <div className="slider_content">
-              <div className="stars">
-                <img src="images/star.svg" alt="" />
-                <img src="images/star.svg" alt="" />
-                <img src="images/star.svg" alt="" />
-                <img src="images/star.svg" alt="" />
-                <img src="images/star.svg" alt="" />
-              </div>
-              <p>
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse varius enim in eros elementum tristique. Duis
-                cursus, mi quis viverra ornare, eros dolor interdum nulla, ut
-                commodo diam libero vitae erat."
-              </p>
-              <div className="sliderlast_div">
-                <div className="name_div">
-                  <img src="images/blank.png " alt="" />
-                  <div className="slider_text">
-                    <h6>Name Surname</h6>
-                    <p>Position, Company name</p>
-                  </div>
-                  <div className="webflow_img">
-                    <img src="images/webflow.svg" alt="" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="swiper_slide">
-            <div className="slider_content">
-              <div className="stars">
-                <img src="images/star.svg" alt="" />
-                <img src="images/star.svg" alt="" />
-                <img src="images/star.svg" alt="" />
-                <img src="images/star.svg" alt="" />
-                <img src="images/star.svg" alt="" />
-              </div>
-              <p>
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse varius enim in eros elementum tristique. Duis
-                cursus, mi quis viverra ornare, eros dolor interdum nulla, ut
-                commodo diam libero vitae erat."
-              </p>
-              <div className="sliderlast_div">
-                <div className="name_div">
-                  <img src="images/blank.png " alt="" />
-                  <div className="slider_text">
-                    <h6>Name Surname</h6>
-                    <p>Position, Company name</p>
+                    <h6>Emily Patel</h6>
+                    <p>Creative Director, Pulse Entertainment Group</p>
                   </div>
                   <div className="webflow_img">
                     <img src="images/webflow.svg" alt="" />

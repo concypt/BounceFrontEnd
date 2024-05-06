@@ -84,7 +84,7 @@ const Footer = () => {
           </div>
           <div className={styles.last_footer}>
             <div className={styles.copyright}>
-              <p>© 2023 Relume. All rights reserved.</p>
+              <p>© 2023 Bounce. All rights reserved.</p>
               <div className={styles.footer_links}>
                 <a href="#">Privacy Policy</a>
                 <a href="#">Terms of Service</a>

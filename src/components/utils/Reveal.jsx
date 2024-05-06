@@ -13,9 +13,12 @@ function Reveal({
   duration = "0.25",
   // eslint-disable-next-line react/prop-types
   y = 75,
+  // eslint-disable-next-line react/prop-types
+  amount = 0.35,
 }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
+
+  const isInView = useInView(ref, { once: true, amount: Number(amount) });
 
   const mainControls = useAnimation();
 

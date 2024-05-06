@@ -48,41 +48,37 @@ function Home() {
             </Reveal>
           </div>
         </div>
-
         <PartySlider />
       </div>
 
       <div className="event_div">
-        <Reveal width="100%" delay=".5">
+        <Reveal width="100%" delay=".2" amount="1">
           <div className="event_heading">
             <h2>Featured Events</h2>
           </div>
         </Reveal>
-        <Reveal width="100%" delay="1.5">
+        <Reveal width="100%" delay="0.2">
           <div className="home_events">
             <EventList limit={3} />
           </div>
         </Reveal>
       </div>
-
-      <div className="slider_section">
-        <Reveal width="100%" delay=".9">
+      <Reveal width="100%" delay="0.2" amount="0.75">
+        <div className="slider_section">
           <div className="swiper_div">
             <TestimonialsSlider />
           </div>
-        </Reveal>
-      </div>
-      <div className="promote_section">
-        <div className="promote_div">
-          <Reveal delay=".9">
+        </div>
+      </Reveal>
+      <Reveal width="100%" delay="0.2" amount="0.5">
+        <div className="promote_section">
+          <div className="promote_div">
             <img src="images/promote_img.png" alt="" />
-          </Reveal>
-          <div className="promote_content">
-            <Reveal delay="1">
+
+            <div className="promote_content">
               <h2>Promote events. Get paid</h2>
-            </Reveal>
-            <div className="checks">
-              <Reveal width="100%" delay="1">
+
+              <div className="checks">
                 <div className="promote_checks">
                   <img src="images/tick.svg" alt="" />
                   <p>
@@ -91,8 +87,7 @@ function Home() {
                     event.
                   </p>
                 </div>
-              </Reveal>
-              <Reveal width="100%" delay="1.1">
+
                 <div className="promote_checks">
                   <img src="images/tick.svg" alt="" />
                   <p>
@@ -101,8 +96,7 @@ function Home() {
                     small portion of their ticket sale!
                   </p>
                 </div>
-              </Reveal>
-              <Reveal width="100%" delay="1.2">
+
                 <div className="promote_checks">
                   <img src="images/tick.svg" alt="" />
                   <p>
@@ -110,39 +104,34 @@ function Home() {
                     on Bounce, today.
                   </p>
                 </div>
-              </Reveal>
-            </div>
-            <Reveal width="100%" delay="1.2">
+              </div>
+
               <div className="promote_btn">
                 <a href="#" className="global_button_one">
                   {" "}
                   <span>Create an account</span>
                 </a>
               </div>
-            </Reveal>
+            </div>
           </div>
         </div>
-      </div>
-
-      <div className="promote_section promote_second">
-        <div className="promote_div">
-          <Reveal delay=".9">
+      </Reveal>
+      <Reveal width="100%" delay="0.2" amount="0.5">
+        <div className="promote_section promote_second">
+          <div className="promote_div">
             <img src="images/promote_img2.png" alt="" />
-          </Reveal>
-          <div className="promote_content">
-            <Reveal delay="1">
+
+            <div className="promote_content">
               <h2>Sell tickets on Bounce!</h2>
-            </Reveal>
-            <div className="checks">
-              <Reveal delay="1.1">
+
+              <div className="checks">
                 <div className="promote_checks">
                   <img src="images/tick.svg" alt="" />
                   <p>
                     The all in one ticketing platform that keeps i t simple.
                   </p>
                 </div>
-              </Reveal>
-              <Reveal delay="1.2">
+
                 <div className="promote_checks">
                   <img src="images/tick.svg" alt="" />
                   <p>
@@ -151,8 +140,7 @@ function Home() {
                     Bounce.
                   </p>
                 </div>
-              </Reveal>
-              <Reveal delay="1.3">
+
                 <div className="promote_checks">
                   <img src="images/tick.svg" alt="" />
                   <p>
@@ -161,34 +149,31 @@ function Home() {
                     for your event brand.
                   </p>
                 </div>
-              </Reveal>
-            </div>
-            <div className="promote_btn">
-              <Reveal delay="1.4">
+              </div>
+              <div className="promote_btn">
                 <a href="" className="global_button_one">
                   {" "}
                   <span>Discover more</span>
                 </a>
-              </Reveal>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <Reveal delay="1.3">
+      </Reveal>
+      <Reveal delay=".2">
         <div className="promote_section blank_section">
           <div className="promote_div">
             <img src="images/blank.png" className="blank_img" alt="" />
             <div className="blank_grid">
               <div className="grid_block">
-                .
                 <img src="images/block.svg" alt="" />
-                <h3>Short heading here</h3>
+                <h3>Analytics Dashboard</h3>
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Suspendisse varius enim in eros.
+                  Gain instant insights into your sales data with our
+                  comprehensive analytics dashboard.
                 </p>
                 <a href="#">
-                  Button{" "}
+                  Learn more{" "}
                   <img
                     src="images/right_arrow.svg"
                     className="arrow_right"
@@ -197,15 +182,14 @@ function Home() {
                 </a>
               </div>
               <div className="grid_block">
-                .
                 <img src="images/block.svg" alt="" />
-                <h3>Short heading here</h3>
+                <h3>Marketing Tools</h3>
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Suspendisse varius enim in eros.
+                  Effortlessly manage email campaigns and create enticing
+                  discounts to boost event attendance.
                 </p>
                 <a href="#">
-                  Button{" "}
+                  Learn more{" "}
                   <img
                     src="images/right_arrow.svg"
                     className="arrow_right"
@@ -214,15 +198,14 @@ function Home() {
                 </a>
               </div>
               <div className="grid_block">
-                .
                 <img src="images/block.svg" alt="" />
-                <h3>Short heading here</h3>
+                <h3>Event Listings</h3>
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Suspendisse varius enim in eros.
+                  Explore a diverse range of live events, from intimate gigs to
+                  large-scale concerts.
                 </p>
                 <a href="#">
-                  Button{" "}
+                  Learn more{" "}
                   <img
                     src="images/right_arrow.svg"
                     className="arrow_right"
@@ -231,15 +214,14 @@ function Home() {
                 </a>
               </div>
               <div className="grid_block">
-                .
                 <img src="images/block.svg" alt="" />
-                <h3>Short heading here</h3>
+                <h3>Secure Transactions</h3>
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Suspendisse varius enim in eros.
+                  Rest assured with our secure transaction system, ensuring
+                  peace of mind with every ticket purchase.
                 </p>
                 <a href="#">
-                  Button{" "}
+                  Learn more{" "}
                   <img
                     src="images/right_arrow.svg"
                     className="arrow_right"
@@ -253,16 +235,17 @@ function Home() {
       </Reveal>
 
       <div className="accordion_section">
-        <Reveal delay="1.3" width="100%">
+        <Reveal delay=".2" width="100%">
           <div className="faqs">
             <h2>FAQs</h2>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse varius enim in eros elementum tristique.
+              Explore our comprehensive FAQ section where you'll find answers to
+              common questions and detailed information on various aspects of
+              our platform.
             </p>
           </div>
         </Reveal>
-        <Reveal delay="1.6" width="100%">
+        <Reveal delay=".2" width="100%">
           <div className="faq_accordians">
             <ul>
               <div className="accordian_main" id="5">
@@ -348,11 +331,14 @@ function Home() {
             </ul>
           </div>
         </Reveal>
-        <Reveal delay="1.3" width="100%">
+        <Reveal delay=".2" width="100%">
           <div className="faq_content">
             <h3>Still have a question?</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <a href="#" className="global_button_one">
+            <p>
+              Don't hesitate to reach out – we're here to help with any queries
+              you may have.
+            </p>
+            <a href="/contact" className="global_button_one">
               {" "}
               <span>Contact</span>
             </a>
