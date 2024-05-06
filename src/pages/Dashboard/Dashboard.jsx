@@ -2,14 +2,13 @@ import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Dashboard/Header";
 import Sidebar from "../../components/Dashboard/Sidebar";
-import "./primaryStyles.css";
-import "./comonStyles.css";
+import "./styles/primaryStyles.css";
+import "./styles/comonStyles.css";
 
 function Dashboard() {
   const navigate = useNavigate(); // Import useNavigate
   const [showToast, setShowToast] = useState(false);
   const fileInputRef = useRef(null);
-  const toast = document.getElementById("toast");
 
   useEffect(() => {
     // Check if token exists in local storage

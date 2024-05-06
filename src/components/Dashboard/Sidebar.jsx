@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import styles from "./sidebar.module.css"; // Import module CSS
+import styles from "./sidebar.module.css";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -26,32 +27,34 @@ const Sidebar = () => {
       </div>
       <div className={`${styles.sidebar} ${showSidebar ? styles.active : ""}`}>
         <div className={styles.logo}>
-          <img src="/images/dashboard/dash-logo.svg" alt="Logo" />
+          <a href="/">
+            <img src="/images/dashboard/dash-logo.svg" alt="Logo" />
+          </a>
         </div>
         <button className={styles.closeBtn} onClick={closeSidebar}>
           &times; {/* Display a cross character */}
         </button>
         <ul className={styles.links}>
           <li>
-            <a href="#">Attend</a>
+            <Link to="">Attend</Link>
           </li>
           <li>
-            <a href="#">Promote</a>
+            <Link to="">Promote</Link>
           </li>
           <li>
-            <a href="#" onClick={toggleSublinks}>
+            <Link to={`/dashboard-host`} onClick={toggleSublinks}>
               Host
-            </a>
+            </Link>
             <ul
               className={`${styles.sublinks} ${
                 showSublinks ? styles.showSublinks : ""
               }`}
             >
               <li>
-                <a href="#">Events</a>
+                <Link to={`/dashboard-event`}>Events</Link>
               </li>
               <li>
-                <a href="#">Marketing</a>
+                <Link to="">Marketing</Link>
               </li>
             </ul>
           </li>
