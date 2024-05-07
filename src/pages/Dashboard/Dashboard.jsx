@@ -7,21 +7,31 @@ import "./styles/comonStyles.css";
 
 function Dashboard() {
   const navigate = useNavigate(); // Import useNavigate
-  const [showToast, setShowToast] = useState(false);
   const fileInputRef = useRef(null);
+  const token = localStorage.getItem("token");
+  const fname = localStorage.getItem("fname");
+  const lname = localStorage.getItem("lname");
+  const phoneNumber = localStorage.getItem("phoneNumber");
+  const userImage = localStorage.getItem("userImage");
 
   useEffect(() => {
     // Check if token exists in local storage
-    const token = localStorage.getItem("token");
     if (!token) {
       // Token doesn't exist, redirect to login page
       navigate("/login");
     }
   }, [navigate]);
 
+  const [formData, setFormData] = useState({
+    first_name: "",
+    last_name: "",
+    phone: "",
+    image: null, // New field for storing the selected image
+  });
+
   useEffect(() => {
     function handleImageLoad() {
-      setShowToast(true);
+      console.log("Image loaded");
     }
 
     const img = document.getElementById("img-preview");
@@ -37,7 +47,134 @@ function Dashboard() {
   }, []);
 
   const handleFileInputChange = (e) => {
-    // Handle file input change here
+    const file = e.target.files[0];
+    if (file) {
+      setFormData((prevState) => ({
+        ...prevState,
+        image: file,
+      }));
+
+      // Display image preview
+      const reader = new FileReader();
+      reader.onload = () => {
+        const img = document.getElementById("img-preview");
+        if (img) {
+          img.src = reader.result;
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleProfileInfoUpdate = async () => {
+    try {
+      // Make a POST request to the API endpoint for updating profile info
+      const response = await fetch(
+        "https://bounce.extrasol.co.uk/api/user/edit-profile",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify({
+            first_name: formData.first_name,
+            last_name: formData.last_name,
+            phone: formData.phone,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      console.log("Profile information updated successfully:", response.data);
+    } catch (error) {
+      console.error("Error updating profile information:", error.message);
+    }
+  };
+
+  const handleImageUpload = async () => {
+    try {
+      const formDataToSend = new FormData();
+      formDataToSend.append("image", formData.image);
+
+      const response = await fetch(
+        "https://bounce.extrasol.co.uk/api/user/change-profile-image",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: formDataToSend,
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      // Extract the new image path from the response data
+      const responseData = await response.json();
+      const newImagePath = responseData.imagePath;
+
+      // Store the new image path in local storage
+      // localStorage.setItem("userImage", newImagePath);
+
+      // console.log("Image uploaded successfully:", responseData);
+
+      // return newImagePath;
+    } catch (error) {
+      console.error("Error uploading image:", error.message);
+      throw error; // Rethrow the error to handle it in the handleSubmit function
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent the default form submission behavior
+
+    // Check if either profile information or image is updated
+    const isProfileInfoUpdated =
+      formData.first_name || formData.last_name || formData.phone;
+    const isImageUpdated = formData.image;
+
+    // If neither profile information nor image is updated, do not proceed with submission
+    if (!isProfileInfoUpdated && !isImageUpdated) {
+      console.log("No changes to submit");
+      return;
+    }
+
+    try {
+      let newImagePath = null;
+      if (isImageUpdated) {
+        // newImagePath = await handleImageUpload(); // Upload the new image and get the new path
+        // console.log("new image" + newImagePath);
+        // localStorage.setItem("userImage", newImagePath);
+      }
+      if (isProfileInfoUpdated) {
+        await handleProfileInfoUpdate(); // Update profile information
+        localStorage.setItem("fname", formData.first_name);
+        localStorage.setItem("lname", formData.last_name);
+        localStorage.setItem("phoneNumber", formData.phone);
+      }
+
+      // Clear the file input field
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    } catch (error) {
+      console.error("Error submitting changes:", error.message);
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
   return (
@@ -86,85 +223,50 @@ function Dashboard() {
                         <img
                           className="baseImg"
                           id="img-preview"
-                          src="images/base.svg"
+                          src={
+                            formData.image
+                              ? URL.createObjectURL(formData.image)
+                              : userImage || "images/base.svg"
+                          }
                           alt=""
                         />
                       </label>
-                      {showToast && <div id="toast">Image Uploaded</div>}
+                      <div id="toast">Image Uploaded</div>
                     </div>
-                    <div className="twoFields">
-                      <div className="inputFields">
-                        <input
-                          type="text"
-                          name="first_name"
-                          // value={formData.first_name}
-                          // onChange={handleChange}
-                          required
-                          placeholder="First Name"
-                        />
-                        <img
-                          src="images/name.svg"
-                          className="inputImgs"
-                          alt=""
-                        />
+                    <form onSubmit={handleSubmit}>
+                      <div className="twoFields">
+                        <div className="inputFields">
+                          <input
+                            type="text"
+                            name="first_name"
+                            value={formData.first_name}
+                            onChange={handleChange}
+                            placeholder={fname}
+                          />
+                        </div>
+                        <div className="inputFields">
+                          <input
+                            type="text"
+                            name="last_name"
+                            value={formData.last_name}
+                            onChange={handleChange}
+                            placeholder={lname}
+                          />
+                        </div>
+                        <div className="inputFields">
+                          <input
+                            type="tel"
+                            name="phone"
+                            value={formData.phone}
+                            onChange={handleChange}
+                            placeholder={phoneNumber}
+                          />
+                        </div>
                       </div>
-                      <div className="inputFields">
-                        <input
-                          type="text"
-                          name="last_name"
-                          // value={formData.last_name}
-                          // onChange={handleChange}
-                          required
-                          placeholder="Last Name"
-                        />
-                        <img
-                          src="images/name.svg"
-                          className="inputImgs"
-                          alt=""
-                        />
-                      </div>
-                      <div className="inputFields">
-                        <input
-                          type="email"
-                          name="email"
-                          // value={formData.email}
-                          // onChange={handleChange}
-                          required
-                          placeholder="Email"
-                        />
-                        <img
-                          src="images/mailIcon.svg"
-                          className="inputImgs"
-                          alt=""
-                        />
-                      </div>
-                      <div className="inputFields">
-                        <input
-                          type="email"
-                          name="email"
-                          // value={formData.email}
-                          // onChange={handleChange}
-                          required
-                          placeholder="Email"
-                        />
-                        <img
-                          src="images/mailIcon.svg"
-                          className="inputImgs"
-                          alt=""
-                        />
-                      </div>
-                    </div>
-                    <button
-                      className="loginButton"
-                      type="submit"
-                      // disabled={isSubmitting} // Disable button when isSubmitting is true
-                    >
-                      {/* {isSubmitting ? (
-                        "Submitting..."
-                      ) : ( */}
-                      <span>Save changes</span>
-                      {/* )} */}
-                    </button>
+                      <button className="loginButton" type="submit">
+                        <span>Save changes</span>
+                      </button>
+                    </form>
                   </div>
                   <div className="right"></div>
                 </div>
@@ -201,16 +303,8 @@ function Dashboard() {
                       popular size at our most affordable price. It’s just what
                       you’ve been waiting for.
                     </p>
-                    <button
-                      className="loginButton"
-                      type="submit"
-                      // disabled={isSubmitting} // Disable button when isSubmitting is true
-                    >
-                      {/* {isSubmitting ? (
-                        "Submitting..."
-                      ) : ( */}
+                    <button className="loginButton" type="submit">
                       <span>Create account</span>
-                      {/* )} */}
                     </button>
                   </div>
                   <div className="right"></div>

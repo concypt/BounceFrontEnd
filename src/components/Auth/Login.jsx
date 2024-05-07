@@ -41,7 +41,13 @@ const LoginPage = () => {
 
       // Store the token in local storage
       localStorage.setItem("token", responseData.data.token);
+      localStorage.setItem("fname", responseData.data.first_name);
+      localStorage.setItem("lname", responseData.data.last_name);
+      localStorage.setItem("phoneNumber", responseData.data.phone);
+      localStorage.setItem("userImage", responseData.data.imagePath);
 
+      const followingArray = responseData.data.following;
+      localStorage.setItem("followingArray", JSON.stringify(followingArray));
       // Login successful
       setSuccess(true);
       setError(null);
