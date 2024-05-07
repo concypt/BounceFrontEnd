@@ -43,33 +43,32 @@ a {
 }
 
 .header_div {
-  padding-top: 250px !important;
+  padding: 0 30px;
+  padding-top: 250px;
   width: 100%;
   max-width: 1273px;
   margin: 0 auto;
   text-align: center;
-  padding: 0 30px;
 }
 
 .header_div h1 {
   font-size: 62px;
   font-family: var(--secondary-font);
-  line-height: 79px;
-  font-weight: 800 !important;
-  text-transform: uppercase;
+  line-height: 124%;
+  font-weight: 700;
   background: -webkit-linear-gradient(
-    -50deg,
-    #98cde4 0%,
-    #bf7fff 50%,
+    0deg,
+    #98cde4 20%,
+    #bf7fff 70%,
     #8482ff 100%
   );
   -webkit-background-clip: text;
-  -webkit-text-stroke: 6px transparent;
-  color: #fff !important;
-  letter-spacing: 4px;
-  text-transform: none;
-  text-shadow: 0px 3px 14px #bf7fff, 0px 7px 24px #8482ff;
+  -webkit-text-stroke: 8px transparent;
+  color: #fff;
+  text-shadow: 0px 3px 12px #bf7fff, 0px 7px 13px #8482ff;
   padding-bottom: 15px;
+  max-width: 80%;
+  margin: 0 auto;
 }
 
 /* global link */
@@ -947,10 +946,6 @@ span.rdrYearPicker {
     font-weight: 600;
   }
 
-  .header {
-    padding-bottom: 100px;
-  }
-
   .navbtn_div {
     width: calc(100vw - 65px);
     display: flex;
@@ -982,10 +977,6 @@ span.rdrYearPicker {
 }
 
 @media screen and (max-width: 567px) {
-  img.img6 {
-    display: none;
-  }
-
   .header_div h1 {
     font-size: 32px;
     line-height: 42px;
