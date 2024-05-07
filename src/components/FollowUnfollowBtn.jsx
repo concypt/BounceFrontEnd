@@ -1,89 +1,33 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styles from "../components/events.module.css";
 import LoadingBar from "react-top-loading-bar";
-import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const FollowUnfollowBtn = ({ organisationId }) => {
-  // Accept organisationId as prop
   const navigate = useNavigate();
-
-  const [event, setEvent] = useState(null);
-  const [loadingComplete, setLoadingComplete] = useState(false);
+  const token = localStorage.getItem("token");
+  const [loading, setLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isFollowingState, setIsFollowingState] = useState(null);
-  const location = useLocation();
-  const token = localStorage.getItem("token");
 
   useEffect(() => {
-    const fetchDataAndStoreArray = async () => {
-      try {
-        const response = await fetch(
-          "https://bounce.extrasol.co.uk/api/user/profile",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
-
-        const responseData = await response.json();
-        const followingArray = responseData.data.following;
-        localStorage.setItem("storedArray", JSON.stringify(followingArray));
-        // console.log("Array stored in local storage:", followingArray);
-
-        // Now that we have stored the array, let's update isFollowingState
-        const isFollowing = followingArray.includes(organisationId);
-        setIsFollowingState(isFollowing);
-      } catch (error) {
-        console.error("Error fetching data and storing array:", error);
-      }
-    };
-
-    fetchDataAndStoreArray();
-  }, [token, organisationId]);
+    // Retrieve the followingArray from local storage
+    const userFollowingArray =
+      JSON.parse(localStorage.getItem("followingArray")) || [];
+    const isFollowing = userFollowingArray.includes(organisationId);
+    setIsFollowingState(isFollowing);
+  }, [organisationId]);
 
   useEffect(() => {
-    if (organisationId) {
-      // Ensure organisationId is defined before fetching event details
-      const fetchEventDetails = async () => {
-        try {
-          const response = await fetch(
-            `https://bounce.extrasol.co.uk/api/host/profile/${organisationId}`
-          );
-
-          if (!response.ok) {
-            throw new Error("Failed to fetch organisation details");
-          }
-
-          const eventData = await response.json();
-          setEvent(eventData.data);
-        } catch (error) {
-          console.error("Error fetching organisation details:", error);
-        } finally {
-          setLoadingComplete(true);
-        }
-      };
-
-      fetchEventDetails();
-    }
-
     if (token) {
       setIsLoggedIn(true);
     }
-  }, [organisationId, token]);
+  }, [token]);
 
-  const toggleFollow = async (organizationId) => {
+  const toggleFollow = async () => {
     try {
-      const url = `https://bounce.extrasol.co.uk/api/user/add-followList/${organizationId}`;
+      const url = `https://bounce.extrasol.co.uk/api/user/add-followList/${organisationId}`;
 
       const response = await fetch(url, {
         method: "GET",
@@ -98,34 +42,44 @@ const FollowUnfollowBtn = ({ organisationId }) => {
         throw new Error("Failed to toggle follow status");
       }
 
-      return Promise.resolve();
+      const userFollowingArray =
+        JSON.parse(localStorage.getItem("followingArray")) || [];
+      const updatedFollowingArray = isFollowingState
+        ? userFollowingArray.filter((id) => id !== organisationId)
+        : [...userFollowingArray, organisationId];
+      localStorage.setItem(
+        "followingArray",
+        JSON.stringify(updatedFollowingArray)
+      );
+
+      return true;
     } catch (error) {
-      return Promise.reject(error);
+      console.error("Toggle follow API error:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+      });
+      return false;
     }
   };
 
   const handleFollow = () => {
     if (isLoggedIn) {
-      toggleFollow(organisationId)
-        .then(() => {
-          setIsFollowingState((prev) => !prev);
+      toggleFollow().then((success) => {
+        if (success) {
+          const message = isFollowingState
+            ? "Unfollowed successfully!"
+            : "Followed successfully!";
           Swal.fire({
             icon: "success",
-            title: !isFollowingState
-              ? "Followed successfully!"
-              : "Unfollowed successfully!",
+            title: message,
             showConfirmButton: false,
             timer: 1500,
           });
-        })
-        .catch((error) => {
-          console.error("Toggle follow API error:", error);
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Something went wrong!",
-          });
-        });
+          setIsFollowingState((prevState) => !prevState); // Update state after successful toggle
+        }
+      });
     } else {
       localStorage.setItem("redirectEventPage", window.location.pathname);
       setTimeout(() => {
@@ -134,27 +88,15 @@ const FollowUnfollowBtn = ({ organisationId }) => {
     }
   };
 
-  if (!event) {
-    return (
-      <LoadingBar
-        color="#7e79ff"
-        height={3}
-        progress={loadingComplete ? 100 : 0}
-      />
-    );
-  }
-
   return (
-    <>
-      <div className="header_btn">
-        <button
-          className={`global_button_one ${styles.followBtn}`}
-          onClick={handleFollow}
-        >
-          <span>{isFollowingState ? "Unfollow" : "Follow"}</span>
-        </button>
-      </div>
-    </>
+    <div className="header_btn">
+      <button
+        className={`global_button_one ${styles.followBtn}`}
+        onClick={handleFollow}
+      >
+        <span>{isFollowingState ? "Unfollow" : "Follow"}</span>
+      </button>
+    </div>
   );
 };
 
