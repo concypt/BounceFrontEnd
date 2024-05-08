@@ -522,8 +522,8 @@ input[type="radio"] {
     max-width: 100%;
   }
   .earningMain {
-   flex-wrap: wrap;
-   gap: 30px;
+    flex-wrap: wrap;
+    gap: 30px;
   }
 }
 @media (max-width: 992px) {
@@ -586,20 +586,23 @@ input[type="radio"] {
   .tabSection ul {
     flex-wrap: wrap;
     justify-content: center;
-    gap: 5px;
+    column-gap: 10px;
   }
-  /* #button-1:checked ~ ul li {
+  #button-1:checked ~ ul li.tab-1-li {
     background-color: #fff;
   }
-  #button-2:checked ~ ul li {
+  #button-2:checked ~ ul li.tab-2-li {
     background-color: #fff;
   }
-  #button-3:checked ~ ul li {
+  #button-3:checked ~ ul li.tab-3-li {
     background-color: #fff;
   }
-  #button-4:checked ~ ul li {
+  #button-4:checked ~ ul li.tab-4-li {
     background-color: #fff;
-  } */
+  }
+  .tabSection ul li {
+    border-radius: 10px;
+  }
   .baseImg {
     width: 90px;
     height: 90px;
@@ -612,5 +615,11 @@ input[type="radio"] {
   }
   .tabs h2 {
     font-size: 26px;
+  }
+}
+
+@media (max-width: 400px) {
+  .tabSection ul li {
+    width: 100%;
   }
 }

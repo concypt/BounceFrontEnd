@@ -4,9 +4,10 @@ import Header from "../../components/Dashboard/Header";
 import Sidebar from "../../components/Dashboard/Sidebar";
 import "./styles/primaryStyles.css";
 import "./styles/comonStyles.css";
+import Swal from "sweetalert2";
 
 function Dashboard() {
-  const navigate = useNavigate(); // Import useNavigate
+  const navigate = useNavigate();
   const fileInputRef = useRef(null);
   const token = localStorage.getItem("token");
   const fname = localStorage.getItem("fname");
@@ -15,18 +16,16 @@ function Dashboard() {
   const userImage = localStorage.getItem("userImage");
 
   useEffect(() => {
-    // Check if token exists in local storage
     if (!token) {
-      // Token doesn't exist, redirect to login page
       navigate("/login");
     }
   }, [navigate]);
 
   const [formData, setFormData] = useState({
-    first_name: "",
-    last_name: "",
-    phone: "",
-    image: null, // New field for storing the selected image
+    first_name: fname,
+    last_name: lname,
+    phone: phoneNumber,
+    image: null,
   });
 
   useEffect(() => {
@@ -68,105 +67,122 @@ function Dashboard() {
 
   const handleProfileInfoUpdate = async () => {
     try {
-      // Make a POST request to the API endpoint for updating profile info
-      const response = await fetch(
-        "https://bounce.extrasol.co.uk/api/user/edit-profile",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          body: JSON.stringify({
-            first_name: formData.first_name,
-            last_name: formData.last_name,
-            phone: formData.phone,
-          }),
-        }
-      );
+      const formDataToSend = new FormData();
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
+      // Append non-empty fields to the form data
+      if (formData.first_name.trim() !== "") {
+        formDataToSend.append("first_name", formData.first_name);
+      }
+      if (formData.last_name.trim() !== "") {
+        formDataToSend.append("last_name", formData.last_name);
+      }
+      if (formData.phone.trim() !== "") {
+        formDataToSend.append("phone", formData.phone);
+      }
+      // Add image data if available
+      if (formData.image) {
+        formDataToSend.append("image", formData.image);
       }
 
-      console.log("Profile information updated successfully:", response.data);
+      // Check if any data is being sent
+      if (
+        formDataToSend.has("first_name") ||
+        formDataToSend.has("last_name") ||
+        formDataToSend.has("phone") ||
+        formDataToSend.has("image")
+      ) {
+        const response = await fetch(
+          "https://bounce.extrasol.co.uk/api/user/edit-profile",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+            body: formDataToSend,
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        console.log("Profile information updated successfully:", response.data);
+      } else {
+        console.log("No data to update");
+      }
     } catch (error) {
       console.error("Error updating profile information:", error.message);
     }
   };
 
-  const handleImageUpload = async () => {
-    try {
-      const formDataToSend = new FormData();
-      formDataToSend.append("image", formData.image);
-
-      const response = await fetch(
-        "https://bounce.extrasol.co.uk/api/user/change-profile-image",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          body: formDataToSend,
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      // Extract the new image path from the response data
-      const responseData = await response.json();
-      const newImagePath = responseData.imagePath;
-
-      // Store the new image path in local storage
-      // localStorage.setItem("userImage", newImagePath);
-
-      // console.log("Image uploaded successfully:", responseData);
-
-      // return newImagePath;
-    } catch (error) {
-      console.error("Error uploading image:", error.message);
-      throw error; // Rethrow the error to handle it in the handleSubmit function
-    }
-  };
-
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent the default form submission behavior
+    e.preventDefault();
 
     // Check if either profile information or image is updated
     const isProfileInfoUpdated =
-      formData.first_name || formData.last_name || formData.phone;
-    const isImageUpdated = formData.image;
+      formData.first_name ||
+      formData.last_name ||
+      formData.phone ||
+      formData.image;
 
-    // If neither profile information nor image is updated, do not proceed with submission
-    if (!isProfileInfoUpdated && !isImageUpdated) {
+    if (!isProfileInfoUpdated) {
       console.log("No changes to submit");
       return;
     }
 
+    const updateMessages = [];
+
     try {
-      let newImagePath = null;
-      if (isImageUpdated) {
-        // newImagePath = await handleImageUpload(); // Upload the new image and get the new path
-        // console.log("new image" + newImagePath);
-        // localStorage.setItem("userImage", newImagePath);
-      }
-      if (isProfileInfoUpdated) {
-        await handleProfileInfoUpdate(); // Update profile information
+      await handleProfileInfoUpdate();
+
+      if (formData.first_name) {
         localStorage.setItem("fname", formData.first_name);
+        updateMessages.push("First name has been updated successfully.");
+      }
+      if (formData.last_name) {
         localStorage.setItem("lname", formData.last_name);
+        updateMessages.push("Last name has been updated successfully.");
+      }
+      if (formData.phone) {
         localStorage.setItem("phoneNumber", formData.phone);
+        updateMessages.push("Phone number has been updated successfully.");
       }
 
-      // Clear the file input field
+      if (formData.image) {
+        // Display image preview
+        const reader = new FileReader();
+        reader.onload = () => {
+          // Store image data in localStorage as data URL
+          localStorage.setItem("userImage", reader.result);
+          updateMessages.push("Profile image has been updated successfully.");
+        };
+        reader.readAsDataURL(formData.image);
+        updateMessages.push("Profile image has been updated successfully.");
+      }
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
+      if (updateMessages.length > 1) {
+        Swal.fire(
+          "Updated!",
+          "Profile information updated successfully",
+          "success"
+        );
+      } else if (updateMessages.length === 1) {
+        Swal.fire("Updated!", updateMessages[0], "success");
+      }
     } catch (error) {
       console.error("Error submitting changes:", error.message);
+      Swal.fire("Error!", "Failed to update profile information.", "error");
     }
+
+    // Clear form data
+    // setFormData({
+    //   first_name: "",
+    //   last_name: "",
+    //   phone: "",
+    //   image: null,
+    // });
   };
 
   const handleChange = (e) => {
@@ -179,12 +195,10 @@ function Dashboard() {
 
   return (
     <div className="dashboard">
-      {/* Add your components here */}
       <div>
         <Header />
         <Sidebar />
       </div>
-      {/* Render EventList component with the events data */}
       <div className="tabs">
         <div className="tabSection">
           <h2>Profile</h2>
@@ -194,16 +208,16 @@ function Dashboard() {
             <input type="radio" id="button-3" name="tab" />
             <input type="radio" id="button-4" name="tab" />
             <ul id="menu">
-              <li>
+              <li className="tab-1-li">
                 <label htmlFor="button-1">Details</label>
               </li>
-              <li>
+              <li className="tab-2-li">
                 <label htmlFor="button-2">Security</label>
               </li>
-              <li>
+              <li className="tab-3-li">
                 <label htmlFor="button-3">Bank Details</label>
               </li>
-              <li>
+              <li className="tab-4-li">
                 <label htmlFor="button-4">Host Profile</label>
               </li>
               <li className="bg"></li>
@@ -241,7 +255,12 @@ function Dashboard() {
                             name="first_name"
                             value={formData.first_name}
                             onChange={handleChange}
-                            placeholder={fname}
+                            placeholder="First Name"
+                          />
+                          <img
+                            src="images/name.svg"
+                            className="inputImgs"
+                            alt=""
                           />
                         </div>
                         <div className="inputFields">
@@ -250,7 +269,12 @@ function Dashboard() {
                             name="last_name"
                             value={formData.last_name}
                             onChange={handleChange}
-                            placeholder={lname}
+                            placeholder="Last Name"
+                          />
+                          <img
+                            src="images/name.svg"
+                            className="inputImgs"
+                            alt=""
                           />
                         </div>
                         <div className="inputFields">
@@ -259,7 +283,12 @@ function Dashboard() {
                             name="phone"
                             value={formData.phone}
                             onChange={handleChange}
-                            placeholder={phoneNumber}
+                            placeholder="Phone Number"
+                          />
+                          <img
+                            src="images/name.svg"
+                            className="inputImgs"
+                            alt=""
                           />
                         </div>
                       </div>

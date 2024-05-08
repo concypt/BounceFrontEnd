@@ -4,7 +4,7 @@
 
 /* Override the default SweetAlert success icon color */
 .swal2-icon.swal2-success .swal2-success-ring {
-  border: 2px solid #7e79ff;
+  border: 5px solid #7e79ff;
 }
 
 .swal2-icon.swal2-success [class^="swal2-success-line"] {
@@ -24,6 +24,15 @@
 /* Override the default SweetAlert success icon right circular line color */
 .swal2-icon.swal2-success .swal2-success-circular-line-right {
   background-color: #7e79ff; /* Change the color */
+}
+
+.swal2-popup.swal2-modal {
+  border-radius: 32px;
+}
+
+button.swal2-confirm.swal2-styled {
+  padding: 10px 40px;
+  border-radius: 22px;
 }
 
 .new-animated-preloader {
