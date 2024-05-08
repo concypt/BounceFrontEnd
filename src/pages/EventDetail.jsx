@@ -24,7 +24,14 @@ const EventDetail = () => {
     const fetchEventDetails = async () => {
       try {
         const response = await fetch(
-          `https://bounce.extrasol.co.uk/api/attenders/event-detail/${eventId}`
+          `https://bounce.extrasol.co.uk/api/attenders/event-detail/${eventId}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              "X-Api-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9",
+            },
+          }
         );
 
         if (!response.ok) {
