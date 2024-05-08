@@ -424,7 +424,7 @@ input[type="radio"] {
   width: 100%;
 }
 
-.tableOne .searchBar {
+.dataTables .searchBar {
   display: flex;
   justify-content: space-between;
   margin-bottom: 30px;
@@ -562,8 +562,18 @@ input[type="radio"] {
   padding: 17px 35px;
 }
 
-.ticketOrders table{
+.ticketOrders table {
   width: 100%;
+}
+
+.ticketOrders .loginButton {
+  margin-top: 0;
+  width: 185px;
+  height: 48px;
+}
+
+.ticketOrders h2{
+  margin-bottom: 0;
 }
 
 @media (max-width: 1600px) {
@@ -587,7 +597,6 @@ input[type="radio"] {
     flex-wrap: wrap;
     gap: 30px;
   }
-
 }
 @media (max-width: 1280px) {
   .tablesGrid {
