@@ -85,8 +85,19 @@ function EventSingle() {
           </div>
           <div className="ticketOrders">
             <div className="searchBar">
-              <h2>Your Events</h2>
-          
+              <h2>Tickets Orders</h2>
+              <button
+                className="loginButton"
+                type="submit"
+                // disabled={isSubmitting} // Disable button when isSubmitting is true
+              >
+                {/* {isSubmitting ? (
+                        "Submitting..."
+                      ) : ( */}
+                <span>Send tickets</span>
+                {/* )} */}
+              </button>
+              <h2>119/200 Available</h2>
             </div>
             <table {...getTableProps()} className="dataTable">
               <thead>
