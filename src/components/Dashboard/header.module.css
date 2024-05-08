@@ -110,11 +110,12 @@
   height: 14px;
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1400px) {
   .header {
-    padding: 30px 60px;
+    padding: 30px 30px;
   }
 }
+
 
 @media (max-width: 768px) {
   .header {

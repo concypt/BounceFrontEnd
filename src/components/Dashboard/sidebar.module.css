@@ -119,6 +119,22 @@
   display: none;
 }
 
+@media (max-width: 1600px) {
+  .sidebar {
+    width: 280px;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: transparent;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease;
+    z-index: 1000; /* Ensure sidebar appears above other content */
+    padding: 40px 30px;
+  }
+}
 @media (max-width: 768px) {
   .sidebar {
     width: 100px;

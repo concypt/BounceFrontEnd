@@ -18,6 +18,7 @@ import "./styles.css";
 import "./global.css";
 import "./js/main.js";
 import "./js/custom.js";
+import EventSingle from "./pages/Dashboard/ViewSingleEvent.jsx";
 
 function App() {
   const [loadingComplete, setLoadingComplete] = useState(false);
@@ -58,6 +59,7 @@ function App() {
           />
           <Route path="/dashboard-host" element={<Host />} />
           <Route path="/dashboard-event" element={<Event />} />
+          <Route path="/dashboard-single-event" element={<EventSingle />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>
