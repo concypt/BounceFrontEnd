@@ -416,19 +416,13 @@ input[type="radio"] {
   gap: 38px;
 }
 
-.tableOne {
-  background: #fff;
-  border: 1px solid #d8d8d8;
-  border-radius: 32px;
-  padding: 20px 35px;
-  width: 100%;
-}
-
 .dataTables .searchBar {
   display: flex;
+  gap: 15px;
   justify-content: space-between;
   margin-bottom: 30px;
   align-items: center;
+  row-gap: 4px;
 }
 
 .dataTables h2 {
@@ -552,6 +546,8 @@ input[type="radio"] {
   padding: 0 40px;
   padding-top: 110px;
   width: 100%;
+  padding-bottom: 30px;
+  border: 1px solid #d8d8d8;
 }
 
 .ticketOrders {
@@ -572,16 +568,120 @@ input[type="radio"] {
   height: 48px;
 }
 
-.ticketOrders h2{
+.ticketOrders h2 {
   margin-bottom: 0;
 }
 
+.cardDescription {
+  margin-top: 20px;
+  font-family: var(--primary-font);
+}
+
+.descriptionImg {
+  width: 27px;
+  height: 27px;
+}
+
+.cardDescription p {
+  font-size: 24px;
+  font-weight: 400;
+  color: #777777;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.singleEventBtn {
+  display: flex;
+  gap: 15px;
+  justify-content: flex-end;
+}
+
+.singleEventBtn {
+  margin-top: 100px;
+}
+
+.singleEventBtn .loginButton {
+  margin-top: 0;
+}
+
+.pagination {
+  justify-content: center;
+  width: 100%;
+  margin-top: 30px;
+}
+
+.promotersMain {
+  display: flex;
+  gap: 38px;
+  margin-top: 38px;
+}
+
+.promotersMain .promotertable {
+  max-width: 100%;
+}
+
+.pagination button {
+  background: #7357ff;
+  color: #fff;
+  padding: 5px 15px;
+  border-radius: 8px;
+}
+
+.dataTables .pagination {
+  align-items: center;
+  gap: 12px;
+}
+
+.singleEventHeader {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.singleEventHeader h2 {
+  margin-bottom: 0;
+}
+
+.marketingGrid .promotersMain {
+  flex-direction: column;
+  width: 100%;
+  max-width: 740px;
+  margin-top: 0;
+}
+
+.marketingGrid .loginButton {
+  width: 277px;
+}
+
+.marketingGrid .searchBar {
+  justify-content: flex-start;
+  gap: 30px;
+}
+
+.marketingSubscriber .searchBar {
+  justify-content: space-between;
+}
+
+.marketingSubscriber .loginButton{
+  width: 220px;
+}
 @media (max-width: 1600px) {
   .hostSection {
     margin-right: 40px;
   }
   .dataTables {
     padding-left: 0;
+  }
+  /* .dataTables h2 {
+    font-size: 22px;
+  } */
+  .dataTables .searchBar {
+    flex-wrap: wrap;
+  }
+  .ticketOrders {
+    max-width: 100%;
   }
 }
 
@@ -600,6 +700,9 @@ input[type="radio"] {
 }
 @media (max-width: 1280px) {
   .tablesGrid {
+    flex-wrap: wrap;
+  }
+  .promotersMain {
     flex-wrap: wrap;
   }
 }
@@ -693,10 +796,55 @@ input[type="radio"] {
   .tabs h2 {
     font-size: 26px;
   }
+  .singleEventBtn {
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 60px;
+  }
+  .cardDescription p {
+    font-size: 19px;
+    gap: 10px;
+  }
+  .singleEvent {
+    padding: 0 20px;
+    padding-top: 60px;
+    padding-bottom: 20px;
+    border-radius: 20px;
+  }
+  .singleEventHeader {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .ticketOrders {
+    padding: 17px 20px;
+    border-radius: 20px;
+  }
+  .dataTables h2 {
+    font-size: 22px;
+  }
+  .dataTables .loginButton {
+    width: 170px;
+    height: 41px;
+  }
+  .dataTables .loginButton span {
+    font-size: 16px;
+  }
+  .tableContent {
+    font-size: 16px;
+    line-height: 130%;
+  }
 }
 
 @media (max-width: 400px) {
   .tabSection ul li {
     width: 100%;
+  }
+  .cardDescription p {
+    font-size: 16px;
+    gap: 5px;
+  }
+  .descriptionImg {
+    width: 20px;
+    height: 20px;
   }
 }

@@ -54,7 +54,7 @@ const Sidebar = () => {
                 <Link to={`/dashboard-event`}>Events</Link>
               </li>
               <li>
-                <Link to="">Marketing</Link>
+                <Link to={`/dashboard-marketing`}>Marketing</Link>
               </li>
             </ul>
           </li>

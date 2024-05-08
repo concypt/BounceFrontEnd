@@ -80,8 +80,64 @@ function EventSingle() {
       <div className="dataTables">
         <div className="tablesGrid">
           <div className="singleEvent">
-            <h2>Miami Part 2</h2>
-            {/* Table */}
+            <div className="singleEventHeader">
+              <h2>Miami Part 2</h2>
+              <a href="#" className="viewAll">
+                <span>View event page </span>
+              </a>
+            </div>
+            <div className="cardDescription">
+              <p className="event_date">
+                <img
+                  src="/images/calender.svg"
+                  className="descriptionImg"
+                  alt=""
+                />{" "}
+                Saturday 23rd March 2024
+              </p>
+              <p>
+                {" "}
+                <img
+                  src="/images/clock_grey.svg"
+                  className="descriptionImg"
+                  alt=""
+                />{" "}
+                5.00 PM
+              </p>
+              <p>
+                {" "}
+                <img
+                  src="/images/location_grey.svg"
+                  className="descriptionImg"
+                  alt=""
+                />{" "}
+                7 Scott Street, London EN12 9GN
+              </p>
+            </div>
+            <div className="singleEventBtn">
+              <button
+                className="loginButton"
+                type="submit"
+                // disabled={isSubmitting} // Disable button when isSubmitting is true
+              >
+                {/* {isSubmitting ? (
+                        "Submitting..."
+                      ) : ( */}
+                <span>Edit event</span>
+                {/* )} */}
+              </button>
+              <button
+                className="loginButton"
+                type="submit"
+                // disabled={isSubmitting} // Disable button when isSubmitting is true
+              >
+                {/* {isSubmitting ? (
+                        "Submitting..."
+                      ) : ( */}
+                <span>Manage tickets</span>
+                {/* )} */}
+              </button>
+            </div>
           </div>
           <div className="ticketOrders">
             <div className="searchBar">
@@ -99,52 +155,166 @@ function EventSingle() {
               </button>
               <h2>119/200 Available</h2>
             </div>
-            <table {...getTableProps()} className="dataTable">
-              <thead>
-                {headerGroups.map((headerGroup) => (
-                  <tr {...headerGroup.getHeaderGroupProps()}>
-                    {headerGroup.headers.map((column) => (
-                      <th {...column.getHeaderProps()}>
-                        {column.render("Header")}
-                      </th>
-                    ))}
-                  </tr>
-                ))}
-              </thead>
-              <tbody {...getTableBodyProps()}>
-                {page.map((row, i) => {
-                  prepareRow(row);
-                  return (
-                    <tr {...row.getRowProps()}>
-                      {row.cells.map((cell) => {
-                        return (
-                          <td {...cell.getCellProps()}>
-                            {cell.render("Cell")}
-                          </td>
-                        );
-                      })}
+            <div className="table-container">
+              <table {...getTableProps()} className="dataTable">
+                <thead>
+                  {headerGroups.map((headerGroup) => (
+                    <tr {...headerGroup.getHeaderGroupProps()}>
+                      {headerGroup.headers.map((column) => (
+                        <th {...column.getHeaderProps()}>
+                          {column.render("Header")}
+                        </th>
+                      ))}
                     </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-            {/* Pagination */}
-            <div className="pagination">
-              <button
-                onClick={() => previousPage()}
-                disabled={!canPreviousPage}
-              >
-                Previous
-              </button>{" "}
-              <span>
-                Page{" "}
-                <strong>
-                  {pageIndex + 1} of {page.length}
-                </strong>{" "}
-              </span>
-              <button onClick={() => nextPage()} disabled={!canNextPage}>
-                Next
-              </button>{" "}
+                  ))}
+                </thead>
+                <tbody {...getTableBodyProps()}>
+                  {page.map((row, i) => {
+                    prepareRow(row);
+                    return (
+                      <tr {...row.getRowProps()}>
+                        {row.cells.map((cell) => {
+                          return (
+                            <td {...cell.getCellProps()}>
+                              {cell.render("Cell")}
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+
+              {/* Pagination */}
+              <div className="pagination">
+                <button
+                  onClick={() => previousPage()}
+                  disabled={!canPreviousPage}
+                >
+                  Previous
+                </button>{" "}
+                <span>
+                  Page{" "}
+                  <strong>
+                    {pageIndex + 1} of {page.length}
+                  </strong>{" "}
+                </span>
+                <button onClick={() => nextPage()} disabled={!canNextPage}>
+                  Next
+                </button>{" "}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="promotersMain">
+          <div className="ticketOrders promotertable">
+            <div className="searchBar">
+              <h2>Promoters</h2>
+            </div>
+            <div className="table-container">
+              <table {...getTableProps()} className="dataTable">
+                <thead>
+                  {headerGroups.map((headerGroup) => (
+                    <tr {...headerGroup.getHeaderGroupProps()}>
+                      {headerGroup.headers.map((column) => (
+                        <th {...column.getHeaderProps()}>
+                          {column.render("Header")}
+                        </th>
+                      ))}
+                    </tr>
+                  ))}
+                </thead>
+                <tbody {...getTableBodyProps()}>
+                  {page.map((row, i) => {
+                    prepareRow(row);
+                    return (
+                      <tr {...row.getRowProps()}>
+                        {row.cells.map((cell) => {
+                          return (
+                            <td {...cell.getCellProps()}>
+                              {cell.render("Cell")}
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+              {/* Pagination */}
+              <div className="pagination">
+                <button
+                  onClick={() => previousPage()}
+                  disabled={!canPreviousPage}
+                >
+                  Previous
+                </button>{" "}
+                <span>
+                  Page{" "}
+                  <strong>
+                    {pageIndex + 1} of {page.length}
+                  </strong>{" "}
+                </span>
+                <button onClick={() => nextPage()} disabled={!canNextPage}>
+                  Next
+                </button>{" "}
+              </div>
+            </div>
+          </div>
+          <div className="ticketOrders">
+            <div className="searchBar">
+              <h2>Refunds</h2>
+            </div>
+            <div className="table-container">
+              <table {...getTableProps()} className="dataTable">
+                <thead>
+                  {headerGroups.map((headerGroup) => (
+                    <tr {...headerGroup.getHeaderGroupProps()}>
+                      {headerGroup.headers.map((column) => (
+                        <th {...column.getHeaderProps()}>
+                          {column.render("Header")}
+                        </th>
+                      ))}
+                    </tr>
+                  ))}
+                </thead>
+                <tbody {...getTableBodyProps()}>
+                  {page.map((row, i) => {
+                    prepareRow(row);
+                    return (
+                      <tr {...row.getRowProps()}>
+                        {row.cells.map((cell) => {
+                          return (
+                            <td {...cell.getCellProps()}>
+                              {cell.render("Cell")}
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+
+              {/* Pagination */}
+              <div className="pagination">
+                <button
+                  onClick={() => previousPage()}
+                  disabled={!canPreviousPage}
+                >
+                  Previous
+                </button>{" "}
+                <span>
+                  Page{" "}
+                  <strong>
+                    {pageIndex + 1} of {page.length}
+                  </strong>{" "}
+                </span>
+                <button onClick={() => nextPage()} disabled={!canNextPage}>
+                  Next
+                </button>{" "}
+              </div>
             </div>
           </div>
         </div>

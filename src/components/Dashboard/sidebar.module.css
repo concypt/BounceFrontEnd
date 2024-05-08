@@ -201,7 +201,7 @@
     display: block;
     position: absolute;
     top: 45px;
-    right: 300px; /* Initially hidden */
+    left: 40px; /* Initially hidden */
   }
 
   .hamburger .line {
@@ -223,7 +223,7 @@
 @media (max-width: 576px) {
   .hamburger {
     top: 42px;
-    right: 250px;
+    left: 30px;
   }
   .sidebar {
     left: -300px;

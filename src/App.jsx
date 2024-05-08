@@ -19,6 +19,7 @@ import "./global.css";
 import "./js/main.js";
 import "./js/custom.js";
 import EventSingle from "./pages/Dashboard/ViewSingleEvent.jsx";
+import Marketing from "./pages/Dashboard/Marketing.jsx";
 
 function App() {
   const [loadingComplete, setLoadingComplete] = useState(false);
@@ -60,6 +61,7 @@ function App() {
           <Route path="/dashboard-host" element={<Host />} />
           <Route path="/dashboard-event" element={<Event />} />
           <Route path="/dashboard-single-event" element={<EventSingle />} />
+          <Route path="/dashboard-marketing" element={<Marketing />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>
