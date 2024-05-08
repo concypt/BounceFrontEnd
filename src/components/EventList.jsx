@@ -13,7 +13,14 @@ const EventList = ({ limit }) => {
     const fetchData = async () => {
       try {
         setProgress(30); // Start loading bar at 30%
-        const response = await fetch(URL);
+        const response = await fetch(URL, {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "X-Api-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9",
+          },
+        });
+
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
@@ -37,18 +44,19 @@ const EventList = ({ limit }) => {
 
   return (
     <div>
-        <div className="container-fluid">
-          <div className={styles.eventsGrid}>
-            {limit
-              ? events
-                  .slice(0, limit)
-                  .map((event, index) => (
-                    <EventCard key={event.id} event={event} />
-                  ))
-              : events.map((event, index) => (
+      <div className="container-fluid">
+        <div className={styles.eventsGrid}>
+          {limit
+            ? events
+                .slice(0, limit)
+                .map((event, index) => (
                   <EventCard key={event.id} event={event} />
-                ))}
-          </div>      </div>
+                ))
+            : events.map((event, index) => (
+                <EventCard key={event.id} event={event} />
+              ))}
+        </div>{" "}
+      </div>
     </div>
   );
 };

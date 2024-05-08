@@ -21,8 +21,14 @@ function Events() {
 
   // Function to fetch categories from API
   useEffect(() => {
-    // Simulate API call
-    fetch("https://bounce.extrasol.co.uk/api/attenders/categories")
+    // Make the fetch request with headers inline
+    fetch("https://bounce.extrasol.co.uk/api/attenders/categories", {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "X-Api-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9",
+      },
+    })
       .then((response) => response.json())
       .then((data) => {
         // Assuming the response contains a 'data' array with category objects
