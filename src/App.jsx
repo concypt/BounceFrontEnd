@@ -22,6 +22,7 @@ import Host from "./pages/Dashboard/Host";
 import Event from "./pages/Dashboard/Event";
 import LoadingBar from "react-top-loading-bar";
 import EventSingle from "./pages/Dashboard/ViewSingleEvent.jsx";
+import Marketing from "./pages/Dashboard/Marketing.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -38,10 +39,12 @@ const router = createBrowserRouter(
         path="/forgot-password-request"
         element={<ForgotPasswordRequest />}
       />
+
       <Route path="/forgot-password-reset" element={<ForgotPasswordReset />} />
       <Route path="/dashboard-host" element={<Host />} />
       <Route path="/dashboard-event" element={<Event />} />
       <Route path="/dashboard-single-event" element={<EventSingle />} />
+      <Route path="/dashboard-marketing" element={<Marketing />} />
       <Route path="*" element={<PageNotFound />} />
     </Route>
   )
