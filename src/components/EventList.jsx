@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import EventCard from "./EventCard";
 import styles from "./events.module.css";
 

@@ -1,15 +1,12 @@
-import React, { useRef, useState } from "react";
 import Reveal from "./utils/Reveal.jsx";
-import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-
 import styles from "./partySlider.module.css";
-
-import { Navigation, Pagination, Mousewheel, Keyboard } from "swiper/modules";
+//images
+import partyImage1 from "../assets/images/party.jpg";
+import partyImage2 from "../assets/images/part2.jpg";
+import partyImage3 from "../assets/images/party3.jpg";
+import partyImage4 from "../assets/images/party4.jpg";
+import partyImage5 from "../assets/images/party5.jpg";
+import partyImage6 from "../assets/images/party6.jpg";
 
 export default function PartySlider() {
   return (
@@ -17,20 +14,68 @@ export default function PartySlider() {
       <div className={styles.partyImagesWrapper}>
         <div className={styles.partyImagesContainer}>
           <div className={styles.partyImages}>
-            <img src="images/party.jpg" className="img1" alt="" />
-            <img src="images/part2.jpg" className="img2" alt="" />
-            <img src="images/party3.jpg" className="img3" alt="" />
-            <img src="images/party4.jpg" className="img4" alt="" />
-            <img src="images/party5.jpg" className="img5" alt="" />
-            <img src="images/party6.jpg" className="img6" alt="" />
+            <img
+              src={partyImage1}
+              className="img1"
+              alt="Picture of party with Bounce"
+            />
+            <img
+              src={partyImage2}
+              className="img2"
+              alt="Picture of party with Bounce"
+            />
+            <img
+              src={partyImage3}
+              className="img3"
+              alt="Picture of party with Bounce"
+            />
+            <img
+              src={partyImage4}
+              className="img4"
+              alt="Picture of party with Bounce"
+            />
+            <img
+              src={partyImage5}
+              className="img5"
+              alt="Picture of party with Bounce"
+            />
+            <img
+              src={partyImage6}
+              className="img6"
+              alt="Picture of party with Bounce"
+            />
           </div>
           <div className={styles.partyImages}>
-            <img src="images/party.jpg" className="img1" alt="" />
-            <img src="images/part2.jpg" className="img2" alt="" />
-            <img src="images/party3.jpg" className="img3" alt="" />
-            <img src="images/party4.jpg" className="img4" alt="" />
-            <img src="images/party5.jpg" className="img5" alt="" />
-            <img src="images/party6.jpg" className="img6" alt="" />
+            <img
+              src={partyImage1}
+              className="img1"
+              alt="Picture of party with Bounce"
+            />
+            <img
+              src={partyImage2}
+              className="img2"
+              alt="Picture of party with Bounce"
+            />
+            <img
+              src={partyImage3}
+              className="img3"
+              alt="Picture of party with Bounce"
+            />
+            <img
+              src={partyImage4}
+              className="img4"
+              alt="Picture of party with Bounce"
+            />
+            <img
+              src={partyImage5}
+              className="img5"
+              alt="Picture of party with Bounce"
+            />
+            <img
+              src={partyImage6}
+              className="img6"
+              alt="Picture of party with Bounce"
+            />
           </div>
         </div>
       </div>

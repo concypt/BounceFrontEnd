@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styles from "./sidebar.module.css";
 import { Link } from "react-router-dom";
+
+//images
+import dashLogoImage from "../../assets/images/dashboard/dash-logo.svg";
 
 const Sidebar = () => {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -28,7 +31,7 @@ const Sidebar = () => {
       <div className={`${styles.sidebar} ${showSidebar ? styles.active : ""}`}>
         <div className={styles.logo}>
           <a href="/">
-            <img src="/images/dashboard/dash-logo.svg" alt="Logo" />
+            <img src={dashLogoImage} alt="Logo" />
           </a>
         </div>
         <button className={styles.closeBtn} onClick={closeSidebar}>

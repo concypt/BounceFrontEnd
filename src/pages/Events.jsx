@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import { useEffect, useState } from "react";
 import styles from "../components/events.module.css";
 import EventList from "../components/EventList";
 import { DateRangePicker } from "react-date-range";
@@ -69,9 +67,7 @@ function Events() {
   };
 
   return (
-    <div>
-      {/* Render Navbar */}
-      <Navbar />
+    <>
       <div className="bounce_bg_circle">
         <div className={styles.filterFrame}>
           <div className={styles.filters}>
@@ -164,9 +160,7 @@ function Events() {
           <EventList className={styles.eventsGrid} />
         </div>
       </div>
-      {/* Render Footer */}
-      <Footer />
-    </div>
+    </>
   );
 }
 

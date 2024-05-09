@@ -1,5 +1,13 @@
-import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import styles from "./footer.module.css";
+
+//images
+import logoImage from "../assets/images/logo.svg";
+import facebookImage from "../assets/images/facebook.svg";
+import instaImage from "../assets/images/insta.svg";
+import twitterImage from "../assets/images/twitter.svg";
+import linkdinImage from "../assets/images/linkdin.svg";
+import youtubeImage from "../assets/images/youtube.svg";
 
 const Footer = () => {
   return (
@@ -9,35 +17,38 @@ const Footer = () => {
           <div className={`row ${styles.footer_row}`}>
             <div className="col-sm-4 col-md-6 col-lg-8">
               <div className={styles.footerdiv_one}>
-                <a href="#" className={styles.logo}>
-                  <img src="../images/logo.svg" alt="" />
-                </a>
+                <Link to="/" className={styles.logo}>
+                  <img src={logoImage} alt="Bounce" />
+                </Link>
                 <div className={styles.address}>
                   <h3>Address:</h3>
                   <p>BOUNCE INC LTD 7 Bell Yard London WC2A 2JR</p>
                 </div>
                 <div className={`${styles.address} ${styles.contact}`}>
                   <h3>Contact:</h3>
-                  <a href="#">1800 123 4567</a>
-                  <a href="#">Info@bounce.live</a>
+                  <Link to="tel:">1800 123 4567</Link>
+                  <Link to="mailto:info@bounce.live">Info@bounce.live</Link>
                 </div>
                 <div className={`${styles.address} ${styles.contact}`}>
                   <div className={styles.social_icons}>
-                    <a href="#">
-                      <img src="../images/facebook.svg" alt="" />
-                    </a>
-                    <a href="#">
-                      <img src="../images/insta.svg" alt="" />
-                    </a>
-                    <a href="#">
-                      <img src="../images/twitter.svg" alt="" />
-                    </a>
-                    <a href="#">
-                      <img src="../images/linkdin.svg" alt="" />
-                    </a>
-                    <a href="#">
-                      <img src="../images/youtube.svg" alt="" />
-                    </a>
+                    <Link to="#">
+                      <img src={facebookImage} alt="Facebook" />
+                    </Link>
+                    <Link
+                      to="https://www.instagram.com/bounce.hub/"
+                      target="blank"
+                    >
+                      <img src={instaImage} alt="instaImage" />
+                    </Link>
+                    <Link to="#">
+                      <img src={twitterImage} alt="Twitter" />
+                    </Link>
+                    <Link to="#">
+                      <img src={linkdinImage} alt="LinkedIn" />
+                    </Link>
+                    <Link to="#">
+                      <img src={youtubeImage} alt="Youtube" />
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -46,19 +57,19 @@ const Footer = () => {
               <div className={styles.list_items}>
                 <ul>
                   <li>
-                    <a href="#">Home</a>
+                    <Link to="/">Home</Link>
                   </li>
                   <li>
-                    <a href="#">Events</a>
+                    <Link to="/events">Events</Link>
                   </li>
                   <li>
-                    <a href="#">Explore Categories</a>
+                    <Link to="#">Explore Categories</Link>
                   </li>
                   <li>
-                    <a href="#">Blog</a>
+                    <Link to="/news">News</Link>
                   </li>
                   <li>
-                    <a href="#">Contact</a>
+                    <Link to="/contact">Contact</Link>
                   </li>
                 </ul>
               </div>
@@ -67,16 +78,16 @@ const Footer = () => {
               <div className={styles.list_items}>
                 <ul>
                   <li>
-                    <a href="#">Privacy Policy</a>
+                    <Link to="#">Privacy Policy</Link>
                   </li>
                   <li>
-                    <a href="#">Terms and Conditions</a>
+                    <Link to="#">Terms and Conditions</Link>
                   </li>
                   <li>
-                    <a href="#">Cookie Policy</a>
+                    <Link to="#">Cookie Policy</Link>
                   </li>
                   <li>
-                    <a href="#">About Us</a>
+                    <Link to="#">About Us</Link>
                   </li>
                 </ul>
               </div>
@@ -86,8 +97,8 @@ const Footer = () => {
             <div className={styles.copyright}>
               <p>© 2023 Bounce. All rights reserved.</p>
               <div className={styles.footer_links}>
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
+                <Link to="/privacy">Privacy Policy</Link>
+                <Link to="/tos">Terms of Service</Link>
               </div>
             </div>
           </div>

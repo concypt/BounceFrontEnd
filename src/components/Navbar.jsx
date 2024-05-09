@@ -1,5 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { Link, NavLink } from "react-router-dom";
+
 import styles from "./navbar.module.css";
+import logo from "../assets/images/logo.svg";
 
 function Navbar() {
   const [isActive, setIsActive] = useState(false);
@@ -17,33 +20,38 @@ function Navbar() {
     }
   }, []);
 
+  const linkClass = ({ isActive }) =>
+    isActive
+      ? `${styles.navLink} ${styles.navLinkActive}`
+      : `${styles.navLink}`;
+
   return (
     <div className="App">
       <header className={styles.App_header}>
         <nav className={styles.navbar}>
-          <a href="/" className={styles.logo}>
-            <img src="../images/logo.svg" alt="" />
-          </a>
+          <Link to="/" className={styles.logo}>
+            <img src={logo} alt="Bounce" />
+          </Link>
           <ul className={`${styles.navMenu} ${isActive ? styles.active : ""}`}>
             <li onClick={() => setIsActive(false)}>
-              <a href="#" className={styles.navLink}>
+              <NavLink to="/about" className={linkClass}>
                 About
-              </a>
+              </NavLink>
             </li>
             <li onClick={() => setIsActive(false)}>
-              <a href="/events" className={styles.navLink}>
+              <NavLink to="/events" className={linkClass}>
                 Browse
-              </a>
+              </NavLink>
             </li>
             <li onClick={() => setIsActive(false)}>
-              <a href="#" className={styles.navLink}>
+              <NavLink to="/new" className={linkClass}>
                 News
-              </a>
+              </NavLink>
             </li>
             <li onClick={() => setIsActive(false)}>
-              <a href="#" className={styles.navLink}>
+              <NavLink to="/contact" className={linkClass}>
                 Contact
-              </a>
+              </NavLink>
             </li>
             <div className="navbtn_div">
               <button
@@ -55,17 +63,17 @@ function Navbar() {
           </ul>
           <div className={styles.host_and_signin}>
             <button className={styles.global_button_one}>Host an event</button>
-            {/* <a href="/login" className={styles.loginBtn}>
+            {/* <NavLink to="/login" className={styles.loginBtn}>
               Sign In
-            </a> */}
+            </NavLink> */}
             {loggedIn ? (
-              <a href="/dashboard" className={styles.loginBtn}>
+              <NavLink to="/dashboard" className={styles.loginBtn}>
                 Dashboard
-              </a>
+              </NavLink>
             ) : (
-              <a href="/login" className={styles.loginBtn}>
+              <NavLink to="/login" className={styles.loginBtn}>
                 Sign In
-              </a>
+              </NavLink>
             )}
           </div>
           <div

@@ -1,5 +1,3 @@
-import React, { useRef, useState } from "react";
-// Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
@@ -7,10 +5,13 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-//import "../styles.css";
-
 // import required modules
 import { Navigation, Pagination, Mousewheel, Keyboard } from "swiper/modules";
+
+//images
+import starImage from "../assets/images/star.svg";
+import blankImage from "../assets/images/blank.png";
+import webflowLogo from "../assets/images/webflow.svg";
 
 export default function TestimonialsSlider() {
   return (
@@ -28,11 +29,11 @@ export default function TestimonialsSlider() {
           <div className="swiper_slide">
             <div className="slider_content">
               <div className="stars">
-                <img src="images/star.svg" alt="" />
-                <img src="images/star.svg" alt="" />
-                <img src="images/star.svg" alt="" />
-                <img src="images/star.svg" alt="" />
-                <img src="images/star.svg" alt="" />
+                <img src={starImage} alt="" />
+                <img src={starImage} alt="" />
+                <img src={starImage} alt="" />
+                <img src={starImage} alt="" />
+                <img src={starImage} alt="" />
               </div>
               <p>
                 "Bounce truly delivers an electrifying experience! The platform
@@ -43,13 +44,13 @@ export default function TestimonialsSlider() {
               </p>
               <div className="sliderlast_div">
                 <div className="name_div">
-                  <img src="images/blank.png " alt="" />
+                  <img src={blankImage} alt="" />
                   <div className="slider_text">
                     <h6>Sarah Johnson</h6>
                     <p>Marketing Manager, Groove Productions</p>
                   </div>
                   <div className="webflow_img">
-                    <img src="images/webflow.svg" alt="" />
+                    <img src={webflowLogo} alt="" />
                   </div>
                 </div>
               </div>
@@ -60,11 +61,11 @@ export default function TestimonialsSlider() {
           <div className="swiper_slide">
             <div className="slider_content">
               <div className="stars">
-                <img src="images/star.svg" alt="" />
-                <img src="images/star.svg" alt="" />
-                <img src="images/star.svg" alt="" />
-                <img src="images/star.svg" alt="" />
-                <img src="images/star.svg" alt="" />
+                <img src={starImage} alt="" />
+                <img src={starImage} alt="" />
+                <img src={starImage} alt="" />
+                <img src={starImage} alt="" />
+                <img src={starImage} alt="" />
               </div>
               <p>
                 "Bounce has revolutionized the way we engage with our audience.
@@ -74,13 +75,13 @@ export default function TestimonialsSlider() {
               </p>
               <div className="sliderlast_div">
                 <div className="name_div">
-                  <img src="images/blank.png " alt="" />
+                  <img src={blankImage} alt="" />
                   <div className="slider_text">
                     <h6>David White</h6>
                     <p>Events Coordinator, Vibe Events</p>
                   </div>
                   <div className="webflow_img">
-                    <img src="images/webflow.svg" alt="" />
+                    <img src={webflowLogo} alt="" />
                   </div>
                 </div>
               </div>
@@ -91,11 +92,11 @@ export default function TestimonialsSlider() {
           <div className="swiper_slide">
             <div className="slider_content">
               <div className="stars">
-                <img src="images/star.svg" alt="" />
-                <img src="images/star.svg" alt="" />
-                <img src="images/star.svg" alt="" />
-                <img src="images/star.svg" alt="" />
-                <img src="images/star.svg" alt="" />
+                <img src={starImage} alt="" />
+                <img src={starImage} alt="" />
+                <img src={starImage} alt="" />
+                <img src={starImage} alt="" />
+                <img src={starImage} alt="" />
               </div>
               <p>
                 "I've had the pleasure of attending numerous events through
@@ -106,13 +107,13 @@ export default function TestimonialsSlider() {
               </p>
               <div className="sliderlast_div">
                 <div className="name_div">
-                  <img src="images/blank.png " alt="" />
+                  <img src={blankImage} alt="" />
                   <div className="slider_text">
                     <h6>Emily Patel</h6>
                     <p>Creative Director, Pulse Entertainment Group</p>
                   </div>
                   <div className="webflow_img">
-                    <img src="images/webflow.svg" alt="" />
+                    <img src={webflowLogo} alt="" />
                   </div>
                 </div>
               </div>

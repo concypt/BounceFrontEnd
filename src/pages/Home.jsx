@@ -1,16 +1,23 @@
-import React from "react";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import TestimonialsSlider from "../components/TestimonialsSlider";
 import EventList from "../components/EventList";
 import Reveal from "../components/utils/Reveal.jsx";
 import PartySlider from "../components/PartySlider";
+//images below
+import userOne from "../assets/images/userOne.svg";
+import userTwo from "../assets/images/userTwo.svg";
+import userThree from "../assets/images/userThree.svg";
+import userFour from "../assets/images/userFour.svg";
+import userFive from "../assets/images/userFive.svg";
+import tick from "../assets/images/tick.svg";
+import promoteImg from "../assets/images/promote_img.png";
+import promoteImg2 from "../assets/images/promote_img2.png";
+import blank from "../assets/images/blank.png";
+import block from "../assets/images/block.svg";
+import rightArrow from "../assets/images/right_arrow.svg";
 
 function Home() {
   return (
     <>
-      <Navbar />
-
       <div className="header bounce_bg_circle">
         <div className="header_div">
           <Reveal width="100%" delay="0">
@@ -19,11 +26,11 @@ function Home() {
           <Reveal width="100%" delay=".2">
             <div className="users">
               <div className="user_imgs">
-                <img src="../images/userOne.svg" alt="" />
-                <img src="../images/userTwo.svg" alt="" />
-                <img src="../images/userThree.svg" alt="" />
-                <img src="../images/userFour.svg" alt="" />
-                <img src="../images/userFive.svg" alt="" />
+                <img src={userOne} alt="Picture of Happy Attendee" />
+                <img src={userTwo} alt="Picture of Happy Host" />
+                <img src={userThree} alt="Picture of Happy Attendee" />
+                <img src={userFour} alt="Picture of Happy Attendee" />
+                <img src={userFive} alt="Picture of Happy Host" />
                 <div className="user_count">
                   <p>268+</p>
                 </div>
@@ -73,14 +80,14 @@ function Home() {
       <Reveal width="100%" delay="0.2" amount="0.5">
         <div className="promote_section">
           <div className="promote_div">
-            <img src="images/promote_img.png" alt="" />
+            <img src={promoteImg} alt="" />
 
             <div className="promote_content">
               <h2>Promote events. Get paid</h2>
 
               <div className="checks">
                 <div className="promote_checks">
-                  <img src="images/tick.svg" alt="" />
+                  <img src={tick} alt="" />
                   <p>
                     It’s simple to get started. Sign up to an account and with
                     one click send a request to event hosts to promote their
@@ -89,7 +96,7 @@ function Home() {
                 </div>
 
                 <div className="promote_checks">
-                  <img src="images/tick.svg" alt="" />
+                  <img src={tick} alt="" />
                   <p>
                     Once approved, your special link goes live! Invite your
                     friends using your link and if they checkout, you get paid a
@@ -98,7 +105,7 @@ function Home() {
                 </div>
 
                 <div className="promote_checks">
-                  <img src="images/tick.svg" alt="" />
+                  <img src={tick} alt="" />
                   <p>
                     Get rewarded and increase your earnings by promoting events
                     on Bounce, today.
@@ -119,21 +126,21 @@ function Home() {
       <Reveal width="100%" delay="0.2" amount="0.5">
         <div className="promote_section promote_second">
           <div className="promote_div">
-            <img src="images/promote_img2.png" alt="" />
+            <img src={promoteImg2} alt="" />
 
             <div className="promote_content">
               <h2>Sell tickets on Bounce!</h2>
 
               <div className="checks">
                 <div className="promote_checks">
-                  <img src="images/tick.svg" alt="" />
+                  <img src={tick} alt="" />
                   <p>
                     The all in one ticketing platform that keeps i t simple.
                   </p>
                 </div>
 
                 <div className="promote_checks">
-                  <img src="images/tick.svg" alt="" />
+                  <img src={tick} alt="" />
                   <p>
                     To get started, we just need a few details from yourself.
                     Once approved, you’re ready to sell out your event on
@@ -142,7 +149,7 @@ function Home() {
                 </div>
 
                 <div className="promote_checks">
-                  <img src="images/tick.svg" alt="" />
+                  <img src={tick} alt="" />
                   <p>
                     With a generous industry beating 7.5% fee, you can rely on
                     Bounce to bring you simple, intuitive ticketing solutions
@@ -163,10 +170,10 @@ function Home() {
       <Reveal delay=".2">
         <div className="promote_section blank_section">
           <div className="promote_div">
-            <img src="images/blank.png" className="blank_img" alt="" />
+            <img src={blank} className="blank_img" alt="" />
             <div className="blank_grid">
               <div className="grid_block">
-                <img src="images/block.svg" alt="" />
+                <img src={block} alt="" />
                 <h3>Analytics Dashboard</h3>
                 <p>
                   Gain instant insights into your sales data with our
@@ -174,15 +181,11 @@ function Home() {
                 </p>
                 <a href="#">
                   Learn more{" "}
-                  <img
-                    src="images/right_arrow.svg"
-                    className="arrow_right"
-                    alt=""
-                  />
+                  <img src={rightArrow} className="arrow_right" alt="" />
                 </a>
               </div>
               <div className="grid_block">
-                <img src="images/block.svg" alt="" />
+                <img src={block} alt="" />
                 <h3>Marketing Tools</h3>
                 <p>
                   Effortlessly manage email campaigns and create enticing
@@ -190,15 +193,11 @@ function Home() {
                 </p>
                 <a href="#">
                   Learn more{" "}
-                  <img
-                    src="images/right_arrow.svg"
-                    className="arrow_right"
-                    alt=""
-                  />
+                  <img src={rightArrow} className="arrow_right" alt="" />
                 </a>
               </div>
               <div className="grid_block">
-                <img src="images/block.svg" alt="" />
+                <img src={block} alt="" />
                 <h3>Event Listings</h3>
                 <p>
                   Explore a diverse range of live events, from intimate gigs to
@@ -206,15 +205,11 @@ function Home() {
                 </p>
                 <a href="#">
                   Learn more{" "}
-                  <img
-                    src="images/right_arrow.svg"
-                    className="arrow_right"
-                    alt=""
-                  />
+                  <img src={rightArrow} className="arrow_right" alt="" />
                 </a>
               </div>
               <div className="grid_block">
-                <img src="images/block.svg" alt="" />
+                <img src={block} alt="" />
                 <h3>Secure Transactions</h3>
                 <p>
                   Rest assured with our secure transaction system, ensuring
@@ -222,11 +217,7 @@ function Home() {
                 </p>
                 <a href="#">
                   Learn more{" "}
-                  <img
-                    src="images/right_arrow.svg"
-                    className="arrow_right"
-                    alt=""
-                  />
+                  <img src={rightArrow} className="arrow_right" alt="" />
                 </a>
               </div>
             </div>
@@ -345,7 +336,6 @@ function Home() {
           </div>
         </Reveal>
       </div>
-      <Footer />
     </>
   );
 }

@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@700&display=swap");
 
 * {
   box-sizing: border-box;
@@ -86,7 +86,7 @@ a.global-link-arrow::after {
   width: 10px;
   height: 12px;
   position: absolute;
-  background-image: url("images/right-arrow.svg");
+  background-image: url("assets/images/right-arrow.svg");
   top: 6px;
   right: -20px;
 }
@@ -118,24 +118,15 @@ a.global-link-arrow::after {
     background-size: 80%;
   }
 }
-/* #animate-area {
-  width: 200px;
-  height: 200px;
-  background-image: url(https://picsum.photos/400/200);
-  background-position: 0px 0px;
-  background-repeat: repeat-x;
-  animation: animatedBackground 10s linear infinite alternate;
-} */
 
 .bounce_bg_circle {
   background-image: linear-gradient(transparent, white 75%),
-    url("/images/header.jpg");
+    url("./assets/images/header.jpg");
 
   background-position: 0px 0px;
   background-repeat: repeat;
   animation: animatedBackground 40s linear infinite alternate;
   margin-top: -140px;
-  /* background-position-x: center; */
 }
 
 .home_events .bounce_bg_circle {
@@ -147,7 +138,7 @@ a.global-link-arrow::after {
 }
 
 .home_events {
-  background-image: url(images/tranparentimg.png);
+  background-image: url(./assets/images/tranparentimg.png);
   background-repeat: no-repeat;
   background-position: center;
   background-position-y: 75%;
@@ -218,25 +209,6 @@ a.global-link-arrow::after {
 .user_imgs img {
   margin-left: -20px;
 }
-
-/* button.global_button_one {
-  padding: 15px 40px;
-  outline: none;
-  position: relative;
-  z-index: 1;
-  border-radius: 55px;
-  background: var(--linear-gradient-border);
-  border: 2px solid var(--linear-gradient-border);
-  cursor: pointer;
-  color: #fff;
-  font-size: 18px;
-  font-weight: 600;
-}
-
-button.global_button_one:hover {
-  background: transparent;
-
-} */
 
 .global_button_one {
   background-image: var(--linear-gradient-border);
@@ -651,7 +623,7 @@ li.answer {
 }
 
 .swiper-button-next {
-  background: url(images/arrow_btn.svg);
+  background: url(./assets/images/arrow_btn.svg);
   width: 49px;
   height: 49px;
   background-repeat: no-repeat;
@@ -659,7 +631,7 @@ li.answer {
 }
 
 .swiper-button-prev {
-  background: url(images/arrow_btn.svg);
+  background: url(./assets/images/arrow_btn.svg);
   width: 49px;
   height: 49px;
   background-repeat: no-repeat;
@@ -1060,3 +1032,196 @@ span.rdrYearPicker {
     width: 210px;
   }
 }
+
+/* global css */
+#preloader {
+  background: #fff;
+}
+
+/* Override the default SweetAlert success icon color */
+.swal2-icon.swal2-success .swal2-success-ring {
+  border: 5px solid #7e79ff;
+}
+
+.swal2-icon.swal2-success [class^="swal2-success-line"] {
+  background-color: #7e79ff;
+}
+
+.swal2-icon.swal2-success.swal2-icon-show {
+  border-color: #7e79ff;
+  color: #7e79ff;
+}
+
+/* Override the default SweetAlert loading circle color */
+.swal2-icon.swal2-loading .swal2-loading-spinner {
+  border-top-color: #7e79ff; /* Change the border color */
+}
+
+/* Override the default SweetAlert success icon right circular line color */
+.swal2-icon.swal2-success .swal2-success-circular-line-right {
+  background-color: #7e79ff; /* Change the color */
+}
+
+.swal2-popup.swal2-modal {
+  border-radius: 32px;
+}
+
+button.swal2-confirm.swal2-styled {
+  padding: 10px 40px;
+  border-radius: 22px;
+}
+
+.new-animated-preloader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+}
+.new-animated-preloader div {
+  position: absolute;
+  border: 6px solid #19164c;
+  opacity: 1;
+  border-radius: 50%;
+  animation: eventripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+.new-animated-preloader div:nth-child(2) {
+  animation-delay: -0.5s;
+}
+@keyframes eventripple {
+  0% {
+    top: 36px;
+    left: 36px;
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+  4.9% {
+    top: 36px;
+    left: 36px;
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+  5% {
+    top: 36px;
+    left: 36px;
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+  100% {
+    top: 0px;
+    left: 0px;
+    width: 72px;
+    height: 72px;
+    opacity: 0;
+  }
+}
+
+.bgGlobalBtn {
+  background-image: var(--linear-gradient-border);
+  border-radius: 40px;
+  box-sizing: border-box;
+  color: #fff;
+  display: block;
+  height: 43px;
+  letter-spacing: 1px;
+  padding: 4px;
+  position: relative;
+  text-decoration: none;
+  text-transform: uppercase;
+  z-index: 2;
+  border: none;
+  transition: 0.5s ease;
+}
+
+.bgGlobalBtn:hover {
+  opacity: 0.7;
+}
+
+.bgGlobalBtn span {
+  padding: 0 20px;
+  align-items: center;
+  background: transparent;
+  border-radius: 40px;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  transition: background 0.5s ease;
+  width: 100%;
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: math-auto;
+  font-family: var(--primary-font);
+}
+
+.bgGlobalBtn.borderGlobalBtn span {
+  background: white;
+}
+
+.bgGlobalBtn.borderGlobalBtn {
+  color: #7e79ff;
+  margin-left: 20px;
+}
+
+.bgGlobalBtn span img {
+  margin-right: 15px;
+}
+
+@media (max-width: 992px) {
+  .bgGlobalBtn.borderGlobalBtn {
+    margin-left: 10px;
+  }
+
+  .bgGlobalBtn span {
+    padding: 0 10px;
+  }
+
+  .bgGlobalBtn span img {
+    margin-right: 10px;
+  }
+}
+
+@media (max-width: 767px) {
+  .bgGlobalBtn span {
+    padding: 0 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .bgGlobalBtn span {
+    padding: 0 12px;
+  }
+
+  .bgGlobalBtn span img {
+    width: 18px;
+  }
+
+  .eventCategoryButton {
+    left: 15px;
+  }
+}
+
+@media (max-width: 420px) {
+  .bgGlobalBtn span {
+    padding: 0 10px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 400px) {
+  .bgGlobalBtn span {
+    padding: 0 10px;
+    font-size: 12px;
+  }
+
+  .bgGlobalBtn.borderGlobalBtn {
+    margin-left: 5px;
+  }
+}
+/* end global css */

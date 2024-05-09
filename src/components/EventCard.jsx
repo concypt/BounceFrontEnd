@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import styles from "./events.module.css";
 import { Link } from "react-router-dom";
 
@@ -11,7 +10,7 @@ function EventCard({ event }) {
     <div className={styles.eventCard}>
       <Link to={`/events/${event.id}`}>
         <div className={styles.eventCardImage}>
-          <img 
+          <img
             className={styles.eventImg}
             src={event.image}
             alt="Event image"

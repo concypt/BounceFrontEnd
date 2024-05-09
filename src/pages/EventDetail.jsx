@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import FollowUnfollowBtn from "../components/FollowUnfollowBtn";
 import styles from "../components/events.module.css";
 import LoadingBar from "react-top-loading-bar";
@@ -75,7 +73,6 @@ const EventDetail = () => {
 
   return (
     <>
-      <Navbar />
       <div className={`${styles.event_detail} bounce_bg_circle`}>
         <div className={styles.event_detail_content}>
           <div className={styles.event_main_img}>
@@ -198,7 +195,6 @@ const EventDetail = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 };
