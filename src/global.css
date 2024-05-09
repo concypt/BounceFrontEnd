@@ -11,19 +11,21 @@
   background-color: #7e79ff;
 }
 
-.swal2-icon.swal2-success.swal2-icon-show {
+.swal2-icon.swal2-success.swal2-icon-show,
+.swal2-icon.swal2-info.swal2-icon-show,
+.swal2-icon.swal2-warning {
   border-color: #7e79ff;
   color: #7e79ff;
 }
 
-/* Override the default SweetAlert loading circle color */
-.swal2-icon.swal2-loading .swal2-loading-spinner {
-  border-top-color: #7e79ff; /* Change the border color */
+.swal2-icon.swal2-success .swal2-success-circular-line-right,
+.swal2-icon.swal2-info .swal2-info-circular-line-right,
+.swal2-icon.swal2-warning .swal2-warning-circular-line-right {
+  background-color: #7e79ff;
 }
 
-/* Override the default SweetAlert success icon right circular line color */
-.swal2-icon.swal2-success .swal2-success-circular-line-right {
-  background-color: #7e79ff; /* Change the color */
+.swal2-icon.swal2-loading .swal2-loading-spinner {
+  border-top-color: #7e79ff;
 }
 
 .swal2-popup.swal2-modal {

@@ -120,32 +120,32 @@ function Dashboard() {
 
     // Check if either profile information or image is updated
     const isProfileInfoUpdated =
-      formData.first_name ||
-      formData.last_name ||
-      formData.phone ||
-      formData.image;
+      formData.first_name !== fname ||
+      formData.last_name !== lname ||
+      formData.phone !== phoneNumber ||
+      formData.image !== null;
 
     if (!isProfileInfoUpdated) {
       console.log("No changes to submit");
+      Swal.fire("", "Nothing to Update", "warning");
       return;
     }
 
-    const updateMessages = [];
-
     try {
       await handleProfileInfoUpdate();
+      let anyFieldUpdated = false;
 
       if (formData.first_name) {
         localStorage.setItem("fname", formData.first_name);
-        updateMessages.push("First name has been updated successfully.");
+        anyFieldUpdated = true;
       }
       if (formData.last_name) {
         localStorage.setItem("lname", formData.last_name);
-        updateMessages.push("Last name has been updated successfully.");
+        anyFieldUpdated = true;
       }
       if (formData.phone) {
         localStorage.setItem("phoneNumber", formData.phone);
-        updateMessages.push("Phone number has been updated successfully.");
+        anyFieldUpdated = true;
       }
 
       if (formData.image) {
@@ -154,42 +154,37 @@ function Dashboard() {
         reader.onload = () => {
           // Store image data in localStorage as data URL
           localStorage.setItem("userImage", reader.result);
-          updateMessages.push("Profile image has been updated successfully.");
         };
         reader.readAsDataURL(formData.image);
-        updateMessages.push("Profile image has been updated successfully.");
+        anyFieldUpdated = true;
       }
-      if (fileInputRef.current) {
-        fileInputRef.current.value = "";
-      }
-      if (updateMessages.length > 1) {
+
+      if (anyFieldUpdated) {
         Swal.fire(
           "Updated!",
           "Profile information updated successfully",
           "success"
         );
-      } else if (updateMessages.length === 1) {
-        Swal.fire("Updated!", updateMessages[0], "success");
+      }
+
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
       }
     } catch (error) {
       console.error("Error submitting changes:", error.message);
       Swal.fire("Error!", "Failed to update profile information.", "error");
     }
-
-    // Clear form data
-    // setFormData({
-    //   first_name: "",
-    //   last_name: "",
-    //   phone: "",
-    //   image: null,
-    // });
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    // setFormData((prevState) => ({
+    //   ...prevState,
+    //   [name]: value,
+    // }));
     setFormData((prevState) => ({
       ...prevState,
-      [name]: value,
+      [name]: prevState[name] !== value ? value : prevState[name],
     }));
   };
 
