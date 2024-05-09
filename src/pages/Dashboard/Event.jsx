@@ -120,7 +120,7 @@ function EventDashboard() {
           <div className="secondActionsDiv">
             <div className="actionDiv">
               <h2>Ready to bounce into action?</h2>
-              
+
               <button
                 className="loginButton"
                 type="submit"

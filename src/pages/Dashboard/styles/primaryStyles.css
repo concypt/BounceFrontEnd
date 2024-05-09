@@ -457,7 +457,7 @@ input[type="radio"] {
 }
 
 .actionDiv {
-  background-image: url(images/action.png);
+  background-image: url(../../../assets/images/action.png);
   width: 100%;
   background-size: cover;
   border-radius: 32px;
@@ -664,7 +664,7 @@ input[type="radio"] {
   justify-content: space-between;
 }
 
-.marketingSubscriber .loginButton{
+.marketingSubscriber .loginButton {
   width: 220px;
 }
 @media (max-width: 1600px) {
