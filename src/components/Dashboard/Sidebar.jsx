@@ -30,9 +30,9 @@ const Sidebar = () => {
       </div>
       <div className={`${styles.sidebar} ${showSidebar ? styles.active : ""}`}>
         <div className={styles.logo}>
-          <a href="/">
+          <Link to="/">
             <img src={dashLogoImage} alt="Logo" />
-          </a>
+          </Link>
         </div>
         <button className={styles.closeBtn} onClick={closeSidebar}>
           &times; {/* Display a cross character */}

@@ -5,6 +5,8 @@ import Sidebar from "../../components/Dashboard/Sidebar";
 import "./styles/primaryStyles.css";
 import "./styles/comonStyles.css";
 import Swal from "sweetalert2";
+import name from "../../assets/images/name.svg";
+import phone from "../../assets/images/phone.png";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -257,11 +259,7 @@ function Dashboard() {
                             onChange={handleChange}
                             placeholder="First Name"
                           />
-                          <img
-                            src="images/name.svg"
-                            className="inputImgs"
-                            alt=""
-                          />
+                          <img src={name} className="inputImgs" alt="" />
                         </div>
                         <div className="inputFields">
                           <input
@@ -271,11 +269,7 @@ function Dashboard() {
                             onChange={handleChange}
                             placeholder="Last Name"
                           />
-                          <img
-                            src="images/name.svg"
-                            className="inputImgs"
-                            alt=""
-                          />
+                          <img src={name} className="inputImgs" alt="" />
                         </div>
                         <div className="inputFields">
                           <input
@@ -285,11 +279,7 @@ function Dashboard() {
                             onChange={handleChange}
                             placeholder="Phone Number"
                           />
-                          <img
-                            src="images/name.svg"
-                            className="inputImgs"
-                            alt=""
-                          />
+                          <img src={phone} className="inputImgs" alt="" />
                         </div>
                       </div>
                       <button className="loginButton" type="submit">

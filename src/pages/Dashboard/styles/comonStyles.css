@@ -3,7 +3,7 @@
 }
 
 .dashboard {
-  background-image: url(images/dashboard/gradient.jpg);
+  background-image: url("./assets/images/gradient.jpg");
   background-attachment: fixed;
   background-position: center;
   height: 100%;
