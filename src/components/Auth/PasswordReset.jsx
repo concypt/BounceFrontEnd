@@ -6,11 +6,9 @@ const PasswordReset = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [loading, setLoading] = useState(false);
 
   const handleChangePassword = async (e) => {
     e.preventDefault();
-    setLoading(true);
     try {
       const response = await fetch(
         "https://bounce.extrasol.co.uk/api/user/change-password",
@@ -30,23 +28,28 @@ const PasswordReset = () => {
       );
       const responseData = await response.json();
       if (!response.ok) {
-        throw new Error(responseData.msg || "Failed to reset password");
+        console.log("responseData", responseData);
+        throw new Error(responseData.message || "Failed to reset password");
       }
-      Swal.fire({
-        icon: "success",
-        title: "Success",
-        text: "Password has been reset successfully!",
-      }).then(() => {
-        // Redirect to login page or any other action
-      });
+      if (responseData.success === false) {
+        Swal.fire({
+          icon: "info",
+          title: "Error",
+          text: responseData.msg || "Please check again",
+        });
+      } else {
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: responseData.msg || "Password has been reset successfully!",
+        });
+      }
     } catch (error) {
       Swal.fire({
         icon: "error",
         title: "Error",
         text: error.message || "Failed to reset password",
       });
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -65,7 +68,6 @@ const PasswordReset = () => {
   return (
     <div>
       <div className={styles.formsSection}>
-        <h2 className={styles.resetPassword}>Reset Password</h2>
         <form onSubmit={handleChangePassword}>
           <div className={styles.inputFields}>
             <input
@@ -74,6 +76,7 @@ const PasswordReset = () => {
               onChange={handleOldPasswordChange}
               required
               placeholder="Old Password"
+              className={styles.dashboardInput}
             />
           </div>
           <div className={styles.inputFields}>
@@ -83,6 +86,7 @@ const PasswordReset = () => {
               onChange={handleChange}
               required
               placeholder="Password"
+              className={styles.dashboardInput}
             />
             <img src="images/lock.svg" className={styles.inputImgs} alt="" />
           </div>
@@ -93,18 +97,14 @@ const PasswordReset = () => {
               onChange={handleConfirmChange}
               required
               placeholder="Confirm Password"
+              className={styles.dashboardInput}
             />
             <img src="images/lock.svg" className={styles.inputImgs} alt="" />
           </div>
           <div className={styles.header_btn}>
-            <button
-              className={styles.loginButton}
-              type="submit"
-              disabled={loading}
-            >
-              {loading ? "Resetting..." : "Reset Password"}{" "}
+            <button className={styles.resetPasswordButton} type="submit">
+              <span>Change Password</span>
             </button>
-            {loading && <span className={styles.loadingIndicator} />}{" "}
           </div>
         </form>
       </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./auth.module.css";
 import { toast } from "react-toastify";
@@ -70,10 +70,6 @@ const LoginPage = () => {
             navigate(redirectEventPage);
           }, 2000); // Redirect to follow
         } else {
-          // If there's no stored URL, navigate the user to the default page
-          console.log("logiiiiiiii");
-          toast.success("Login successfulllllllllllllllllllllllll!");
-          // <ToastContainer />;
           setTimeout(() => {
             navigate("/dashboard");
           }, 2000); // Redirect to dashboard page
