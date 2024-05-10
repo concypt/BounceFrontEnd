@@ -6,6 +6,12 @@ import EventCard from "./EventCard";
 import FollowUnfollowBtn from "./FollowUnfollowBtn";
 import styles from "./hostProfile.module.css";
 import LoadingBar from "react-top-loading-bar";
+//images below
+import userOne from "../assets/images/userOne.svg";
+import userTwo from "../assets/images/userTwo.svg";
+import userThree from "../assets/images/userThree.svg";
+import userFour from "../assets/images/userFour.svg";
+import userFive from "../assets/images/userFive.svg";
 
 const URL = "https://bounce.extrasol.co.uk/api/host/profile";
 
@@ -77,11 +83,11 @@ const HostProfile = ({ limit }) => {
                     <h2>Followers</h2>
                     <div className={`users ${styles.hostUser}`}>
                       <div className="user_imgs">
-                        <img src="../images/userOne.svg" alt="" />
-                        <img src="../images/userTwo.svg" alt="" />
-                        <img src="../images/userThree.svg" alt="" />
-                        <img src="../images/userFour.svg" alt="" />
-                        <img src="../images/userFive.svg" alt="" />
+                        <img src={userOne} alt="Picture of Happy Attendee" />
+                        <img src={userTwo} alt="Picture of Happy Host" />
+                        <img src={userThree} alt="Picture of Happy Attendee" />
+                        <img src={userFour} alt="Picture of Happy Attendee" />
+                        <img src={userFive} alt="Picture of Happy Host" />
                         <div className="user_count">
                           <p>268+</p>
                         </div>

@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./auth.module.css";
+//images
+import whiteLogo from "../../assets/images/whiteLogo.svg";
+import otpImage from "../../assets/images/otp.png";
 
 const OTPVerificationPage = () => {
   const navigate = useNavigate();
@@ -129,7 +132,7 @@ const OTPVerificationPage = () => {
           <div className={styles.loginLeft}>
             <div className={styles.logiLogo}>
               <a href="/">
-                <img src="images/whiteLogo.svg" alt="" />
+                <img src={whiteLogo} alt="" />
               </a>
             </div>
             <div className={styles.loginContent}>
@@ -143,7 +146,7 @@ const OTPVerificationPage = () => {
           <div className={styles.loginForm}>
             <div className={styles.secondLogo}>
               <a href="#">
-                <img src="images/whiteLogo.svg" alt="" />
+                <img src={whiteLogo} alt="" />
               </a>
             </div>
             <div className={`${styles.formsSection} ${styles.otpSection}`}>
@@ -158,11 +161,7 @@ const OTPVerificationPage = () => {
                       placeholder="Enter OTP"
                       disabled={loading} // Disable input during loading
                     />
-                    <img
-                      src="images/otp.png"
-                      className={styles.inputImgs}
-                      alt=""
-                    />
+                    <img src={otpImage} className={styles.inputImgs} alt="" />
                   </div>
                   <div className={styles.forgetDiv}>
                     <button

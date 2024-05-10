@@ -1,6 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./auth.module.css";
+//images
+import whiteLogo from "../../assets/images/whiteLogo.svg";
+import mailIcon from "../../assets/images/mailIcon.svg";
+import nameIcon from "../../assets/images/name.svg";
+import phoneIcon from "../../assets/images/phone.png";
+import lockIcon from "../../assets/images/lock.svg";
 
 const RegisterPage = () => {
   const navigate = useNavigate(); // Initialize useNavigate
@@ -105,7 +111,7 @@ const RegisterPage = () => {
           <div className={styles.loginLeft}>
             <div className={styles.logiLogo}>
               <a href="/">
-                <img src="images/whiteLogo.svg" alt="" />
+                <img src={whiteLogo} alt="" />
               </a>
             </div>
             <div className={styles.loginContent}>
@@ -123,7 +129,7 @@ const RegisterPage = () => {
           <div className={styles.loginForm}>
             <div className={styles.secondLogo}>
               <a href="#">
-                <img src="images/whiteLogo.svg" alt="" />
+                <img src={whiteLogo} alt="" />
               </a>
             </div>
             <div className={`${styles.formsSection} ${styles.registerSection}`}>
@@ -139,11 +145,7 @@ const RegisterPage = () => {
                       required
                       placeholder="First Name"
                     />
-                    <img
-                      src="images/name.svg"
-                      className={styles.inputImgs}
-                      alt=""
-                    />
+                    <img src={nameIcon} className={styles.inputImgs} alt="" />
                   </div>
                   <div className={styles.inputFields}>
                     <input
@@ -154,11 +156,7 @@ const RegisterPage = () => {
                       required
                       placeholder="Last Name"
                     />
-                    <img
-                      src="images/name.svg"
-                      className={styles.inputImgs}
-                      alt=""
-                    />
+                    <img src={nameIcon} className={styles.inputImgs} alt="" />
                   </div>
                 </div>
                 <div className={styles.inputFields}>
@@ -170,11 +168,7 @@ const RegisterPage = () => {
                     required
                     placeholder="Email"
                   />
-                  <img
-                    src="images/mailIcon.svg"
-                    className={styles.inputImgs}
-                    alt=""
-                  />
+                  <img src={mailIcon} className={styles.inputImgs} alt="" />
                 </div>
                 <div className={styles.inputFields}>
                   <input
@@ -185,11 +179,7 @@ const RegisterPage = () => {
                     required
                     placeholder="Phone"
                   />
-                  <img
-                    src="images/phone.png"
-                    className={styles.inputImgs}
-                    alt=""
-                  />
+                  <img src={phoneIcon} className={styles.inputImgs} alt="" />
                 </div>
                 <div className={styles.inputFields}>
                   <input
@@ -200,11 +190,7 @@ const RegisterPage = () => {
                     required
                     placeholder="Password"
                   />
-                  <img
-                    src="images/lock.svg"
-                    className={styles.inputImgs}
-                    alt=""
-                  />
+                  <img src={lockIcon} className={styles.inputImgs} alt="" />
                 </div>
                 <div className={styles.inputFields}>
                   <input
@@ -215,11 +201,7 @@ const RegisterPage = () => {
                     required
                     placeholder="Confirm Password"
                   />
-                  <img
-                    src="images/lock.svg"
-                    className={styles.inputImgs}
-                    alt=""
-                  />
+                  <img src={lockIcon} className={styles.inputImgs} alt="" />
                 </div>
                 <div className={styles.header_btn}>
                   <button

@@ -17,14 +17,14 @@
 }
 
 .loginBg {
-  background: url(images/loginBg.jpg);
+  background: url(../../assets/images/loginBg.jpg);
   height: 100vh;
   font-family: var(--primary-font);
   overflow-x: hidden;
 }
 
 .registerbg {
-  background: url(images/register.jpg);
+  background: url(../../assets/images/register.jpg);
   height: 100vh;
   font-family: var(--primary-font);
   overflow-x: hidden;

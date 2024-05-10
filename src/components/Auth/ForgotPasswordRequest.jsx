@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./auth.module.css";
+//images
+import whiteLogo from "../../assets/images/whiteLogo.svg";
+import mailIcon from "../../assets/images/mailIcon.svg";
 
 const ForgotPasswordRequest = () => {
   const navigate = useNavigate(); // Initialize useNavigate
@@ -53,7 +56,7 @@ const ForgotPasswordRequest = () => {
           <div className={styles.loginLeft}>
             <div className={styles.logiLogo}>
               <a href="/">
-                <img src="images/whiteLogo.svg" alt="" />
+                <img src={whiteLogo} alt="" />
               </a>
             </div>
             <div className={styles.loginContent}>
@@ -78,7 +81,7 @@ const ForgotPasswordRequest = () => {
             </div>
             <div className={styles.secondLogo}>
               <a href="/">
-                <img src="images/whiteLogo.svg" alt="" />
+                <img src={whiteLogo} alt="" />
               </a>
             </div>
             <div className={styles.formsSection}>
@@ -96,11 +99,7 @@ const ForgotPasswordRequest = () => {
                     placeholder="Email"
                     disabled={isSubmitting} // Disable input during form submission
                   />
-                  <img
-                    src="images/mailIcon.svg"
-                    className={styles.inputImgs}
-                    alt=""
-                  />
+                  <img src={mailIcon} className={styles.inputImgs} alt="" />
                 </div>
                 <div className={styles.header_btn}>
                   <button
