@@ -667,6 +667,307 @@ input[type="radio"] {
 .marketingSubscriber .loginButton {
   width: 220px;
 }
+
+.tabs .progressCard {
+  width: 100%;
+  max-width: 908px;
+}
+
+#heading {
+  text-transform: uppercase;
+  color: #673ab7;
+  font-weight: normal;
+}
+
+#msform {
+  text-align: center;
+  position: relative;
+  margin-top: 20px;
+}
+
+#msform fieldset {
+  background: white;
+  border: 1px solid #d8d8d8;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: 40px 80px;
+  position: relative;
+  border-radius: 32px;
+}
+
+.form-card {
+  text-align: left;
+}
+
+#msform fieldset:not(:first-of-type) {
+  display: none;
+}
+
+#msform input,
+#msform textarea {
+  padding: 8px 15px 8px 15px;
+  border: 1px solid #ccc;
+  border-radius: 0px;
+  margin-bottom: 25px;
+  margin-top: 2px;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: montserrat;
+  color: #2c3e50;
+  background-color: #eceff1;
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+#msform .action-button {
+  width: 100px;
+  background: #673ab7;
+  font-weight: bold;
+  color: white;
+  border: 0 none;
+  border-radius: 0px;
+  cursor: pointer;
+  padding: 10px 5px;
+  margin: 10px 0px 10px 5px;
+  float: right;
+}
+
+#msform .action-button:hover,
+#msform .action-button:focus {
+  background-color: #311b92;
+}
+
+#msform .action-button-previous {
+  width: 100px;
+  background: #616161;
+  font-weight: bold;
+  color: white;
+  border: 0 none;
+  border-radius: 0px;
+  cursor: pointer;
+  padding: 10px 5px;
+  margin: 10px 5px 10px 0px;
+  float: right;
+}
+
+#msform .action-button-previous:hover,
+#msform .action-button-previous:focus {
+  background-color: #000000;
+}
+
+.card {
+  z-index: 0;
+  border: none;
+  position: relative;
+}
+
+.fs-title {
+  font-size: 25px;
+  color: #673ab7;
+  margin-bottom: 15px;
+  font-weight: normal;
+  text-align: left;
+}
+
+.purple-text {
+  color: #673ab7;
+  font-weight: normal;
+}
+
+.steps {
+  font-size: 25px;
+  color: gray;
+  margin-bottom: 10px;
+  font-weight: normal;
+  text-align: right;
+}
+
+.fieldlabels {
+  color: gray;
+  text-align: left;
+}
+
+#progressbar {
+  margin-bottom: 30px;
+  overflow: hidden;
+  color: #b9b9b9;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  font-family: var(--primary-font);
+}
+
+#progressbar strong {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+#progressbar h3 {
+  color: #000;
+  font-size: 24px;
+}
+
+#progressbar li {
+  list-style-type: none;
+  font-size: 15px;
+  width: 25%;
+  float: left;
+  position: relative;
+  font-weight: 400;
+}
+
+#progressbar #account:before {
+  font-family: FontAwesome;
+  content: "\f13e";
+}
+
+#progressbar #personal:before {
+  font-family: FontAwesome;
+  content: "\f007";
+}
+
+#progressbar li:before {
+  width: 50px;
+  height: 50px;
+  line-height: 45px;
+  display: block;
+  font-size: 0px;
+  color: #ffffff;
+  background: #b9b9b9;
+  border-radius: 50%;
+  margin: 0 auto 10px auto;
+  padding: 2px;
+}
+
+#progressbar li:after {
+  content: "";
+  width: 100%;
+  height: 2px;
+  background: #b9b9b9;
+  position: absolute;
+  left: 0;
+  top: 25px;
+  z-index: 1;
+}
+
+#progressbar li.active:before,
+#progressbar li.active:after {
+  background: #aeabff;
+}
+
+.progress {
+  height: 20px;
+}
+
+.fit-image {
+  width: 100%;
+  object-fit: cover;
+}
+
+/* // opcacity shenanigans not in default tailwind */
+.hasImage:hover section {
+  background-color: #aeabff;
+}
+.hasImage:hover button:hover {
+  background: #aeabff;
+}
+#overlay p,
+i {
+  opacity: 0;
+}
+#overlay.draggedover {
+  background-color: rgba(255, 255, 255, 0.7);
+}
+#overlay.draggedover p,
+#overlay.draggedover i {
+  opacity: 1;
+}
+/* // group hover not in default tailwind */
+.group:hover .group-hover\:text-blue-800 {
+  color: #aeabff;
+}
+
+input#hidden-input {
+  display: none;
+}
+
+#gallery {
+  padding: 20px 20px;
+  background: #f7f7f7;
+  border-radius: 21px;
+  min-height: 170px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+li#empty {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+#empty span {
+  font-size: 16px;
+  font-weight: 600;
+  text-align: left;
+}
+
+#empty p {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 0;
+}
+
+#gallery h1 {
+  font-size: 26px;
+}
+
+.uploadedImgs {
+  background: #fff;
+}
+
+.uploadImg {
+  position: relative;
+}
+
+.uploadBtn {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.uploadBtn button {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.uploadedImgs {
+  width: 100%;
+  border-radius: 21px;
+}
+
+#gallery svg {
+  fill: #aeabff;
+}
+
+button.delete.ml-auto {
+  border: 2px solid #aeabff;
+  border-radius: 5px;
+}
+
+#gallery article{
+  border-radius: 21px;
+}
+
+.uploadImgDiv{
+  position: relative;
+  z-index: 99;
+}
 @media (max-width: 1600px) {
   .hostSection {
     margin-right: 40px;

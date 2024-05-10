@@ -119,18 +119,19 @@ function EventDashboard() {
           <div className="secondActionsDiv">
             <div className="actionDiv">
               <h2>Ready to bounce into action?</h2>
-
-              <button
-                className="loginButton"
-                type="submit"
-                // disabled={isSubmitting} // Disable button when isSubmitting is true
-              >
-                {/* {isSubmitting ? (
+              <Link to={`/dashboard-create-event`}>
+                <button
+                  className="loginButton"
+                  type="submit"
+                  // disabled={isSubmitting} // Disable button when isSubmitting is true
+                >
+                  {/* {isSubmitting ? (
                         "Submitting..."
                       ) : ( */}
-                <span>Create new event</span>
-                {/* )} */}
-              </button>
+                  <span>Create new event</span>
+                  {/* )} */}
+                </button>
+              </Link>
             </div>
             <div className="earningsDiv">
               <h2>Earnings</h2>
