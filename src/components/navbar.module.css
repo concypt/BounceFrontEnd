@@ -81,7 +81,7 @@ header.App_header {
   width: 10px;
   height: 12px;
   position: absolute;
-  background-image: url(images/right-arrow.svg);
+  background-image: url(../assets/images/right-arrow.svg);
   top: 9px;
   right: -20px;
 }

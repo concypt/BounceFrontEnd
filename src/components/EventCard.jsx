@@ -1,6 +1,11 @@
 import styles from "./events.module.css";
 import { Link } from "react-router-dom";
 
+//images
+import clockIcon from "../assets/images/clock.svg";
+import locationIcon from "../assets/images/location.svg";
+import buyTicketIcon from "../assets/images/buy-ticket.svg";
+
 function EventCard({ event }) {
   // Parse the start time string into a Date object
   const startTime = new Date(event.start_time);
@@ -24,7 +29,7 @@ function EventCard({ event }) {
         </Link>
         <div className={styles.dateRemainingDaysDiv}>
           <span className={styles.time}>
-            <img src="../images/clock.svg" alt="" /> {formattedDate}
+            <img src={clockIcon} alt="" /> {formattedDate}
           </span>
           <div className={styles.remainingDaysBtn}>
             <>The event is over</>
@@ -34,7 +39,7 @@ function EventCard({ event }) {
         <div className={event.location ? styles.locationDiv : null}>
           {event.location && (
             <span className={styles.location}>
-              <img src="../images/location.svg" alt="" /> {event.location}
+              <img src={locationIcon} alt="" /> {event.location}
             </span>
           )}
         </div>
@@ -42,7 +47,7 @@ function EventCard({ event }) {
         <div className={styles.ticketsFindMore}>
           <a className="bgGlobalBtn" href="">
             <span>
-              <img src="../images/buy-ticket.svg" alt="" />
+              <img src={buyTicketIcon} alt="" />
               Buy Tickets
             </span>
           </a>

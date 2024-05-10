@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./auth.module.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+//images
+import whiteLogo from "../../assets/images/whiteLogo.svg";
+import mailIcon from "../../assets/images/mailIcon.svg";
+import lockIcon from "../../assets/images/lock.svg";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -92,7 +96,7 @@ const LoginPage = () => {
           <div className={styles.loginLeft}>
             <div className={styles.logiLogo}>
               <a href="/">
-                <img src="images/whiteLogo.svg" alt="" />
+                <img src={whiteLogo} alt="" />
               </a>
             </div>
             <div className={styles.loginContent}>
@@ -117,7 +121,7 @@ const LoginPage = () => {
             </div>
             <div className={styles.secondLogo}>
               <a href="#">
-                <img src="images/whiteLogo.svg" alt="" />
+                <img src={whiteLogo} alt="" />
               </a>
             </div>
             <div className={styles.formsSection}>
@@ -132,11 +136,7 @@ const LoginPage = () => {
                     required
                     placeholder="Email"
                   />
-                  <img
-                    src="images/mailIcon.svg"
-                    className={styles.inputImgs}
-                    alt=""
-                  />
+                  <img src={mailIcon} className={styles.inputImgs} alt="" />
                 </div>
                 <div>
                   <div className={styles.inputFields}>
@@ -148,11 +148,7 @@ const LoginPage = () => {
                       required
                       placeholder="Password"
                     />
-                    <img
-                      src="images/lock.svg"
-                      className={styles.inputImgs}
-                      alt=""
-                    />
+                    <img src={lockIcon} className={styles.inputImgs} alt="" />
                   </div>
                   <div className={styles.forgetDiv}>
                     <a href="/forgot-password-request">Forgot password?</a>

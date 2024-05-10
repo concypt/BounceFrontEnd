@@ -5,8 +5,10 @@ import Sidebar from "../../components/Dashboard/Sidebar";
 import "./styles/primaryStyles.css";
 import "./styles/comonStyles.css";
 import Swal from "sweetalert2";
+//images
 import name from "../../assets/images/name.svg";
 import phone from "../../assets/images/phone.png";
+import baseImage from "../../assets/images/base.svg";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -237,7 +239,7 @@ function Dashboard() {
                           src={
                             formData.image
                               ? URL.createObjectURL(formData.image)
-                              : userImage || "images/base.svg"
+                              : userImage || baseImage
                           }
                           alt=""
                         />

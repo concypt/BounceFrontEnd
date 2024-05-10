@@ -1,6 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styles from "./auth.module.css";
+//images
+import whiteLogo from "../../assets/images/whiteLogo.svg";
+import mailIcon from "../../assets/images/mailIcon.svg";
+import lockIcon from "../../assets/images/lock.svg";
 
 const ForgotPasswordReset = () => {
   const navigate = useNavigate(); // Initialize useNavigate
@@ -68,7 +72,7 @@ const ForgotPasswordReset = () => {
             <div className={styles.loginLeft}>
               <div className={styles.logiLogo}>
                 <a href="/">
-                  <img src="images/whiteLogo.svg" alt="" />
+                  <img src={whiteLogo} alt="" />
                 </a>
               </div>
               <div className={styles.loginContent}>
@@ -93,7 +97,7 @@ const ForgotPasswordReset = () => {
               </div>
               <div className={styles.secondLogo}>
                 <a href="#">
-                  <img src="images/whiteLogo.svg" alt="" />
+                  <img src={whiteLogo} alt="" />
                 </a>
               </div>
               <div className={styles.formsSection}>
@@ -116,11 +120,7 @@ const ForgotPasswordReset = () => {
                       required
                       placeholder="Password"
                     />
-                    <img
-                      src="images/lock.svg"
-                      className={styles.inputImgs}
-                      alt=""
-                    />
+                    <img src={lockIcon} className={styles.inputImgs} alt="" />
                   </div>
                   <div className={styles.inputFields}>
                     <input
@@ -130,11 +130,7 @@ const ForgotPasswordReset = () => {
                       required
                       placeholder="Confirm Password"
                     />
-                    <img
-                      src="images/lock.svg"
-                      className={styles.inputImgs}
-                      alt=""
-                    />
+                    <img src={lockIcon} className={styles.inputImgs} alt="" />
                   </div>
                   <div className={styles.header_btn}>
                     <button
