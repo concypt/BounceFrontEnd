@@ -74,10 +74,6 @@ const LoginPage = () => {
             navigate(redirectEventPage);
           }, 2000); // Redirect to follow
         } else {
-          // If there's no stored URL, navigate the user to the default page
-          console.log("logiiiiiiii");
-          toast.success("Login successfulllllllllllllllllllllllll!");
-          // <ToastContainer />;
           setTimeout(() => {
             navigate("/dashboard");
           }, 2000); // Redirect to dashboard page
