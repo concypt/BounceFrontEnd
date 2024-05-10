@@ -1,0 +1,59 @@
+.dashboardInput {
+  height: 46px;
+  width: 100%;
+  padding: 0 43px;
+  color: #8897ae;
+  font-size: 16px;
+  border: 1px solid #afbaca;
+  border-radius: 6px;
+  outline: none;
+  max-width: 396px;
+}
+
+.saveChangesBtn {
+  background-image: var(--linear-gradient-border);
+  border-radius: 40px;
+  box-sizing: border-box;
+  color: #fff;
+  display: block;
+  height: 54px;
+  letter-spacing: 1px;
+  padding: 4px;
+  position: relative;
+  text-decoration: none;
+  text-transform: uppercase;
+  width: 216px;
+  z-index: 2;
+  border: none;
+  transition: 0.5s ease;
+  margin-top: 30px;
+}
+
+.saveChangesBtn span {
+  font-family: var(--primary-font);
+  align-items: center;
+  background: transparent;
+  border-radius: 40px;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  transition: background 0.5s ease;
+  width: 100%;
+  font-size: 18px;
+  font-weight: normal;
+  text-transform: math-auto;
+}
+
+.saveChangesBtn:hover span {
+  background: white;
+}
+
+.saveChangesBtn:hover {
+  color: #7e79ff;
+}
+
+.countrySelect {
+  display: block;
+  width: 100%;
+  max-width: 396px;
+}

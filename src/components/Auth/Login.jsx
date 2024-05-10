@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./auth.module.css";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 //images
 import whiteLogo from "../../assets/images/whiteLogo.svg";

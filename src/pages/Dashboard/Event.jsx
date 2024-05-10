@@ -1,6 +1,6 @@
 //import React, { useEffect, useState, useRef } from "react";
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Header from "../../components/Dashboard/Header";
 import Sidebar from "../../components/Dashboard/Sidebar";
 import { useTable, useFilters, useGlobalFilter } from "react-table"; // Import useFilters and useGlobalFilter
@@ -23,7 +23,6 @@ function EventDashboard() {
         date: "2024-05-07",
         location: "Location 2",
       },
-      // Add more data as needed
     ],
     []
   );

@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom";
 import Header from "../../components/Dashboard/Header";
 import Sidebar from "../../components/Dashboard/Sidebar";
 import PasswordReset from "../../components/Auth/PasswordReset";
+import BankDetails from "../../components/User/BankDetails";
 import "./styles/primaryStyles.css";
 import "./styles/comonStyles.css";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 //images
 import name from "../../assets/images/name.svg";
 import phone from "../../assets/images/phone.png";
@@ -183,10 +185,6 @@ function Dashboard() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    // setFormData((prevState) => ({
-    //   ...prevState,
-    //   [name]: value,
-    // }));
     setFormData((prevState) => ({
       ...prevState,
       [name]: prevState[name] !== value ? value : prevState[name],
@@ -295,27 +293,21 @@ function Dashboard() {
                 </div>
                 <div id="tab-3">
                   <div className="left">
-                    <h4>iPhone SE</h4>
-                    <p>
-                      iPhone SE packs our powerful A13 Bionic chip into our most
-                      popular size at our most affordable price. It’s just what
-                      you’ve been waiting for.
-                    </p>
-                    <button>Shop Now</button>
+                    <BankDetails />
                   </div>
                   <div className="right"></div>
                 </div>
                 <div id="tab-4">
                   <div className="left">
-                    <h4>iPhone SE</h4>
-                    <p>
-                      iPhone SE packs our powerful A13 Bionic chip into our most
-                      popular size at our most affordable price. It’s just what
-                      you’ve been waiting for.
-                    </p>
-                    <button className="loginButton" type="submit">
+                    <h4>Apply for host profile</h4>
+                    <p>Youre not a host</p>
+                    <Link
+                      to="/dashboard-host"
+                      className="loginButton"
+                      type="submit"
+                    >
                       <span>Create account</span>
-                    </button>
+                    </Link>
                   </div>
                   <div className="right"></div>
                 </div>
