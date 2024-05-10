@@ -15,7 +15,6 @@ import Register from "./components/Auth/Register";
 import Verification from "./components/Auth/Verification";
 import Login from "./components/Auth/Login";
 import ForgotPasswordRequest from "./components/Auth/ForgotPasswordRequest";
-import ForgotPasswordReset from "./components/Auth/ForgotPasswordReset";
 import HostProfile from "./components/HostProfile";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Host from "./pages/Dashboard/Host";
@@ -48,7 +47,6 @@ const router = createBrowserRouter(
         path="/forgot-password-request"
         element={<ForgotPasswordRequest />}
       />
-      <Route path="/forgot-password-reset" element={<ForgotPasswordReset />} />
     </>
   )
 );

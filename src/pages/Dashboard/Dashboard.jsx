@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Dashboard/Header";
 import Sidebar from "../../components/Dashboard/Sidebar";
+import PasswordReset from "../../components/Auth/PasswordReset";
 import "./styles/primaryStyles.css";
 import "./styles/comonStyles.css";
 import Swal from "sweetalert2";
@@ -296,14 +297,7 @@ function Dashboard() {
                 </div>
                 <div id="tab-2">
                   <div className="left">
-                    <h4>iPhone 12</h4>
-                    <p>
-                      5G speed. A14 Bionic, the fastest chip in a smartphone. An
-                      edge-to-edge OLED display. Ceramic Shield with four times
-                      better drop performance. And Night mode on every camera.
-                      iPhone 12 has it all — in two perfect sizes.
-                    </p>
-                    <button>Shop Now</button>
+                    <PasswordReset />
                   </div>
                   <div className="right"></div>
                 </div>
