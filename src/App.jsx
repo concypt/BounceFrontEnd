@@ -17,7 +17,7 @@ import Login from "./components/Auth/Login";
 import ForgotPasswordRequest from "./components/Auth/ForgotPasswordRequest";
 import HostProfile from "./components/HostProfile";
 import Dashboard from "./pages/Dashboard/Dashboard";
-import Host from "./pages/Dashboard/Host";
+import ApplyHost from "./pages/Dashboard/ApplyForHost";
 import Event from "./pages/Dashboard/Event";
 import LoadingBar from "react-top-loading-bar";
 import EventSingle from "./pages/Dashboard/ViewSingleEvent.jsx";
@@ -36,7 +36,7 @@ const router = createBrowserRouter(
       </Route>
       {/* Should be in dashboard layout  */}
       <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/dashboard-host" element={<Host />} />
+      <Route path="/dashboard-host" element={<ApplyHost />} />
       <Route path="/dashboard-event" element={<Event />} />
       <Route path="/dashboard-single-event" element={<EventSingle />} />
       <Route path="/dashboard-marketing" element={<Marketing />} />

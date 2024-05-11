@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import EventCard from "./EventCard";
@@ -15,7 +15,7 @@ import userFive from "../assets/images/userFive.svg";
 
 const URL = "https://bounce.extrasol.co.uk/api/host/profile";
 
-const HostProfile = ({ limit }) => {
+const HostProfile = () => {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

@@ -48,6 +48,7 @@ const LoginPage = () => {
       localStorage.setItem("token", responseData.data.token);
       localStorage.setItem("fname", responseData.data.first_name);
       localStorage.setItem("lname", responseData.data.last_name);
+      localStorage.setItem("hostName", responseData.data.name);
       localStorage.setItem("phoneNumber", responseData.data.phone);
       localStorage.setItem("userImage", responseData.data.imagePath);
 
