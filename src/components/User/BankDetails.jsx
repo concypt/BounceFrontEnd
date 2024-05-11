@@ -91,6 +91,10 @@ const BankDetailsForm = () => {
       });
   };
 
+  if (!bankDetails) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <form onSubmit={handleSubmit}>
       <label htmlFor="bank_name">Bank Name:</label>
@@ -98,7 +102,7 @@ const BankDetailsForm = () => {
         type="text"
         id="bank_name"
         name="bank_name"
-        value={bankDetails.bank_name}
+        value={bankDetails.bank_name ?? ""}
         onChange={handleInputChange}
         className={styles.dashboardInput}
       />
@@ -110,7 +114,7 @@ const BankDetailsForm = () => {
         type="text"
         id="account_title"
         name="account_title"
-        value={bankDetails.account_title}
+        value={bankDetails.account_title ?? ""}
         onChange={handleInputChange}
         className={styles.dashboardInput}
       />
@@ -121,7 +125,7 @@ const BankDetailsForm = () => {
       <select
         id="country"
         name="country"
-        value={bankDetails.country}
+        value={bankDetails.country ?? ""}
         onChange={handleInputChange}
         className={styles.countrySelect}
       >
@@ -137,7 +141,7 @@ const BankDetailsForm = () => {
             type="text"
             id="account_number"
             name="account_number"
-            value={bankDetails.account_number}
+            value={bankDetails.account_number ?? ""}
             onChange={handleInputChange}
             className={styles.dashboardInput}
           />
@@ -149,7 +153,7 @@ const BankDetailsForm = () => {
             type="text"
             id="sort_code"
             name="sort_code"
-            value={bankDetails.sort_code}
+            value={bankDetails.sort_code ?? ""}
             onChange={handleInputChange}
             className={styles.dashboardInput}
           />
@@ -165,7 +169,7 @@ const BankDetailsForm = () => {
             type="text"
             id="iban"
             name="iban"
-            value={bankDetails.iban}
+            value={bankDetails.iban ?? ""}
             onChange={handleInputChange}
             className={styles.dashboardInput}
           />

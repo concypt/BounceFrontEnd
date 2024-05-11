@@ -8,6 +8,8 @@ import dashLogoImage from "../../assets/images/dashboard/dash-logo.svg";
 const Sidebar = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [showSublinks, setShowSublinks] = useState(false);
+  const hostName = localStorage.getItem("hostName");
+  console.log("host name =>" + hostName);
 
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
@@ -45,9 +47,11 @@ const Sidebar = () => {
             <Link to="">Promote</Link>
           </li>
           <li>
-            <Link to={`/dashboard-host`} onClick={toggleSublinks}>
-              Host
-            </Link>
+            {hostName === "null" ? (
+              <Link to="/dashboard-host">Host</Link>
+            ) : (
+              <Link onClick={toggleSublinks}>Host</Link>
+            )}
             <ul
               className={`${styles.sublinks} ${
                 showSublinks ? styles.showSublinks : ""

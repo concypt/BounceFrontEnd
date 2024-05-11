@@ -22,9 +22,7 @@ function HostDashboard() {
                   <label htmlFor="">Company name</label>
                   <input
                     type="text"
-                    name="first_name"
-                    // value={formData.first_name}
-                    // onChange={handleChange}
+                    name="name"
                     required
                     placeholder="Example Events"
                     className="comapanyName"
@@ -32,13 +30,7 @@ function HostDashboard() {
                 </div>
                 <div className="inputFields">
                   <label htmlFor="">Instagram handle</label>
-                  <input
-                    type="text"
-                    name="last_name"
-                    // value={formData.last_name}
-                    // onChange={handleChange}
-                    required
-                  />
+                  <input type="text" name="last_name" required />
                   <img
                     src="images/greyInsta.svg"
                     className="inputImgs"
@@ -50,13 +42,10 @@ function HostDashboard() {
                   <input
                     type="url"
                     name="email"
-                    // value={formData.email}
-                    // onChange={handleChange}
                     required
                     placeholder="https://"
                     className="comapanyName"
                   />
-                  {/* <img src="images/https.svg" className="inputImgs" alt="" /> */}
                 </div>
               </div>
               <div className="inputTextarea">
@@ -64,16 +53,8 @@ function HostDashboard() {
                   Tell us a little bit about the events you plan to host on
                   Bounce...
                 </textarea>
-                <button
-                  className="loginButton"
-                  type="submit"
-                  // disabled={isSubmitting} // Disable button when isSubmitting is true
-                >
-                  {/* {isSubmitting ? (
-                        "Submitting..."
-                      ) : ( */}
+                <button className="loginButton" type="submit">
                   <span>Submit Application</span>
-                  {/* )} */}
                 </button>
               </div>
             </div>

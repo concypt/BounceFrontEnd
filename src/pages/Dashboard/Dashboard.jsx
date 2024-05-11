@@ -21,7 +21,8 @@ function Dashboard() {
   const lname = localStorage.getItem("lname");
   const phoneNumber = localStorage.getItem("phoneNumber");
   const userImage = localStorage.getItem("userImage");
-
+  const hostName = localStorage.getItem("hostName");
+  console.log("host name =>" + hostName);
   useEffect(() => {
     if (!token) {
       navigate("/login");
@@ -299,15 +300,21 @@ function Dashboard() {
                 </div>
                 <div id="tab-4">
                   <div className="left">
-                    <h4>Apply for host profile</h4>
-                    <p>Youre not a host</p>
-                    <Link
-                      to="/dashboard-host"
-                      className="loginButton"
-                      type="submit"
-                    >
-                      <span>Create account</span>
-                    </Link>
+                    {hostName === "null" ? (
+                      <div className="apply-for-host">
+                        <h4>Apply for Host Profile</h4>
+                        <p>You are not a host</p>
+                        <Link
+                          to="/dashboard-host"
+                          className="loginButton"
+                          type="submit"
+                        >
+                          <span>Create Host Profile</span>
+                        </Link>
+                      </div>
+                    ) : (
+                      <p>not null</p>
+                    )}
                   </div>
                   <div className="right"></div>
                 </div>

@@ -1,13 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "../components/events.module.css";
-import LoadingBar from "react-top-loading-bar";
 import Swal from "sweetalert2";
 
 const FollowUnfollowBtn = ({ organisationId }) => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  const [loading, setLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isFollowingState, setIsFollowingState] = useState(null);
 
@@ -90,10 +87,7 @@ const FollowUnfollowBtn = ({ organisationId }) => {
 
   return (
     <div className="header_btn">
-      <button
-        className={`global_button_one ${styles.followBtn}`}
-        onClick={handleFollow}
-      >
+      <button className="global_button_one follow_btn" onClick={handleFollow}>
         <span>{isFollowingState ? "Unfollow" : "Follow"}</span>
       </button>
     </div>
