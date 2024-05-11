@@ -32,6 +32,10 @@ a {
   text-decoration: none;
 }
 
+.custom-wrapper {
+  margin: 0 30px;
+}
+
 .App {
   position: sticky;
   top: 20px;
@@ -889,6 +893,10 @@ span.rdrYearPicker {
 }
 
 @media screen and (max-width: 780px) {
+  .custom-wrapper {
+    margin: 0 22px;
+  }
+
   a.global-link-arrow {
     margin-left: 0;
     order: 1;
@@ -1033,6 +1041,11 @@ span.rdrYearPicker {
   }
 }
 
+@media screen and (max-width: 350px) {
+  .custom-wrapper {
+    margin: 0 10px;
+  }
+}
 /* global css */
 #preloader {
   background: #fff;

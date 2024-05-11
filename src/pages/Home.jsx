@@ -66,7 +66,9 @@ function Home() {
         </Reveal>
         <Reveal width="100%" delay="0.2">
           <div className="home_events">
-            <EventList limit={3} />
+            <div className="custom-wrapper">
+              <EventList limit={3} />
+            </div>
           </div>
         </Reveal>
       </div>

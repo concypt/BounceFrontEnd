@@ -69,93 +69,96 @@ function Events() {
   return (
     <>
       <div className="bounce_bg_circle">
-        <div className={styles.filterFrame}>
-          <div className={styles.filters}>
-            <h1>Filter</h1>
-            <form onSubmit={handleSubmit} className={styles.searchDiv}>
-              <input
-                className={styles.searchInput}
-                type="text"
-                placeholder="Enter your search terms here..."
-                name="search"
-                required
-              />
-              <button type="submit">Search</button>
-            </form>
-            <div className={styles.mainFilters}>
-              <div className={styles.mainCheckbox}>
-                <h2>
-                  Genres{" "}
-                  <span id="selectedCount">({selectedCount} selected)</span>
-                  <input type="checkbox" className={styles.smallCheckbox} />
-                </h2>
-                <form id="categoryForm" className={styles.mainCheckForm}>
-                  {categories.map((category, index) => (
-                    <CheckboxTag
-                      key={index}
-                      id={`categoryCheckbox-${index}`}
-                      value={category.id} // Assuming 'id' is used as value
-                      label={category.name}
-                      updateSelectedCount={updateSelectedCount}
-                    />
-                  ))}
-                </form>
-              </div>
-              <div className={styles.locationFields}>
-                <h2>
-                  Location{" "}
-                  <input type="checkbox" className={styles.smallCheckbox} />
-                </h2>
-                <div className={styles.locationInputs}>
-                  <div className={styles.locationSearch}>
-                    <img src="images/location_grey.svg" alt="" />
-                    <input type="search" name="" />
-                  </div>
-                  <select name="cars" id="cars" defaultValue="">
-                    <option value="" disabled>
-                      Within 40 miles
-                    </option>
-                    <option value="saab">Saab</option>
-                    <option value="opel">Opel</option>
-                    <option value="audi">Audi</option>
-                  </select>
+        <div className="custom-wrapper">
+          <div className={styles.filterFrame}>
+            <div className={styles.filters}>
+              <h1>Filter</h1>
+              <form onSubmit={handleSubmit} className={styles.searchDiv}>
+                <input
+                  className={styles.searchInput}
+                  type="text"
+                  placeholder="Enter your search terms here..."
+                  name="search"
+                  required
+                />
+                <button type="submit">Search</button>
+              </form>
+              <div className={styles.mainFilters}>
+                <div className={styles.mainCheckbox}>
+                  <h2>
+                    Genres{" "}
+                    <span id="selectedCount">({selectedCount} selected)</span>
+                    <input type="checkbox" className={styles.smallCheckbox} />
+                  </h2>
+                  <form id="categoryForm" className={styles.mainCheckForm}>
+                    {categories.map((category, index) => (
+                      <CheckboxTag
+                        key={index}
+                        id={`categoryCheckbox-${index}`}
+                        value={category.id} // Assuming 'id' is used as value
+                        label={category.name}
+                        updateSelectedCount={updateSelectedCount}
+                      />
+                    ))}
+                  </form>
                 </div>
-              </div>
-              <div className={styles.dateRange}>
-                <h2>
-                  Between these dates{" "}
-                  <input type="checkbox" className={styles.smallCheckbox} />
-                </h2>
-                <div onClick={toggleDatePicker} className={styles.dateFields}>
-                  <input
-                    type="text"
-                    placeholder="Start date"
-                    value={dateRange[0].startDate.toLocaleDateString()}
-                    readOnly
-                  />
-                  <p> To </p>
-                  <input
-                    type="text"
-                    placeholder="End date"
-                    value={dateRange[0].endDate?.toLocaleDateString()}
-                    readOnly
-                  />
-                  {showDatePicker && (
-                    <DateRangePicker
-                      onChange={handleDateRangeChange}
-                      months={1} // Display only one month per tab
-                      ranges={dateRange}
-                      direction="horizontal"
-                      editableDateInputs={false}
+                <div className={styles.locationFields}>
+                  <h2>
+                    Location{" "}
+                    <input type="checkbox" className={styles.smallCheckbox} />
+                  </h2>
+                  <div className={styles.locationInputs}>
+                    <div className={styles.locationSearch}>
+                      <img src="images/location_grey.svg" alt="" />
+                      <input type="search" name="" />
+                    </div>
+                    <select name="cars" id="cars" defaultValue="">
+                      <option value="" disabled>
+                        Within 40 miles
+                      </option>
+                      <option value="saab">Saab</option>
+                      <option value="opel">Opel</option>
+                      <option value="audi">Audi</option>
+                    </select>
+                  </div>
+                </div>
+                <div className={styles.dateRange}>
+                  <h2>
+                    Between these dates{" "}
+                    <input type="checkbox" className={styles.smallCheckbox} />
+                  </h2>
+                  <div onClick={toggleDatePicker} className={styles.dateFields}>
+                    <input
+                      type="text"
+                      placeholder="Start date"
+                      value={dateRange[0].startDate.toLocaleDateString()}
+                      readOnly
                     />
-                  )}
+                    <p> To </p>
+                    <input
+                      type="text"
+                      placeholder="End date"
+                      value={dateRange[0].endDate?.toLocaleDateString()}
+                      readOnly
+                    />
+                    {showDatePicker && (
+                      <DateRangePicker
+                        onChange={handleDateRangeChange}
+                        months={1} // Display only one month per tab
+                        ranges={dateRange}
+                        direction="horizontal"
+                        editableDateInputs={false}
+                      />
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
-        {/* Render EventList component with the events data */}
+      </div>
+      {/* Render EventList component with the events data */}
+      <div className="custom-wrapper">
         <div className={styles.eventList}>
           <EventList className={styles.eventsGrid} />
         </div>

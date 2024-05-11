@@ -10,7 +10,7 @@ const EventList = ({ limit }) => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchEvents = async () => {
       try {
         setProgress(30); // Start loading bar at 30%
         const response = await fetch(URL, {
@@ -35,7 +35,7 @@ const EventList = ({ limit }) => {
       }
     };
 
-    fetchData();
+    fetchEvents();
 
     return () => {
       // Cleanup if needed
@@ -43,21 +43,15 @@ const EventList = ({ limit }) => {
   }, []);
 
   return (
-    <div>
-      <div className="container-fluid">
-        <div className={styles.eventsGrid}>
-          {limit
-            ? events
-                .slice(0, limit)
-                .map((event, index) => (
-                  <EventCard key={event.id} event={event} />
-                ))
-            : events.map((event, index) => (
-                <EventCard key={event.id} event={event} />
-              ))}
-        </div>{" "}
-      </div>
-    </div>
+    <>
+      <div className={styles.eventsGrid}>
+        {limit
+          ? events
+              .slice(0, limit)
+              .map((event) => <EventCard key={event.id} event={event} />)
+          : events.map((event) => <EventCard key={event.id} event={event} />)}
+      </div>{" "}
+    </>
   );
 };
 

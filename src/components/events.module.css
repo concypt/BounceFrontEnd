@@ -1,16 +1,13 @@
-.eventsGrid a {
-  text-decoration: none;
-}
-
 .eventsGrid {
   display: grid;
   grid-template-columns: 32% 32% 32%;
-  column-gap: 20px;
   row-gap: 60px;
-  max-width: 1670px;
-  margin: 0 auto;
   justify-content: space-between;
   padding-top: 50px;
+}
+
+.eventsGrid a {
+  text-decoration: none;
 }
 
 .eventCard {
@@ -71,6 +68,7 @@
   display: inline-block;
   color: #fff;
   font-size: 14px;
+  font-weight: 600;
   line-height: 24px;
   border-radius: 30px;
   padding: 3px 20px;
@@ -311,7 +309,7 @@
 /* Filters */
 
 .filterFrame {
-  padding: 0 20px;
+  padding: 0;
   padding-top: 160px;
   max-width: 1740px;
   margin: 0 auto;
@@ -569,9 +567,10 @@ select {
 
 @media (max-width: 1300px) {
   .eventsGrid {
-    max-width: 1100px;
     grid-template-columns: 48% 48%;
-    justify-content: center;
+  }
+  .eventCard {
+    max-width: 100%;
   }
 }
 
@@ -586,13 +585,11 @@ select {
 
 @media (max-width: 767px) {
   .eventsGrid {
-    display: block;
+    grid-template-columns: 100%;
   }
 
   .eventCard {
-    margin: 0 auto;
-    width: 95%;
-    margin-bottom: 40px;
+    width: 100%;
   }
 
   .details h2 {
