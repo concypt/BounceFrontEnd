@@ -9,7 +9,6 @@ const Sidebar = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [showSublinks, setShowSublinks] = useState(false);
   const hostName = localStorage.getItem("hostName");
-  console.log("host name =>" + hostName);
 
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);

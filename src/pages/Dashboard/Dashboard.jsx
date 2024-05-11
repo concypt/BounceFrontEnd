@@ -22,7 +22,6 @@ function Dashboard() {
   const phoneNumber = localStorage.getItem("phoneNumber");
   const userImage = localStorage.getItem("userImage");
   const hostName = localStorage.getItem("hostName");
-  console.log("host name =>" + hostName);
   useEffect(() => {
     if (!token) {
       navigate("/login");

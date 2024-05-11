@@ -28,8 +28,12 @@ const BankDetailsForm = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        setBankDetails(data.data);
-        setInitialBankDetails(data.data);
+        if (data.data) {
+          setBankDetails(data.data);
+          setInitialBankDetails(data.data);
+        } else {
+          // console.log("Bank details contain null values:", data.data);
+        }
       })
       .catch((error) => console.error("Error fetching bank details:", error));
   };
