@@ -32,21 +32,17 @@ function HostDashboard() {
       body: JSON.stringify(formData),
     })
       .then((response) => response.json())
-      .then((data) => {
-        console.log("Response from API:", data);
+      .then(() => {
+        // console.log("Response from API:", data);
         // Handle success or error response from the API
-        // Swal.fire({
-        //   icon: "success",
-        //   title: "Success",
-        //   text: "You are host now.",
-        //   timer: 2000,
-        //   timerProgressBar: true,
-        //   didOpen: () => {
-        //     Swal.showLoading();
-        //   },
-        // }).then(() => {
-        //   navigate("/dashboard");
-        // });
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Congrats! You are host now.",
+          timer: 2000,
+        }).then(() => {
+          navigate("/dashboard");
+        });
       })
       .catch((error) => {
         console.error("Error submitting host application:", error);

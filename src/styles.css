@@ -1047,11 +1047,13 @@ span.rdrYearPicker {
   }
 }
 /* global css */
-#preloader {
-  background: #fff;
-}
 
 /* Override the default SweetAlert success icon color */
+button.swal2-cancel.swal2-styled {
+  padding: 10px 40px;
+  border-radius: 22px;
+}
+
 .swal2-icon.swal2-success .swal2-success-ring {
   border: 5px solid #7e79ff;
 }

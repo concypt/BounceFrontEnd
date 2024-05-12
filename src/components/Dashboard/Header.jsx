@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./header.module.css";
+import Swal from "sweetalert2";
 
 //images
 import baseImage from "../../assets/images/base.svg";
@@ -9,16 +10,32 @@ import dashboardLogout from "../../assets/images/dashboard/dashboardLogout.svg";
 
 const Header = () => {
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
   const fname = localStorage.getItem("fname");
   const lname = localStorage.getItem("lname");
   const userImage = localStorage.getItem("userImage");
 
   const handleLogout = () => {
-    // Remove token from local storage
-    localStorage.removeItem("token");
-    // Redirect to login page
-    navigate("/login");
+    Swal.fire({
+      title: "Are you sure you want to logout?",
+      text: "You will be logged out of your account.",
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Remove token from local storage
+        localStorage.removeItem("token");
+        localStorage.removeItem("fname");
+        localStorage.removeItem("lname");
+        localStorage.removeItem("hostName");
+        localStorage.removeItem("followingArray");
+        localStorage.removeItem("phoneNumber");
+        localStorage.removeItem("userImage");
+        // Redirect to login page
+        navigate("/login");
+      }
+    });
   };
 
   return (
