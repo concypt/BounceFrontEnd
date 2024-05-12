@@ -32,15 +32,14 @@ function HostDashboard() {
       body: JSON.stringify(formData),
     })
       .then((response) => response.json())
-      .then(() => {
-        // console.log("Response from API:", data);
-        // Handle success or error response from the API
+      .then((response) => {
         Swal.fire({
           icon: "success",
           title: "Success",
           text: "Congrats! You are host now.",
           timer: 2000,
         }).then(() => {
+          localStorage.setItem("hostName", response.data.name);
           navigate("/dashboard");
         });
       })

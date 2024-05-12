@@ -960,11 +960,11 @@ button.delete.ml-auto {
   border-radius: 5px;
 }
 
-#gallery article{
+#gallery article {
   border-radius: 21px;
 }
 
-.uploadImgDiv{
+.uploadImgDiv {
   position: relative;
   z-index: 99;
 }
@@ -1148,4 +1148,9 @@ button.delete.ml-auto {
     width: 20px;
     height: 20px;
   }
+}
+
+/* Masab Styles */
+#content > div.edit-host-profile-tab {
+  display: block;
 }

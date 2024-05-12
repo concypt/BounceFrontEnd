@@ -101,73 +101,72 @@ const BankDetailsForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="bank_name">Bank Name:</label>
-      <input
-        type="text"
-        id="bank_name"
-        name="bank_name"
-        value={bankDetails.bank_name ?? ""}
-        onChange={handleInputChange}
-        className={styles.dashboardInput}
-      />
-      <br />
-      <br />
-
-      <label htmlFor="account_title">Account Title:</label>
-      <input
-        type="text"
-        id="account_title"
-        name="account_title"
-        value={bankDetails.account_title ?? ""}
-        onChange={handleInputChange}
-        className={styles.dashboardInput}
-      />
-      <br />
-      <br />
-
-      <label htmlFor="country">Country:</label>
-      <select
-        id="country"
-        name="country"
-        value={bankDetails.country ?? ""}
-        onChange={handleInputChange}
-        className={styles.countrySelect}
-      >
-        <option value="1">UK</option>
-        <option value="2">Abroad</option>
-      </select>
-      <br />
-
+      <div className={styles.twoInputFields}>
+        <div className={styles.halfInputField}>
+          <label htmlFor="bank_name">Bank Name:</label>
+          <input
+            type="text"
+            id="bank_name"
+            name="bank_name"
+            value={bankDetails.bank_name ?? ""}
+            onChange={handleInputChange}
+            className={styles.dashboardInput}
+          />
+        </div>
+        <div className={styles.halfInputField}>
+          <label htmlFor="account_title">Account Title:</label>
+          <input
+            type="text"
+            id="account_title"
+            name="account_title"
+            value={bankDetails.account_title ?? ""}
+            onChange={handleInputChange}
+            className={styles.dashboardInput}
+          />
+        </div>
+        <div className={styles.fullInputField}>
+          <label htmlFor="country">Country:</label>
+          <select
+            id="country"
+            name="country"
+            value={bankDetails.country ?? ""}
+            onChange={handleInputChange}
+            className={styles.countrySelect}
+          >
+            <option value="1">UK</option>
+            <option value="2">Abroad</option>
+          </select>
+        </div>
+      </div>
       {bankDetails.country === "1" && (
-        <div>
-          <label htmlFor="account_number">Account Number:</label>
-          <input
-            type="text"
-            id="account_number"
-            name="account_number"
-            value={bankDetails.account_number ?? ""}
-            onChange={handleInputChange}
-            className={styles.dashboardInput}
-          />
-          <br />
-          <br />
-
-          <label htmlFor="sort_code">Sort Code:</label>
-          <input
-            type="text"
-            id="sort_code"
-            name="sort_code"
-            value={bankDetails.sort_code ?? ""}
-            onChange={handleInputChange}
-            className={styles.dashboardInput}
-          />
-          <br />
-          <br />
+        <div className={styles.twoInputFields}>
+          <div className={styles.halfInputField}>
+            <label htmlFor="account_number">Account Number:</label>
+            <input
+              type="text"
+              id="account_number"
+              name="account_number"
+              value={bankDetails.account_number ?? ""}
+              onChange={handleInputChange}
+              className={styles.dashboardInput}
+            />
+          </div>
+          <div className={styles.halfInputField}>
+            <label htmlFor="sort_code">Sort Code:</label>
+            <input
+              type="text"
+              id="sort_code"
+              name="sort_code"
+              value={bankDetails.sort_code ?? ""}
+              onChange={handleInputChange}
+              className={styles.dashboardInput}
+            />
+          </div>
         </div>
       )}
 
       {bankDetails.country === "2" && (
-        <div>
+        <div className={styles.fullInputField}>
           <label htmlFor="iban">IBAN:</label>
           <input
             type="text"

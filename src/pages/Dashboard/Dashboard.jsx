@@ -4,6 +4,7 @@ import Header from "../../components/Dashboard/Header";
 import Sidebar from "../../components/Dashboard/Sidebar";
 import PasswordReset from "../../components/Auth/PasswordReset";
 import BankDetails from "../../components/User/BankDetails";
+import UpdateHostProfile from "../../components/Host/UpdateHostProfile";
 import "./styles/primaryStyles.css";
 import "./styles/comonStyles.css";
 import Swal from "sweetalert2";
@@ -297,7 +298,7 @@ function Dashboard() {
                   </div>
                   <div className="right"></div>
                 </div>
-                <div id="tab-4">
+                <div id="tab-4" className="edit-host-profile-tab">
                   <div className="left">
                     {hostName === "null" ? (
                       <div className="apply-for-host">
@@ -312,7 +313,7 @@ function Dashboard() {
                         </Link>
                       </div>
                     ) : (
-                      <p>not null</p>
+                      <UpdateHostProfile />
                     )}
                   </div>
                   <div className="right"></div>
