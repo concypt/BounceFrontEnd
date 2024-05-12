@@ -23,6 +23,7 @@ import LoadingBar from "react-top-loading-bar";
 import EventSingle from "./pages/Dashboard/ViewSingleEvent.jsx";
 import Marketing from "./pages/Dashboard/Marketing.jsx";
 import CreateEvent from "./pages/Dashboard/CreateEvent.jsx";
+import About from "./pages/static/About.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -41,6 +42,7 @@ const router = createBrowserRouter(
       <Route path="/dashboard-single-event" element={<EventSingle />} />
       <Route path="/dashboard-marketing" element={<Marketing />} />
       <Route path="/dashboard-create-event" element={<CreateEvent />} />
+      <Route path="/about" element={<About />} />
       {/* without layout pages */}
       <Route path="/register" element={<Register />} />
       <Route path="/verification" element={<Verification />} />
