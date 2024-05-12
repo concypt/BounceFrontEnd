@@ -182,30 +182,44 @@ function CreateEvent() {
                             </main>
                           </div>
                         </div>{" "}
-                        <label className="fieldlabels">Email: *</label>{" "}
-                        <input
-                          type="email"
-                          name="email"
-                          placeholder="Email Id"
-                          value={formData.email}
-                          onChange={handleChange}
-                        />{" "}
-                        <label className="fieldlabels">Username: *</label>{" "}
-                        <input
-                          type="text"
-                          name="uname"
-                          placeholder="UserName"
-                          value={formData.uname}
-                          onChange={handleChange}
-                        />{" "}
-                        <label className="fieldlabels">Password: *</label>{" "}
-                        <input
-                          type="password"
-                          name="pwd"
-                          placeholder="Password"
-                          value={formData.pwd}
-                          onChange={handleChange}
-                        />{" "}
+                        <div className="eventFields">
+                          <div className="eventLables">
+                            <label className="fieldlabels">Event Name</label>{" "}
+                            <input
+                              type="text"
+                              name="text"
+                              placeholder="Name"
+                              onChange={handleChange}
+                            />{" "}
+                          </div>
+                          <div className="eventLables">
+                            <label className="fieldlabels">
+                              Event Category
+                            </label>{" "}
+                            <select
+                              className="form-select form-select-lg"
+                              aria-label=".form-select-lg example"
+                            >
+                              <option selected>Event Category</option>
+                              <option value="1">One</option>
+                              <option value="2">Two</option>
+                              <option value="3">Three</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div className="eventLables">
+                          <label className="fieldlabels">Tags</label>{" "}
+                          <select
+                            className="form-select form-select-lg"
+                            aria-label=".form-select-lg example"
+                          >
+                            <option selected>Event Category</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                          </select>
+                        </div>
+              
                         <label className="fieldlabels">
                           Confirm Password: *
                         </label>{" "}

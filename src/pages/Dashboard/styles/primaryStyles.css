@@ -670,7 +670,7 @@ input[type="radio"] {
 
 .tabs .progressCard {
   width: 100%;
-  max-width: 908px;
+  max-width: 950px;
 }
 
 #heading {
@@ -705,19 +705,20 @@ input[type="radio"] {
 }
 
 #msform input,
-#msform textarea {
+#msform textarea,
+#msform select {
   padding: 8px 15px 8px 15px;
-  border: 1px solid #ccc;
-  border-radius: 0px;
+  border: 1px solid #d9d8dc;
+  border-radius: 8px;
   margin-bottom: 25px;
   margin-top: 2px;
   width: 100%;
   box-sizing: border-box;
-  font-family: montserrat;
+  font-family: var(--primary);
   color: #2c3e50;
-  background-color: #eceff1;
-  font-size: 16px;
-  letter-spacing: 1px;
+  background-color: transparent;
+  font-size: 14px;
+  box-shadow: none;
 }
 
 #msform .action-button {
@@ -784,7 +785,8 @@ input[type="radio"] {
 }
 
 .fieldlabels {
-  color: gray;
+  font-size: 14px;
+  color: #3d4a5c;
   text-align: left;
 }
 
@@ -960,13 +962,23 @@ button.delete.ml-auto {
   border-radius: 5px;
 }
 
-#gallery article{
+#gallery article {
   border-radius: 21px;
 }
 
-.uploadImgDiv{
+.uploadImgDiv {
   position: relative;
   z-index: 99;
+}
+
+.eventFields {
+  display: flex;
+  justify-content: space-between;
+  gap: 25px;
+}
+
+.eventLables {
+  width: 100%;
 }
 @media (max-width: 1600px) {
   .hostSection {
