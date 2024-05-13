@@ -37,9 +37,7 @@ function Dashboard() {
   });
 
   useEffect(() => {
-    function handleImageLoad() {
-      console.log("Image loaded");
-    }
+    function handleImageLoad() {}
 
     const img = document.getElementById("img-preview");
     if (img) {

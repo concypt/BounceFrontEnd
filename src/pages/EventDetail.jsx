@@ -1,56 +1,138 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
-import FollowUnfollowBtn from "../components/FollowUnfollowBtn";
 import styles from "../components/events.module.css";
 import LoadingBar from "react-top-loading-bar";
-import moment from "moment";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
-const EventDetail = () => {
-  const { eventId } = useParams();
+const FollowUnfollowBtn = ({ organisationId }) => {
+  // Accept organisationId as prop
   const navigate = useNavigate();
 
   const [event, setEvent] = useState(null);
   const [loadingComplete, setLoadingComplete] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isFollowingState, setIsFollowingState] = useState(null);
   const location = useLocation();
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    const fetchEventDetails = async () => {
+    const fetchDataAndStoreArray = async () => {
       try {
         const response = await fetch(
-          `https://bounce.extrasol.co.uk/api/attenders/event-detail/${eventId}`,
+          "https://bounce.extrasol.co.uk/api/user/profile",
           {
+            method: "GET",
             headers: {
               "Content-Type": "application/json",
               Accept: "application/json",
-              "X-Api-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
           }
         );
 
         if (!response.ok) {
-          throw new Error("Failed to fetch event details");
+          throw new Error("Failed to fetch data");
         }
 
-        const eventData = await response.json();
-        setEvent(eventData.data);
+        const responseData = await response.json();
+        const followingArray = responseData.data.following;
+        localStorage.setItem("storedArray", JSON.stringify(followingArray));
+        // console.log("Array stored in local storage:", followingArray);
+
+        // Now that we have stored the array, let's update isFollowingState
+        const isFollowing = followingArray.includes(organisationId);
+        setIsFollowingState(isFollowing);
       } catch (error) {
-        console.error("Error fetching event details:", error);
-      } finally {
-        setLoadingComplete(true);
+        console.error("Error fetching data and storing array:", error);
       }
     };
 
-    fetchEventDetails();
+    fetchDataAndStoreArray();
+  }, [token, organisationId]);
+
+  useEffect(() => {
+    if (organisationId) {
+      // Ensure organisationId is defined before fetching event details
+      const fetchEventDetails = async () => {
+        try {
+          const response = await fetch(
+            `https://bounce.extrasol.co.uk/api/host/profile/${organisationId}`
+          );
+
+          if (!response.ok) {
+            throw new Error("Failed to fetch organisation details");
+          }
+
+          const eventData = await response.json();
+          setEvent(eventData.data);
+        } catch (error) {
+          console.error("Error fetching organisation details:", error);
+        } finally {
+          setLoadingComplete(true);
+        }
+      };
+
+      fetchEventDetails();
+    }
 
     if (token) {
       setIsLoggedIn(true);
     }
-  }, [eventId, token]);
+  }, [organisationId, token]);
+
+  const toggleFollow = async (organizationId) => {
+    try {
+      const url = `https://bounce.extrasol.co.uk/api/user/add-followList/${organizationId}`;
+
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to toggle follow status");
+      }
+
+      return Promise.resolve();
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  };
+
+  const handleFollow = () => {
+    if (isLoggedIn) {
+      toggleFollow(organisationId)
+        .then(() => {
+          setIsFollowingState((prev) => !prev);
+          Swal.fire({
+            icon: "success",
+            title: !isFollowingState
+              ? "Followed successfully!"
+              : "Unfollowed successfully!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        })
+        .catch((error) => {
+          console.error("Toggle follow API error:", error);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+          });
+        });
+    } else {
+      localStorage.setItem("redirectEventPage", window.location.pathname);
+      setTimeout(() => {
+        navigate("/login");
+      }, 1500);
+    }
+  };
 
   if (!event) {
     return (
@@ -62,141 +144,18 @@ const EventDetail = () => {
     );
   }
 
-  // Assuming $setting and $item are objects with properties org_commission and price respectively
-  let netPrice = 0;
-  let adminFee = 0;
-  if (event.ticket && event.ticket.length > 0 && event.ticket[0].price) {
-    const adminPercentage = (100 - event.org_commission) / 100;
-    netPrice = event.ticket[0].price / (1 + adminPercentage);
-    adminFee = event.ticket[0].price - netPrice;
-  }
-
   return (
     <>
-      <div className={`${styles.event_detail} bounce_bg_circle`}>
-        <div className={styles.event_detail_content}>
-          <div className={styles.event_main_img}>
-            <img
-              className={styles.eventImg}
-              src={event.image}
-              alt="San Francisco"
-            />
-            <div className={styles.category_main}>
-              <h5 className={styles.category_name}>{event.category.name}</h5>
-            </div>
-            <div className={styles.heart_icon}>
-              <img src="/images/heart.svg" alt="" />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-12 col-lg-7">
-              <div className={styles.details}>
-                <h2>{event.name}</h2>
-                <div className={styles.event_detail_card}>
-                  <div className={styles.event_circle_img}>
-                    <p className={styles.image_path}>
-                      {event.organisation.imagePath}
-                    </p>
-                    <img src="http://bounce.extrasol.co.uk/images/upload/defaultuser.png" />
-                    <div className={styles.card_text}>
-                      <Link
-                        to={{
-                          pathname: `/host-profile/${event.organisation.id}`,
-                        }}
-                      >
-                        {event.organisation.first_name +
-                          " " +
-                          event.organisation.last_name}
-                      </Link>
-                      <p>{event.organisation.followers.length} followers</p>
-                    </div>
-                  </div>
-                  <FollowUnfollowBtn organisationId={event.organisation.id} />
-                </div>
-                <div className={styles.cart_description}>
-                  <p className={styles.event_date}>
-                    <img
-                      src="/images/calender.svg"
-                      className={styles.description_img}
-                      alt=""
-                    />{" "}
-                    {event.date}
-                  </p>
-                  <p>
-                    {" "}
-                    <img
-                      src="/images/clock_grey.svg"
-                      className={styles.description_img}
-                      alt=""
-                    />{" "}
-                    {moment(event.start_time).format("HH:mm:ss")}
-                  </p>
-                  <p>
-                    {" "}
-                    <img
-                      src="/images/location_grey.svg"
-                      className={styles.description_img}
-                      alt=""
-                    />{" "}
-                    {event.address}
-                  </p>
-                </div>
-                <div className={styles.hashtags}>
-                  {event.hasTag &&
-                    event.hasTag.length > 0 &&
-                    event.hasTag.map((tag, index) => (
-                      <span key={index}>{tag} </span>
-                    ))}
-                </div>
-
-                <div className={styles.description_heading}>
-                  <h2>About the event</h2>
-                  <p>Description: {event.description}</p>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-12 col-lg-5">
-              <div className={styles.details}>
-                <div className={styles.ticket_detail}>
-                  <h3>Tickets available</h3>
-
-                  {event.ticket &&
-                    event.ticket.length &&
-                    (event.ticket[0].absorbe_fees === 0 ? (
-                      <>
-                        £ {netPrice.toFixed(2)}
-                        <p className="fee_text">+ £{adminFee.toFixed(2)} Fee</p>
-                      </>
-                    ) : (
-                      <>£ {event.ticket[0].price}</>
-                    ))}
-
-                  <div className="header_btn">
-                    <a href="#" className="global_button_one">
-                      <span>Secure your ticket</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <div className={styles.details}>
-                <div className={styles.ticket_detail}>
-                  <h3>Promote this event</h3>
-                  <p className={styles.ticket_text}>
-                    Earn 10% of every ticket <br /> purchased through your link.
-                  </p>
-                  <div className="header_btn">
-                    <a href="#" className="global_button_one">
-                      <span>Request my link</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div className="header_btn">
+        <button
+          className={`global_button_one ${styles.followBtn}`}
+          onClick={handleFollow}
+        >
+          <span>{isFollowingState ? "Unfollow" : "Follow"}</span>
+        </button>
       </div>
     </>
   );
 };
 
-export default EventDetail;
+export default FollowUnfollowBtn;

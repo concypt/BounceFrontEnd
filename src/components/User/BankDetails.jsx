@@ -3,15 +3,7 @@ import styles from "./user.module.css";
 import Swal from "sweetalert2";
 
 const BankDetailsForm = () => {
-  const [bankDetails, setBankDetails] = useState({
-    bank_name: "",
-    account_title: "",
-    account_number: "",
-    sort_code: "",
-    iban: "",
-    country: "1",
-  });
-
+  const [bankDetails, setBankDetails] = useState(null);
   const [initialBankDetails, setInitialBankDetails] = useState(null);
 
   useEffect(() => {
@@ -28,11 +20,27 @@ const BankDetailsForm = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.data) {
+        if (data.data !== 1) {
           setBankDetails(data.data);
           setInitialBankDetails(data.data);
         } else {
-          // console.log("Bank details contain null values:", data.data);
+          // No bank details available yet
+          setBankDetails({
+            bank_name: "",
+            account_title: "",
+            account_number: "",
+            sort_code: "",
+            iban: "",
+            country: "1",
+          });
+          setInitialBankDetails({
+            bank_name: "",
+            account_title: "",
+            account_number: "",
+            sort_code: "",
+            iban: "",
+            country: "1",
+          });
         }
       })
       .catch((error) => console.error("Error fetching bank details:", error));
@@ -108,7 +116,7 @@ const BankDetailsForm = () => {
             type="text"
             id="bank_name"
             name="bank_name"
-            value={bankDetails.bank_name ?? ""}
+            value={bankDetails.bank_name}
             onChange={handleInputChange}
             className={styles.dashboardInput}
           />
@@ -119,24 +127,24 @@ const BankDetailsForm = () => {
             type="text"
             id="account_title"
             name="account_title"
-            value={bankDetails.account_title ?? ""}
+            value={bankDetails.account_title}
             onChange={handleInputChange}
             className={styles.dashboardInput}
           />
         </div>
-        <div className={styles.fullInputField}>
-          <label htmlFor="country">Country:</label>
-          <select
-            id="country"
-            name="country"
-            value={bankDetails.country ?? ""}
-            onChange={handleInputChange}
-            className={styles.countrySelect}
-          >
-            <option value="1">UK</option>
-            <option value="2">Abroad</option>
-          </select>
-        </div>
+      </div>
+      <div className={styles.fullInputField}>
+        <label htmlFor="country">Country:</label>
+        <select
+          id="country"
+          name="country"
+          value={bankDetails.country}
+          onChange={handleInputChange}
+          className={styles.countrySelect}
+        >
+          <option value="1">UK</option>
+          <option value="2">Abroad</option>
+        </select>
       </div>
       {bankDetails.country === "1" && (
         <div className={styles.twoInputFields}>
@@ -146,7 +154,7 @@ const BankDetailsForm = () => {
               type="text"
               id="account_number"
               name="account_number"
-              value={bankDetails.account_number ?? ""}
+              value={bankDetails.account_number}
               onChange={handleInputChange}
               className={styles.dashboardInput}
             />
@@ -157,14 +165,13 @@ const BankDetailsForm = () => {
               type="text"
               id="sort_code"
               name="sort_code"
-              value={bankDetails.sort_code ?? ""}
+              value={bankDetails.sort_code}
               onChange={handleInputChange}
               className={styles.dashboardInput}
             />
           </div>
         </div>
       )}
-
       {bankDetails.country === "2" && (
         <div className={styles.fullInputField}>
           <label htmlFor="iban">IBAN:</label>
@@ -172,7 +179,7 @@ const BankDetailsForm = () => {
             type="text"
             id="iban"
             name="iban"
-            value={bankDetails.iban ?? ""}
+            value={bankDetails.iban}
             onChange={handleInputChange}
             className={styles.dashboardInput}
           />

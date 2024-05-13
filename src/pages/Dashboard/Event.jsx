@@ -1,50 +1,59 @@
-//import React, { useEffect, useState, useRef } from "react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../../components/Dashboard/Header";
 import Sidebar from "../../components/Dashboard/Sidebar";
-import { useTable, useFilters, useGlobalFilter } from "react-table"; // Import useFilters and useGlobalFilter
+import { useTable, useFilters, useGlobalFilter, useSortBy } from "react-table";
+import PropTypes from "prop-types";
 import "./styles/primaryStyles.css";
 import "./styles/comonStyles.css";
 
 function EventDashboard() {
-  // Sample data
-  const data = React.useMemo(
-    () => [
-      {
-        id: 1,
-        eventName: "Event 1",
-        date: "2024-05-06",
-        location: "Location 1",
-      },
-      {
-        id: 2,
-        eventName: "Event 2",
-        date: "2024-05-07",
-        location: "Location 2",
-      },
-    ],
-    []
-  );
+  const [tableData, setTableData] = useState([]);
 
-  // Define table columns
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "https://bounce.extrasol.co.uk/api/user/all-event",
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        const data = await response.json();
+        setTableData(data.data.events);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Define columns for React Table
   const columns = React.useMemo(
     () => [
       {
-        Header: "ID",
-        accessor: "id",
-      },
-      {
         Header: "Event Name",
-        accessor: "eventName",
+        accessor: "name",
+        sortType: "basic",
       },
       {
         Header: "Date",
-        accessor: "date",
-      },
-      {
-        Header: "Location",
-        accessor: "location",
+        accessor: "start_time",
+        Cell: ({ value }) => {
+          // Convert the value to a JavaScript Date object
+          const date = new Date(value);
+          // Format the date to display only the date part
+          const formattedDate = date.toISOString().split("T")[0];
+          return <span>{formattedDate}</span>;
+        },
       },
     ],
     []
@@ -60,9 +69,10 @@ function EventDashboard() {
     state,
     setGlobalFilter,
   } = useTable(
-    { columns, data },
-    useFilters, // useFilters hook
-    useGlobalFilter // useGlobalFilter hook
+    { columns, data: tableData },
+    useFilters,
+    useGlobalFilter,
+    useSortBy
   );
 
   const { globalFilter } = state;
@@ -87,11 +97,18 @@ function EventDashboard() {
             <div className="table-container">
               <table {...getTableProps()} className="table">
                 <thead>
-                  {headerGroups.map((headerGroup) => (
-                    <tr {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroups.map((headerGroup, index) => (
+                    <tr {...headerGroup.getHeaderGroupProps()} key={index}>
                       {headerGroup.headers.map((column) => (
-                        <th {...column.getHeaderProps()}>
+                        <th {...column.getHeaderProps()} key={column.id}>
                           {column.render("Header")}
+                          <span>
+                            {column.isSorted
+                              ? column.isSortedDesc
+                                ? " 🔽"
+                                : " 🔼"
+                              : ""}
+                          </span>
                         </th>
                       ))}
                     </tr>
@@ -101,10 +118,10 @@ function EventDashboard() {
                   {rows.map((row, i) => {
                     prepareRow(row);
                     return (
-                      <tr {...row.getRowProps()}>
+                      <tr {...row.getRowProps()} key={row.id}>
                         {row.cells.map((cell) => {
                           return (
-                            <td {...cell.getCellProps()}>
+                            <td {...cell.getCellProps()} key={cell.column.id}>
                               {cell.render("Cell")}
                             </td>
                           );
@@ -120,16 +137,8 @@ function EventDashboard() {
             <div className="actionDiv">
               <h2>Ready to bounce into action?</h2>
               <Link to={`/dashboard-create-event`}>
-                <button
-                  className="loginButton"
-                  type="submit"
-                  // disabled={isSubmitting} // Disable button when isSubmitting is true
-                >
-                  {/* {isSubmitting ? (
-                        "Submitting..."
-                      ) : ( */}
+                <button className="loginButton" type="submit">
                   <span>Create new event</span>
-                  {/* )} */}
                 </button>
               </Link>
             </div>
@@ -154,37 +163,7 @@ function EventDashboard() {
               <div className="searchBar">
                 <h2>Ticket Orders</h2>
               </div>
-              <div className="table-container">
-                <table {...getTableProps()} className="table">
-                  <thead>
-                    {headerGroups.map((headerGroup) => (
-                      <tr {...headerGroup.getHeaderGroupProps()}>
-                        {headerGroup.headers.map((column) => (
-                          <th {...column.getHeaderProps()}>
-                            {column.render("Header")}
-                          </th>
-                        ))}
-                      </tr>
-                    ))}
-                  </thead>
-                  <tbody {...getTableBodyProps()}>
-                    {rows.map((row, i) => {
-                      prepareRow(row);
-                      return (
-                        <tr {...row.getRowProps()}>
-                          {row.cells.map((cell) => {
-                            return (
-                              <td {...cell.getCellProps()}>
-                                {cell.render("Cell")}
-                              </td>
-                            );
-                          })}
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
+              <div className="table-container"></div>
             </div>
             <div className="secondActionsDiv">
               <div className="tableOne">
@@ -198,37 +177,7 @@ function EventDashboard() {
                     <img src="images/right-arrow.svg" alt="" />
                   </Link>
                 </div>
-                <div className="table-container">
-                  <table {...getTableProps()} className="table">
-                    <thead>
-                      {headerGroups.map((headerGroup) => (
-                        <tr {...headerGroup.getHeaderGroupProps()}>
-                          {headerGroup.headers.map((column) => (
-                            <th {...column.getHeaderProps()}>
-                              {column.render("Header")}
-                            </th>
-                          ))}
-                        </tr>
-                      ))}
-                    </thead>
-                    <tbody {...getTableBodyProps()}>
-                      {rows.map((row, i) => {
-                        prepareRow(row);
-                        return (
-                          <tr {...row.getRowProps()}>
-                            {row.cells.map((cell) => {
-                              return (
-                                <td {...cell.getCellProps()}>
-                                  {cell.render("Cell")}
-                                </td>
-                              );
-                            })}
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </div>
+                <div className="table-container"></div>
                 <p className="tableContent">
                   Not automatic, either manually paid out or simple workflow
                   needed to handle this. Based on when events happen, 7-14 days

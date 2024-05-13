@@ -32,6 +32,9 @@ const Header = () => {
         localStorage.removeItem("followingArray");
         localStorage.removeItem("phoneNumber");
         localStorage.removeItem("userImage");
+        localStorage.removeItem("instagram");
+        localStorage.removeItem("website");
+        localStorage.removeItem("bio");
         // Redirect to login page
         navigate("/login");
       }
