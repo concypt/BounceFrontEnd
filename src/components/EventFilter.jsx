@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import EventFilterCheckbox from "./EventFilterCheckbox";
 import styles from "./eventFilter.module.css";
 import { DateRangePicker } from "react-date-range";
@@ -7,14 +8,16 @@ import "react-date-range/dist/theme/default.css"; // Theme css file
 //images
 import locationImage from "../assets/images/location_grey.svg";
 
-const EventFilter = () => {
+const EventFilter = ({
+  setSearchKeywords,
+  setSelectedCategories,
+  setLocation,
+  setLocationMiles,
+  setDateParameter,
+  filterNow,
+}) => {
   const [categories, setCategories] = useState([]);
   const [selectedCount, setSelectedCount] = useState(0);
-
-  const [searchKeywords, setSearchKeywords] = useState("");
-  const [selectedCategories, setSelectedCategories] = useState([]);
-  const [location, setLocation] = useState("");
-  const [locationMiles, setLocationMiles] = useState(40);
 
   const today = new Date();
   const endDateNumber = today.setDate(today.getDate() + 6);
@@ -27,23 +30,6 @@ const EventFilter = () => {
       key: "selection",
     },
   ]);
-
-  const sd = dateRange[0].startDate;
-  const ed = dateRange[0].endDate;
-
-  const dateParameter =
-    sd.getMonth() +
-    1 +
-    "/" +
-    sd.getDate() +
-    "/" +
-    sd.getFullYear() +
-    "+-+" +
-    (ed.getMonth() + 1) +
-    "/" +
-    ed.getDate() +
-    "/" +
-    ed.getFullYear();
 
   const [showDatePicker, setShowDatePicker] = useState(false);
 
@@ -88,7 +74,11 @@ const EventFilter = () => {
   };
 
   const handleKeywordsChange = (e) => {
-    setSearchKeywords(e.target.value);
+    const delayDebounceFn = setTimeout(() => {
+      setSearchKeywords(e.target.value);
+    }, 3000);
+
+    return () => clearTimeout(delayDebounceFn);
   };
 
   const handleLocationChange = (e) => {
@@ -107,15 +97,30 @@ const EventFilter = () => {
   const handleDateRangeChange = (ranges) => {
     setDateRange([ranges.selection]);
     document.getElementById("dateCheckbox").checked = true;
+
+    const sd = dateRange[0].startDate;
+    const ed = dateRange[0].endDate;
+
+    const dateParameter =
+      sd.getMonth() +
+      1 +
+      "/" +
+      sd.getDate() +
+      "/" +
+      sd.getFullYear() +
+      "+-+" +
+      (ed.getMonth() + 1) +
+      "/" +
+      ed.getDate() +
+      "/" +
+      ed.getFullYear();
+
+    setDateParameter(dateParameter);
   };
 
   // Function to handle form submission
-  const handleSubmit = () => {
-    console.log(searchKeywords);
-    console.log(selectedCategories);
-    console.log(location);
-    console.log(locationMiles);
-    console.log(dateRange);
+  const handleSearch = () => {
+    filterNow();
   };
 
   // Function to toggle date picker visibility
@@ -144,7 +149,7 @@ const EventFilter = () => {
                   onChange={handleKeywordsChange}
                   required
                 />
-                <button onClick={handleSubmit}>Search</button>
+                <button onClick={handleSearch}>Search</button>
               </div>
               <div className={styles.mainFilters}>
                 <div className={styles.mainCheckbox}>
@@ -244,5 +249,12 @@ const EventFilter = () => {
     </>
   );
 };
-
+EventFilter.propTypes = {
+  setSearchKeywords: PropTypes.func,
+  setSelectedCategories: PropTypes.func,
+  setLocation: PropTypes.func,
+  setLocationMiles: PropTypes.func,
+  setDateParameter: PropTypes.func,
+  filterNow: PropTypes.func,
+};
 export default EventFilter;

@@ -22,31 +22,33 @@ const EventList = ({ limit }) => {
   const [locationMiles, setLocationMiles] = useState(40);
   const [dateParameter, setDateParameter] = useState("");
 
-  let categoriesParameter = "";
-  selectedCategories.map((category) => {
-    categoriesParameter += "&categories[]=" + category;
-  });
-
-  const completeURL =
-    URL +
-    "?keyword=" +
-    (searchKeywords ? searchKeywords : "") +
-    "&location=" +
-    (location ? location : "");
-  location +
-    "&locationmiles=" +
-    locationMiles +
-    "&date=" +
-    dateParameter +
-    categoriesParameter;
-  //const completeURL = `${URL}?keyword=${searchKeywords}&location=${location}&locationmiles=${locationMiles}&date=${dateRange}`;
-  console.log(completeURL);
+  const filterNow = () => {
+    console.log(searchKeywords);
+    console.log(selectedCategories);
+    console.log(location);
+    console.log(locationMiles);
+    console.log(dateParameter);
+  };
 
   useEffect(() => {
+    let categoriesParameter = "";
+    selectedCategories.map((category) => {
+      categoriesParameter += "&categories[]=" + category;
+    });
+
+    const completeURL =
+      URL +
+      "?" +
+      (searchKeywords ? "keyword=" + searchKeywords + "&" : "") +
+      (location ? "?location=" + location + "&" : "") +
+      //(locationMiles ? "?locationmiles=" + locationMiles + "&" : "") +
+      (dateParameter ? "?date=" + dateParameter + "&" : "") +
+      (categoriesParameter ? categoriesParameter : "");
+
     const fetchEvents = async () => {
       try {
         setProgress(30); // Start loading bar at 30%
-        const response = await fetch(URL, {
+        const response = await fetch(completeURL, {
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
@@ -73,7 +75,7 @@ const EventList = ({ limit }) => {
     return () => {
       // Cleanup if needed
     };
-  }, []);
+  }, [searchKeywords, location, dateParameter, selectedCategories]);
 
   const lastEventIndex = currentPage * eventsPerPage;
   const firstEventIndex = lastEventIndex - eventsPerPage;
@@ -90,6 +92,7 @@ const EventList = ({ limit }) => {
           setLocation={setLocation}
           setLocationMiles={setLocationMiles}
           setDateParameter={setDateParameter}
+          filterNow={filterNow}
         />
       )}
 

@@ -14,6 +14,11 @@ import promoteImg2 from "../assets/images/promote_img2.png";
 import blank from "../assets/images/blank.png";
 import block from "../assets/images/block.svg";
 import rightArrow from "../assets/images/right_arrow.svg";
+import appImage from "../assets/images/appimage.png";
+import analyticsIcon from "../assets/images/analyticsicon.svg";
+import listingsIcon from "../assets/images/listingsicon.svg";
+import marketingIcon from "../assets/images/marketingicon.svg";
+import secureIcon from "../assets/images/secureicon.svg";
 
 function Home() {
   return (
@@ -172,10 +177,10 @@ function Home() {
       <Reveal delay=".2">
         <div className="promote_section blank_section">
           <div className="promote_div">
-            <img src={blank} className="blank_img" alt="" />
+            <img src={appImage} className="blank_img" alt="Bounce App" />
             <div className="blank_grid">
               <div className="grid_block">
-                <img src={block} alt="" />
+                <img src={analyticsIcon} alt="Analytics" />
                 <h3>Analytics Dashboard</h3>
                 <p>
                   Gain instant insights into your sales data with our
@@ -187,7 +192,7 @@ function Home() {
                 </a>
               </div>
               <div className="grid_block">
-                <img src={block} alt="" />
+                <img src={marketingIcon} alt="Marketing" />
                 <h3>Marketing Tools</h3>
                 <p>
                   Effortlessly manage email campaigns and create enticing
@@ -199,7 +204,7 @@ function Home() {
                 </a>
               </div>
               <div className="grid_block">
-                <img src={block} alt="" />
+                <img src={listingsIcon} alt="Listings" />
                 <h3>Event Listings</h3>
                 <p>
                   Explore a diverse range of live events, from intimate gigs to
@@ -211,7 +216,7 @@ function Home() {
                 </a>
               </div>
               <div className="grid_block">
-                <img src={block} alt="" />
+                <img src={secureIcon} alt="Secure" />
                 <h3>Secure Transactions</h3>
                 <p>
                   Rest assured with our secure transaction system, ensuring

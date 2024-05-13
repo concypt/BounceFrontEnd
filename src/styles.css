@@ -345,6 +345,7 @@ a.global-link-arrow::after {
 
 .blank_section .blank_img {
   max-width: 616px;
+  object-fit: contain;
 }
 
 .grid_block {
@@ -833,7 +834,7 @@ span.rdrYearPicker {
   .blank_section .blank_img {
     max-width: 100%;
     height: 400px;
-    object-fit: cover;
+    object-fit: contain;
   }
 }
 
