@@ -1,0 +1,166 @@
+.eventCard {
+  max-width: 516px;
+  box-shadow: 0px 0px 10px 5px rgba(155, 154, 197, 0.15);
+  border-radius: 18px;
+  overflow: hidden;
+  background: #f9f9f9;
+  position: relative;
+  padding-bottom: 70px;
+}
+
+.eventCard h2 {
+  font-family: var(--primary-font);
+  font-size: 32px;
+  line-height: 36px;
+  font-weight: 700;
+  color: #242424;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: clip;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.eventCardImage {
+  position: relative;
+}
+
+.eventImg {
+  width: 100%;
+  object-fit: cover;
+  font-size: 32px;
+  line-height: 36px;
+  min-height: 275px;
+}
+
+.eventCategoryButton {
+  position: absolute;
+  background-color: #aeabff;
+  display: inline-block;
+  color: #fff;
+  font-size: 14px;
+  line-height: 24px;
+  border-radius: 30px;
+  padding: 3px 24px;
+  left: 25px;
+  bottom: 20px;
+}
+
+.dateRemainingDaysDiv {
+  margin-top: 20px;
+}
+
+.remainingDaysBtn {
+  background-color: #f0677f;
+  display: inline-block;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 24px;
+  border-radius: 30px;
+  padding: 3px 20px;
+  margin-left: 20px;
+}
+
+.eventCardDetails {
+  padding: 18px 28px;
+}
+
+.eventCardDetails span.time,
+.eventCardDetails span.location {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.eventCardDetails span.time img {
+  margin-right: 10px;
+  margin-left: 2px;
+}
+
+.eventCardDetails span.location img {
+  margin-right: 5px;
+  margin-left: 0;
+}
+
+.locationDiv {
+  margin-top: 10px;
+}
+
+.ticketsFindMore {
+  display: flex;
+  position: absolute;
+  bottom: 23px;
+}
+
+@media (max-width: 1300px) {
+  .eventCard {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 767px) {
+  .eventCard {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .eventCard h2 {
+    font-size: 24px;
+    line-height: 30px;
+  }
+
+  .eventImg {
+    min-height: 200px;
+  }
+
+  .eventCardDetails {
+    padding: 20px 15px;
+  }
+
+  .ticketsFindMore {
+    margin-top: 10px;
+  }
+
+  .eventCardDetails span.time img {
+    width: 19px;
+    margin-right: 3px;
+    margin-left: 1px;
+  }
+
+  .remainingDaysBtn {
+    background-color: #f0677f;
+    display: inline-block;
+    color: #fff;
+    font-size: 12px;
+    line-height: 24px;
+    border-radius: 30px;
+    padding: 2px 10px;
+    margin-left: 15px;
+  }
+
+  .eventCardDetails span.location img {
+    margin-right: 0px;
+    margin-left: 0;
+    width: 22px;
+  }
+
+  .locationDiv {
+    margin-top: 5px;
+  }
+
+  .eventCategoryButton {
+    left: 15px;
+  }
+}
+
+@media (max-width: 400px) {
+  .eventCardDetails {
+    padding: 20px 10px;
+  }
+
+  .eventImg {
+    min-height: 160px;
+  }
+}

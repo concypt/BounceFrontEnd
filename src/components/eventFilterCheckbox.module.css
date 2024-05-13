@@ -1,0 +1,16 @@
+label.checkboxTag {
+  display: inline-block;
+  background-color: #e5e8ee;
+  color: #000;
+  padding: 4px 12px;
+  margin: 0.25rem;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 50px;
+}
+
+input[type="checkbox"]:checked + label.checkboxTag {
+  background-color: #4a4a4a;
+  color: #ffffff;
+}

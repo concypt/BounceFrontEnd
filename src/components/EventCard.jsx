@@ -1,5 +1,7 @@
-import styles from "./events.module.css";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+
+import styles from "./eventCard.module.css";
 
 //images
 import clockIcon from "../assets/images/clock.svg";
@@ -7,6 +9,7 @@ import locationIcon from "../assets/images/location.svg";
 import buyTicketIcon from "../assets/images/buy-ticket.svg";
 
 function EventCard({ event }) {
+  //console.log(event);
   // Parse the start time string into a Date object
   const startTime = new Date(event.start_time);
   // Format the date portion only
@@ -59,5 +62,7 @@ function EventCard({ event }) {
     </div>
   );
 }
-
+EventCard.propTypes = {
+  event: PropTypes.object,
+};
 export default EventCard;

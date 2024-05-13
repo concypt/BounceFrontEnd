@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
+import EventFilter from "./EventFilter";
 import EventCard from "./EventCard";
-import styles from "./events.module.css";
+import Pagination from "./Pagination";
+
+import PropTypes from "prop-types";
+import styles from "./eventList.module.css";
 
 const URL = "https://bounce.extrasol.co.uk/api/attenders/events";
 
@@ -8,6 +12,35 @@ const EventList = ({ limit }) => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [eventsPerPage, setEventsPerPage] = useState(9);
+
+  //filters
+  const [searchKeywords, setSearchKeywords] = useState("");
+  const [selectedCategories, setSelectedCategories] = useState([8, 7, 2]);
+  const [location, setLocation] = useState("");
+  const [locationMiles, setLocationMiles] = useState(40);
+  const [dateParameter, setDateParameter] = useState("");
+
+  let categoriesParameter = "";
+  selectedCategories.map((category) => {
+    categoriesParameter += "&categories[]=" + category;
+  });
+
+  const completeURL =
+    URL +
+    "?keyword=" +
+    (searchKeywords ? searchKeywords : "") +
+    "&location=" +
+    (location ? location : "");
+  location +
+    "&locationmiles=" +
+    locationMiles +
+    "&date=" +
+    dateParameter +
+    categoriesParameter;
+  //const completeURL = `${URL}?keyword=${searchKeywords}&location=${location}&locationmiles=${locationMiles}&date=${dateRange}`;
+  console.log(completeURL);
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -42,17 +75,50 @@ const EventList = ({ limit }) => {
     };
   }, []);
 
+  const lastEventIndex = currentPage * eventsPerPage;
+  const firstEventIndex = lastEventIndex - eventsPerPage;
+  const currentPageEvents = events.slice(firstEventIndex, lastEventIndex);
+
   return (
     <>
-      <div className={styles.eventsGrid}>
-        {limit
-          ? events
-              .slice(0, limit)
-              .map((event) => <EventCard key={event.id} event={event} />)
-          : events.map((event) => <EventCard key={event.id} event={event} />)}
-      </div>{" "}
+      {limit ? (
+        ""
+      ) : (
+        <EventFilter
+          setSearchKeywords={setSearchKeywords}
+          setSelectedCategories={setSelectedCategories}
+          setLocation={setLocation}
+          setLocationMiles={setLocationMiles}
+          setDateParameter={setDateParameter}
+        />
+      )}
+
+      <div className="custom-wrapper">
+        <div className={styles.eventsGrid}>
+          {limit
+            ? currentPageEvents
+                .slice(0, limit)
+                .map((event) => <EventCard key={event.id} event={event} />)
+            : currentPageEvents.map((event) => (
+                <EventCard key={event.id} event={event} />
+              ))}
+          {limit ? (
+            ""
+          ) : (
+            <Pagination
+              totalPosts={events.length}
+              postsPerPage={eventsPerPage}
+              setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+            />
+          )}
+        </div>{" "}
+      </div>
     </>
   );
 };
 
+EventList.propTypes = {
+  limit: PropTypes.number,
+};
 export default EventList;
