@@ -48,9 +48,12 @@ const LoginPage = () => {
       localStorage.setItem("token", responseData.data.token);
       localStorage.setItem("fname", responseData.data.first_name);
       localStorage.setItem("lname", responseData.data.last_name);
-      localStorage.setItem("hostName", responseData.data.name);
       localStorage.setItem("phoneNumber", responseData.data.phone);
       localStorage.setItem("userImage", responseData.data.imagePath);
+      localStorage.setItem("hostName", responseData.data.name);
+      localStorage.setItem("instagram", responseData.data.instagram);
+      localStorage.setItem("website", responseData.data.website);
+      localStorage.setItem("bio", responseData.data.bio);
 
       const followingArray = responseData.data.following;
       localStorage.setItem("followingArray", JSON.stringify(followingArray));

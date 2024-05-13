@@ -57,3 +57,28 @@
   width: 100%;
   max-width: 396px;
 }
+
+.twoInputFields {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.halfInputField {
+  width: 50%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.fullInputField {
+  width: 50%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (max-width: 600px) {
+  .halfInputField,
+  .fullInputField {
+    width: 100%;
+  }
+}
