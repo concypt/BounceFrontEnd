@@ -11,4 +11,4 @@ const EventDetail = () => {
   );
 };
 
-export default EventDetail;
+export default FollowUnfollowBtn;

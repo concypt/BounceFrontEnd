@@ -40,6 +40,9 @@ function HostDashboard() {
           timer: 2000,
         }).then(() => {
           localStorage.setItem("hostName", response.data.name);
+          localStorage.setItem("instagram", response.data.instagram);
+          localStorage.setItem("website", response.data.website);
+          localStorage.setItem("bio", response.data.bio);
           navigate("/dashboard");
         });
       })
