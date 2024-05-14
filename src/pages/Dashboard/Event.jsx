@@ -3,9 +3,14 @@ import { Link } from "react-router-dom";
 import Header from "../../components/Dashboard/Header";
 import Sidebar from "../../components/Dashboard/Sidebar";
 import { useTable, useFilters, useGlobalFilter, useSortBy } from "react-table";
-import PropTypes from "prop-types";
 import "./styles/primaryStyles.css";
 import "./styles/comonStyles.css";
+
+//images
+import viewImg from "../../assets/images/event-dash-icon-view.svg";
+import ticketImg from "../../assets/images/event-dash-icon-ticket.svg";
+import editImg from "../../assets/images/event-dash-icon-edit.svg";
+import deleteImg from "../../assets/images/event-dash-icon-delete.svg";
 
 function EventDashboard() {
   const [tableData, setTableData] = useState([]);
@@ -43,6 +48,19 @@ function EventDashboard() {
         Header: "Event Name",
         accessor: "name",
         sortType: "basic",
+        Cell: ({ value }) => (
+          <div>{value.length > 20 ? value.slice(0, 20) + "..." : value}</div>
+        ),
+      },
+      {
+        Header: "Status",
+        accessor: "status",
+        className: "status-column",
+        Cell: ({ value }) => (
+          <div className={value === 1 ? "published" : "draft"}>
+            {value === 1 ? "Published" : "Draft"}
+          </div>
+        ),
       },
       {
         Header: "Date",
@@ -53,6 +71,31 @@ function EventDashboard() {
           // Format the date to display only the date part
           const formattedDate = date.toISOString().split("T")[0];
           return <span>{formattedDate}</span>;
+        },
+      },
+      {
+        Header: "Tickets sold",
+        accessor: "tickets",
+        Cell: ({ row }) => {
+          const { soldTickets, totalTickets } = row.original;
+          const progress =
+            totalTickets !== 0 ? (soldTickets / totalTickets) * 100 : 0;
+
+          return (
+            <div
+              className={`progress-bar-container-ticket ${
+                progress < 40 ? "half-tickets-sold" : ""
+              }`}
+            >
+              <div
+                className="progress-bar-ticket"
+                style={{ width: `${progress}%` }}
+              ></div>
+              <span className="progress-text">
+                {soldTickets}/{totalTickets}
+              </span>
+            </div>
+          );
         },
       },
     ],
@@ -95,7 +138,7 @@ function EventDashboard() {
               />
             </div>
             <div className="table-container">
-              <table {...getTableProps()} className="table">
+              <table {...getTableProps()} className="table your-events-table">
                 <thead>
                   {headerGroups.map((headerGroup, index) => (
                     <tr {...headerGroup.getHeaderGroupProps()} key={index}>
@@ -111,6 +154,7 @@ function EventDashboard() {
                           </span>
                         </th>
                       ))}
+                      <th>Actions</th>
                     </tr>
                   ))}
                 </thead>
@@ -126,6 +170,21 @@ function EventDashboard() {
                             </td>
                           );
                         })}
+                        <td className="actionsColumn">
+                          {/* Actions */}
+                          <button>
+                            <img src={viewImg} alt="" />
+                          </button>
+                          <button className="mx-1">
+                            <img src={ticketImg} alt="" />
+                          </button>
+                          <button className="me-1">
+                            <img src={editImg} alt="" />
+                          </button>
+                          <button>
+                            <img src={deleteImg} alt="" />
+                          </button>
+                        </td>
                       </tr>
                     );
                   })}
