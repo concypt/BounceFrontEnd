@@ -1,0 +1,55 @@
+.aboutMain .cardContainer {
+  padding: 0 30px;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.aboutMain .headerBlog{
+    max-width: 100%;
+}
+
+.mainBlog {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 30px;
+  margin-top: 40px;
+  text-align: left;
+}
+
+.blogCards {
+  width: 100%;
+  max-width: 450px;
+}
+
+.blogCards img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 18px;
+}
+
+.blogCards h2 {
+  font-size: 22px;
+  font-weight: 600;
+  color: #000;
+  margin-top: 20px;
+}
+
+.blogCards .blogCalnder {
+  width: 18px;
+  height: 18px;
+  border-radius: 0;
+}
+
+.blogInfo {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 5px;
+}
+
+.blogInfo p {
+  margin: 0;
+  line-height: normal;
+}

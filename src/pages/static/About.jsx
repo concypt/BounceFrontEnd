@@ -1,184 +1,181 @@
 import { useEffect, useState } from "react";
-// import styles from "../about.css";
-import { DateRangePicker } from "react-date-range";
+import styles from "./about.module.css";
 import "react-date-range/dist/styles.css"; // Main css file
 import "react-date-range/dist/theme/default.css"; // Theme css file
+import Reveal from "../../components/utils/Reveal.jsx";
+
+// imaages
+import promoteImg2 from "../../assets/images/promote_img2.png";
+import tick from "../../assets/images/tick.svg";
 
 function About() {
-  const [categories, setCategories] = useState([]);
-  const [selectedCount, setSelectedCount] = useState(0);
-  const [dateRange, setDateRange] = useState([
-    {
-      startDate: new Date(),
-      endDate: null,
-      key: "selection",
-    },
-  ]);
-  const [showDatePicker, setShowDatePicker] = useState(false);
-
-  // Function to fetch categories from API
-  useEffect(() => {
-    // Make the fetch request with headers inline
-    fetch("https://bounce.extrasol.co.uk/api/attenders/categories", {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "X-Api-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Assuming the response contains a 'data' array with category objects
-        setCategories(data.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching categories:", error);
-      });
-  }, []);
-
-  // Function to update selected count
-  const updateSelectedCount = () => {
-    const selectedCheckboxes = document.querySelectorAll(
-      'input[type="checkbox"]:checked'
-    );
-    setSelectedCount(selectedCheckboxes.length);
-  };
-
-  // Function to handle date range change
-  const handleDateRangeChange = (ranges) => {
-    setDateRange([ranges.selection]);
-  };
-
-  // Function to handle form submission
-  const handleSubmit = (event) => {
-    event.preventDefault();
-  };
-
-  // Function to toggle date picker visibility
-  const toggleDatePicker = (event) => {
-    // Check if the click event occurred inside the date picker
-    if (event.target.closest(".rdrDateRangeWrapper")) {
-      // Click occurred inside the date picker, do not toggle visibility
-      return;
-    }
-    // Click occurred outside the date picker, toggle visibility
-    setShowDatePicker(!showDatePicker);
-  };
-
   return (
     <>
       <div className="bounce_bg_circle">
-        <div className={styles.filterFrame}>
-          <div className={styles.filters}>
-            <h1>Filter</h1>
-            <form onSubmit={handleSubmit} className={styles.searchDiv}>
-              <input
-                className={styles.searchInput}
-                type="text"
-                placeholder="Enter your search terms here..."
-                name="search"
-                required
-              />
-              <button type="submit">Search</button>
-            </form>
-            <div className={styles.mainFilters}>
-              <div className={styles.mainCheckbox}>
-                <h2>
-                  Genres{" "}
-                  <span id="selectedCount">({selectedCount} selected)</span>
-                  <input type="checkbox" className={styles.smallCheckbox} />
-                </h2>
-                <form id="categoryForm" className={styles.mainCheckForm}>
-                  {categories.map((category, index) => (
-                    <CheckboxTag
-                      key={index}
-                      id={`categoryCheckbox-${index}`}
-                      value={category.id} // Assuming 'id' is used as value
-                      label={category.name}
-                      updateSelectedCount={updateSelectedCount}
-                    />
-                  ))}
-                </form>
-              </div>
-              <div className={styles.locationFields}>
-                <h2>
-                  Location{" "}
-                  <input type="checkbox" className={styles.smallCheckbox} />
-                </h2>
-                <div className={styles.locationInputs}>
-                  <div className={styles.locationSearch}>
-                    <img src="images/location_grey.svg" alt="" />
-                    <input type="search" name="" />
+        <div className={styles.aboutMain}>
+          <Reveal width="100%" delay="0.2" amount="0.5">
+            <div className={`promote_section ${styles.aboutPromote}`}>
+              <div className="promote_div">
+                <img src={promoteImg2} alt="" />
+
+                <div className="promote_content">
+                  <h2>Our Services</h2>
+
+                  <div className="checks">
+                    <div className="promote_checks">
+                      <img src={tick} alt="" />
+                      <p>
+                        The all in one ticketing platform that keeps i t simple.
+                      </p>
+                    </div>
+
+                    <div className="promote_checks">
+                      <img src={tick} alt="" />
+                      <p>
+                        To get started, we just need a few details from
+                        yourself. Once approved, you’re ready to sell out your
+                        event on Bounce.
+                      </p>
+                    </div>
+
+                    <div className="promote_checks">
+                      <img src={tick} alt="" />
+                      <p>
+                        With a generous industry beating 7.5% fee, you can rely
+                        on Bounce to bring you simple, intuitive ticketing
+                        solutions for your event brand.
+                      </p>
+                    </div>
                   </div>
-                  <select name="cars" id="cars" defaultValue="">
-                    <option value="" disabled>
-                      Within 0 miles
-                    </option>
-                    <option value="saab">Saab</option>
-                    <option value="opel">Opel</option>
-                    <option value="audi">Audi</option>
-                  </select>
-                </div>
-              </div>
-              <div className={styles.dateRange}>
-                <h2>
-                  Between these dates{" "}
-                  <input type="checkbox" className={styles.smallCheckbox} />
-                </h2>
-                <div onClick={toggleDatePicker} className={styles.dateFields}>
-                  <input
-                    type="text"
-                    placeholder="Start date"
-                    value={dateRange[0].startDate.toLocaleDateString()}
-                    readOnly
-                  />
-                  <p> To </p>
-                  <input
-                    type="text"
-                    placeholder="End date"
-                    value={dateRange[0].endDate?.toLocaleDateString()}
-                    readOnly
-                  />
-                  {showDatePicker && (
-                    <DateRangePicker
-                      onChange={handleDateRangeChange}
-                      months={1} // Display only one month per tab
-                      ranges={dateRange}
-                      direction="horizontal"
-                      editableDateInputs={false}
-                    />
-                  )}
+                  <div className="promote_btn">
+                    <a href="" className="global_button_one">
+                      {" "}
+                      <span>Discover more</span>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
+          </Reveal>
+          <div className="accordion_section">
+            <Reveal delay=".2" width="100%">
+              <div className="faqs">
+                <h2>FAQs</h2>
+                <p>
+                  Explore our comprehensive FAQ section where you'll find
+                  answers to common questions and detailed information on
+                  various aspects of our platform.
+                </p>
+              </div>
+            </Reveal>
+            <Reveal delay=".2" width="100%">
+              <div className="faq_accordians">
+                <ul>
+                  <div className="accordian_main" id="5">
+                    <li className="question que5">
+                      <span>How do I use Bounce?</span>
+                      <div className="expand-bar"></div>
+                    </li>
+                    <li className="answer ans5">
+                      Get started on Bounce by signing up and creating your
+                      account. Join a vibrant community of event creators and
+                      attendees, leveraging Bounce’s user-friendly platform to
+                      effortlessly manage, promote, and sell your event tickets.
+                      With advanced tools for email marketing, and streamlined
+                      event management, Bounce is your all-in-one solution to
+                      boost ticket sales and elevate your event business.
+                      Discover the simplicity and power of Bounce for a seamless
+                      event planning experience!
+                    </li>
+                  </div>
+                  <div className="accordian_main" id="1">
+                    <li className="question que1" id="question">
+                      <span>
+                        How do I get started selling tickets online for free?
+                      </span>
+                      <div className="expand-bar"></div>
+                    </li>
+                    <li className="answer ans1">
+                      To begin selling tickets online for free, simply kickstart
+                      your event on Bounce. Our platform offers a seamless
+                      experience in crafting, advertising, and overseeing your
+                      event without any cost. Dive in effortlessly to start
+                      selling your event tickets hassle-free!{" "}
+                    </li>
+                  </div>
+                  <div className="accordian_main" id="2">
+                    <li className="question que2">
+                      <span>
+                        Can I offer discounts or promo codes on event tickets?
+                      </span>
+                      <div className="expand-bar"></div>
+                    </li>
+                    <li className="answer ans2 ">
+                      {" "}
+                      Yes! You can boost your ticket sales by offering discounts
+                      or promo codes. With Bounce’s ticket management tools, you
+                      can easily create tickets and provide discounts to
+                      encourage more people to buy them. These promo codes also
+                      help you track how well your online ads are performing and
+                      figure out which customer groups are spreading the word
+                      about your event. It’s like giving a special offer to your
+                      audience while also keeping track of how effective your
+                      marketing efforts are!
+                    </li>
+                  </div>
+                  <div className="accordian_main" id="3">
+                    <li className="question que3">
+                      <span>
+                        How do I create multiple ticket types on Bounce?
+                      </span>
+                      <div className="expand-bar"></div>
+                    </li>
+                    <li className="answer ans3">
+                      On Bounce, creating multiple ticket types is
+                      straightforward. You have the flexibility to set up
+                      various ticket options like Early Bird, VIP, or any other
+                      category that fits your event. This helps you cater to
+                      different preferences and budgets, enticing more people to
+                      purchase tickets based on their desired experience.
+                    </li>
+                  </div>
+                  <div className="accordian_main" id="4">
+                    <li className="question que4">
+                      <span>
+                        Can I sell tickets online for a charity event on Bounce?
+                      </span>
+                      <div className="expand-bar"></div>
+                    </li>
+                    <li className="answer ans4">
+                      Absolutely! Bounce is a fantastic platform for selling
+                      tickets for charity events. Through our dedicated feature
+                      called “Bounce for Nonprofits,” you can expand your
+                      audience, increase event attendance, and successfully
+                      reach your fundraising objectives using our advanced
+                      online ticketing system.
+                    </li>
+                  </div>
+                </ul>
+              </div>
+            </Reveal>
+            <Reveal delay=".2" width="100%">
+              <div className="faq_content">
+                <h3>Still have a question?</h3>
+                <p>
+                  Don't hesitate to reach out – we're here to help with any
+                  queries you may have.
+                </p>
+                <a href="/contact" className="global_button_one">
+                  {" "}
+                  <span>Contact</span>
+                </a>
+              </div>
+            </Reveal>
           </div>
-        </div>
-
-        {/* Render EventList component with the events data */}
-        <div className={styles.eventList}>
-          <EventList className={styles.eventsGrid} />
         </div>
       </div>
     </>
   );
 }
 
-function CheckboxTag({ id, value, label, updateSelectedCount }) {
-  return (
-    <div>
-      <input
-        type="checkbox"
-        id={id}
-        name="categories"
-        value={value}
-        onChange={updateSelectedCount}
-      />
-      <label className={styles.checkboxTag} htmlFor={id}>
-        {label}
-      </label>
-    </div>
-  );
-}
-
 export default About;
-4;

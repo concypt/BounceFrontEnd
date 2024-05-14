@@ -66,10 +66,10 @@ const Footer = () => {
                     <Link to="#">Explore Categories</Link>
                   </li>
                   <li>
-                    <Link to="/news">News</Link>
+                    <Link to="/News">News</Link>
                   </li>
                   <li>
-                    <Link to="/contact">Contact</Link>
+                    <Link to="/Contact">Contact</Link>
                   </li>
                 </ul>
               </div>
@@ -78,16 +78,16 @@ const Footer = () => {
               <div className={styles.list_items}>
                 <ul>
                   <li>
-                    <Link to="#">Privacy Policy</Link>
+                    <Link to="/PrivacyPolicy">Privacy Policy</Link>
                   </li>
                   <li>
-                    <Link to="#">Terms and Conditions</Link>
+                    <Link to="/TermsConditions">Terms and Conditions</Link>
                   </li>
                   <li>
-                    <Link to="#">Cookie Policy</Link>
+                    <Link to="/CookiePolicy">Cookie Policy</Link>
                   </li>
                   <li>
-                    <Link to="#">About Us</Link>
+                    <Link to="/About">About Us</Link>
                   </li>
                 </ul>
               </div>

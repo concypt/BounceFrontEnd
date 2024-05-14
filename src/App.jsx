@@ -23,7 +23,13 @@ import LoadingBar from "react-top-loading-bar";
 import EventSingle from "./pages/Dashboard/ViewSingleEvent.jsx";
 import Marketing from "./pages/Dashboard/Marketing.jsx";
 import CreateEvent from "./pages/Dashboard/CreateEvent.jsx";
+import Attend from "./pages/Dashboard/Attend.jsx";
+import PrivacyPolicy from "./pages/static/PrivacyPolicy.jsx";
 import About from "./pages/static/About.jsx";
+import News from "./pages/static/News.jsx";
+import Contact from "./pages/static/Contact.jsx";
+import TermsConditions from "./pages/static/TermsConditions.jsx";
+import CookiePolicy from "./pages/static/CookiePolicy.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -33,6 +39,13 @@ const router = createBrowserRouter(
         <Route path="/events" element={<Events />} />
         <Route path="/events/:eventId" element={<EventDetail />} />
         <Route path="/host-profile/:organisationId" element={<HostProfile />} />
+        <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
+        <Route path="/About" element={<About />} />
+        <Route path="/News" element={<News />} />
+        <Route path="/Contact" element={<Contact />} />
+        <Route path="/TermsConditions" element={<TermsConditions />} />
+        <Route path="/CookiePolicy" element={<CookiePolicy />} />
+
         <Route path="*" element={<PageNotFound />} />
       </Route>
       {/* Should be in dashboard layout  */}
@@ -42,7 +55,7 @@ const router = createBrowserRouter(
       <Route path="/dashboard-single-event" element={<EventSingle />} />
       <Route path="/dashboard-marketing" element={<Marketing />} />
       <Route path="/dashboard-create-event" element={<CreateEvent />} />
-      <Route path="/about" element={<About />} />
+      <Route path="/Attend" element={<Attend />} />
       {/* without layout pages */}
       <Route path="/register" element={<Register />} />
       <Route path="/verification" element={<Verification />} />

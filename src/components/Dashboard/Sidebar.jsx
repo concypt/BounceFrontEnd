@@ -40,7 +40,7 @@ const Sidebar = () => {
         </button>
         <ul className={styles.links}>
           <li>
-            <Link to="">Attend</Link>
+            <Link to="/Attend">Attend</Link>
           </li>
           <li>
             <Link to="">Promote</Link>
