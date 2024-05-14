@@ -1163,6 +1163,116 @@ button.delete.ml-auto {
 }
 
 /* Masab Styles */
+
+.your-events-table {
+  font-family: var(--primary-font);
+}
+
+.your-events-table th:nth-child(4) {
+  text-align: center;
+}
+
+.your-events-table td {
+  vertical-align: middle;
+}
+
+.your-events-table td .published {
+  width: 69px;
+  font-size: 12px;
+  font-family: outfit;
+  color: #0a9c55;
+  background: #e2fcf0;
+  text-align: center;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+}
+
+.your-events-table td .published .draft {
+  width: 47px;
+  font-size: 12px;
+  font-family: outfit;
+  color: #5b59ff;
+  text-align: center;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  background: #dddbff;
+}
+
 #content > div.edit-host-profile-tab {
   display: block;
+}
+
+.progress-bar-container-ticket {
+  width: 125px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+}
+
+.progress-bar-ticket {
+  height: 100%;
+  background-color: #ddf7e4;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 1px;
+  position: relative;
+}
+
+.half-tickets-sold .progress-bar-ticket {
+  background-color: #ffc3ce;
+}
+
+.progress-text {
+  color: #0a9c55;
+  font-size: 14px;
+  font-weight: bold;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.half-tickets-sold .progress-text {
+  color: #f48787;
+}
+
+.actionsColumn button {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: 1px solid #ececed;
+  background: transparent;
+}
+
+@media screen and (max-width: 1100px) {
+  .actionsColumn button {
+    width: 30px;
+    height: 30px;
+  }
+
+  .actionsColumn button img {
+    width: 15px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .dataTables table {
+    width: 700px;
+  }
+
+  .dashboard {
+    padding-left: 250px;
+  }
 }
