@@ -670,7 +670,7 @@ input[type="radio"] {
 
 .tabs .progressCard {
   width: 100%;
-  max-width: 950px;
+  max-width: 1072px;
 }
 
 #heading {
@@ -722,16 +722,23 @@ input[type="radio"] {
 }
 
 #msform .action-button {
-  width: 100px;
-  background: #673ab7;
-  font-weight: bold;
-  color: white;
-  border: 0 none;
-  border-radius: 0px;
-  cursor: pointer;
-  padding: 10px 5px;
-  margin: 10px 0px 10px 5px;
-  float: right;
+  background-image: var(--linear-gradient-border);
+  border-radius: 40px;
+  box-sizing: border-box;
+  color: #fff;
+  display: block;
+  height: 52px;
+  letter-spacing: 1px;
+  padding: 4px;
+  position: relative;
+  text-decoration: none;
+  text-transform: uppercase;
+  width: 133px;
+  z-index: 2;
+  border: none;
+  transition: 0.5s ease;
+  margin: 0 auto;
+  margin-right: 0;
 }
 
 #msform .action-button:hover,
@@ -980,6 +987,280 @@ button.delete.ml-auto {
 .eventLables {
   width: 100%;
 }
+
+.datetime {
+  display: flex;
+  gap: 25px;
+}
+
+.datePicker {
+  width: 100%;
+}
+
+.chooseTime {
+  width: 100%;
+}
+
+.onlineVenue #button-1:checked ~ ul li.bg {
+  transform: translatex(-200%);
+}
+
+.onlineVenue #button-2:checked ~ ul li.bg {
+  transform: translatex(-100%);
+}
+
+.onlineVenue #button-2:checked ~ #shadow #content {
+  transform: translatex(-50%);
+}
+
+.onlineVenue .tabSection {
+  border: 0;
+  padding: 0;
+}
+
+.onlineVenue .tabSection ul {
+  width: 100%;
+  max-width: 470px;
+  margin: 0 auto;
+}
+
+.onlineVenue #content > div {
+  padding: 0;
+  margin-top: 40px;
+}
+
+.onlineVenue .left {
+  width: 50%;
+}
+
+.eventLables textarea {
+  height: 176px;
+}
+
+.onlineVenue .tabSection #tabs {
+  max-width: 100%;
+  margin-top: 40px;
+}
+
+.multiForm .loginButton {
+  margin-top: 20px;
+}
+
+.multiForm .loginButton {
+  margin: 0 auto;
+  margin-right: 0;
+  width: 133px;
+  height: 52px;
+}
+
+#msform .fieldsetTwo {
+  padding: 40px 30px;
+}
+
+.manageTickets {
+  background: #e9e9e9;
+  padding: 50px 50px;
+  margin-top: 50px;
+  border-radius: 11px;
+}
+
+.manageTickets .tickets {
+  background: #fff;
+  padding: 20px 15px;
+  color: #000;
+  min-height: 135px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.manageTickets .tickets h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.manageTickets .tickets h3::after {
+  content: "";
+  height: 15px;
+  width: 15px;
+  border-radius: 50px;
+  background-color: #a9eecc;
+}
+
+.manageTickets .tickets p {
+  margin-bottom: 0;
+  margin-top: 15px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.manageTickets #gallery {
+  border-radius: 6px;
+  min-height: 135px;
+  margin-top: 0;
+}
+
+.tickets .arrowTwo {
+  transform: rotate(180deg);
+}
+
+.ticketRight {
+  display: flex;
+  gap: 15px;
+}
+
+.ticketArrows {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 95px;
+  height: 100%;
+}
+
+.ticketDetails {
+  border: 1px solid #bfbfbf;
+  padding: 30px;
+  margin-top: 50px;
+  border-radius: 11px;
+  margin-bottom: 100px;
+}
+
+.ticketDetails #ticketInput {
+  margin-bottom: 0;
+}
+
+.ticketDetails .eventFields {
+  gap: 10px;
+  margin-bottom: 9px;
+}
+
+.ticketDetails .eventLables {
+  width: unset;
+}
+
+.ticketDetails .status {
+  width: 100%;
+  max-width: 120px;
+}
+
+.ticketDetails .datetime {
+  margin-top: 10px;
+}
+
+.tabSection ul li.bg {
+  transform: translatex(-200%);
+}
+
+.paidFree {
+  display: flex;
+  gap: 5px;
+}
+
+.ticketDetails .onlineVenue #content > div {
+  padding: 0;
+  margin-top: 0px;
+  height: 120px;
+}
+
+.absorbFees h4 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #aeabff;
+}
+
+.absorbFees .switch {
+  position: relative;
+  display: inline-block;
+  width: 28px;
+  height: 16px;
+}
+
+.absorbFees .switch input {
+  display: none;
+}
+
+.absorbFees .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #b7b7b7;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.absorbFees .slider:before {
+  position: absolute;
+  content: "";
+  height: 12px;
+  width: 12px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.absorbFees input:checked + .slider {
+  background-color: #7357ff;
+  box-shadow: 0 0px 10px 0 #cfc8e8;
+}
+
+.absorbFees input:focus + .slider {
+  box-shadow: 0 0 1px #2196f3;
+}
+
+.absorbFees input:checked + .slider:before {
+  transform: translateX(12px);
+}
+
+/* Rounded sliders */
+.absorbFees .slider.round {
+  border-radius: 34px;
+}
+
+.absorbFees .slider.round:before {
+  border-radius: 50%;
+}
+
+.absorbFees {
+  display: flex;
+  justify-content: space-between;
+}
+
+.toggleBtn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.toggleBtn p {
+  font-size: 12px;
+  margin: 0;
+  font-weight: 500;
+}
+
+.ticketBtns {
+  display: flex;
+}
+
+.ticketBtns .loginButton {
+  width: 100%;
+  margin-top: 60px;
+}
+
+.fieldsetTwo .loginButton {
+  width: 180px;
+}
 @media (max-width: 1600px) {
   .hostSection {
     margin-right: 40px;
@@ -1009,6 +1290,9 @@ button.delete.ml-auto {
   .earningMain {
     flex-wrap: wrap;
     gap: 30px;
+  }
+  #msform fieldset {
+    padding: 40px 40px;
   }
 }
 @media (max-width: 1280px) {
@@ -1062,6 +1346,19 @@ button.delete.ml-auto {
   }
   .hostSection {
     margin-right: 0px;
+  }
+  .ticketBtns {
+    gap: 10px;
+  }
+  .paidFree {
+    gap: 5px;
+    flex-wrap: wrap;
+  }
+  .ticketDetails .onlineVenue #content > div {
+    height: 100%;
+  }
+  .ticketDetails .eventLables {
+    width: 100%;
   }
 }
 
@@ -1146,6 +1443,51 @@ button.delete.ml-auto {
     font-size: 16px;
     line-height: 130%;
   }
+  .eventFields {
+    gap: 0;
+    flex-wrap: wrap;
+  }
+  .datetime {
+    gap: 0;
+    flex-wrap: wrap;
+  }
+  #msform input,
+  #msform textarea,
+  #msform select {
+    margin-bottom: 10px;
+  }
+  li#empty {
+    flex-wrap: wrap;
+  }
+  #empty span {
+    text-align: center;
+  }
+  #msform fieldset {
+    padding: 30px 20px;
+  }
+  .tabs .progressCard {
+    padding: 0;
+  }
+  #progressbar li {
+    width: 50%;
+  }
+  .absorbFees {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .manageTickets {
+    padding: 30px 20px;
+    margin-top: 23px;
+  }
+  .ticketDetails {
+    padding: 20px;
+  }
+  #msform .fieldsetTwo {
+    padding: 40px 20px;
+  }
+  .earningsDiv {
+    padding: 20px 20px;
+  }
 }
 
 @media (max-width: 400px) {
@@ -1159,6 +1501,14 @@ button.delete.ml-auto {
   .descriptionImg {
     width: 20px;
     height: 20px;
+  }
+  .ticketBtns {
+    flex-wrap: wrap;
+    margin-top: 40px;
+  }
+  .ticketBtns .loginButton {
+    width: 100%;
+    margin-top: 0;
   }
 }
 

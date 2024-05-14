@@ -1,0 +1,30 @@
+.privacy {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1308px;
+  text-align: left;
+  padding: 0 20px;
+  padding-bottom: 140px;
+}
+
+.privacy .privacyHeading {
+  margin-left: 0;
+}
+
+.privacyContent {
+  color: #000;
+  margin-top: 30px;
+}
+
+.privacyContent h2 {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.privacyContent p {
+  margin-bottom: 30px;
+}
+
+.privacyContent li {
+  list-style-type: circle;
+}

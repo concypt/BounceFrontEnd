@@ -34,7 +34,7 @@ function Navbar() {
           </Link>
           <ul className={`${styles.navMenu} ${isActive ? styles.active : ""}`}>
             <li onClick={() => setIsActive(false)}>
-              <NavLink to="/about" className={linkClass}>
+              <NavLink to="/About" className={linkClass}>
                 About
               </NavLink>
             </li>
@@ -44,7 +44,7 @@ function Navbar() {
               </NavLink>
             </li>
             <li onClick={() => setIsActive(false)}>
-              <NavLink to="/new" className={linkClass}>
+              <NavLink to="/News" className={linkClass}>
                 News
               </NavLink>
             </li>
