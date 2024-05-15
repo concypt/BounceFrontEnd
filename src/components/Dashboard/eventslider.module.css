@@ -1,0 +1,41 @@
+.mySwiper {
+  width: 100%;
+  height: 100%;
+  padding: 20px 42px;
+}
+
+.eventSlide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+
+  /* Center slide text vertically */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiperCard {
+  box-shadow: 0 0px 10px 0 #9b9ac573;
+  border-radius: 18px;
+  width: 100%;
+}
+
+.swiperCard img {
+  width: 100%;
+}
+
+.cardBody {
+  background: #fff;
+  padding: 15px;
+  border-radius: 18px;
+  text-align: left;
+}
+
+.cardBody h3{
+   font-size: 24px;
+  }
+
+.swiper-wrapper {
+  padding: 0 14px;
+}
