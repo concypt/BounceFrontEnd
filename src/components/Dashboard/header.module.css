@@ -38,6 +38,7 @@
   border-top-right-radius: 0;
   display: block;
   opacity: 0;
+  visibility: hidden;
   transition: ease-out 0.3s;
   top: 80px;
   position: absolute;
@@ -51,6 +52,7 @@
 
 .dropdown:hover .dropdownMenu {
   opacity: 1;
+  visibility: visible;
   top: 51px;
 }
 

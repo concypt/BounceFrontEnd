@@ -1267,6 +1267,15 @@ button.delete.ml-auto {
   }
   .dataTables {
     padding-left: 0;
+    padding-right: 20px;
+  }
+
+  .secondActionsDiv {
+    max-width: 500px;
+  }
+
+  .tablesGrid {
+    gap: 15px;
   }
   /* .dataTables h2 {
     font-size: 22px;
@@ -1294,11 +1303,11 @@ button.delete.ml-auto {
   #msform fieldset {
     padding: 40px 40px;
   }
-}
-@media (max-width: 1280px) {
   .tablesGrid {
     flex-wrap: wrap;
   }
+}
+@media (max-width: 1280px) {
   .promotersMain {
     flex-wrap: wrap;
   }
@@ -1522,15 +1531,24 @@ button.delete.ml-auto {
   text-align: center;
 }
 
+.your-events-table td:nth-child(3) {
+  font-size: 12px;
+}
+
 .your-events-table td {
   vertical-align: middle;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+table.your-events-table th {
+  color: #8d8a95;
+  font-size: 12px;
+  font-weight: 600;
 }
 
 .your-events-table td .published {
   width: 69px;
-  font-size: 12px;
-  font-family: outfit;
-  color: #0a9c55;
   background: #e2fcf0;
   text-align: center;
   height: 24px;
@@ -1540,11 +1558,15 @@ button.delete.ml-auto {
   border-radius: 8px;
 }
 
-.your-events-table td .published .draft {
-  width: 47px;
+.your-events-table td .published p {
   font-size: 12px;
   font-family: outfit;
-  color: #5b59ff;
+  color: #0a9c55;
+  margin: 0;
+}
+
+.your-events-table td .draft {
+  width: 47px;
   text-align: center;
   height: 24px;
   display: flex;
@@ -1552,6 +1574,19 @@ button.delete.ml-auto {
   align-items: center;
   border-radius: 8px;
   background: #dddbff;
+  font-weight: 600;
+}
+
+.your-events-table td .draft p {
+  font-size: 12px;
+  font-family: outfit;
+  color: #5b59ff;
+  color: var(--linear-gradient-border);
+  background: var(--linear-gradient-border);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 600;
+  margin: 0;
 }
 
 #content > div.edit-host-profile-tab {
@@ -1584,7 +1619,7 @@ button.delete.ml-auto {
 
 .progress-text {
   color: #0a9c55;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: bold;
   position: absolute;
   left: 50%;
@@ -1606,6 +1641,73 @@ button.delete.ml-auto {
   background: transparent;
 }
 
+.dataTables .pagination .pagination-btns {
+  display: flex;
+  gap: 5px;
+  outline: none;
+  border: none;
+}
+
+.dataTables .pagination-btns button {
+  outline: none;
+  border: none;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  color: #4f4b5c;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.dataTables .pagination-btns button:hover,
+.dataTables .pagination-btns button.active {
+  background: #7357ff;
+  color: #fff;
+  padding: 5px 15px;
+  border-radius: 8px;
+}
+
+.dataTables .pagination-btns button.control-btn {
+  background: #fff;
+  border: 2px solid #ececed;
+  color: #4f4b5c;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dataTables .pagination-btns button.control-btn {
+  background: #fff;
+  border: 2px solid #ececed;
+  color: #4f4b5c;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dataTables .pagination .item-show-per-page {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.dataTables .pagination .item-show-per-page select {
+  width: 80px;
+}
+
+.dataTables .pagination .item-show-per-page select {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.dataTables .pagination .item-show-per-page select {
+  background-image: url(../../../assets/images/pagination-arrow-select.svg);
+  background-position: 85%;
+  background-repeat: no-repeat;
+  background-size: 12px;
+}
+
 @media screen and (max-width: 1100px) {
   .actionsColumn button {
     width: 30px;
@@ -1624,5 +1726,10 @@ button.delete.ml-auto {
 
   .dashboard {
     padding-left: 250px;
+  }
+
+  .dataTables .pagination {
+    justify-content: center;
+    flex-wrap: wrap;
   }
 }
