@@ -45,6 +45,20 @@ function Attend() {
             </button>
           </div>
         </div>
+        <div className="likedEvents">
+          <div className="upcomingEvents">
+            <div className="upcomingDiv">
+              <h2>Liked Events</h2>
+            </div>
+            <EventSlider />
+          </div>
+          <div className="upcomingEvents">
+            <div className="upcomingDiv">
+              <h2>Events you may like</h2>
+            </div>
+            <EventSlider />
+          </div>
+        </div>
       </div>
     </div>
   );

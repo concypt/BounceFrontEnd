@@ -1300,7 +1300,9 @@ button.delete.ml-auto {
 .upcomingDiv {
   display: flex;
   align-items: center;
-  gap: 40px;
+  column-gap: 40px;
+  row-gap: 10px;
+  flex-wrap: wrap;
 }
 
 .upcomingDiv .loginButton {
@@ -1343,6 +1345,16 @@ button.delete.ml-auto {
   width: 100%;
   max-width: 350px;
   margin: 0 auto;
+}
+
+.likedEvents {
+  display: flex;
+  column-gap: 40px;
+}
+
+.likedEvents .upcomingEvents {
+  width: 100%;
+  max-width: 50%;
 }
 
 @media (max-width: 1600px) {
@@ -1390,6 +1402,13 @@ button.delete.ml-auto {
   .tablesGrid {
     flex-wrap: wrap;
   }
+  .likedEvents .upcomingEvents {
+    max-width: 100%;
+  }
+  .likedEvents {
+    flex-wrap: wrap;
+  }
+  
 }
 @media (max-width: 1280px) {
   .promotersMain {
