@@ -1261,6 +1261,90 @@ button.delete.ml-auto {
 .fieldsetTwo .loginButton {
   width: 180px;
 }
+
+.upcomingEvents {
+  background: #fff;
+  padding: 50px 0;
+  border: 1px solid #d8d8d8;
+  border-radius: 32px;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.upcomingEvents .upcomingDiv {
+  padding: 0 50px;
+}
+
+.upcomingEvents .swiper-button-prev:after,
+.upcomingEvents .swiper-button-next:after {
+  opacity: 0;
+}
+
+.upcomingEvents .swiper-button-next {
+  background: url(../../../assets/images/sliderArrow.svg);
+  width: 49px;
+  height: 49px;
+  background-repeat: no-repeat;
+  right: -14px;
+}
+
+.upcomingEvents .swiper-button-prev {
+  background: url(../../../assets/images/sliderArrow.svg);
+  width: 49px;
+  height: 49px;
+  background-repeat: no-repeat;
+  transform: rotate(180deg);
+  left: -14px;
+}
+
+.upcomingDiv {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.upcomingDiv .loginButton {
+  margin-top: 0;
+  width: 261px;
+  height: 45px;
+}
+
+.upcomingDiv h2 {
+  font-size: 36px;
+  font-weight: 700;
+  color: #000;
+  margin: 0;
+}
+
+.emptyContent .loginButton {
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+.emptyContent {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.emptyContent h2 {
+  font-size: 36px;
+  color: #aeabff;
+  font-family: var(--secondary-font);
+  margin-top: 30px;
+}
+
+.emptyContent p {
+  font-size: 18px;
+  color: #504f8c;
+  font-weight: 500;
+  width: 100%;
+  max-width: 350px;
+  margin: 0 auto;
+}
+
 @media (max-width: 1600px) {
   .hostSection {
     margin-right: 40px;
