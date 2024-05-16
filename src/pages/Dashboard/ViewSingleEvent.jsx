@@ -1,13 +1,14 @@
 import { useMemo } from "react";
 import { useTable, usePagination } from "react-table";
-import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Header from "../../components/Dashboard/Header";
 import Sidebar from "../../components/Dashboard/Sidebar";
+import HostSingleEventInfo from "../../components/Host/HostSingleEventInfo";
 import "./styles/primaryStyles.css";
 import "./styles/comonStyles.css";
 
 function EventSingle() {
-  // Sample data
+  const { eventId } = useParams();
   const data = useMemo(
     () => [
       {
@@ -22,7 +23,6 @@ function EventSingle() {
         date: "2024-05-07",
         location: "Location 2",
       },
-      // Add more data as needed
     ],
     []
   );
@@ -79,79 +79,12 @@ function EventSingle() {
       </div>
       <div className="dataTables">
         <div className="tablesGrid">
-          <div className="singleEvent">
-            <div className="singleEventHeader">
-              <h2>Miami Part 2</h2>
-              <a href="#" className="viewAll">
-                <span>View event page </span>
-              </a>
-            </div>
-            <div className="cardDescription">
-              <p className="event_date">
-                <img
-                  src="/images/calender.svg"
-                  className="descriptionImg"
-                  alt=""
-                />{" "}
-                Saturday 23rd March 2024
-              </p>
-              <p>
-                {" "}
-                <img
-                  src="/images/clock_grey.svg"
-                  className="descriptionImg"
-                  alt=""
-                />{" "}
-                5.00 PM
-              </p>
-              <p>
-                {" "}
-                <img
-                  src="/images/location_grey.svg"
-                  className="descriptionImg"
-                  alt=""
-                />{" "}
-                7 Scott Street, London EN12 9GN
-              </p>
-            </div>
-            <div className="singleEventBtn">
-              <button
-                className="loginButton"
-                type="submit"
-                // disabled={isSubmitting} // Disable button when isSubmitting is true
-              >
-                {/* {isSubmitting ? (
-                        "Submitting..."
-                      ) : ( */}
-                <span>Edit event</span>
-                {/* )} */}
-              </button>
-              <button
-                className="loginButton"
-                type="submit"
-                // disabled={isSubmitting} // Disable button when isSubmitting is true
-              >
-                {/* {isSubmitting ? (
-                        "Submitting..."
-                      ) : ( */}
-                <span>Manage tickets</span>
-                {/* )} */}
-              </button>
-            </div>
-          </div>
+          <HostSingleEventInfo eventId={eventId} />
           <div className="ticketOrders">
             <div className="searchBar">
               <h2>Tickets Orders</h2>
-              <button
-                className="loginButton"
-                type="submit"
-                // disabled={isSubmitting} // Disable button when isSubmitting is true
-              >
-                {/* {isSubmitting ? (
-                        "Submitting..."
-                      ) : ( */}
+              <button className="loginButton" type="submit">
                 <span>Send tickets</span>
-                {/* )} */}
               </button>
               <h2>119/200 Available</h2>
             </div>

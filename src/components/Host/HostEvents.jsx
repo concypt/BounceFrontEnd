@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   useTable,
   useFilters,
@@ -20,6 +21,7 @@ import paginatePrev from "../../assets/images/pagination-arrow-prev.svg";
 import paginateNext from "../../assets/images/pagination-arrow-next.svg";
 
 const HostEvents = () => {
+  const navigate = useNavigate();
   const [tableData, setTableData] = useState([]);
 
   useEffect(() => {
@@ -47,6 +49,10 @@ const HostEvents = () => {
 
     fetchData();
   }, []);
+
+  const handleView = (id) => {
+    navigate(`/dashboard-single-event/${id}`);
+  };
 
   const handleDelete = async (id) => {
     Swal.fire({
@@ -146,7 +152,7 @@ const HostEvents = () => {
         accessor: "actions",
         Cell: ({ row }) => (
           <div className="actionsColumn">
-            <button>
+            <button onClick={() => handleView(row.original.id)}>
               <img src={viewImg} alt="View" />
             </button>
             <button className="mx-1">

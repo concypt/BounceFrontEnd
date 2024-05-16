@@ -7,15 +7,15 @@ import {
   usePagination,
 } from "react-table";
 import PropTypes from "prop-types";
-import Swal from "sweetalert2";
 import "../../pages/Dashboard/styles/primaryStyles.css";
 import "../../pages/Dashboard/styles/comonStyles.css";
 
 //images
+import viewImg from "../../assets/images/event-dash-icon-view.svg";
 import paginatePrev from "../../assets/images/pagination-arrow-prev.svg";
 import paginateNext from "../../assets/images/pagination-arrow-next.svg";
 
-const HostEvents = () => {
+const HostTicketOrders = () => {
   const [tableData, setTableData] = useState([]);
 
   useEffect(() => {
@@ -44,6 +44,13 @@ const HostEvents = () => {
     fetchData();
   }, []);
 
+  const handleView = (id) => {
+    console.log(`View button clicked for row with id: ${id}`);
+    // Add your logic to handle the view action here.
+    // For example, you might navigate to a detail page:
+    // history.push(`/details/${id}`);
+  };
+
   const columns = React.useMemo(
     () => [
       {
@@ -57,6 +64,17 @@ const HostEvents = () => {
         sortType: "basic",
         Cell: ({ value }) => (
           <div>{value.length > 20 ? value.slice(0, 20) + "..." : value}</div>
+        ),
+      },
+      {
+        Header: "Actions",
+        accessor: "actions",
+        Cell: ({ row }) => (
+          <div className="actionsColumn">
+            <button onClick={() => handleView(row.original.id)}>
+              <img src={viewImg} alt="View" />
+            </button>
+          </div>
         ),
       },
     ],
@@ -173,9 +191,9 @@ const HostEvents = () => {
   );
 };
 
-HostEvents.propTypes = {
+HostTicketOrders.propTypes = {
   value: PropTypes.number,
   row: PropTypes.number,
 };
 
-export default HostEvents;
+export default HostTicketOrders;
