@@ -52,7 +52,10 @@ const router = createBrowserRouter(
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/dashboard-host" element={<ApplyHost />} />
       <Route path="/dashboard-event" element={<Event />} />
-      <Route path="/dashboard-single-event" element={<EventSingle />} />
+      <Route
+        path="/dashboard-single-event/:eventId"
+        element={<EventSingle />}
+      />
       <Route path="/dashboard-marketing" element={<Marketing />} />
       <Route path="/dashboard-create-event" element={<CreateEvent />} />
       <Route path="/Attend" element={<Attend />} />

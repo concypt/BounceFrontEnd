@@ -540,7 +540,7 @@ input[type="radio"] {
 /* singleEvent */
 
 .singleEvent {
-  background-image: url(images/signleEvent.png);
+  background-image: url(../../../assets/images/signleEvent.png);
   background-size: cover;
   border-radius: 32px;
   padding: 0 40px;
@@ -1408,7 +1408,6 @@ button.delete.ml-auto {
   .likedEvents {
     flex-wrap: wrap;
   }
-  
 }
 @media (max-width: 1280px) {
   .promotersMain {
