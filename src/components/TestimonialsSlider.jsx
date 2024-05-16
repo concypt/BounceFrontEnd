@@ -12,8 +12,11 @@ import { Navigation, Pagination, Mousewheel, Keyboard } from "swiper/modules";
 import starImage from "../assets/images/star.svg";
 import blankImage from "../assets/images/blank.png";
 import webflowLogo from "../assets/images/webflow.svg";
+import staremptyImage from "../assets/images/star-empty.svg";
 
-export default function TestimonialsSlider() {
+export default function TestimonialsSlider(props) {
+  const { reviews } = props;
+  const baseUrl = 'https://bounce.extrasol.co.uk';
   return (
     <>
       <Swiper
@@ -25,101 +28,38 @@ export default function TestimonialsSlider() {
         modules={[Navigation, Pagination, Mousewheel, Keyboard]}
         className="mySwiper"
       >
-        <SwiperSlide>
+         {reviews.map(review => (
+        <SwiperSlide key={review.id}>
           <div className="swiper_slide">
             <div className="slider_content">
-              <div className="stars">
-                <img src={starImage} alt="" />
-                <img src={starImage} alt="" />
-                <img src={starImage} alt="" />
-                <img src={starImage} alt="" />
-                <img src={starImage} alt="" />
-              </div>
+            <div className="stars">
+          {Array.from({ length: 5 }, (_, index) => (
+            <img
+              key={index}
+              src={index < review.rating ? starImage : staremptyImage}
+              alt={`Star ${index + 1}`}
+            />
+            ))}
+</div>
               <p>
-                "Bounce truly delivers an electrifying experience! The platform
-                seamlessly connects event hosts with eager attendees, fostering
-                an atmosphere of inclusivity and excitement. As an avid
-                event-goer, I've discovered some of the most thrilling live
-                music events through Bounce. Highly recommended!"
+              {review.description}
               </p>
               <div className="sliderlast_div">
                 <div className="name_div">
-                  <img src={blankImage} alt="" />
+                  <img src={`${baseUrl}${review.image}`} alt="" />
                   <div className="slider_text">
-                    <h6>Sarah Johnson</h6>
-                    <p>Marketing Manager, Groove Productions</p>
+                    <h6>{review.name}</h6>
+                    <p>{review.position}</p>
                   </div>
                   <div className="webflow_img">
-                    <img src={webflowLogo} alt="" />
+                    <img src={`${baseUrl}${review.logo}`} alt="" />
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </SwiperSlide>
-        <SwiperSlide>
-          <div className="swiper_slide">
-            <div className="slider_content">
-              <div className="stars">
-                <img src={starImage} alt="" />
-                <img src={starImage} alt="" />
-                <img src={starImage} alt="" />
-                <img src={starImage} alt="" />
-                <img src={starImage} alt="" />
-              </div>
-              <p>
-                "Bounce has revolutionized the way we engage with our audience.
-                As a host, I've found their platform to be intuitive and
-                effective in reaching a diverse demographic. It's been a
-                game-changer for us!"
-              </p>
-              <div className="sliderlast_div">
-                <div className="name_div">
-                  <img src={blankImage} alt="" />
-                  <div className="slider_text">
-                    <h6>David White</h6>
-                    <p>Events Coordinator, Vibe Events</p>
-                  </div>
-                  <div className="webflow_img">
-                    <img src={webflowLogo} alt="" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="swiper_slide">
-            <div className="slider_content">
-              <div className="stars">
-                <img src={starImage} alt="" />
-                <img src={starImage} alt="" />
-                <img src={starImage} alt="" />
-                <img src={starImage} alt="" />
-                <img src={starImage} alt="" />
-              </div>
-              <p>
-                "I've had the pleasure of attending numerous events through
-                Bounce, and each one has exceeded my expectations. The
-                user-friendly interface makes it easy to discover and book
-                tickets, and I've never been disappointed. Kudos to the Bounce
-                team for creating such a dynamic platform!"
-              </p>
-              <div className="sliderlast_div">
-                <div className="name_div">
-                  <img src={blankImage} alt="" />
-                  <div className="slider_text">
-                    <h6>Emily Patel</h6>
-                    <p>Creative Director, Pulse Entertainment Group</p>
-                  </div>
-                  <div className="webflow_img">
-                    <img src={webflowLogo} alt="" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </SwiperSlide>
+         ))}
       </Swiper>
     </>
   );

@@ -8,71 +8,73 @@ import partyImage4 from "../assets/images/party4.jpg";
 import partyImage5 from "../assets/images/party5.jpg";
 import partyImage6 from "../assets/images/party6.jpg";
 
-export default function PartySlider() {
+export default function PartySlider(props) {
+  const { imagePath1, imagePath2, imagePath3 , imagePath4 , imagePath5 , imagePath6} = props;
+  const baseUrl = 'https://bounce.extrasol.co.uk';
   return (
     <Reveal width="100%" delay="0.2">
       <div className={styles.partyImagesWrapper}>
         <div className={styles.partyImagesContainer}>
           <div className={styles.partyImages}>
             <img
-              src={partyImage1}
+              src={`${baseUrl}${imagePath1}`}
               className="img1"
               alt="Picture of party with Bounce"
             />
             <img
-              src={partyImage2}
+              src={`${baseUrl}${imagePath2}`}
               className="img2"
               alt="Picture of party with Bounce"
             />
             <img
-              src={partyImage3}
+              src={`${baseUrl}${imagePath3}`}
               className="img3"
               alt="Picture of party with Bounce"
             />
             <img
-              src={partyImage4}
+              src={`${baseUrl}${imagePath4}`}
               className="img4"
               alt="Picture of party with Bounce"
             />
             <img
-              src={partyImage5}
+              src={`${baseUrl}${imagePath5}`}
               className="img5"
               alt="Picture of party with Bounce"
             />
             <img
-              src={partyImage6}
+              src={`${baseUrl}${imagePath6}`}
               className="img6"
               alt="Picture of party with Bounce"
             />
           </div>
           <div className={styles.partyImages}>
             <img
-              src={partyImage1}
+              src={`${baseUrl}${imagePath1}`}
               className="img1"
               alt="Picture of party with Bounce"
             />
             <img
-              src={partyImage2}
+              src={`${baseUrl}${imagePath2}`}
               className="img2"
               alt="Picture of party with Bounce"
             />
             <img
-              src={partyImage3}
+              src={`${baseUrl}${imagePath3}`}
               className="img3"
               alt="Picture of party with Bounce"
             />
             <img
-              src={partyImage4}
+              src={`${baseUrl}${imagePath4}`}
               className="img4"
               alt="Picture of party with Bounce"
             />
             <img
-              src={partyImage5}
+              src={`${baseUrl}${imagePath5}`}
               className="img5"
               alt="Picture of party with Bounce"
             />
             <img
-              src={partyImage6}
+              src={`${baseUrl}${imagePath6}`}
               className="img6"
               alt="Picture of party with Bounce"
             />

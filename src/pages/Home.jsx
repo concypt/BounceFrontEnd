@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import LoadingBar from "react-top-loading-bar";
 import TestimonialsSlider from "../components/TestimonialsSlider";
 import EventList from "../components/EventList";
 import Reveal from "../components/utils/Reveal.jsx";
@@ -20,13 +22,62 @@ import listingsIcon from "../assets/images/listingsicon.svg";
 import marketingIcon from "../assets/images/marketingicon.svg";
 import secureIcon from "../assets/images/secureicon.svg";
 
+
+
 function Home() {
+  const [home, setHomeContent] = useState(null);
+  const [loadingComplete, setLoadingComplete] = useState(false);
+useEffect(() => {
+  
+  const fetchHomeContent = async () => {
+    try {
+      const response = await fetch(
+        `https://bounce.extrasol.co.uk/api/attenders/home-content`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "X-Api-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch event details");
+      }
+
+      const homeData = await response.json();
+      setHomeContent(homeData.data);
+      
+      
+    } catch (error) {
+      console.error("Error fetching event details:", error);
+    } finally {
+      setLoadingComplete(true);
+    }
+  };
+
+  fetchHomeContent();
+  
+  
+});
+if (!home) {
   return (
+    <LoadingBar
+      color="#7e79ff"
+      height={3}
+      progress={loadingComplete ? 10 : 0}
+    />
+  );
+}
+  return (
+    
     <>
+    
       <div className="header bounce_bg_circle">
         <div className="header_div">
           <Reveal width="100%" delay="0">
-            <h1>Exclusive live music events brought to you by Bounce.</h1>
+            <h1>{home.header.title}</h1>
           </Reveal>
           <Reveal width="100%" delay=".2">
             <div className="users">
@@ -45,9 +96,7 @@ function Home() {
           <div className="hader_text">
             <Reveal width="100%" delay=".4">
               <p>
-                Join hundreds of others and immerse yourself in captivating
-                performances. Fill up your cup and embrace rhythmic bliss with
-                friends.
+              {home.header.description}
               </p>
             </Reveal>
           </div>
@@ -55,18 +104,18 @@ function Home() {
             <Reveal width="100%" delay=".6">
               <a href="#" className="global_button_one">
                 {" "}
-                <span>Browse events</span>
+                <span>{home.header.btn}</span>
               </a>
             </Reveal>
           </div>
         </div>
-        <PartySlider />
+        <PartySlider imagePath1={home.header.img1} imagePath2={home.header.img2} imagePath3={home.header.img3} imagePath4={home.header.img4} imagePath5={home.header.img5} imagePath6={home.header.img6} />
       </div>
 
       <div className="event_div">
         <Reveal width="100%" delay=".2" amount="1">
           <div className="event_heading">
-            <h2>Featured Events</h2>
+            <h2>{home.header.event_title}</h2>
           </div>
         </Reveal>
         <Reveal width="100%" delay="0.2">
@@ -80,42 +129,37 @@ function Home() {
       <Reveal width="100%" delay="0.2" amount="0.75">
         <div className="slider_section">
           <div className="swiper_div">
-            <TestimonialsSlider />
+            <TestimonialsSlider reviews={home.reviews} />
           </div>
         </div>
       </Reveal>
       <Reveal width="100%" delay="0.2" amount="0.5">
         <div className="promote_section">
           <div className="promote_div">
-            <img src={promoteImg} alt="" />
+            <img src={`${baseUrl}${home.section_three.img1}`} alt="" />
 
             <div className="promote_content">
-              <h2>Promote events. Get paid</h2>
+              <h2>{home.section_three.title1}</h2>
 
               <div className="checks">
                 <div className="promote_checks">
                   <img src={tick} alt="" />
                   <p>
-                    It’s simple to get started. Sign up to an account and with
-                    one click send a request to event hosts to promote their
-                    event.
+                  {home.section_three.description1}
                   </p>
                 </div>
 
                 <div className="promote_checks">
                   <img src={tick} alt="" />
                   <p>
-                    Once approved, your special link goes live! Invite your
-                    friends using your link and if they checkout, you get paid a
-                    small portion of their ticket sale!
+                  {home.section_three.description2}
                   </p>
                 </div>
 
                 <div className="promote_checks">
                   <img src={tick} alt="" />
                   <p>
-                    Get rewarded and increase your earnings by promoting events
-                    on Bounce, today.
+                  {home.section_three.description3}
                   </p>
                 </div>
               </div>
@@ -123,7 +167,7 @@ function Home() {
               <div className="promote_btn">
                 <a href="#" className="global_button_one">
                   {" "}
-                  <span>Create an account</span>
+                  <span>{home.section_three.btn1}</span>
                 </a>
               </div>
             </div>
@@ -133,41 +177,37 @@ function Home() {
       <Reveal width="100%" delay="0.2" amount="0.5">
         <div className="promote_section promote_second">
           <div className="promote_div">
-            <img src={promoteImg2} alt="" />
+            <img src={`${baseUrl}${home.section_three.img2}`} alt="" />
 
             <div className="promote_content">
-              <h2>Sell tickets on Bounce!</h2>
+              <h2>{home.section_three.title2}</h2>
 
               <div className="checks">
                 <div className="promote_checks">
                   <img src={tick} alt="" />
                   <p>
-                    The all in one ticketing platform that keeps i t simple.
+                  {home.section_three.description4}
                   </p>
                 </div>
 
                 <div className="promote_checks">
                   <img src={tick} alt="" />
                   <p>
-                    To get started, we just need a few details from yourself.
-                    Once approved, you’re ready to sell out your event on
-                    Bounce.
+                  {home.section_three.description5}
                   </p>
                 </div>
 
                 <div className="promote_checks">
                   <img src={tick} alt="" />
                   <p>
-                    With a generous industry beating 7.5% fee, you can rely on
-                    Bounce to bring you simple, intuitive ticketing solutions
-                    for your event brand.
+                  {home.section_three.description6}
                   </p>
                 </div>
               </div>
               <div className="promote_btn">
                 <a href="" className="global_button_one">
                   {" "}
-                  <span>Discover more</span>
+                  <span>{home.section_three.btn2}</span>
                 </a>
               </div>
             </div>
@@ -177,53 +217,49 @@ function Home() {
       <Reveal delay=".2">
         <div className="promote_section blank_section">
           <div className="promote_div">
-            <img src={appImage} className="blank_img" alt="Bounce App" />
+            <img src={`${baseUrl}${home.section_four.img}`} className="blank_img" alt="Bounce App" />
             <div className="blank_grid">
               <div className="grid_block">
                 <img src={analyticsIcon} alt="Analytics" />
-                <h3>Analytics Dashboard</h3>
+                <h3>{home.section_four.title1}</h3>
                 <p>
-                  Gain instant insights into your sales data with our
-                  comprehensive analytics dashboard.
+                {home.section_four.description1}
                 </p>
                 <a href="#">
-                  Learn more{" "}
+                {home.section_four.btn}{" "}
                   <img src={rightArrow} className="arrow_right" alt="" />
                 </a>
               </div>
               <div className="grid_block">
                 <img src={marketingIcon} alt="Marketing" />
-                <h3>Marketing Tools</h3>
+                <h3>{home.section_four.title2}</h3>
                 <p>
-                  Effortlessly manage email campaigns and create enticing
-                  discounts to boost event attendance.
+                {home.section_four.description2}
                 </p>
                 <a href="#">
-                  Learn more{" "}
+                {home.section_four.btn}{" "}
                   <img src={rightArrow} className="arrow_right" alt="" />
                 </a>
               </div>
               <div className="grid_block">
                 <img src={listingsIcon} alt="Listings" />
-                <h3>Event Listings</h3>
+                <h3>{home.section_four.title3}</h3>
                 <p>
-                  Explore a diverse range of live events, from intimate gigs to
-                  large-scale concerts.
+                {home.section_four.description3}
                 </p>
                 <a href="#">
-                  Learn more{" "}
+                {home.section_four.btn}{" "}
                   <img src={rightArrow} className="arrow_right" alt="" />
                 </a>
               </div>
               <div className="grid_block">
                 <img src={secureIcon} alt="Secure" />
-                <h3>Secure Transactions</h3>
+                <h3>{home.section_four.title4}</h3>
                 <p>
-                  Rest assured with our secure transaction system, ensuring
-                  peace of mind with every ticket purchase.
+                {home.section_four.description4}
                 </p>
                 <a href="#">
-                  Learn more{" "}
+                {home.section_four.btn}{" "}
                   <img src={rightArrow} className="arrow_right" alt="" />
                 </a>
               </div>
@@ -235,97 +271,27 @@ function Home() {
       <div className="accordion_section">
         <Reveal delay=".2" width="100%">
           <div className="faqs">
-            <h2>FAQs</h2>
+            <h2>{home.section_four.faq_title}</h2>
             <p>
-              Explore our comprehensive FAQ section where you'll find answers to
-              common questions and detailed information on various aspects of
-              our platform.
+            {home.section_four.faq_description}
             </p>
           </div>
         </Reveal>
         <Reveal delay=".2" width="100%">
           <div className="faq_accordians">
             <ul>
-              <div className="accordian_main" id="5">
-                <li className="question que5">
-                  <span>How do I use Bounce?</span>
+            {home.faqs.map((faq, index) => (
+              <div className="accordian_main" key={faq.id} id={`question-${faq.id}`}>
+                <li className={`question que${index + 1}`}>
+                  <span>{faq.question}</span>
                   <div className="expand-bar"></div>
                 </li>
-                <li className="answer ans5">
-                  Get started on Bounce by signing up and creating your account.
-                  Join a vibrant community of event creators and attendees,
-                  leveraging Bounce’s user-friendly platform to effortlessly
-                  manage, promote, and sell your event tickets. With advanced
-                  tools for email marketing, and streamlined event management,
-                  Bounce is your all-in-one solution to boost ticket sales and
-                  elevate your event business. Discover the simplicity and power
-                  of Bounce for a seamless event planning experience!
+                <li className={`answer ans${index + 1}`}>
+                  {faq.answer}
                 </li>
               </div>
-              <div className="accordian_main" id="1">
-                <li className="question que1" id="question">
-                  <span>
-                    How do I get started selling tickets online for free?
-                  </span>
-                  <div className="expand-bar"></div>
-                </li>
-                <li className="answer ans1">
-                  To begin selling tickets online for free, simply kickstart
-                  your event on Bounce. Our platform offers a seamless
-                  experience in crafting, advertising, and overseeing your event
-                  without any cost. Dive in effortlessly to start selling your
-                  event tickets hassle-free!{" "}
-                </li>
-              </div>
-              <div className="accordian_main" id="2">
-                <li className="question que2">
-                  <span>
-                    Can I offer discounts or promo codes on event tickets?
-                  </span>
-                  <div className="expand-bar"></div>
-                </li>
-                <li className="answer ans2 ">
-                  {" "}
-                  Yes! You can boost your ticket sales by offering discounts or
-                  promo codes. With Bounce’s ticket management tools, you can
-                  easily create tickets and provide discounts to encourage more
-                  people to buy them. These promo codes also help you track how
-                  well your online ads are performing and figure out which
-                  customer groups are spreading the word about your event. It’s
-                  like giving a special offer to your audience while also
-                  keeping track of how effective your marketing efforts are!
-                </li>
-              </div>
-              <div className="accordian_main" id="3">
-                <li className="question que3">
-                  <span>How do I create multiple ticket types on Bounce?</span>
-                  <div className="expand-bar"></div>
-                </li>
-                <li className="answer ans3">
-                  On Bounce, creating multiple ticket types is straightforward.
-                  You have the flexibility to set up various ticket options like
-                  Early Bird, VIP, or any other category that fits your event.
-                  This helps you cater to different preferences and budgets,
-                  enticing more people to purchase tickets based on their
-                  desired experience.
-                </li>
-              </div>
-              <div className="accordian_main" id="4">
-                <li className="question que4">
-                  <span>
-                    Can I sell tickets online for a charity event on Bounce?
-                  </span>
-                  <div className="expand-bar"></div>
-                </li>
-                <li className="answer ans4">
-                  Absolutely! Bounce is a fantastic platform for selling tickets
-                  for charity events. Through our dedicated feature called
-                  “Bounce for Nonprofits,” you can expand your audience,
-                  increase event attendance, and successfully reach your
-                  fundraising objectives using our advanced online ticketing
-                  system.
-                </li>
-              </div>
+            ))}
+            
             </ul>
           </div>
         </Reveal>
@@ -348,3 +314,4 @@ function Home() {
 }
 
 export default Home;
+const baseUrl = 'https://bounce.extrasol.co.uk';
