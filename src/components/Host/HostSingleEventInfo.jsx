@@ -1,13 +1,14 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import LoadingBar from "react-top-loading-bar";
+import { Link } from "react-router-dom";
 // import { format, parseISO } from "date-fns";
-import "../../pages/Dashboard/styles/primaryStyles.css";
-import "../../pages/Dashboard/styles/comonStyles.css";
-
-const EventSingleInfo = ({ eventId }) => {
-  const [event, setEventData] = useState(null);
+const EventInfoComponent = ({ eventId }) => {
+  const [eventData, setEventData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true); // Start loading
       try {
         const response = await fetch(
           `https://bounce.extrasol.co.uk/api/user/event-edit/${eventId}`,
@@ -23,20 +24,27 @@ const EventSingleInfo = ({ eventId }) => {
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
-        const data = await response.json();
-        setEventData(data.data.event);
+        const responseData = await response.json();
+        // console.log("responseData", responseData);
+        setEventData(responseData.data.event);
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchData();
   }, [eventId]);
 
-  console.log("event", event);
+  useEffect(() => {
+    console.log("eventData updated=>", eventData);
+  }, [eventData]);
 
-  if (!event) {
-    console.log("No Data Find");
+  if (!eventData) {
+    return (
+      <LoadingBar color="#7e79ff" height={3} progress={setLoading ? 10 : 0} />
+    );
   }
 
   //   const startTime = parseISO(event.start_time);
@@ -46,15 +54,15 @@ const EventSingleInfo = ({ eventId }) => {
   return (
     <div className="singleEvent">
       <div className="singleEventHeader">
-        {/* <h2>{event.name}</h2> */}
-        <a href="#" className="viewAll">
+        <h2>{eventData.name}</h2>
+        <Link to={`/events/${eventData.id}`} className="viewAll">
           <span>View event page </span>
-        </a>
+        </Link>
       </div>
       <div className="cardDescription">
         <p className="event_date">
           <img src="/images/calender.svg" className="descriptionImg" alt="" />{" "}
-          {/* {event.start_time} */}
+          {eventData.start_time}
         </p>
         <p>
           <img src="/images/clock_grey.svg" className="descriptionImg" alt="" />{" "}
@@ -66,7 +74,7 @@ const EventSingleInfo = ({ eventId }) => {
             className="descriptionImg"
             alt=""
           />{" "}
-          7 Scott Street, London EN12 9GN
+          {eventData.address ? eventData.address : "No location Entered"}
         </p>
       </div>
       <div className="singleEventBtn">
@@ -81,4 +89,4 @@ const EventSingleInfo = ({ eventId }) => {
   );
 };
 
-export default EventSingleInfo;
+export default EventInfoComponent;
