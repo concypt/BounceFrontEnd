@@ -550,6 +550,10 @@ input[type="radio"] {
   border: 1px solid #d8d8d8;
 }
 
+.singleEventHeader a {
+  width: 220px;
+}
+
 .ticketOrders {
   width: 100%;
   background: #fff;
@@ -637,7 +641,7 @@ input[type="radio"] {
 .singleEventHeader {
   display: flex;
   gap: 20px;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .singleEventHeader h2 {
