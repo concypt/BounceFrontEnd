@@ -81,16 +81,17 @@ if (!home) {
           </Reveal>
           <Reveal width="100%" delay=".2">
             <div className="users">
-              <div className="user_imgs">
-                <img src={userOne} alt="Picture of Happy Attendee" />
-                <img src={userTwo} alt="Picture of Happy Host" />
-                <img src={userThree} alt="Picture of Happy Attendee" />
-                <img src={userFour} alt="Picture of Happy Attendee" />
-                <img src={userFive} alt="Picture of Happy Host" />
-                <div className="user_count">
-                  <p>268+</p>
-                </div>
+            <div className="user_imgs">
+            {home.host.slice(0, 5).map((image, index) => (
+              <img key={index} src={home.host_img + image} alt={image.alt} />
+            ))}
+            {home.host.length > 5 && (
+              <div className="user_count">
+                <p>{home.host.length - 5}+</p>
               </div>
+            )}
+            </div>
+              
             </div>
           </Reveal>
           <div className="hader_text">
