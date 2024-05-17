@@ -75,6 +75,15 @@
   color: #827dff;
 }
 
+.links li a:focus {
+  color: #827dff;
+}
+
+.links li a:focus::after {
+  left: 0;
+}
+
+
 .sublinks {
   list-style-type: none;
   padding: 0;

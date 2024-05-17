@@ -23,11 +23,11 @@ function News() {
                   <div className={styles.contactInput}>
                     <div className={styles.contactFields}>
                       <label htmlFor="">Your Name</label>
-                      <input type="text" placeholder="Name" required/>
+                      <input type="text" placeholder="Name" required />
                     </div>
                     <div className={styles.contactFields}>
                       <label htmlFor="">Your Email</label>
-                      <input type="email" placeholder="Email" required/>
+                      <input type="email" placeholder="Email" required />
                     </div>
                   </div>
                   <div className={styles.contactFields}>
@@ -46,12 +46,15 @@ function News() {
                     <Link>
                       <b>Email:</b> Info@bounce.live
                     </Link>
-                      <Reveal width="100%" delay=".6">
-                        <button type="submit" className={`global_button_one ${styles.submitBtn}`}>
-                          {" "}
-                          <span>Browse events</span>
-                        </button>
-                      </Reveal>
+                    <Reveal width="100%" delay=".6">
+                      <button
+                        type="submit"
+                        className={`global_button_one ${styles.submitBtn}`}
+                      >
+                        {" "}
+                        <span>Send Message</span>
+                      </button>
+                    </Reveal>
                   </div>
                 </form>
               </div>
