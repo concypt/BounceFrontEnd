@@ -212,6 +212,9 @@ a.global-link-arrow::after {
 
 .user_imgs img {
   margin-left: -20px;
+  max-width: 58px;
+  height: 58px;
+  border-radius: 100px;
 }
 
 .global_button_one {
