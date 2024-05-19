@@ -1,5 +1,4 @@
 import $ from "jquery";
-import { Swiper, SwiperSlide } from "swiper/react";
 
 $(document).ready(function () {
   $(".accordian_main").click(function () {

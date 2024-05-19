@@ -1,0 +1,43 @@
+.faqAccordians {
+  margin-top: 102px;
+  display: flex;
+  justify-content: space-between;
+  max-width: 767px;
+  margin: 0 auto;
+}
+
+/* .accordian_image {
+    min-height: 100%;
+  } */
+
+.faqContainer {
+  width: 100%;
+  padding-left: 0;
+}
+
+/* .faq_main_content h4 {
+    color: #8f8bff;
+    text-align: center;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 21.48px;
+  } */
+
+/* .faq_main_content h2 {
+    color: #000;
+    text-align: center;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 41.7px;
+  
+    width: 100%;
+    max-width: 514px;
+    margin: 20px auto;
+  } */
+
+/* .question,
+  .answer {
+    list-style-type: none;
+  } */

@@ -4,76 +4,61 @@ import TestimonialsSlider from "../components/TestimonialsSlider";
 import EventList from "../components/EventList";
 import Reveal from "../components/utils/Reveal.jsx";
 import PartySlider from "../components/PartySlider";
+import FAQs from "../components/HomePage/FAQs.jsx";
 //images below
-import userOne from "../assets/images/userOne.svg";
-import userTwo from "../assets/images/userTwo.svg";
-import userThree from "../assets/images/userThree.svg";
-import userFour from "../assets/images/userFour.svg";
-import userFive from "../assets/images/userFive.svg";
+
 import tick from "../assets/images/tick.svg";
-import promoteImg from "../assets/images/promote_img.png";
-import promoteImg2 from "../assets/images/promote_img2.png";
-import blank from "../assets/images/blank.png";
-import block from "../assets/images/block.svg";
+
 import rightArrow from "../assets/images/right_arrow.svg";
-import appImage from "../assets/images/appimage.png";
+
 import analyticsIcon from "../assets/images/analyticsicon.svg";
 import listingsIcon from "../assets/images/listingsicon.svg";
 import marketingIcon from "../assets/images/marketingicon.svg";
 import secureIcon from "../assets/images/secureicon.svg";
 
-
-
 function Home() {
   const [home, setHomeContent] = useState(null);
   const [loadingComplete, setLoadingComplete] = useState(false);
-useEffect(() => {
-  
-  const fetchHomeContent = async () => {
-    try {
-      const response = await fetch(
-        `https://bounce.extrasol.co.uk/api/attenders/home-content`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            "X-Api-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9",
-          },
+  useEffect(() => {
+    const fetchHomeContent = async () => {
+      try {
+        const response = await fetch(
+          `https://bounce.extrasol.co.uk/api/attenders/home-content`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              "X-Api-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9",
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch event details");
         }
-      );
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch event details");
+        const homeData = await response.json();
+        setHomeContent(homeData.data);
+      } catch (error) {
+        console.error("Error fetching event details:", error);
+      } finally {
+        setLoadingComplete(true);
       }
+    };
 
-      const homeData = await response.json();
-      setHomeContent(homeData.data);
-      
-      
-    } catch (error) {
-      console.error("Error fetching event details:", error);
-    } finally {
-      setLoadingComplete(true);
-    }
-  };
-
-  fetchHomeContent();
-  
-  
-});
-if (!home) {
+    fetchHomeContent();
+  }, []);
+  if (!home) {
+    return (
+      <LoadingBar
+        color="#7e79ff"
+        height={3}
+        progress={loadingComplete ? 10 : 0}
+      />
+    );
+  }
   return (
-    <LoadingBar
-      color="#7e79ff"
-      height={3}
-      progress={loadingComplete ? 10 : 0}
-    />
-  );
-}
-  return (
-    
     <>
-    
       <div className="header bounce_bg_circle">
         <div className="header_div">
           <Reveal width="100%" delay="0">
@@ -81,24 +66,25 @@ if (!home) {
           </Reveal>
           <Reveal width="100%" delay=".2">
             <div className="users">
-            <div className="user_imgs">
-            {home.host.slice(0, 5).map((image, index) => (
-              <img key={index} src={home.host_img + image} alt={image.alt} />
-            ))}
-            {home.host.length > 5 && (
-              <div className="user_count">
-                <p>{home.host.length - 5}+</p>
+              <div className="user_imgs">
+                {home.host.slice(0, 5).map((image, index) => (
+                  <img
+                    key={index}
+                    src={home.host_img + image}
+                    alt={image.alt}
+                  />
+                ))}
+                {home.host.length > 5 && (
+                  <div className="user_count">
+                    <p>{home.host.length - 5}+</p>
+                  </div>
+                )}
               </div>
-            )}
-            </div>
-              
             </div>
           </Reveal>
           <div className="hader_text">
             <Reveal width="100%" delay=".4">
-              <p>
-              {home.header.description}
-              </p>
+              <p>{home.header.description}</p>
             </Reveal>
           </div>
           <div className="header_btn">
@@ -110,7 +96,14 @@ if (!home) {
             </Reveal>
           </div>
         </div>
-        <PartySlider imagePath1={home.header.img1} imagePath2={home.header.img2} imagePath3={home.header.img3} imagePath4={home.header.img4} imagePath5={home.header.img5} imagePath6={home.header.img6} />
+        <PartySlider
+          imagePath1={home.header.img1}
+          imagePath2={home.header.img2}
+          imagePath3={home.header.img3}
+          imagePath4={home.header.img4}
+          imagePath5={home.header.img5}
+          imagePath6={home.header.img6}
+        />
       </div>
 
       <div className="event_div">
@@ -145,23 +138,17 @@ if (!home) {
               <div className="checks">
                 <div className="promote_checks">
                   <img src={tick} alt="" />
-                  <p>
-                  {home.section_three.description1}
-                  </p>
+                  <p>{home.section_three.description1}</p>
                 </div>
 
                 <div className="promote_checks">
                   <img src={tick} alt="" />
-                  <p>
-                  {home.section_three.description2}
-                  </p>
+                  <p>{home.section_three.description2}</p>
                 </div>
 
                 <div className="promote_checks">
                   <img src={tick} alt="" />
-                  <p>
-                  {home.section_three.description3}
-                  </p>
+                  <p>{home.section_three.description3}</p>
                 </div>
               </div>
 
@@ -186,23 +173,17 @@ if (!home) {
               <div className="checks">
                 <div className="promote_checks">
                   <img src={tick} alt="" />
-                  <p>
-                  {home.section_three.description4}
-                  </p>
+                  <p>{home.section_three.description4}</p>
                 </div>
 
                 <div className="promote_checks">
                   <img src={tick} alt="" />
-                  <p>
-                  {home.section_three.description5}
-                  </p>
+                  <p>{home.section_three.description5}</p>
                 </div>
 
                 <div className="promote_checks">
                   <img src={tick} alt="" />
-                  <p>
-                  {home.section_three.description6}
-                  </p>
+                  <p>{home.section_three.description6}</p>
                 </div>
               </div>
               <div className="promote_btn">
@@ -218,49 +199,45 @@ if (!home) {
       <Reveal delay=".2">
         <div className="promote_section blank_section">
           <div className="promote_div">
-            <img src={`${baseUrl}${home.section_four.img}`} className="blank_img" alt="Bounce App" />
+            <img
+              src={`${baseUrl}${home.section_four.img}`}
+              className="blank_img"
+              alt="Bounce App"
+            />
             <div className="blank_grid">
               <div className="grid_block">
                 <img src={analyticsIcon} alt="Analytics" />
                 <h3>{home.section_four.title1}</h3>
-                <p>
-                {home.section_four.description1}
-                </p>
+                <p>{home.section_four.description1}</p>
                 <a href="#">
-                {home.section_four.btn}{" "}
+                  {home.section_four.btn}{" "}
                   <img src={rightArrow} className="arrow_right" alt="" />
                 </a>
               </div>
               <div className="grid_block">
                 <img src={marketingIcon} alt="Marketing" />
                 <h3>{home.section_four.title2}</h3>
-                <p>
-                {home.section_four.description2}
-                </p>
+                <p>{home.section_four.description2}</p>
                 <a href="#">
-                {home.section_four.btn}{" "}
+                  {home.section_four.btn}{" "}
                   <img src={rightArrow} className="arrow_right" alt="" />
                 </a>
               </div>
               <div className="grid_block">
                 <img src={listingsIcon} alt="Listings" />
                 <h3>{home.section_four.title3}</h3>
-                <p>
-                {home.section_four.description3}
-                </p>
+                <p>{home.section_four.description3}</p>
                 <a href="#">
-                {home.section_four.btn}{" "}
+                  {home.section_four.btn}{" "}
                   <img src={rightArrow} className="arrow_right" alt="" />
                 </a>
               </div>
               <div className="grid_block">
                 <img src={secureIcon} alt="Secure" />
                 <h3>{home.section_four.title4}</h3>
-                <p>
-                {home.section_four.description4}
-                </p>
+                <p>{home.section_four.description4}</p>
                 <a href="#">
-                {home.section_four.btn}{" "}
+                  {home.section_four.btn}{" "}
                   <img src={rightArrow} className="arrow_right" alt="" />
                 </a>
               </div>
@@ -273,28 +250,11 @@ if (!home) {
         <Reveal delay=".2" width="100%">
           <div className="faqs">
             <h2>{home.section_four.faq_title}</h2>
-            <p>
-            {home.section_four.faq_description}
-            </p>
+            <p>{home.section_four.faq_description}</p>
           </div>
         </Reveal>
         <Reveal delay=".2" width="100%">
-          <div className="faq_accordians">
-            <ul>
-            {home.faqs.map((faq, index) => (
-              <div className="accordian_main" key={faq.id} id={`question-${faq.id}`}>
-                <li className={`question que${index + 1}`}>
-                  <span>{faq.question}</span>
-                  <div className="expand-bar"></div>
-                </li>
-                <li className={`answer ans${index + 1}`}>
-                  {faq.answer}
-                </li>
-              </div>
-            ))}
-            
-            </ul>
-          </div>
+          <FAQs FAQs={home.faqs} />
         </Reveal>
         <Reveal delay=".2" width="100%">
           <div className="faq_content">
@@ -315,4 +275,4 @@ if (!home) {
 }
 
 export default Home;
-const baseUrl = 'https://bounce.extrasol.co.uk';
+const baseUrl = "https://bounce.extrasol.co.uk";

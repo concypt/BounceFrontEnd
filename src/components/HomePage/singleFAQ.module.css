@@ -1,0 +1,121 @@
+.question {
+  font-weight: bold;
+  position: relative;
+  color: #000;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: capitalize;
+  transition: 0.7s;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.accordianMain {
+  /* border-top: 1px solid rgba(143, 139, 255, 0.22); */
+  position: relative;
+  overflow: hidden;
+  z-index: 3;
+  border: 1px solid black;
+  padding: 22px 24px;
+  cursor: pointer;
+  background: transparent;
+  background-size: 300%;
+  transition: all 0.5s ease-in;
+  margin-bottom: 16px;
+}
+
+.accordianMain::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 130%;
+  height: 100%;
+  background-color: black;
+  transform: translate(-155%, 0) skew(-30deg);
+  transition: 0.5s;
+}
+
+.accordianMain:hover::before {
+  transform: translate(-9%, 0) skew(-15deg);
+}
+
+.accordianMain:hover .question {
+  color: #fff;
+  z-index: 2;
+  position: relative;
+}
+
+.accordianMain:hover .answer {
+  color: #fff;
+  z-index: 2;
+  position: relative;
+}
+
+.accordianMain:hover .expandBar:after {
+  background-color: #fff;
+}
+
+.accordianMain:hover .expandBar {
+  background-color: #fff;
+}
+
+.question:hover {
+  cursor: pointer;
+}
+
+.expandBar {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background-color: #000;
+  position: relative;
+}
+
+.expandBar,
+.expandBar:after {
+  width: 18px;
+  height: 2px;
+  background-color: #000;
+  transition: all 0.5s ease;
+}
+
+.expandBar:after {
+  content: "";
+  position: relative;
+  display: block;
+  transform: rotate(90deg);
+  transition: all 0.5s ease;
+}
+
+.open {
+  border-bottom: none;
+}
+
+.open .expandBar {
+  transform: rotate(180deg);
+}
+
+.open .expandBar:after {
+  transform: rotate(180deg);
+}
+
+.answer {
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 10px;
+  height: 0;
+  max-height: 0;
+  margin: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+}
+
+.answer.open {
+  height: auto;
+  max-height: 150px;
+}
