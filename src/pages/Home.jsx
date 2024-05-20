@@ -258,14 +258,13 @@ function Home() {
         </Reveal>
         <Reveal delay=".2" width="100%">
           <div className="faq_content">
-            <h3>Still have a question?</h3>
+            <h3>{home.section_four.contact_title}</h3>
             <p>
-              Don't hesitate to reach out – we're here to help with any queries
-              you may have.
+            {home.section_four.contact_description}
             </p>
             <a href="/contact" className="global_button_one">
               {" "}
-              <span>Contact</span>
+              <span>{home.section_four.contact_btn}</span>
             </a>
           </div>
         </Reveal>
