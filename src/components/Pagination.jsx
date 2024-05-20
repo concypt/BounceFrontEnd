@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import styles from "./pagination.module.css";
 
 const Pagination = ({
   totalPosts,
@@ -12,7 +13,7 @@ const Pagination = ({
     pages.push(i);
   }
   return (
-    <div>
+    <div className={styles.paginationWrapper}>
       {pages.map((page, index) => {
         return (
           <button
@@ -20,12 +21,8 @@ const Pagination = ({
             onClick={() => {
               setCurrentPage(page);
               globalThis.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-
-              // document
-              //   .getElementById("root")
-              //   .scrollIntoView({ behavior: "smooth" });
             }}
-            className={page == currentPage ? "active" : ""}
+            className={page == currentPage ? styles.active : ""}
           >
             {page}
           </button>

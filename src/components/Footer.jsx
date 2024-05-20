@@ -26,7 +26,7 @@ const Footer = () => {
                 </div>
                 <div className={`${styles.address} ${styles.contact}`}>
                   <h3>Contact:</h3>
-                  <Link to="tel:">1800 123 4567</Link>
+                  {/* <Link to="tel:">1800 123 4567</Link> */}
                   <Link to="mailto:info@bounce.live">Info@bounce.live</Link>
                 </div>
                 <div className={`${styles.address} ${styles.contact}`}>

@@ -30,23 +30,29 @@ import News from "./pages/static/News.jsx";
 import Contact from "./pages/static/Contact.jsx";
 import TermsConditions from "./pages/static/TermsConditions.jsx";
 import CookiePolicy from "./pages/static/CookiePolicy.jsx";
+import ScrollToTop from "./components/utils/scrollToTop.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/" element={<MainLayout />}>
-        <Route index element={<Home />} />
-        <Route path="/events" element={<Events />} />
-        <Route path="/events/:eventId" element={<EventDetail />} />
-        <Route path="/host-profile/:organisationId" element={<HostProfile />} />
-        <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
-        <Route path="/About" element={<About />} />
-        <Route path="/News" element={<News />} />
-        <Route path="/Contact" element={<Contact />} />
-        <Route path="/TermsConditions" element={<TermsConditions />} />
-        <Route path="/CookiePolicy" element={<CookiePolicy />} />
+      <Route element={<ScrollToTop />}>
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<Home />} />
+          <Route path="/events" element={<Events />} />
+          <Route path="/events/:eventId" element={<EventDetail />} />
+          <Route
+            path="/host-profile/:organisationId"
+            element={<HostProfile />}
+          />
+          <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
+          <Route path="/About" element={<About />} />
+          <Route path="/News" element={<News />} />
+          <Route path="/Contact" element={<Contact />} />
+          <Route path="/TermsConditions" element={<TermsConditions />} />
+          <Route path="/CookiePolicy" element={<CookiePolicy />} />
 
-        <Route path="*" element={<PageNotFound />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Route>
       </Route>
       {/* Should be in dashboard layout  */}
       <Route path="/dashboard" element={<Dashboard />} />
@@ -85,6 +91,7 @@ function App() {
         height={3}
         progress={loadingComplete ? 100 : 0}
       />
+
       <RouterProvider router={router} />
     </>
   );

@@ -1,9 +1,10 @@
 .eventsGrid {
   display: grid;
-  grid-template-columns: 32% 32% 32%;
   row-gap: 60px;
   justify-content: space-between;
   padding-top: 50px;
+  grid-template-columns: repeat(3, minmax(0, 516px));
+  column-gap: 50px;
 }
 
 .eventsGrid a {

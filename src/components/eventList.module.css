@@ -1,7 +1,8 @@
 .eventsGrid {
   display: grid;
-  grid-template-columns: 32% 32% 32%;
+  grid-template-columns: repeat(3, minmax(0, 516px));
   row-gap: 60px;
+  column-gap: 60px;
   justify-content: space-between;
   padding-top: 50px;
 }
@@ -13,6 +14,7 @@
 @media (max-width: 1300px) {
   .eventsGrid {
     grid-template-columns: 48% 48%;
+    grid-template-columns: repeat(2, minmax(0, 516px));
   }
 }
 

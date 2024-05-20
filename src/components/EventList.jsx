@@ -105,17 +105,17 @@ const EventList = ({ limit }) => {
             : currentPageEvents.map((event) => (
                 <EventCard key={event.id} event={event} />
               ))}
-          {limit ? (
-            ""
-          ) : (
-            <Pagination
-              totalPosts={events.length}
-              postsPerPage={eventsPerPage}
-              setCurrentPage={setCurrentPage}
-              currentPage={currentPage}
-            />
-          )}
         </div>{" "}
+        {limit ? (
+          ""
+        ) : (
+          <Pagination
+            totalPosts={events.length}
+            postsPerPage={eventsPerPage}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+          />
+        )}
       </div>
     </>
   );

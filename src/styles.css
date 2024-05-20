@@ -33,9 +33,15 @@ a {
 }
 
 .custom-wrapper {
+  max-width: 1700px;
   margin: 0 30px;
 }
 
+@media screen and (min-width: 1774px) {
+  .custom-wrapper {
+    margin: 0 auto;
+  }
+}
 .App {
   position: sticky;
   top: 20px;
