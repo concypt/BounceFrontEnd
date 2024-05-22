@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import LoadingBar from "react-top-loading-bar";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+
 import TestimonialsSlider from "../components/TestimonialsSlider";
 import EventList from "../components/EventList";
 import Reveal from "../components/utils/Reveal.jsx";
@@ -16,38 +19,52 @@ import listingsIcon from "../assets/images/listingsicon.svg";
 import marketingIcon from "../assets/images/marketingicon.svg";
 import secureIcon from "../assets/images/secureicon.svg";
 
+const URL = "https://bounce.extrasol.co.uk/api/attenders/home-content";
+let config = {
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    "X-Api-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9",
+  },
+};
+
+const fetchHomeData = async () => {
+  const { data } = await axios.get(URL, config);
+  return data;
+};
+
 function Home() {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["homeData"],
+    queryFn: fetchHomeData,
+  });
+
   const [home, setHomeContent] = useState(null);
   const [loadingComplete, setLoadingComplete] = useState(false);
+
   useEffect(() => {
-    const fetchHomeContent = async () => {
-      try {
-        const response = await fetch(
-          `https://bounce.extrasol.co.uk/api/attenders/home-content`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-              "X-Api-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9",
-            },
-          }
-        );
+    if (data) {
+      setHomeContent(data.data);
+      setLoadingComplete(true);
+    }
+  }, [data]);
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch event details");
-        }
+  if (isLoading)
+    return (
+      <div
+        style={{
+          width: "100vw",
+          height: "90vh",
+          display: "flex",
+          alignContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <p style={{ textAlign: "center", width: "100%" }}>Loading...</p>
+      </div>
+    );
+  if (error) return <p>Error: {error.message}</p>;
 
-        const homeData = await response.json();
-        setHomeContent(homeData.data);
-      } catch (error) {
-        console.error("Error fetching event details:", error);
-      } finally {
-        setLoadingComplete(true);
-      }
-    };
-
-    fetchHomeContent();
-  }, []);
   if (!home) {
     return (
       <LoadingBar
@@ -259,9 +276,7 @@ function Home() {
         <Reveal delay=".2" width="100%">
           <div className="faq_content">
             <h3>{home.section_four.contact_title}</h3>
-            <p>
-            {home.section_four.contact_description}
-            </p>
+            <p>{home.section_four.contact_description}</p>
             <a href="/contact" className="global_button_one">
               {" "}
               <span>{home.section_four.contact_btn}</span>

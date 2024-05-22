@@ -7,6 +7,13 @@ import PropTypes from "prop-types";
 import styles from "./eventList.module.css";
 
 const URL = "https://bounce.extrasol.co.uk/api/attenders/events";
+let config = {
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    "X-Api-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9",
+  },
+};
 
 const EventList = ({ limit }) => {
   const [events, setEvents] = useState([]);
@@ -29,6 +36,16 @@ const EventList = ({ limit }) => {
     console.log(locationMiles);
     console.log(dateParameter);
   };
+
+  // const fetchEvents = async (completeURL) => {
+  //   const { data } = await axios.get(completeURL, config);
+  //   return data;
+  // };
+
+  // const { data, error, isLoading } = useQuery({
+  //   queryKey: ["events"],
+  //   queryFn: fetchEvents,
+  // });
 
   useEffect(() => {
     let categoriesParameter = "";
