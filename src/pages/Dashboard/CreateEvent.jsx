@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
+import $ from "jquery";
 import Header from "../../components/Dashboard/Header";
 import Sidebar from "../../components/Dashboard/Sidebar";
 import uploadImg from "../../assets/images/upload.svg";
@@ -13,23 +14,29 @@ import pencil from "../../assets/images/pencil.svg";
 function CreateEvent() {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
-    email: "",
-    uname: "",
-    pwd: "",
-    cpwd: "",
-    fname: "",
-    lname: "",
-    phno: "",
-    phno_2: "",
+    event_name: "",
+    category_id: "",
+    tag: "",
+    event_start_time: "",
+    event_end_time: "",
+    address: "",
+    event_description: "",
+    title: "",
+    ticket_status: "",
+    description: "",
+    ticket_start_time: "",
+    ticket_end_time: "",
+    ticket_type: "",
+    price: "",
+    quantity: "",
+    ticket_per_order: "",
+    absorbe_fees: "",
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
-  const nextStep = () => setStep(step + 1);
-  const prevStep = () => setStep(step - 1);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -53,6 +60,69 @@ function CreateEvent() {
     console.log(fileList);
     setFiles([...files, ...fileList]);
   };
+
+  // for multisptep and progress bar
+  useEffect(() => {
+    var current_fs, next_fs, previous_fs;
+    var opacity;
+    var current = 1;
+    var steps = $("fieldset").length;
+
+    setProgressBar(current);
+
+    $(".next-create-event").click(function () {
+      current_fs = $(this).parent();
+      next_fs = $(this).parent().next();
+      $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+      next_fs.show();
+      current_fs.animate(
+        { opacity: 0 },
+        {
+          step: function (now) {
+            opacity = 1 - now;
+
+            current_fs.css({
+              display: "none",
+              position: "relative",
+            });
+            next_fs.css({ opacity: opacity });
+          },
+          duration: 500,
+        }
+      );
+      setProgressBar(++current);
+    });
+
+    $(".previous-create-event").click(function () {
+      current_fs = $(this).parent().parent();
+      previous_fs = $(this).parent().parent().prev();
+      $("#progressbar li")
+        .eq($("fieldset").index(current_fs))
+        .removeClass("active");
+
+      previous_fs.show();
+      current_fs.animate(
+        { opacity: 0 },
+        {
+          step: function (now) {
+            opacity = 1 - now;
+            current_fs.css({
+              display: "none",
+              position: "relative",
+            });
+            previous_fs.css({ opacity: opacity });
+          },
+          duration: 500,
+        }
+      );
+      setProgressBar(--current);
+    });
+    function setProgressBar(curStep) {
+      var percent = parseFloat((100 / steps) * curStep);
+      percent = percent.toFixed();
+      $(".progress-bar").css("width", percent + "%");
+    }
+  }, []);
 
   return (
     <div className="dashboard">
@@ -332,7 +402,7 @@ function CreateEvent() {
                       <input
                         type="submit"
                         name="next"
-                        class="next action-button"
+                        className="next-create-event action-button"
                         value="Next"
                       />
                     </fieldset>
@@ -653,45 +723,35 @@ function CreateEvent() {
                                 </div>
                                 <div className="absorbFees">
                                   <div className="toggleBtn">
-                                    <label class="switch">
+                                    <label className="switch">
                                       <input type="checkbox" id="togBtn" />
-                                      <div class="slider round"></div>
+                                      <div className="slider round"></div>
                                     </label>
                                     <p>Absorb Fee</p>
                                   </div>
                                   <h4>Total cost: £25.00</h4>
                                 </div>
                                 <div className="ticketBtns">
-                                  <button
-                                    className="loginButton"
-                                    type="submit"
-                                    // onClick={prevStep}
-                                  >
+                                  <button className="loginButton">
                                     <span>Cancel</span>
-                                    {/* )} */}
                                   </button>
-                                  <button
-                                    className="loginButton"
-                                    type="submit"
-                                    // onClick={prevStep}
-                                  >
+                                  <button className="loginButton" type="submit">
                                     <span>Add ticket</span>
-                                    {/* )} */}
                                   </button>
                                 </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>{" "}
-                      <button
-                        className="loginButton"
-                        type="submit"
-                        // onClick={prevStep}
-                      >
-                        <span>Save Event</span>
-                        {/* )} */}
-                      </button>
+                      </div>
+                      <div className="multistep-button-wrap">
+                        <button className="loginButton previous-create-event">
+                          <span>Prev</span>
+                        </button>
+                        <button className="loginButton" type="submit">
+                          <span>Save Event</span>
+                        </button>
+                      </div>
                     </fieldset>
                   </form>
                 </div>
