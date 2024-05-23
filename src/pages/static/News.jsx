@@ -1,4 +1,9 @@
 import { useEffect, useState } from "react";
+import LoadingBar from "react-top-loading-bar";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import moment from 'moment';
+
 import styles from "./news.module.css";
 import { Link, NavLink } from "react-router-dom";
 import "react-date-range/dist/styles.css"; // Main css file
@@ -10,7 +15,61 @@ import promoteImg2 from "../../assets/images/promote_img2.png";
 import calender from "../../assets/images/calender.svg";
 import promoteImg from "../../assets/images/promote_img.png";
 
+const URL = "https://bounce.extrasol.co.uk/api/attenders/news";
+let config = {
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    "X-Api-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9",
+  },
+};
+
+const fetchNewsData = async () => {
+  const { data } = await axios.get(URL, config);
+  return data;
+};
+
 function News() {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["newsDataFetch"],
+    queryFn: fetchNewsData,
+  });
+
+  const [news, setNewsContent] = useState(null);
+  const [loadingComplete, setLoadingComplete] = useState(false);
+
+  useEffect(() => {
+    if (data) {
+      setNewsContent(data.data);
+      setLoadingComplete(true);
+    }
+  }, [data]);
+
+  if (isLoading)
+    return (
+      <div
+        style={{
+          width: "100vw",
+          height: "90vh",
+          display: "flex",
+          alignContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <p style={{ textAlign: "center", width: "100%" }}>Loading...</p>
+      </div>
+    );
+  if (error) return <p>Error: {error.message}</p>;
+console.log(news)
+  if (!news) {
+    return (
+      <LoadingBar
+        color="#7e79ff"
+        height={3}
+        progress={loadingComplete ? 10 : 0}
+      />
+    );
+  }
   return (
     <>
       <div className="bounce_bg_circle">
@@ -19,78 +78,20 @@ function News() {
             <div class={styles.cardContainer}>
               <h1>Latest News</h1>
               <div className={styles.mainBlog}>
-                <div className={styles.blogCards}>
-                  <Link>
-                    <img src={promoteImg2} alt="" />
+              {news.map(newsrow => (
+                <div key={newsrow.id} className={styles.blogCards}>
+                  <Link  to={`/news/${newsrow.id}`}>
+                    <img src={`${newsrow.imagePath}${newsrow.image}`} alt="" />
                     <h2>
-                      Formula 1 Returns to Las Vegas For The First Time ...
+                      {newsrow.title.length > 50 ? `${newsrow.title.substring(0, 50)}...` : newsrow.title}
                     </h2>
                   </Link>
                   <div className={styles.blogInfo}>
                     <img src={calender} className={styles.blogCalnder} alt="" />
-                    <p>02 Dec.2023</p>
+                    <p>{moment(newsrow.created_at).format('DD MMM.YYYY')}</p>
                   </div>
                 </div>
-                <div className={styles.blogCards}>
-                  <Link>
-                    <img src={promoteImg} alt="" />
-                    <h2>
-                      Formula 1 Returns to Las Vegas For The First Time ...
-                    </h2>
-                  </Link>
-                  <div className={styles.blogInfo}>
-                    <img src={calender} className={styles.blogCalnder} alt="" />
-                    <p>02 Dec.2023</p>
-                  </div>
-                </div>
-                <div className={styles.blogCards}>
-                  <Link>
-                    <img src={promoteImg2} alt="" />
-                    <h2>
-                      Formula 1 Returns to Las Vegas For The First Time ...
-                    </h2>
-                  </Link>
-                  <div className={styles.blogInfo}>
-                    <img src={calender} className={styles.blogCalnder} alt="" />
-                    <p>02 Dec.2023</p>
-                  </div>
-                </div>
-                <div className={styles.blogCards}>
-                  <Link>
-                    <img src={promoteImg2} alt="" />
-                    <h2>
-                      Formula 1 Returns to Las Vegas For The First Time ...
-                    </h2>
-                  </Link>
-                  <div className={styles.blogInfo}>
-                    <img src={calender} className={styles.blogCalnder} alt="" />
-                    <p>02 Dec.2023</p>
-                  </div>
-                </div>
-                <div className={styles.blogCards}>
-                  <Link>
-                    <img src={promoteImg} alt="" />
-                    <h2>
-                      Formula 1 Returns to Las Vegas For The First Time ...
-                    </h2>
-                  </Link>
-                  <div className={styles.blogInfo}>
-                    <img src={calender} className={styles.blogCalnder} alt="" />
-                    <p>02 Dec.2023</p>
-                  </div>
-                </div>
-                <div className={styles.blogCards}>
-                  <Link>
-                    <img src={promoteImg2} alt="" />
-                    <h2>
-                      Formula 1 Returns to Las Vegas For The First Time ...
-                    </h2>
-                  </Link>
-                  <div className={styles.blogInfo}>
-                    <img src={calender} className={styles.blogCalnder} alt="" />
-                    <p>02 Dec.2023</p>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </dir>
