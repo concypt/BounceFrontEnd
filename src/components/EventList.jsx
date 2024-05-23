@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+
 import EventFilter from "./EventFilter";
 import EventCard from "./EventCard";
 import Pagination from "./Pagination";
@@ -24,7 +27,7 @@ const EventList = ({ limit }) => {
 
   //filters
   const [searchKeywords, setSearchKeywords] = useState("");
-  const [selectedCategories, setSelectedCategories] = useState([8, 7, 2]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
   const [location, setLocation] = useState("");
   const [locationMiles, setLocationMiles] = useState(40);
   const [dateParameter, setDateParameter] = useState("");
@@ -37,23 +40,16 @@ const EventList = ({ limit }) => {
     console.log(dateParameter);
   };
 
-  // const fetchEvents = async (completeURL) => {
-  //   const { data } = await axios.get(completeURL, config);
-  //   return data;
-  // };
-
-  // const { data, error, isLoading } = useQuery({
-  //   queryKey: ["events"],
-  //   queryFn: fetchEvents,
-  // });
-
-  useEffect(() => {
+  //function for completeURL
+  const getCompleteURL = () => {
+    //create multipe or one category parameter to send
     let categoriesParameter = "";
     selectedCategories.map((category) => {
       categoriesParameter += "&categories[]=" + category;
     });
 
-    const completeURL =
+    //create completeURL
+    const cURL =
       URL +
       "?" +
       (searchKeywords ? "keyword=" + searchKeywords + "&" : "") +
@@ -61,7 +57,21 @@ const EventList = ({ limit }) => {
       //(locationMiles ? "?locationmiles=" + locationMiles + "&" : "") +
       (dateParameter ? "?date=" + dateParameter + "&" : "") +
       (categoriesParameter ? categoriesParameter : "");
+    return cURL;
+  };
 
+  const fetchEvents = async () => {
+    const completeURL = getCompleteURL();
+    const { data } = await axios.get(completeURL, config);
+    return data;
+  };
+
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["events"],
+    queryFn: fetchEvents,
+  });
+
+  useEffect(() => {
     const fetchEvents = async () => {
       try {
         setProgress(30); // Start loading bar at 30%

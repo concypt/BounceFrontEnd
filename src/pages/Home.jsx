@@ -11,9 +11,7 @@ import FAQs from "../components/HomePage/FAQs.jsx";
 //images below
 
 import tick from "../assets/images/tick.svg";
-
 import rightArrow from "../assets/images/right_arrow.svg";
-
 import analyticsIcon from "../assets/images/analyticsicon.svg";
 import listingsIcon from "../assets/images/listingsicon.svg";
 import marketingIcon from "../assets/images/marketingicon.svg";
@@ -29,25 +27,22 @@ let config = {
 };
 
 const fetchHomeData = async () => {
-  const { data } = await axios.get(URL, config);
+  const { data } = await axios.get(URL, config).then((res) => res.data);
   return data;
 };
 
 function Home() {
-  const { data, error, isLoading } = useQuery({
+  const {
+    data: home,
+    error,
+    isLoading,
+  } = useQuery({
     queryKey: ["homeData"],
     queryFn: fetchHomeData,
   });
 
-  const [home, setHomeContent] = useState(null);
+  //const [home, setHomeContent] = useState(null);
   const [loadingComplete, setLoadingComplete] = useState(false);
-
-  useEffect(() => {
-    if (data) {
-      setHomeContent(data.data);
-      setLoadingComplete(true);
-    }
-  }, [data]);
 
   if (isLoading)
     return (
@@ -74,6 +69,7 @@ function Home() {
       />
     );
   }
+  console.log(home);
   return (
     <>
       <div className="header bounce_bg_circle">
@@ -122,7 +118,6 @@ function Home() {
           imagePath6={home.header.img6}
         />
       </div>
-
       <div className="event_div">
         <Reveal width="100%" delay=".2" amount="1">
           <div className="event_heading">
@@ -131,9 +126,7 @@ function Home() {
         </Reveal>
         <Reveal width="100%" delay="0.2">
           <div className="home_events">
-            <div className="custom-wrapper">
-              <EventList limit={3} />
-            </div>
+            <EventList limit={3} />
           </div>
         </Reveal>
       </div>
@@ -147,7 +140,7 @@ function Home() {
       <Reveal width="100%" delay="0.2" amount="0.5">
         <div className="promote_section">
           <div className="promote_div">
-            <img src={`${baseUrl}${home.section_three.img1}`} alt="" />
+            <img src={`/${home.section_three.img1}`} alt="" />
 
             <div className="promote_content">
               <h2>{home.section_three.title1}</h2>
@@ -182,7 +175,7 @@ function Home() {
       <Reveal width="100%" delay="0.2" amount="0.5">
         <div className="promote_section promote_second">
           <div className="promote_div">
-            <img src={`${baseUrl}${home.section_three.img2}`} alt="" />
+            <img src={`/${home.section_three.img2}`} alt="" />
 
             <div className="promote_content">
               <h2>{home.section_three.title2}</h2>
@@ -217,7 +210,7 @@ function Home() {
         <div className="promote_section blank_section">
           <div className="promote_div">
             <img
-              src={`${baseUrl}${home.section_four.img}`}
+              src={`${home.section_four.img}`}
               className="blank_img"
               alt="Bounce App"
             />
@@ -262,7 +255,6 @@ function Home() {
           </div>
         </div>
       </Reveal>
-
       <div className="accordion_section">
         <Reveal delay=".2" width="100%">
           <div className="faqs">
@@ -289,4 +281,3 @@ function Home() {
 }
 
 export default Home;
-const baseUrl = "https://bounce.extrasol.co.uk";
