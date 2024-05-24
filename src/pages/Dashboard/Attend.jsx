@@ -1,6 +1,9 @@
-//import React, { useEffect, useState, useRef } from "react";
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import LoadingBar from "react-top-loading-bar";
+import axios from "axios";
+import moment from 'moment';
 import Header from "../../components/Dashboard/Header";
 import Sidebar from "../../components/Dashboard/Sidebar";
 import EventSlider from "../../components/Dashboard/EventSlider";
@@ -10,9 +13,54 @@ import "./styles/comonStyles.css";
 // images
 import emptyState from "../../assets/images/emptystate.svg";
 
-function Attend() {
-  // Sample data
+const URL = "https://bounce.extrasol.co.uk/api/user/event-liked";
+let config = {
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  },
+};
+const fetchEventData = async () => {
+  const { data } = await axios.get(URL, config).then((res) => res.data);
+  return data;
+};
 
+  function Attend() {
+    const {
+      data: events,
+      error,
+      isLoading,
+    } = useQuery({
+      queryKey: ["eventsDataFetch"],
+      queryFn: fetchEventData,
+    });
+  const [loadingComplete, setLoadingComplete] = useState(false);
+
+  if (isLoading)
+    return (
+      <div
+        style={{
+          width: "100vw",
+          height: "90vh",
+          display: "flex",
+          alignContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <p style={{ textAlign: "center", width: "100%" }}>Loading...</p>
+      </div>
+    );
+  if (error) return <p>Error: {error.message}</p>;
+  if (!events) {
+    return (
+      <LoadingBar
+        color="#7e79ff"
+        height={3}
+        progress={loadingComplete ? 10 : 0}
+      />
+    );
+  }
   return (
     <div className="dashboard">
       <div>
@@ -20,6 +68,7 @@ function Attend() {
         <Sidebar />
       </div>
       <div className="dataTables">
+      {events.upcoming.length > 0 ? (
         <div className="upcomingEvents">
           <div className="upcomingDiv">
             <h2>Upcoming Events</h2>
@@ -27,8 +76,9 @@ function Attend() {
               <span>Browse All Events</span>
             </button>
           </div>
-          <EventSlider />
+          <EventSlider events={events.upcoming} />
         </div>
+        ) : (
         <div className="upcomingEvents">
           <div className="upcomingDiv">
             <h2>Upcoming Events</h2>
@@ -45,22 +95,47 @@ function Attend() {
             </button>
           </div>
         </div>
+        )}
         <div className="likedEvents">
-          <div className="upcomingEvents">
+          
+          
+      {events.liked.length > 0 ? (
+        <div className="upcomingEvents">
             <div className="upcomingDiv">
               <h2>Liked Events</h2>
             </div>
-            <EventSlider />
+            <EventSlider events={events.liked} />
+            </div>
+      ) : (
+        <div className="upcomingEvents">
+        <div className="emptyContent">
+            <img src={emptyState} alt="" />
+            <h2>No Liked events :(</h2>
           </div>
+          </div>
+          
+      )}
+      {events.liked.length > 0 ? (
           <div className="upcomingEvents">
             <div className="upcomingDiv">
               <h2>Events you may like</h2>
             </div>
-            <EventSlider />
+            <EventSlider events={events.liked} />
           </div>
+           ) : (
+            <div className="upcomingEvents">
+            <div className="emptyContent">
+                <img src={emptyState} alt="" />
+                <h2>No events available:(</h2>
+              </div>
+              </div>
+              
+          )}
         </div>
       </div>
-    </div>
+      </div>
   );
 }
+
 export default Attend;
+

@@ -24,26 +24,22 @@ let config = {
   },
 };
 
+
 const fetchNewsData = async () => {
-  const { data } = await axios.get(URL, config);
+  const { data } = await axios.get(URL, config).then((res) => res.data);
   return data;
 };
 
-function News() {
-  const { data, error, isLoading } = useQuery({
-    queryKey: ["newsDataFetch"],
-    queryFn: fetchNewsData,
-  });
-
-  const [news, setNewsContent] = useState(null);
+  function News() {
+    const {
+      data: news,
+      error,
+      isLoading,
+    } = useQuery({
+      queryKey: ["newsDataFetch"],
+      queryFn: fetchNewsData,
+    });
   const [loadingComplete, setLoadingComplete] = useState(false);
-
-  useEffect(() => {
-    if (data) {
-      setNewsContent(data.data);
-      setLoadingComplete(true);
-    }
-  }, [data]);
 
   if (isLoading)
     return (
@@ -60,7 +56,6 @@ function News() {
       </div>
     );
   if (error) return <p>Error: {error.message}</p>;
-console.log(news)
   if (!news) {
     return (
       <LoadingBar

@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
+import moment from 'moment';
 import styles from "./eventslider.module.css";
 // import "swiper/css/pagination";
 import { Navigation } from "swiper/modules";
@@ -7,7 +8,8 @@ import { Navigation } from "swiper/modules";
 // images
 import staticCard from "../../assets/images/staticCard.png";
 
-const EventSlider = () => {
+const EventSlider = (props) => {
+  const { events } = props;
   return (
     <>
       <Swiper
@@ -39,62 +41,23 @@ const EventSlider = () => {
         modules={[Navigation]}
         className={styles.mySwiper}
       >
+        {events.map(event => (
         <SwiperSlide className={styles.eventSlide}>
           <div className={styles.swiperCard}>
-            <img src={staticCard} alt="" />
+            <img src={event.image} alt="" />
             <div className={styles.cardBody}>
-              <h3>Pendulum LIVE</h3>
-              <p>24/02/2024</p>
-              <p>The O2 Arena, London</p>
+              <h3>{event.name}</h3>
+              <p>{event.start_time}</p>
+              <p>{event.location}</p>
             </div>
           </div>
         </SwiperSlide>
-        <SwiperSlide className={styles.eventSlide}>
-          {" "}
-          <div className={styles.swiperCard}>
-            <img src={staticCard} alt="" />
-            <div className={styles.cardBody}>
-              <h3>Pendulum LIVE</h3>
-              <p>24/02/2024</p>
-              <p>The O2 Arena, London</p>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide className={styles.eventSlide}>
-          {" "}
-          <div className={styles.swiperCard}>
-            <img src={staticCard} alt="" />
-            <div className={styles.cardBody}>
-              <h3>Pendulum LIVE</h3>
-              <p>24/02/2024</p>
-              <p>The O2 Arena, London</p>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide className={styles.eventSlide}>
-          {" "}
-          <div className={styles.swiperCard}>
-            <img src={staticCard} alt="" />
-            <div className={styles.cardBody}>
-              <h3>Pendulum LIVE</h3>
-              <p>24/02/2024</p>
-              <p>The O2 Arena, London</p>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide className={styles.eventSlide}>
-          {" "}
-          <div className={styles.swiperCard}>
-            <img src={staticCard} alt="" />
-            <div className={styles.cardBody}>
-              <h3>Pendulum LIVE</h3>
-              <p>24/02/2024</p>
-              <p>The O2 Arena, London</p>
-            </div>
-          </div>
-        </SwiperSlide>
+        ))}
+        
+    
       </Swiper>
     </>
   );
 };
 export default EventSlider;
+
