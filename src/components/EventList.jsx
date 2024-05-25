@@ -85,9 +85,9 @@ const EventList = ({
       <div className="custom-wrapper">
         <div className={styles.eventsGrid}>
           {limit
-            ? events.slice.map((event) => (
-                <EventCard key={event.id} event={event} />
-              ))
+            ? events
+                .slice(0, limit)
+                .map((event) => <EventCard key={event.id} event={event} />)
             : events.map((event) => <EventCard key={event.id} event={event} />)}
         </div>{" "}
         {limit ? (

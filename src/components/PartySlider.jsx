@@ -9,8 +9,15 @@ import partyImage5 from "../assets/images/party5.jpg";
 import partyImage6 from "../assets/images/party6.jpg";
 
 export default function PartySlider(props) {
-  const { imagePath1, imagePath2, imagePath3 , imagePath4 , imagePath5 , imagePath6} = props;
-  const baseUrl = 'https://bounce.extrasol.co.uk';
+  const {
+    imagePath1,
+    imagePath2,
+    imagePath3,
+    imagePath4,
+    imagePath5,
+    imagePath6,
+  } = props;
+  const baseUrl = import.meta.env.VITE_API_URL;
   return (
     <Reveal width="100%" delay="0.2">
       <div className={styles.partyImagesWrapper}>

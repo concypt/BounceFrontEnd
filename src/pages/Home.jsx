@@ -17,7 +17,7 @@ import listingsIcon from "../assets/images/listingsicon.svg";
 import marketingIcon from "../assets/images/marketingicon.svg";
 import secureIcon from "../assets/images/secureicon.svg";
 
-const URL = "https://bounce.extrasol.co.uk/api/attenders/home-content";
+const URL = "/api/attenders/home-content";
 let config = {
   headers: {
     "Content-Type": "application/json",
@@ -140,7 +140,10 @@ function Home() {
       <Reveal width="100%" delay="0.2" amount="0.5">
         <div className="promote_section">
           <div className="promote_div">
-            <img src={`/${home.section_three.img1}`} alt="" />
+            <img
+              src={`${import.meta.env.VITE_API_URL}/${home.section_three.img1}`}
+              alt=""
+            />
 
             <div className="promote_content">
               <h2>{home.section_three.title1}</h2>
@@ -175,7 +178,10 @@ function Home() {
       <Reveal width="100%" delay="0.2" amount="0.5">
         <div className="promote_section promote_second">
           <div className="promote_div">
-            <img src={`/${home.section_three.img2}`} alt="" />
+            <img
+              src={`${import.meta.env.VITE_API_URL}/${home.section_three.img2}`}
+              alt=""
+            />
 
             <div className="promote_content">
               <h2>{home.section_three.title2}</h2>
@@ -210,7 +216,7 @@ function Home() {
         <div className="promote_section blank_section">
           <div className="promote_div">
             <img
-              src={`${home.section_four.img}`}
+              src={`${import.meta.env.VITE_API_URL}/${home.section_four.img}`}
               className="blank_img"
               alt="Bounce App"
             />

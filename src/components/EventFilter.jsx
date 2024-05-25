@@ -35,7 +35,7 @@ const EventFilter = ({
   // Function to fetch categories from API
   useEffect(() => {
     // Make the fetch request with headers inline
-    fetch("https://bounce.extrasol.co.uk/api/attenders/categories", {
+    fetch("/api/attenders/categories", {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
