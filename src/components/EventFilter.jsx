@@ -14,7 +14,6 @@ const EventFilter = ({
   setLocation,
   setLocationMiles,
   setDateParameter,
-  filterNow,
 }) => {
   const [categories, setCategories] = useState([]);
   const [selectedCount, setSelectedCount] = useState(0);
@@ -120,7 +119,7 @@ const EventFilter = ({
 
   // Function to handle form submission
   const handleSearch = () => {
-    filterNow();
+    console.log("why this search button");
   };
 
   // Function to toggle date picker visibility
@@ -255,6 +254,5 @@ EventFilter.propTypes = {
   setLocation: PropTypes.func,
   setLocationMiles: PropTypes.func,
   setDateParameter: PropTypes.func,
-  filterNow: PropTypes.func,
 };
 export default EventFilter;

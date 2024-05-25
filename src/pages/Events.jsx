@@ -1,9 +1,31 @@
+import { useState } from "react";
+import EventFilter from "../components/EventFilter";
 import EventList from "../components/EventList";
 
 function Events() {
+  //filters
+  const [searchKeywords, setSearchKeywords] = useState("");
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [location, setLocation] = useState("");
+  const [locationMiles, setLocationMiles] = useState(40);
+  const [dateParameter, setDateParameter] = useState("");
+
   return (
     <>
-      <EventList />
+      <EventFilter
+        setSearchKeywords={setSearchKeywords}
+        setSelectedCategories={setSelectedCategories}
+        setLocation={setLocation}
+        setLocationMiles={setLocationMiles}
+        setDateParameter={setDateParameter}
+      />
+      <EventList
+        searchKeywords={searchKeywords}
+        selectedCategories={selectedCategories}
+        location={location}
+        locationMiles={locationMiles}
+        dateParameter={dateParameter}
+      />
     </>
   );
 }

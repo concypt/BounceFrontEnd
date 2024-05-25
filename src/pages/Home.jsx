@@ -69,7 +69,7 @@ function Home() {
       />
     );
   }
-  console.log(home);
+
   return (
     <>
       <div className="header bounce_bg_circle">
