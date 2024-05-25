@@ -10,6 +10,7 @@ import MainLayout from "./layouts/MainLayout.jsx";
 import Home from "./pages/Home";
 import Events from "./pages/Events";
 import EventDetail from "./pages/EventDetail";
+import NewsDetail from "./pages/NewsDetail.jsx";
 import PageNotFound from "./pages/PageNotFound.jsx";
 import Register from "./components/Auth/Register";
 import Verification from "./components/Auth/Verification";
@@ -47,6 +48,7 @@ const router = createBrowserRouter(
           <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
           <Route path="/About" element={<About />} />
           <Route path="/News" element={<News />} />
+          <Route path="/news/:newsId" element={<NewsDetail />} />
           <Route path="/Contact" element={<Contact />} />
           <Route path="/TermsConditions" element={<TermsConditions />} />
           <Route path="/CookiePolicy" element={<CookiePolicy />} />
