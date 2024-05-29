@@ -115,12 +115,12 @@ const fetchEventData = async () => {
           </div>
           
       )}
-      {events.liked.length > 0 ? (
+      {events.unlikeevents.length > 0 ? (
           <div className="upcomingEvents">
             <div className="upcomingDiv">
               <h2>Events you may like</h2>
             </div>
-            <EventSlider events={events.liked} />
+            <EventSlider events={events.unlikeevents} />
           </div>
            ) : (
             <div className="upcomingEvents">
@@ -128,8 +128,7 @@ const fetchEventData = async () => {
                 <img src={emptyState} alt="" />
                 <h2>No events available:(</h2>
               </div>
-              </div>
-              
+              </div>    
           )}
         </div>
       </div>
