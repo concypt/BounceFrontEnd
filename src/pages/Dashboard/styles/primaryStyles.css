@@ -1821,6 +1821,15 @@ table.your-events-table th {
   float: right;
 }
 
+.create-event-form-header {
+  display: flex;
+  gap: 20px;
+}
+
+.create-event-form-header .eventLables.status {
+  max-width: 130px;
+}
+
 @media screen and (max-width: 1100px) {
   .actionsColumn button {
     width: 30px;

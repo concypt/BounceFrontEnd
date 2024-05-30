@@ -16,11 +16,16 @@ function CreateEvent() {
   const [formData, setFormData] = useState({
     event_name: "",
     category_id: "",
-    tag: "",
+    tag: [""],
+    // event_start_time: "",
+    // event_end_time: "",
+    event_start_date: "",
     event_start_time: "",
+    event_end_date: "",
     event_end_time: "",
     address: "",
     event_description: "",
+    event_status: "",
     title: "",
     ticket_status: "",
     description: "",
@@ -33,17 +38,62 @@ function CreateEvent() {
     absorbe_fees: "",
   });
 
+  const [files, setFiles] = useState([]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleArrayChange = (e, index, key) => {
+    const values = [...formData[key]];
+    values[index] = e.target.value;
+    setFormData({
+      ...formData,
+      [key]: values,
+    });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
-  };
 
-  const [files, setFiles] = useState([]);
+    const formattedData = {
+      ...formData,
+      event_start_time: `${formData.event_start_date} ${formData.event_start_time}`,
+      event_end_time: `${formData.event_end_date} ${formData.event_end_time}`,
+      tag: formData.tag.split(","),
+      title: formData.title.split(","),
+      description: formData.description.split(","),
+      ticket_start_time: formData.ticket_start_time.split(","),
+      ticket_end_time: formData.ticket_end_time.split(","),
+      ticket_type: formData.ticket_type.split(","),
+      price: formData.price.split(",").map(Number),
+      ticket_per_order: formData.ticket_per_order.split(",").map(Number),
+      quantity: formData.quantity.split(",").map(Number),
+      absorbe_fees: formData.absorbe_fees.split(",").map(Number),
+      ticket_status: formData.ticket_status.split(",").map(Number),
+    };
+
+    fetch("https://bounce.extrasol.co.uk/user/event-create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formattedData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+        alert("Event created successfully!");
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        alert("Error creating event.");
+      });
+  };
 
   const handleDrop = (e) => {
     e.preventDefault();
@@ -148,7 +198,19 @@ function CreateEvent() {
                     <fieldset>
                       <div className="form-card">
                         <div className="row">
-                          <h2 className="fs-title">New Event</h2>
+                          <div className="create-event-form-header">
+                            <h2 className="fs-title">New Event</h2>
+                            <div className="eventLables status">
+                              <select
+                                className="form-select form-select-lg"
+                                aria-label=".form-select-lg example"
+                                id="ticketInput"
+                              >
+                                <option selected>Acitve</option>
+                                <option>Inactve</option>
+                              </select>
+                            </div>
+                          </div>
                           <div className="mainUpload">
                             <main className="mx-auto max-w-screen-lg h-full">
                               <article
@@ -262,6 +324,7 @@ function CreateEvent() {
                               type="text"
                               name="text"
                               placeholder="Name"
+                              value={formData.event_name}
                               onChange={handleChange}
                             />{" "}
                           </div>
@@ -282,7 +345,17 @@ function CreateEvent() {
                         </div>
                         <div className="eventLables">
                           <label className="fieldlabels">Tags</label>{" "}
-                          <select
+                          {formData.tags.map((tag, index) => (
+                            <input
+                              key={index}
+                              type="text"
+                              value={tag}
+                              onChange={(e) =>
+                                handleArrayChange(e, index, "tags")
+                              }
+                            />
+                          ))}
+                          {/* <select
                             className="form-select form-select-lg"
                             aria-label=".form-select-lg example"
                           >
@@ -290,20 +363,22 @@ function CreateEvent() {
                             <option value="1">One</option>
                             <option value="2">Two</option>
                             <option value="3">Three</option>
-                          </select>
+                          </select> */}
                         </div>
                         <div className="datetime">
                           <div className="datePicker">
                             <label className="fieldlabels">Start date</label>{" "}
                             <input
                               type="date"
-                              value={formData.cpwd}
+                              name="event_start_date"
+                              value={formData.event_start_date}
                               onChange={handleChange}
                             />
                             <label className="fieldlabels">End date</label>{" "}
                             <input
                               type="date"
-                              value={formData.cpwd}
+                              name="event_end_date"
+                              value={formData.event_end_date}
                               onChange={handleChange}
                             />
                           </div>
@@ -311,13 +386,15 @@ function CreateEvent() {
                             <label className="fieldlabels">Start Time</label>{" "}
                             <input
                               type="time"
-                              value={formData.cpwd}
+                              name="event_start_time"
+                              value={formData.event_start_time}
                               onChange={handleChange}
                             />
-                            <label className="fieldlabels">Start Time</label>{" "}
+                            <label className="fieldlabels">End Time</label>{" "}
                             <input
                               type="time"
-                              value={formData.cpwd}
+                              name="event_end_time"
+                              value={formData.event_end_time}
                               onChange={handleChange}
                             />
                           </div>
@@ -355,8 +432,9 @@ function CreateEvent() {
                                         </label>{" "}
                                         <input
                                           type="text"
-                                          name="text"
+                                          name="address"
                                           placeholder="Leave blank if the location is to be announced..."
+                                          value={formData.address}
                                           onChange={handleChange}
                                         />{" "}
                                       </div>
@@ -364,6 +442,8 @@ function CreateEvent() {
                                         <textarea
                                           name="description"
                                           placeholder="Description"
+                                          value={formData.event_description}
+                                          onChange={handleChange}
                                         ></textarea>
                                       </div>
                                     </form>
@@ -375,12 +455,13 @@ function CreateEvent() {
                                     <form onSubmit={handleSubmit}>
                                       <div className="eventLables">
                                         <label className="fieldlabels">
-                                          Event Location
+                                          Event Link
                                         </label>{" "}
                                         <input
                                           type="text"
-                                          name="text"
-                                          placeholder="Leave blank if the location is to be announced..."
+                                          name="link"
+                                          placeholder="Leave blank if the meeting link is to be announced..."
+                                          value={formData.link}
                                           onChange={handleChange}
                                         />{" "}
                                       </div>
@@ -388,6 +469,8 @@ function CreateEvent() {
                                         <textarea
                                           name="description"
                                           placeholder="Description"
+                                          value={formData.event_description}
+                                          onChange={handleChange}
                                         ></textarea>
                                       </div>
                                     </form>

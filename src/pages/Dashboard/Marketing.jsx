@@ -1,4 +1,7 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
+import LoadingBar from "react-top-loading-bar";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import { useTable, usePagination } from "react-table";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Dashboard/Header";
@@ -6,7 +9,59 @@ import Sidebar from "../../components/Dashboard/Sidebar";
 import "./styles/primaryStyles.css";
 import "./styles/comonStyles.css";
 
+const URL = "https://bounce.extrasol.co.uk/api/user/all-marketing-list";
+let config = {
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  },
+};
+
+
+const fetchMarketingData = async () => {
+  const { data } = await axios.get(URL, config).then((res) => res.data);
+  return data;
+};
+
 function Marketing() {
+
+//   const {
+//     data: marketing,
+//     error,
+//     isLoading,
+//   } = useQuery({
+//     queryKey: ["marketingFetchData"],
+//     queryFn: fetchMarketingData,
+//   });
+// const [loadingComplete, setLoadingComplete] = useState(false);
+
+// if (isLoading)
+//   return (
+//     <div
+//       style={{
+//         width: "100vw",
+//         height: "90vh",
+//         display: "flex",
+//         alignContent: "center",
+//         alignItems: "center",
+//       }}
+//     >
+//       <p style={{ textAlign: "center", width: "100%" }}>Loading...</p>
+//     </div>
+//   );
+// if (error) return <p>Error: {error.message}</p>;
+// if (!marketing) {
+//   return (
+//     <LoadingBar
+//       color="#7e79ff"
+//       height={3}
+//       progress={loadingComplete ? 10 : 0}
+//     />
+//   );
+// }
+
+
   // Sample data
   const data = useMemo(
     () => [
