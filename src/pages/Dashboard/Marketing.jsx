@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import LoadingBar from "react-top-loading-bar";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -9,7 +9,7 @@ import Sidebar from "../../components/Dashboard/Sidebar";
 import "./styles/primaryStyles.css";
 import "./styles/comonStyles.css";
 
-const URL = "https://bounce.extrasol.co.uk/api/user/all-marketing-list";
+const URL = "/api/user/all-marketing-list";
 let config = {
   headers: {
     "Content-Type": "application/json",
@@ -18,49 +18,46 @@ let config = {
   },
 };
 
-
 const fetchMarketingData = async () => {
   const { data } = await axios.get(URL, config).then((res) => res.data);
   return data;
 };
 
 function Marketing() {
+  const {
+    data: marketing,
+    error,
+    isLoading,
+  } = useQuery({
+    queryKey: ["marketingFetchData"],
+    queryFn: fetchMarketingData,
+  });
+  const [loadingComplete, setLoadingComplete] = useState(false);
 
-//   const {
-//     data: marketing,
-//     error,
-//     isLoading,
-//   } = useQuery({
-//     queryKey: ["marketingFetchData"],
-//     queryFn: fetchMarketingData,
-//   });
-// const [loadingComplete, setLoadingComplete] = useState(false);
-
-// if (isLoading)
-//   return (
-//     <div
-//       style={{
-//         width: "100vw",
-//         height: "90vh",
-//         display: "flex",
-//         alignContent: "center",
-//         alignItems: "center",
-//       }}
-//     >
-//       <p style={{ textAlign: "center", width: "100%" }}>Loading...</p>
-//     </div>
-//   );
-// if (error) return <p>Error: {error.message}</p>;
-// if (!marketing) {
-//   return (
-//     <LoadingBar
-//       color="#7e79ff"
-//       height={3}
-//       progress={loadingComplete ? 10 : 0}
-//     />
-//   );
-// }
-
+  if (isLoading)
+    return (
+      <div
+        style={{
+          width: "100vw",
+          height: "90vh",
+          display: "flex",
+          alignContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <p style={{ textAlign: "center", width: "100%" }}>Loading...</p>
+      </div>
+    );
+  if (error) return <p>Error: {error.message}</p>;
+  if (!marketing) {
+    return (
+      <LoadingBar
+        color="#7e79ff"
+        height={3}
+        progress={loadingComplete ? 10 : 0}
+      />
+    );
+  }
 
   // Sample data
   const data = useMemo(
@@ -153,9 +150,12 @@ function Marketing() {
               <table {...getTableProps()} className="dataTable">
                 <thead>
                   {headerGroups.map((headerGroup) => (
-                    <tr {...headerGroup.getHeaderGroupProps()}>
+                    <tr
+                      key={headerGroup.key}
+                      {...headerGroup.getHeaderGroupProps()}
+                    >
                       {headerGroup.headers.map((column) => (
-                        <th {...column.getHeaderProps()}>
+                        <th key={column.id} {...column.getHeaderProps()}>
                           {column.render("Header")}
                         </th>
                       ))}
@@ -163,13 +163,13 @@ function Marketing() {
                   ))}
                 </thead>
                 <tbody {...getTableBodyProps()}>
-                  {page.map((row, i) => {
+                  {page.map((row) => {
                     prepareRow(row);
                     return (
-                      <tr {...row.getRowProps()}>
+                      <tr key={row.id} {...row.getRowProps()}>
                         {row.cells.map((cell) => {
                           return (
-                            <td {...cell.getCellProps()}>
+                            <td key={cell.column.id} {...cell.getCellProps()}>
                               {cell.render("Cell")}
                             </td>
                           );
@@ -220,9 +220,12 @@ function Marketing() {
                 <table {...getTableProps()} className="dataTable">
                   <thead>
                     {headerGroups.map((headerGroup) => (
-                      <tr {...headerGroup.getHeaderGroupProps()}>
+                      <tr
+                        key={headerGroup.id}
+                        {...headerGroup.getHeaderGroupProps()}
+                      >
                         {headerGroup.headers.map((column) => (
-                          <th {...column.getHeaderProps()}>
+                          <th key={column.id} {...column.getHeaderProps()}>
                             {column.render("Header")}
                           </th>
                         ))}
@@ -230,13 +233,13 @@ function Marketing() {
                     ))}
                   </thead>
                   <tbody {...getTableBodyProps()}>
-                    {page.map((row, i) => {
+                    {page.map((row) => {
                       prepareRow(row);
                       return (
-                        <tr {...row.getRowProps()}>
+                        <tr key={row.id} {...row.getRowProps()}>
                           {row.cells.map((cell) => {
                             return (
-                              <td {...cell.getCellProps()}>
+                              <td key={cell.column.id} {...cell.getCellProps()}>
                                 {cell.render("Cell")}
                               </td>
                             );
@@ -285,9 +288,12 @@ function Marketing() {
                 <table {...getTableProps()} className="dataTable">
                   <thead>
                     {headerGroups.map((headerGroup) => (
-                      <tr {...headerGroup.getHeaderGroupProps()}>
+                      <tr
+                        key={headerGroup.id}
+                        {...headerGroup.getHeaderGroupProps()}
+                      >
                         {headerGroup.headers.map((column) => (
-                          <th {...column.getHeaderProps()}>
+                          <th key={column.id} {...column.getHeaderProps()}>
                             {column.render("Header")}
                           </th>
                         ))}
@@ -295,13 +301,13 @@ function Marketing() {
                     ))}
                   </thead>
                   <tbody {...getTableBodyProps()}>
-                    {page.map((row, i) => {
+                    {page.map((row) => {
                       prepareRow(row);
                       return (
-                        <tr {...row.getRowProps()}>
+                        <tr key={row.id} {...row.getRowProps()}>
                           {row.cells.map((cell) => {
                             return (
-                              <td {...cell.getCellProps()}>
+                              <td key={cell.column.id} {...cell.getCellProps()}>
                                 {cell.render("Cell")}
                               </td>
                             );
