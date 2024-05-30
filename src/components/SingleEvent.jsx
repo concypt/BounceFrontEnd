@@ -1,67 +1,72 @@
-import { useEffect, useState } from "react";
-//import { useParams, useLocation } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import FollowUnfollowBtn from "./FollowUnfollowBtn";
 import styles from "../components/singleEvent.module.css";
-import LoadingBar from "react-top-loading-bar";
 import moment from "moment";
 import { Link } from "react-router-dom";
 //import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+// import Swal from "sweetalert2";
+
+//images
+import heartImage from "../assets/images/heart.svg";
+import calendarImage from "../assets/images/calender.svg";
+import clockImage from "../assets/images/clock_grey.svg";
+import locationImage from "../assets/images/location_grey.svg";
+
+const URL = "/api/attenders/event-detail/";
+let config = {
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    "X-Api-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9",
+  },
+};
 
 const SingleEvent = ({ eventId }) => {
   //const navigate = useNavigate();
 
-  const [event, setEvent] = useState(null);
-  const [loadingComplete, setLoadingComplete] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  //const [event, setEvent] = useState(null);
+  // const [loadingComplete, setLoadingComplete] = useState(false);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   //const location = useLocation();
   const token = localStorage.getItem("token");
 
-  useEffect(() => {
-    const fetchEventDetails = async () => {
-      try {
-        const response = await fetch(
-          `https://bounce.extrasol.co.uk/api/attenders/event-detail/${eventId}`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-              "X-Api-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9",
-            },
-          }
-        );
+  // Function to fetch categories from API
+  const fetchEventDetails = async () => {
+    const { data } = await axios
+      .get(`${URL}${eventId}`, config)
+      .then((res) => res.data);
+    return data;
+  };
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch event details");
-        }
+  const {
+    data: event,
+    error,
+    isLoading,
+  } = useQuery({
+    queryKey: ["eventDetails", eventId],
+    queryFn: fetchEventDetails,
+  });
 
-        const eventData = await response.json();
-        setEvent(eventData.data);
-      } catch (error) {
-        console.error("Error fetching event details:", error);
-      } finally {
-        setLoadingComplete(true);
-      }
-    };
-
-    fetchEventDetails();
-
-    if (token) {
-      setIsLoggedIn(true);
-    }
-  }, [eventId, token]);
-
-  if (!event) {
+  if (isLoading) {
     return (
-      <LoadingBar
-        color="#7e79ff"
-        height={3}
-        progress={loadingComplete ? 100 : 0}
-      />
+      <div
+        style={{
+          width: "100vw",
+          height: "90vh",
+          display: "flex",
+          alignContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <p style={{ textAlign: "center", width: "100%" }}>Loading...</p>
+      </div>
     );
   }
+  if (error) {
+    return <p>Errors: {error.message}</p>;
+  }
 
-  // Assuming $setting and $item are objects with properties org_commission and price respectively
   let netPrice = 0;
   let adminFee = 0;
   if (event.ticket && event.ticket.length > 0 && event.ticket[0].price) {
@@ -84,7 +89,7 @@ const SingleEvent = ({ eventId }) => {
               <h5 className={styles.category_name}>{event.category.name}</h5>
             </div>
             <div className={styles.heart_icon}>
-              <img src="/images/heart.svg" alt="" />
+              <img src={heartImage} alt="" />
             </div>
           </div>
           <div className="row">
@@ -115,7 +120,7 @@ const SingleEvent = ({ eventId }) => {
                 <div className={styles.cart_description}>
                   <p className={styles.event_date}>
                     <img
-                      src="/images/calender.svg"
+                      src={calendarImage}
                       className={styles.description_img}
                       alt=""
                     />{" "}
@@ -124,7 +129,7 @@ const SingleEvent = ({ eventId }) => {
                   <p>
                     {" "}
                     <img
-                      src="/images/clock_grey.svg"
+                      src={clockImage}
                       className={styles.description_img}
                       alt=""
                     />{" "}
@@ -133,7 +138,7 @@ const SingleEvent = ({ eventId }) => {
                   <p>
                     {" "}
                     <img
-                      src="/images/location_grey.svg"
+                      src={locationImage}
                       className={styles.description_img}
                       alt=""
                     />{" "}

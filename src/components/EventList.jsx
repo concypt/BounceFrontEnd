@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 
 import EventCard from "./EventCard";
@@ -8,7 +9,7 @@ import Pagination from "./Pagination";
 import PropTypes from "prop-types";
 import styles from "./eventList.module.css";
 
-const URL = "https://bounce.extrasol.co.uk/api/attenders/events";
+const URL = "/api/attenders/events";
 let config = {
   headers: {
     "Content-Type": "application/json",
@@ -23,11 +24,62 @@ const EventList = ({
   selectedCategories,
   location,
   dateParameter,
+  setSearchKeywords,
+  setSelectedCategories,
+  setLocation,
+  setDateParameter,
 }) => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [eventsPerPage, setEventsPerPage] = useState(9);
+  const navigate = useNavigate();
+  const locationObj = useLocation();
 
-  const fetchEvents = async () => {
+  // Parse query parameters from URL if there are any
+  const queryParams = new URLSearchParams(locationObj.search);
+  const initialPage = parseInt(queryParams.get("page")) || 1;
+  const initialSearchKeywords = queryParams.get("keyword") || "";
+  const initialLocation = queryParams.get("location") || "";
+  const initialDateParameter = queryParams.get("date") || "";
+  const initialSelectedCategories = queryParams.getAll("categories[]");
+  const [page, setPage] = useState(initialPage);
+  const [eventsPerPage] = useState(6);
+  //useEffect with empty dependency to render first time if found parameters in URL
+
+  useEffect(() => {
+    if (!limit) {
+      setSearchKeywords(initialSearchKeywords);
+      setLocation(initialLocation);
+      setDateParameter(initialDateParameter);
+      setSelectedCategories(initialSelectedCategories);
+    }
+  }, []);
+
+  //whenever a filter changes or page changes
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (!limit) params.set("page", page);
+    if (searchKeywords) params.set("keyword", searchKeywords);
+    if (location) params.set("location", location);
+    if (dateParameter) params.set("date", dateParameter);
+    if (selectedCategories) {
+      selectedCategories.forEach((category) =>
+        params.append("categories[]", category)
+      );
+    }
+
+    navigate({ search: params.toString() });
+  }, [
+    page,
+    searchKeywords,
+    location,
+    dateParameter,
+    selectedCategories,
+    navigate,
+  ]);
+  // Reset page to 1 when filter parameters change
+  useEffect(() => {
+    setPage(1);
+  }, [searchKeywords, location, dateParameter, selectedCategories]);
+
+  const fetchEvents = async (page = 1) => {
     let completeURL = `${URL}`;
     if (!limit) {
       const categoriesParameter = selectedCategories
@@ -36,32 +88,42 @@ const EventList = ({
 
       const params = new URLSearchParams({
         ...(searchKeywords && { keyword: searchKeywords }),
-        ...(location && { location }),
-        ...(dateParameter && { date: dateParameter }),
+        ...(location && { location: location }),
+        ...(eventsPerPage && { perPage: eventsPerPage }),
+        ...(page && { page }),
       });
 
-      completeURL = `${URL}?${params.toString()}&${categoriesParameter}`;
+      completeURL = `${URL}?${params.toString()}`;
+      if (dateParameter) {
+        completeURL += `&date=${dateParameter}`;
+      }
+      if (categoriesParameter) {
+        completeURL += `&${categoriesParameter}`;
+      }
     }
+
     const { data } = await axios
       .get(completeURL, config)
       .then((res) => res.data);
     return data;
   };
 
-  const {
-    data: events,
-    error,
-    isLoading,
-  } = useQuery({
+  const { data, error, isLoading } = useQuery({
     queryKey: [
       "events",
-      { selectedCategories, searchKeywords, location, dateParameter },
+      page,
+      {
+        selectedCategories: selectedCategories,
+        searchKeywords: searchKeywords,
+        location: location,
+        dateParameter: dateParameter,
+      },
     ],
-    queryFn: fetchEvents,
+    queryFn: () => fetchEvents(page),
+    keepPreviousData: true,
   });
 
   if (isLoading) {
-    // setProgress(30);
     return (
       <div
         style={{
@@ -85,19 +147,21 @@ const EventList = ({
       <div className="custom-wrapper">
         <div className={styles.eventsGrid}>
           {limit
-            ? events
+            ? data.events
                 .slice(0, limit)
                 .map((event) => <EventCard key={event.id} event={event} />)
-            : events.map((event) => <EventCard key={event.id} event={event} />)}
+            : data.events.map((event) => (
+                <EventCard key={event.id} event={event} />
+              ))}
         </div>{" "}
         {limit ? (
           ""
         ) : (
           <Pagination
-            totalPosts={events.length}
+            totalPosts={data.total_result}
             postsPerPage={eventsPerPage}
-            setCurrentPage={setCurrentPage}
-            currentPage={currentPage}
+            setPage={setPage}
+            page={page}
           />
         )}
       </div>
@@ -112,5 +176,9 @@ EventList.propTypes = {
   location: PropTypes.string,
   locationMiles: PropTypes.number,
   dateParameter: PropTypes.string,
+  setSearchKeywords: PropTypes.func,
+  setSelectedCategories: PropTypes.func,
+  setLocation: PropTypes.func,
+  setDateParameter: PropTypes.func,
 };
 export default EventList;

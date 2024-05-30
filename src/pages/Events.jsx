@@ -25,6 +25,10 @@ function Events() {
         location={location}
         locationMiles={locationMiles}
         dateParameter={dateParameter}
+        setSearchKeywords={setSearchKeywords}
+        setSelectedCategories={setSelectedCategories}
+        setLocation={setLocation}
+        setDateParameter={setDateParameter}
       />
     </>
   );

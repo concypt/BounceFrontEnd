@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import PropTypes from "prop-types";
 import EventFilterCheckbox from "./EventFilterCheckbox";
 import styles from "./eventFilter.module.css";
@@ -8,6 +10,15 @@ import "react-date-range/dist/theme/default.css"; // Theme css file
 //images
 import locationImage from "../assets/images/location_grey.svg";
 
+const URL = "/api/attenders/categories";
+let config = {
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    "X-Api-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9",
+  },
+};
+
 const EventFilter = ({
   setSearchKeywords,
   setSelectedCategories,
@@ -15,7 +26,7 @@ const EventFilter = ({
   setLocationMiles,
   setDateParameter,
 }) => {
-  const [categories, setCategories] = useState([]);
+  //const [categories, setCategories] = useState([]);
   const [selectedCount, setSelectedCount] = useState(0);
 
   const today = new Date();
@@ -33,24 +44,19 @@ const EventFilter = ({
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   // Function to fetch categories from API
-  useEffect(() => {
-    // Make the fetch request with headers inline
-    fetch("/api/attenders/categories", {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "X-Api-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Assuming the response contains a 'data' array with category objects
-        setCategories(data.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching categories:", error);
-      });
-  }, []);
+  const fetchCategories = async () => {
+    const { data } = await axios.get(URL, config).then((res) => res.data);
+    return data;
+  };
+
+  const {
+    data: categories,
+    error,
+    isLoading,
+  } = useQuery({
+    queryKey: ["categories"],
+    queryFn: fetchCategories,
+  });
 
   // Function to update selected count for categories
   const updateSelectedCount = () => {
@@ -132,6 +138,26 @@ const EventFilter = ({
     // Click occurred outside the date picker, toggle visibility
     setShowDatePicker(!showDatePicker);
   };
+
+  if (isLoading) {
+    return (
+      <div
+        style={{
+          width: "100vw",
+          height: "90vh",
+          display: "flex",
+          alignContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <p style={{ textAlign: "center", width: "100%" }}>Loading...</p>
+      </div>
+    );
+  }
+  if (error) {
+    return <p>Errors: {error.message}</p>;
+  }
+
   return (
     <>
       <div className="bounce_bg_circle">

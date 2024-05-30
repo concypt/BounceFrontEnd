@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import LoadingBar from "react-top-loading-bar";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
