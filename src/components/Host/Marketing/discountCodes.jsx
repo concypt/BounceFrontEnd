@@ -7,13 +7,14 @@ import {
   usePagination,
 } from "react-table";
 import PropTypes from "prop-types";
-import "../../pages/Dashboard/styles/primaryStyles.css";
-import "../../pages/Dashboard/styles/comonStyles.css";
+import Swal from "sweetalert2";
+import "../../../pages/Dashboard/styles/primaryStyles.css";
+import "../../../pages/Dashboard/styles/comonStyles.css";
 
 //images
-import viewImg from "../../assets/images/event-dash-icon-view.svg";
-import paginatePrev from "../../assets/images/pagination-arrow-prev.svg";
-import paginateNext from "../../assets/images/pagination-arrow-next.svg";
+import deleteImg from "../../../assets/images/event-dash-icon-delete.svg";
+import paginatePrev from "../../../assets/images/pagination-arrow-prev.svg";
+import paginateNext from "../../../assets/images/pagination-arrow-next.svg";
 
 const HostTicketOrders = () => {
   const [tableData, setTableData] = useState([]);
@@ -22,7 +23,7 @@ const HostTicketOrders = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://bounce.extrasol.co.uk/api/user/all-orders",
+          "https://bounce.extrasol.co.uk/api/user/all-marketing-list",
           {
             headers: {
               Accept: "application/json",
@@ -35,7 +36,7 @@ const HostTicketOrders = () => {
           throw new Error("Failed to fetch data");
         }
         const data = await response.json();
-        setTableData(data.data);
+        setTableData(data.data.subscribe_list);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -44,32 +45,71 @@ const HostTicketOrders = () => {
     fetchData();
   }, []);
 
-  const handleView = (id) => {
-    console.log(`View button clicked for row with id: ${id}`);
+  const handleDelete = async (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#7357FF",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const response = await fetch(
+            `https://bounce.extrasol.co.uk/api/user/event-delete/${id}`,
+            {
+              method: "GET",
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error("Failed to delete event");
+          }
+
+          setTableData((prevData) =>
+            prevData.filter((event) => event.id !== id)
+          );
+          Swal.fire("Deleted!", "Your event has been deleted.", "success");
+        } catch (error) {
+          console.error("Error deleting event:", error);
+          Swal.fire("Error!", "Failed to delete event.", "error");
+        }
+      }
+    });
   };
 
   const columns = React.useMemo(
     () => [
       {
-        Header: "Name",
-        accessor: "order_id",
-        sortType: "basic",
+        Header: "ID",
+        accessor: "id",
       },
       {
-        Header: "Event Name",
-        accessor: "event.name",
+        Header: "Name",
+        accessor: "name",
         sortType: "basic",
         Cell: ({ value }) => (
           <div>{value.length > 20 ? value.slice(0, 20) + "..." : value}</div>
         ),
       },
       {
+        Header: "Status",
+        accessor: "status",
+        Cell: ({ value }) => (value === 1 ? "Active" : "Inactive"),
+      },
+      {
         Header: "Actions",
         accessor: "actions",
         Cell: ({ row }) => (
           <div className="actionsColumn">
-            <button onClick={() => handleView(row.original.id)}>
-              <img src={viewImg} alt="View" />
+            <button onClick={() => handleDelete(row.original.id)}>
+              <img src={deleteImg} alt="View" />
             </button>
           </div>
         ),
@@ -88,7 +128,6 @@ const HostTicketOrders = () => {
     canNextPage,
     canPreviousPage,
     state,
-    setGlobalFilter,
     gotoPage,
     pageCount,
     setPageSize,
@@ -101,47 +140,37 @@ const HostTicketOrders = () => {
     usePagination
   );
 
-  const { globalFilter, pageIndex, pageSize } = state;
+  const { pageIndex, pageSize } = state;
 
   return (
-    <div className="tableOne">
-      <div className="searchBar">
-        <h2>Ticket Orders</h2>
-        <input
-          value={globalFilter || ""}
-          onChange={(e) => setGlobalFilter(e.target.value)}
-          placeholder="Search your orders"
-        />
-      </div>
-      <div className="table-container">
-        <table {...getTableProps()} className="table your-events-table">
-          <thead>
-            {headerGroups.map((headerGroup, index) => (
-              <tr {...headerGroup.getHeaderGroupProps()} key={index}>
-                {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps()} key={column.id}>
-                    {column.render("Header")}
-                  </th>
+    <div>
+      <table {...getTableProps()} className="table your-events-table">
+        <thead>
+          {headerGroups.map((headerGroup, index) => (
+            <tr {...headerGroup.getHeaderGroupProps()} key={index}>
+              {headerGroup.headers.map((column) => (
+                <th {...column.getHeaderProps()} key={column.id}>
+                  {column.render("Header")}
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {page.map((row) => {
+            prepareRow(row);
+            return (
+              <tr {...row.getRowProps()} key={row.id}>
+                {row.cells.map((cell) => (
+                  <td {...cell.getCellProps()} key={cell.column.id}>
+                    {cell.render("Cell")}
+                  </td>
                 ))}
               </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {page.map((row) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()} key={row.id}>
-                  {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()} key={cell.column.id}>
-                      {cell.render("Cell")}
-                    </td>
-                  ))}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+            );
+          })}
+        </tbody>
+      </table>
       <div className="pagination">
         <div className="pagination-btns">
           <button
