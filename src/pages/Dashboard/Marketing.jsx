@@ -8,6 +8,7 @@ import Header from "../../components/Dashboard/Header";
 import Sidebar from "../../components/Dashboard/Sidebar";
 import "./styles/primaryStyles.css";
 import "./styles/comonStyles.css";
+import Modal from 'react-modal';
 
 const URL = "https://bounce.extrasol.co.uk/api/user/all-marketing-list";
 let config = {
@@ -61,7 +62,15 @@ function Marketing() {
 //   );
 // }
 
+const [modalIsOpen, setModalIsOpen] = useState(false);
 
+const openModal = () => {
+  setModalIsOpen(true);
+};
+
+const closeModal = () => {
+  setModalIsOpen(false);
+};
   // Sample data
   const data = useMemo(
     () => [
@@ -140,6 +149,7 @@ function Marketing() {
               <button
                 className="loginButton"
                 type="submit"
+                onClick={openModal}
                 // disabled={isSubmitting} // Disable button when isSubmitting is true
               >
                 {/* {isSubmitting ? (
@@ -148,6 +158,15 @@ function Marketing() {
                 <span>Create new campaign</span>
                 {/* )} */}
               </button>
+              <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Example Modal"
+      >
+        <h2>Popup Content</h2>
+        <p>This is the content of the popup.</p>
+        <button onClick={closeModal}>Close</button>
+      </Modal>
             </div>
             <div className="table-container">
               <table {...getTableProps()} className="dataTable">
