@@ -1830,6 +1830,54 @@ table.your-events-table th {
   max-width: 130px;
 }
 
+.popupInput {
+  height: 46px;
+  width: 100%;
+  max-width: 363px;
+  padding: 0 43px;
+  color: #8897ae;
+  font-size: 16px;
+  border: 1px solid #afbaca;
+  border-radius: 6px;
+  outline: none;
+}
+
+/* Hide the default file input */
+.ReactModalPortal .file-input {
+  display: none;
+}
+
+/* Custom file input label styles */
+.ReactModalPortal .custom-file-upload {
+  display: inline-block;
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color: #7357ff;
+  color: white;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.ReactModalPortal .custom-file-upload:hover {
+  background-color: #5a45cc;
+}
+
+.label-with-button {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.ReactModalPortal p {
+  margin: 0;
+}
+
+.ReactModalPortal .popup-buttons {
+  float: right;
+}
+
 @media screen and (max-width: 1100px) {
   .actionsColumn button {
     width: 30px;
