@@ -27,22 +27,37 @@
   color: #fff;
 }
 
-.prevButton {
+.paginationWrapper button:disabled {
+  opacity: 0.5;
+}
+.paginationWrapper button:disabled:hover {
+  background-color: #fff;
+}
+
+.paginationWrapper .prevButton {
+  margin-right: 24px;
   background-image: url("../assets/images/icon_prev_normal.png");
 }
 .prevButton:hover {
   background-image: url("../assets/images/icon_prev_hover.png");
 }
-.nextButton {
+.prevButton:disabled:hover {
+  background-image: url("../assets/images/icon_prev_normal.png");
+}
+.paginationWrapper .nextButton {
+  margin-left: 24px;
   background-image: url("../assets/images/icon_next_normal.png");
 }
 .nextButton:hover {
   background-image: url("../assets/images/icon_next_hover.png");
 }
-
+.nextButton:disabled:hover {
+  background-image: url("../assets/images/icon_next_normal.png");
+}
 .dropDownContainer {
   display: flex;
   align-items: center;
+  margin: 0 50px 0;
 }
 .dropDownContainer select {
   width: 60px;

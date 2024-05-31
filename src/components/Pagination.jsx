@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import PropTypes from "prop-types";
 import styles from "./pagination.module.css";
 
@@ -15,14 +16,20 @@ const Pagination = ({
   }
 
   const options = ["10", "20", "30", "40", "50"];
+  useEffect(() => {
+    globalThis.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, [page]);
 
   return (
     <div className={styles.paginationWrapper}>
       <button
         className={styles.prevButton}
         onClick={() => {
-          globalThis.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+          if (page > 1) {
+            setPage(page - 1);
+          }
         }}
+        disabled={page === 1}
       ></button>
       {pages.map((thisPage, index) => {
         return (
@@ -30,7 +37,6 @@ const Pagination = ({
             key={index}
             onClick={() => {
               setPage(thisPage);
-              globalThis.scrollTo({ top: 0, left: 0, behavior: "smooth" });
             }}
             className={thisPage === page ? styles.active : ""}
           >
@@ -42,14 +48,19 @@ const Pagination = ({
       <button
         className={styles.nextButton}
         onClick={() => {
-          globalThis.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+          if (page < pages.length) {
+            setPage(page + 1);
+          }
         }}
+        disabled={page === pages.length}
       ></button>
 
       <div className={styles.dropDownContainer}>
         <p style={{ margin: 0 }}>Results per page: </p>
         <select
-          onChange={(e) => setEventsPerPage(e.target.value)}
+          onChange={(e) => {
+            setEventsPerPage(parseInt(e.target.value));
+          }}
           defaultValue={postsPerPage}
         >
           {options.map((option, idx) => (
