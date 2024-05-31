@@ -10,7 +10,6 @@ import SubscribersList from "../../components/Host/Marketing/subscribersList";
 import "./styles/primaryStyles.css";
 import "./styles/comonStyles.css";
 
-
 const URL = "/api/user/all-marketing-list";
 let config = {
   headers: {
@@ -19,7 +18,6 @@ let config = {
     Authorization: `Bearer ${localStorage.getItem("token")}`,
   },
 };
-
 
 const fetchMarketingData = async () => {
   const { data } = await axios.get(URL, config).then((res) => res.data);
@@ -34,33 +32,33 @@ function Marketing() {
   } = useQuery({
     queryKey: ["fetchMarketingData"],
     queryFn: fetchMarketingData,
-  });
-const [loadingComplete, setLoadingComplete] = useState(false);
+  });
+  const [loadingComplete, setLoadingComplete] = useState(false);
 
-if (isLoading)
-  return (
-    <div
-      style={{
-        width: "100vw",
-        height: "90vh",
-        display: "flex",
-        alignContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <p style={{ textAlign: "center", width: "100%" }}>Loading...</p>
-    </div>
-  );
-if (error) return <p>Error: {error.message}</p>;
-if (!marketing) {
-  return (
-    <LoadingBar
-      color="#7e79ff"
-      height={3}
-      progress={loadingComplete ? 10 : 0}
-    />
-  );
-}
+  if (isLoading)
+    return (
+      <div
+        style={{
+          width: "100vw",
+          height: "90vh",
+          display: "flex",
+          alignContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <p style={{ textAlign: "center", width: "100%" }}>Loading...</p>
+      </div>
+    );
+  if (error) return <p>Error: {error.message}</p>;
+  if (!marketing) {
+    return (
+      <LoadingBar
+        color="#7e79ff"
+        height={3}
+        progress={loadingComplete ? 10 : 0}
+      />
+    );
+  }
   return (
     <div className="dashboard">
       <div>
@@ -69,40 +67,10 @@ if (!marketing) {
       </div>
       <div className="dataTables">
         <div className="tablesGrid marketingGrid">
-          <div className="ticketOrders">
-            <div className="searchBar">
-              <h2>Emails</h2>
-              <button className="loginButton" type="submit">
-                <span>Create new campaign</span>
-              </button>
-            </div>
-            <div className="table-container">
-              <EmailList  campaigns={marketing.campaigns} />
-            </div>
-          </div>
+          <EmailList campaigns={marketing.campaigns} />
           <div className="promotersMain marketingSubscriber">
-            <div className="ticketOrders promotertable">
-              <div className="searchBar">
-                <h2>Subscriber Lists</h2>
-                <button className="loginButton" type="submit">
-                  <span>Create new list</span>
-                </button>
-              </div>
-              <div className="table-container">
-                <SubscribersList subscribe_list={marketing.subscribe_list} />
-              </div>
-            </div>
-            <div className="ticketOrders">
-              <div className="searchBar">
-                <h2>Discount codes</h2>
-                <button className="loginButton" type="submit">
-                  <span>Create new code</span>
-                </button>
-              </div>
-              <div className="table-container">
-                <DiscountCodes coupons={marketing.coupon}  />
-              </div>
-            </div>
+            <SubscribersList subscribe_list={marketing.subscribe_list} />
+            <DiscountCodes coupons={marketing.coupon} />
           </div>
         </div>
       </div>

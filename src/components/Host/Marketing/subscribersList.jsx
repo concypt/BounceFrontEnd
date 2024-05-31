@@ -60,11 +60,9 @@ const HostTicketOrders = (props) => {
   const columns = React.useMemo(
     () => [
       {
-        Header: 'ID',
-        accessor: 'id',
-        Cell: ({ row }) => (
-          <div>{row.index + 1}</div>
-        ),
+        Header: "ID",
+        accessor: "id",
+        Cell: ({ row }) => <div>{row.index + 1}</div>,
       },
       {
         Header: "Name",
@@ -104,7 +102,11 @@ const HostTicketOrders = (props) => {
     setPageSize,
     prepareRow,
   } = useTable(
-    { columns, data: subscribe_list, initialState: { pageIndex: 0, pageSize: 5 } },
+    {
+      columns,
+      data: subscribe_list,
+      initialState: { pageIndex: 0, pageSize: 5 },
+    },
     useFilters,
     useGlobalFilter,
     useSortBy,
@@ -114,74 +116,82 @@ const HostTicketOrders = (props) => {
   const { pageIndex, pageSize } = state;
 
   return (
-    <div>
-      <table {...getTableProps()} className="table your-events-table">
-        <thead>
-          {headerGroups.map((headerGroup, index) => (
-            <tr {...headerGroup.getHeaderGroupProps()} key={index}>
-              {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()} key={column.id}>
-                  {column.render("Header")}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {page.map((row) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()} key={row.id}>
-                {row.cells.map((cell) => (
-                  <td {...cell.getCellProps()} key={cell.column.id}>
-                    {cell.render("Cell")}
-                  </td>
+    <div className="ticketOrders promotertable">
+      <div className="searchBar">
+        <h2>Subscriber Lists</h2>
+        <button className="loginButton" type="submit">
+          <span>Create new list</span>
+        </button>
+      </div>
+      <div className="table-container">
+        <table {...getTableProps()} className="table your-events-table">
+          <thead>
+            {headerGroups.map((headerGroup, index) => (
+              <tr {...headerGroup.getHeaderGroupProps()} key={index}>
+                {headerGroup.headers.map((column) => (
+                  <th {...column.getHeaderProps()} key={column.id}>
+                    {column.render("Header")}
+                  </th>
                 ))}
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
-      <div className="pagination">
-        <div className="pagination-btns">
-          <button
-            className="control-btn"
-            onClick={() => previousPage()}
-            disabled={!canPreviousPage}
-            aria-label="Previous page"
-          >
-            <img src={paginatePrev} alt="Previous" />
-          </button>
-          {[...Array(pageCount)].map((_, index) => (
-            <button
-              key={index}
-              onClick={() => gotoPage(index)}
-              className={pageIndex === index ? "active" : ""}
-            >
-              {index + 1}
-            </button>
-          ))}
-          <button
-            className="control-btn"
-            onClick={() => nextPage()}
-            disabled={!canNextPage}
-            aria-label="Next page"
-          >
-            <img src={paginateNext} alt="Next" />
-          </button>
-        </div>
-        <div className="item-show-per-page">
-          <span>Results per page:</span>
-          <select
-            value={pageSize}
-            onChange={(e) => setPageSize(Number(e.target.value))}
-          >
-            {[5, 10, 20, 30, 50].map((size) => (
-              <option key={size} value={size}>
-                {size}
-              </option>
             ))}
-          </select>
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {page.map((row) => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()} key={row.id}>
+                  {row.cells.map((cell) => (
+                    <td {...cell.getCellProps()} key={cell.column.id}>
+                      {cell.render("Cell")}
+                    </td>
+                  ))}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+        <div className="pagination">
+          <div className="pagination-btns">
+            <button
+              className="control-btn"
+              onClick={() => previousPage()}
+              disabled={!canPreviousPage}
+              aria-label="Previous page"
+            >
+              <img src={paginatePrev} alt="Previous" />
+            </button>
+            {[...Array(pageCount)].map((_, index) => (
+              <button
+                key={index}
+                onClick={() => gotoPage(index)}
+                className={pageIndex === index ? "active" : ""}
+              >
+                {index + 1}
+              </button>
+            ))}
+            <button
+              className="control-btn"
+              onClick={() => nextPage()}
+              disabled={!canNextPage}
+              aria-label="Next page"
+            >
+              <img src={paginateNext} alt="Next" />
+            </button>
+          </div>
+          <div className="item-show-per-page">
+            <span>Results per page:</span>
+            <select
+              value={pageSize}
+              onChange={(e) => setPageSize(Number(e.target.value))}
+            >
+              {[5, 10, 20, 30, 50].map((size) => (
+                <option key={size} value={size}>
+                  {size}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
     </div>
