@@ -46,9 +46,6 @@ const HostTicketOrders = () => {
 
   const handleView = (id) => {
     console.log(`View button clicked for row with id: ${id}`);
-    // Add your logic to handle the view action here.
-    // For example, you might navigate to a detail page:
-    // history.push(`/details/${id}`);
   };
 
   const columns = React.useMemo(

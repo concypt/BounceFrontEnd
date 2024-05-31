@@ -16,7 +16,6 @@ import staremptyImage from "../assets/images/star-empty.svg";
 
 export default function TestimonialsSlider(props) {
   const { reviews } = props;
-  const baseUrl = 'https://bounce.extrasol.co.uk';
   return (
     <>
       <Swiper
@@ -46,13 +45,13 @@ export default function TestimonialsSlider(props) {
               </p>
               <div className="sliderlast_div">
                 <div className="name_div">
-                  <img src={`${baseUrl}${review.image}`} alt="" />
+                  <img src={review.image} alt="" />
                   <div className="slider_text">
                     <h6>{review.name}</h6>
                     <p>{review.position}</p>
                   </div>
                   <div className="webflow_img">
-                    <img src={`${baseUrl}${review.logo}`} alt="" />
+                    <img src={review.logo} alt="" />
                   </div>
                 </div>
               </div>
