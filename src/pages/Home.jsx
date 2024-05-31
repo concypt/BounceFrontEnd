@@ -80,18 +80,15 @@ function Home() {
           <Reveal width="100%" delay=".2">
             <div className="users">
               <div className="user_imgs">
-                {home.host.slice(0, 5).map((image, index) => (
-                  <img
-                    key={index}
-                    src={home.host_img + image}
-                    alt={image.alt}
-                  />
-                ))}
-                {home.host.length > 5 && (
+              <img src={home.header.user1} alt={home.header.user1.alt} />
+              <img src={home.header.user2} alt={home.header.user2.alt} />
+              <img src={home.header.user3} alt={home.header.user3.alt} />
+              <img src={home.header.user4} alt={home.header.user4.alt} />
+              <img src={home.header.user5} alt={home.header.user5.alt} />
                   <div className="user_count">
-                    <p>{home.host.length - 5}+</p>
+                    <p>{home.header.user_number}+</p>
                   </div>
-                )}
+                
               </div>
             </div>
           </Reveal>
@@ -141,7 +138,7 @@ function Home() {
         <div className="promote_section">
           <div className="promote_div">
             <img
-              src={`${import.meta.env.VITE_API_URL}/${home.section_three.img1}`}
+              src={home.section_three.img1}
               alt=""
             />
 
@@ -179,7 +176,7 @@ function Home() {
         <div className="promote_section promote_second">
           <div className="promote_div">
             <img
-              src={`${import.meta.env.VITE_API_URL}/${home.section_three.img2}`}
+              src={home.section_three.img2}
               alt=""
             />
 
@@ -216,7 +213,7 @@ function Home() {
         <div className="promote_section blank_section">
           <div className="promote_div">
             <img
-              src={`${import.meta.env.VITE_API_URL}/${home.section_four.img}`}
+              src={home.section_four.img}
               className="blank_img"
               alt="Bounce App"
             />
