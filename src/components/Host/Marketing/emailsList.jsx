@@ -16,34 +16,8 @@ import deleteImg from "../../../assets/images/event-dash-icon-delete.svg";
 import paginatePrev from "../../../assets/images/pagination-arrow-prev.svg";
 import paginateNext from "../../../assets/images/pagination-arrow-next.svg";
 
-const HostTicketOrders = () => {
-  const [tableData, setTableData] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "https://bounce.extrasol.co.uk/api/user/all-marketing-list",
-          {
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
-        const data = await response.json();
-        setTableData(data.data.subscribe_list);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
+const HostTicketOrders = (props) => {
+  const { campaigns } = props;
 
   const handleDelete = async (id) => {
     Swal.fire({
@@ -89,10 +63,21 @@ const HostTicketOrders = () => {
       {
         Header: "ID",
         accessor: "id",
+        Cell: ({ row }) => (
+          <div>{row.index + 1}</div>
+        ),
       },
       {
         Header: "Name",
         accessor: "name",
+        sortType: "basic",
+        Cell: ({ value }) => (
+          <div>{value.length > 20 ? value.slice(0, 20) + "..." : value}</div>
+        ),
+      },
+      {
+        Header: "Subject",
+        accessor: "subject",
         sortType: "basic",
         Cell: ({ value }) => (
           <div>{value.length > 20 ? value.slice(0, 20) + "..." : value}</div>
@@ -133,7 +118,7 @@ const HostTicketOrders = () => {
     setPageSize,
     prepareRow,
   } = useTable(
-    { columns, data: tableData, initialState: { pageIndex: 0, pageSize: 10 } },
+    { columns, data: campaigns, initialState: { pageIndex: 0, pageSize: 10 } },
     useFilters,
     useGlobalFilter,
     useSortBy,
