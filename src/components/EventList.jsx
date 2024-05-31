@@ -40,7 +40,7 @@ const EventList = ({
   const initialDateParameter = queryParams.get("date") || "";
   const initialSelectedCategories = queryParams.getAll("categories[]");
   const [page, setPage] = useState(initialPage);
-  const [eventsPerPage] = useState(6);
+  const [eventsPerPage, setEventsPerPage] = useState(10);
   //useEffect with empty dependency to render first time if found parameters in URL
 
   useEffect(() => {
@@ -67,7 +67,9 @@ const EventList = ({
 
     navigate({ search: params.toString() });
   }, [
+    limit,
     page,
+    eventsPerPage,
     searchKeywords,
     location,
     dateParameter,
@@ -77,7 +79,13 @@ const EventList = ({
   // Reset page to 1 when filter parameters change
   useEffect(() => {
     setPage(1);
-  }, [searchKeywords, location, dateParameter, selectedCategories]);
+  }, [
+    searchKeywords,
+    location,
+    dateParameter,
+    selectedCategories,
+    eventsPerPage,
+  ]);
 
   const fetchEvents = async (page = 1) => {
     let completeURL = `${URL}`;
@@ -117,6 +125,7 @@ const EventList = ({
         searchKeywords: searchKeywords,
         location: location,
         dateParameter: dateParameter,
+        eventsPerPage: eventsPerPage,
       },
     ],
     queryFn: () => fetchEvents(page),
@@ -160,6 +169,7 @@ const EventList = ({
           <Pagination
             totalPosts={data.total_result}
             postsPerPage={eventsPerPage}
+            setEventsPerPage={setEventsPerPage}
             setPage={setPage}
             page={page}
           />

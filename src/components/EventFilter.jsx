@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import PropTypes from "prop-types";
+import PropTypes, { element } from "prop-types";
 import EventFilterCheckbox from "./EventFilterCheckbox";
 import styles from "./eventFilter.module.css";
 import { DateRangePicker } from "react-date-range";
@@ -139,6 +139,22 @@ const EventFilter = ({
     setShowDatePicker(!showDatePicker);
   };
 
+  //function to handle main checkboxes for each filter
+  const handleMainCheck = (element) => {
+    if (!element.checked) {
+      if (element.id === "categoryCheckbox") {
+        console.log(element.id);
+        setSelectedCategories([""]);
+      }
+      if (element.id === "locationCheckbox") {
+        console.log(element.id);
+      }
+      if (element.id === "dateCheckbox") {
+        console.log(element.id);
+      }
+    }
+  };
+
   if (isLoading) {
     return (
       <div
@@ -185,6 +201,7 @@ const EventFilter = ({
                       id="categoryCheckbox"
                       type="checkbox"
                       className={styles.smallCheckbox}
+                      onChange={(e) => handleMainCheck(e.target)}
                     />
                   </h2>
                   <div id="categoriesFilter" className={styles.mainCheckForm}>
@@ -206,13 +223,14 @@ const EventFilter = ({
                       id="locationCheckbox"
                       type="checkbox"
                       className={styles.smallCheckbox}
+                      onChange={(e) => handleMainCheck(e.target)}
                     />
                   </h2>
                   <div className={styles.locationInputs}>
                     <div className={styles.locationSearch}>
                       <img src={locationImage} alt="" />
                       <input
-                        type="search"
+                        type="text"
                         name="location"
                         onChange={handleLocationChange}
                       />
@@ -238,6 +256,7 @@ const EventFilter = ({
                       id="dateCheckbox"
                       type="checkbox"
                       className={styles.smallCheckbox}
+                      onChange={(e) => handleMainCheck(e.target)}
                     />
                   </h2>
                   <div onClick={toggleDatePicker} className={styles.dateFields}>

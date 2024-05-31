@@ -1,12 +1,13 @@
+import PropTypes from "prop-types";
 import Reveal from "./utils/Reveal.jsx";
 import styles from "./partySlider.module.css";
 //images
-import partyImage1 from "../assets/images/party.jpg";
-import partyImage2 from "../assets/images/part2.jpg";
-import partyImage3 from "../assets/images/party3.jpg";
-import partyImage4 from "../assets/images/party4.jpg";
-import partyImage5 from "../assets/images/party5.jpg";
-import partyImage6 from "../assets/images/party6.jpg";
+// import partyImage1 from "../assets/images/party.jpg";
+// import partyImage2 from "../assets/images/part2.jpg";
+// import partyImage3 from "../assets/images/party3.jpg";
+// import partyImage4 from "../assets/images/party4.jpg";
+// import partyImage5 from "../assets/images/party5.jpg";
+// import partyImage6 from "../assets/images/party6.jpg";
 
 export default function PartySlider(props) {
   const {
@@ -91,3 +92,12 @@ export default function PartySlider(props) {
     </Reveal>
   );
 }
+
+PartySlider.propTypes = {
+  imagePath1: PropTypes.string,
+  imagePath2: PropTypes.string,
+  imagePath3: PropTypes.string,
+  imagePath4: PropTypes.string,
+  imagePath5: PropTypes.string,
+  imagePath6: PropTypes.string,
+};

@@ -7,6 +7,7 @@
 .paginationWrapper button {
   width: 40px;
   height: 40px;
+  margin: 1px;
   font-size: 14px;
   color: #4f4b5c;
   border-radius: 8px;
@@ -14,10 +15,37 @@
   outline: 0px;
   font-weight: 600;
   border: 0;
+  background-size: 18px;
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-position-y: center;
 }
 
 .paginationWrapper button:hover,
 .paginationWrapper button.active {
   background-color: #7357ff;
   color: #fff;
+}
+
+.prevButton {
+  background-image: url("../assets/images/icon_prev_normal.png");
+}
+.prevButton:hover {
+  background-image: url("../assets/images/icon_prev_hover.png");
+}
+.nextButton {
+  background-image: url("../assets/images/icon_next_normal.png");
+}
+.nextButton:hover {
+  background-image: url("../assets/images/icon_next_hover.png");
+}
+
+.dropDownContainer {
+  display: flex;
+  align-items: center;
+}
+.dropDownContainer select {
+  width: 60px;
+  margin-left: 10px;
+  padding: 0 0 0 10px;
 }
