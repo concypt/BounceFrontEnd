@@ -38,7 +38,8 @@
   margin-bottom: 30px;
 }
 
-.links li a {
+.links li a,
+.links li span {
   color: #c5c5ff;
   text-decoration: none;
   font-size: 24px;
@@ -83,6 +84,13 @@
   left: 0;
 }
 
+.activeLink {
+  color: #827dff !important;
+}
+
+.activeLink::after {
+  left: 0 !important;
+}
 
 .sublinks {
   list-style-type: none;
