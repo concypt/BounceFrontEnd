@@ -24,6 +24,7 @@ const fetchMarketingData = async () => {
   return data;
 };
 
+
 function Marketing() {
   const {
     data: marketing,
@@ -70,7 +71,7 @@ function Marketing() {
           <EmailList campaigns={marketing.campaigns} />
           <div className="promotersMain marketingSubscriber">
             <SubscribersList subscribe_list={marketing.subscribe_list} />
-            <DiscountCodes coupons={marketing.coupon} />
+            <DiscountCodes coupons={marketing.coupon} events={marketing.events} />
           </div>
         </div>
       </div>
