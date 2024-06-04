@@ -34,7 +34,7 @@ function EventCard({ event }) {
             <img src={clockIcon} alt="" /> {formattedDate}
           </span>
           <div className={styles.remainingDaysBtn}>
-            <>The event is over</>
+            <>{event.daysCount}</>
           </div>
         </div>
 

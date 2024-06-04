@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import {
   useTable,
   useFilters,
@@ -10,19 +11,20 @@ import PropTypes from "prop-types";
 import "../../pages/Dashboard/styles/primaryStyles.css";
 import "../../pages/Dashboard/styles/comonStyles.css";
 
-//images
+// images
 import viewImg from "../../assets/images/event-dash-icon-view.svg";
 import paginatePrev from "../../assets/images/pagination-arrow-prev.svg";
 import paginateNext from "../../assets/images/pagination-arrow-next.svg";
 
 const HostTicketOrders = () => {
+  const { eventId } = useParams();
   const [tableData, setTableData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://bounce.extrasol.co.uk/api/user/all-orders",
+          `https://bounce.extrasol.co.uk/api/user/all-orders?event_id=${eventId}`,
           {
             headers: {
               Accept: "application/json",
@@ -42,19 +44,16 @@ const HostTicketOrders = () => {
     };
 
     fetchData();
-  }, []);
+  }, [eventId]);
 
   const handleView = (id) => {
     console.log(`View button clicked for row with id: ${id}`);
-    // Add your logic to handle the view action here.
-    // For example, you might navigate to a detail page:
-    // history.push(`/details/${id}`);
   };
 
   const columns = React.useMemo(
     () => [
       {
-        Header: "Name",
+        Header: "Order ID",
         accessor: "order_id",
         sortType: "basic",
       },
@@ -125,7 +124,7 @@ const HostTicketOrders = () => {
             {page.map((row) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()} key={row.id}>
+                <tr {...row.getRowProps()} key={row.original.order_id}>
                   {row.cells.map((cell) => (
                     <td {...cell.getCellProps()} key={cell.column.id}>
                       {cell.render("Cell")}

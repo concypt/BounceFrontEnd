@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-
+import LoadingBar from "react-top-loading-bar";
 import TestimonialsSlider from "../components/TestimonialsSlider";
 import EventList from "../components/EventList";
 import Reveal from "../components/utils/Reveal.jsx";
@@ -40,19 +40,20 @@ function Home() {
     queryFn: fetchHomeData,
   });
 
+  //const [home, setHomeContent] = useState(null);
+  const [loadingComplete, setLoadingComplete] = useState(false);
+  // Set loading complete to true when the page has finished loading
+  window.onload = () => {
+    setLoadingComplete(true);
+  };
+
   if (isLoading)
     return (
-      <div
-        style={{
-          width: "100vw",
-          height: "90vh",
-          display: "flex",
-          alignContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <p style={{ textAlign: "center", width: "100%" }}>Loading...</p>
-      </div>
+      <LoadingBar
+        color="#7e79ff"
+        height={3}
+        progress={loadingComplete ? 100 : 0}
+      />
     );
   if (error) return <p>Error: {error.message}</p>;
 

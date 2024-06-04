@@ -20,7 +20,7 @@ const EventInfoComponent = ({ eventId }) => {
             },
           }
         );
-        console.log("response=>", response);
+        // console.log("response=>", response);
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
@@ -38,7 +38,7 @@ const EventInfoComponent = ({ eventId }) => {
   }, [eventId]);
 
   useEffect(() => {
-    console.log("eventData updated=>", eventData);
+    // console.log("eventData updated=>", eventData);
   }, [eventData]);
 
   if (!eventData) {
