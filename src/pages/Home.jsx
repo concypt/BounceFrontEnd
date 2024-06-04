@@ -1,5 +1,3 @@
-import { useState } from "react";
-import LoadingBar from "react-top-loading-bar";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
@@ -16,6 +14,7 @@ import analyticsIcon from "../assets/images/analyticsicon.svg";
 import listingsIcon from "../assets/images/listingsicon.svg";
 import marketingIcon from "../assets/images/marketingicon.svg";
 import secureIcon from "../assets/images/secureicon.svg";
+import { Link } from "react-router-dom";
 
 const URL = "/api/attenders/home-content";
 let config = {
@@ -41,9 +40,6 @@ function Home() {
     queryFn: fetchHomeData,
   });
 
-  //const [home, setHomeContent] = useState(null);
-  const [loadingComplete, setLoadingComplete] = useState(false);
-
   if (isLoading)
     return (
       <div
@@ -59,16 +55,6 @@ function Home() {
       </div>
     );
   if (error) return <p>Error: {error.message}</p>;
-
-  if (!home) {
-    return (
-      <LoadingBar
-        color="#7e79ff"
-        height={3}
-        progress={loadingComplete ? 10 : 0}
-      />
-    );
-  }
 
   return (
     <>
@@ -98,10 +84,9 @@ function Home() {
           </div>
           <div className="header_btn">
             <Reveal width="100%" delay=".6">
-              <a href="#" className="global_button_one">
-                {" "}
+              <Link to="/events" className="global_button_one">
                 <span>{home.header.btn}</span>
-              </a>
+              </Link>
             </Reveal>
           </div>
         </div>
@@ -159,10 +144,9 @@ function Home() {
               </div>
 
               <div className="promote_btn">
-                <a href="#" className="global_button_one">
-                  {" "}
+                <Link to="/register" className="global_button_one">
                   <span>{home.section_three.btn1}</span>
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -193,16 +177,15 @@ function Home() {
                 </div>
               </div>
               <div className="promote_btn">
-                <a href="" className="global_button_one">
-                  {" "}
+                <Link to="/about" className="global_button_one">
                   <span>{home.section_three.btn2}</span>
-                </a>
+                </Link>
               </div>
             </div>
           </div>
         </div>
       </Reveal>
-      <Reveal delay=".2">
+      <Reveal delay=".2" width="100%">
         <div className="promote_section blank_section">
           <div className="promote_div">
             <img
@@ -215,37 +198,37 @@ function Home() {
                 <img src={analyticsIcon} alt="Analytics" />
                 <h3>{home.section_four.title1}</h3>
                 <p>{home.section_four.description1}</p>
-                <a href="#">
+                {/* <a href="#">
                   {home.section_four.btn}{" "}
                   <img src={rightArrow} className="arrow_right" alt="" />
-                </a>
+                </a> */}
               </div>
               <div className="grid_block">
                 <img src={marketingIcon} alt="Marketing" />
                 <h3>{home.section_four.title2}</h3>
                 <p>{home.section_four.description2}</p>
-                <a href="#">
+                {/* <a href="#">
                   {home.section_four.btn}{" "}
                   <img src={rightArrow} className="arrow_right" alt="" />
-                </a>
+                </a> */}
               </div>
               <div className="grid_block">
                 <img src={listingsIcon} alt="Listings" />
                 <h3>{home.section_four.title3}</h3>
                 <p>{home.section_four.description3}</p>
-                <a href="#">
+                {/* <a href="#">
                   {home.section_four.btn}{" "}
                   <img src={rightArrow} className="arrow_right" alt="" />
-                </a>
+                </a> */}
               </div>
               <div className="grid_block">
                 <img src={secureIcon} alt="Secure" />
                 <h3>{home.section_four.title4}</h3>
                 <p>{home.section_four.description4}</p>
-                <a href="#">
+                {/* <a href="#">
                   {home.section_four.btn}{" "}
                   <img src={rightArrow} className="arrow_right" alt="" />
-                </a>
+                </a> */}
               </div>
             </div>
           </div>
@@ -265,10 +248,9 @@ function Home() {
           <div className="faq_content">
             <h3>{home.section_four.contact_title}</h3>
             <p>{home.section_four.contact_description}</p>
-            <a href="/contact" className="global_button_one">
-              {" "}
+            <Link to="/contact" className="global_button_one">
               <span>{home.section_four.contact_btn}</span>
-            </a>
+            </Link>
           </div>
         </Reveal>
       </div>

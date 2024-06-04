@@ -39,7 +39,7 @@ function Navbar() {
               </NavLink>
             </li>
             <li onClick={() => setIsActive(false)}>
-              <NavLink to="/events" className={linkClass}>
+              <NavLink to="/events?page=1" className={linkClass}>
                 Browse
               </NavLink>
             </li>

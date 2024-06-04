@@ -42,7 +42,6 @@ const EventList = ({
   const [page, setPage] = useState(initialPage);
   const [eventsPerPage, setEventsPerPage] = useState(10);
   //useEffect with empty dependency to render first time if found parameters in URL
-
   useEffect(() => {
     if (!limit) {
       setSearchKeywords(initialSearchKeywords);
@@ -64,11 +63,11 @@ const EventList = ({
         params.append("categories[]", category)
       );
     }
-
     navigate({ search: params.toString() });
   }, [
     limit,
     page,
+    initialPage,
     eventsPerPage,
     searchKeywords,
     location,

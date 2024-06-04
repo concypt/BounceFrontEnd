@@ -14,11 +14,27 @@
   border-radius: 17px;
 }
 
-.filters h1 {
+/* .filters h1 {
   font-size: 32px;
   font-weight: 700;
   margin: 0;
   color: #000;
+} */
+
+.filterHeader {
+  display: flex;
+  justify-content: space-between;
+}
+
+.filterHeader h1 {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0;
+  color: #000;
+}
+.filterSwitch {
+  background: none;
+  border: 0;
 }
 
 .searchDiv {
@@ -102,6 +118,7 @@ input[type="checkbox"] {
 .rdrDateRangePickerWrapper {
   right: 0;
 }
+
 .dateRange {
   text-align: center;
 }
@@ -218,6 +235,13 @@ select {
   z-index: 2;
 }
 
+@media (max-width: 1266px) {
+  .rdrDateRangePickerWrapper {
+    left: 0;
+    right: auto;
+  }
+}
+
 @media (max-width: 767px) {
   .filters {
     padding: 25px 20px;
@@ -244,5 +268,10 @@ select {
 
   .dateFields input {
     width: 100%;
+  }
+
+  .rdrDateRangePickerWrapper {
+    left: 0;
+    right: 0;
   }
 }

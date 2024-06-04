@@ -889,6 +889,9 @@ input[type="radio"] {
 i {
   opacity: 0;
 }
+.rdrNextPrevButton i {
+  opacity: 1;
+}
 #overlay.draggedover {
   background-color: rgba(255, 255, 255, 0.7);
 }

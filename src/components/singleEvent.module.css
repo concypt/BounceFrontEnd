@@ -1,4 +1,4 @@
-.eventsGrid {
+/* .eventsGrid {
   display: grid;
   grid-template-columns: 32% 32% 32%;
   row-gap: 60px;
@@ -38,13 +38,7 @@
   position: relative;
 }
 
-.eventImg {
-  width: 100%;
-  object-fit: cover;
-  font-size: 32px;
-  line-height: 36px;
-  min-height: 275px;
-}
+
 
 .eventCategoryButton {
   position: absolute;
@@ -103,15 +97,18 @@
   display: flex;
   position: absolute;
   bottom: 23px;
-}
+} */
 
 /* event-detail */
-
-.event_detail_content .eventImg {
-  height: 736px;
+.eventImg {
+  width: 100%;
+  object-fit: cover;
+  font-size: 32px;
+  line-height: 36px;
+  min-height: 275px;
+  height: calc(100vh - 265px);
   border-radius: 20px;
 }
-
 .event_main_img {
   position: relative;
 }
@@ -151,9 +148,9 @@
 
 .event_detail_content {
   width: 100%;
-  max-width: 1730px;
+  max-width: 1700px;
   margin: 0 auto;
-  padding: 0 30px;
+  padding: 0;
 }
 
 .event_detail {
@@ -271,14 +268,12 @@
   margin-top: 57px;
 }
 
-.description_heading p {
+.description {
   font-size: 20px;
   font-weight: 500;
   color: #000;
   margin-top: 20px;
   font-family: var(--primary-font);
-  width: 100%;
-  max-width: 635px;
 }
 
 .ticket_detail {
@@ -579,7 +574,7 @@ select {
     row-gap: 40px;
   }
   .event_detail_content .eventImg {
-    height: 500px;
+    height: calc(80vh - 215px);
   }
 }
 
@@ -590,6 +585,10 @@ select {
 
   .eventCard {
     width: 100%;
+  }
+
+  .event_detail {
+    padding-top: 175px;
   }
 
   .details h2 {
@@ -637,8 +636,8 @@ select {
     font-size: 14px;
   }
 
-  .event_detail_content .eventImg {
-    height: 450px;
+  .eventImg {
+    height: calc(50vh - 215px);
   }
 
   .description_heading h2 {
@@ -661,7 +660,7 @@ select {
   }
 
   .eventImg {
-    min-height: 200px;
+    height: calc(50vh - 215px);
   }
 
   .eventCardDetails {
@@ -703,9 +702,9 @@ select {
     left: 15px;
   }
 
-  .event_detail_content .eventImg {
+  /* .event_detail_content .eventImg {
     height: 250px;
-  }
+  } */
 
   .details h2 {
     font-size: 24px;
@@ -794,7 +793,7 @@ select {
   }
 
   .eventImg {
-    min-height: 160px;
+    min-height: calc(100vh - 215px);
   }
 
   .event_detail_card {

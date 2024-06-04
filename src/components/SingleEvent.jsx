@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import FollowUnfollowBtn from "./FollowUnfollowBtn";
+import PropTypes from "prop-types";
 import styles from "../components/singleEvent.module.css";
 import moment from "moment";
 import { Link } from "react-router-dom";
@@ -29,7 +30,7 @@ const SingleEvent = ({ eventId }) => {
   // const [loadingComplete, setLoadingComplete] = useState(false);
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
   //const location = useLocation();
-  const token = localStorage.getItem("token");
+  //const token = localStorage.getItem("token");
 
   // Function to fetch categories from API
   const fetchEventDetails = async () => {
@@ -78,7 +79,7 @@ const SingleEvent = ({ eventId }) => {
   return (
     <>
       <div className={`${styles.event_detail} bounce_bg_circle`}>
-        <div className={styles.event_detail_content}>
+        <div className={"custom-wrapper"}>
           <div className={styles.event_main_img}>
             <img
               className={styles.eventImg}
@@ -98,10 +99,10 @@ const SingleEvent = ({ eventId }) => {
                 <h2>{event.name}</h2>
                 <div className={styles.event_detail_card}>
                   <div className={styles.event_circle_img}>
-                    <p className={styles.image_path}>
+                    {/* <p className={styles.image_path}>
                       {event.organisation.imagePath}
-                    </p>
-                    <img src="http://bounce.extrasol.co.uk/images/upload/defaultuser.png" />
+                    </p> */}
+                    <img src={event.organisation.imagePath} />
                     <div className={styles.card_text}>
                       <Link
                         to={{
@@ -155,7 +156,7 @@ const SingleEvent = ({ eventId }) => {
 
                 <div className={styles.description_heading}>
                   <h2>About the event</h2>
-                  <p>Description: {event.description}</p>
+                  <div className={styles.description}>{event.description}</div>
                 </div>
               </div>
             </div>
@@ -182,7 +183,7 @@ const SingleEvent = ({ eventId }) => {
                   </div>
                 </div>
               </div>
-              <div className={styles.details}>
+              {/* <div className={styles.details}>
                 <div className={styles.ticket_detail}>
                   <h3>Promote this event</h3>
                   <p className={styles.ticket_text}>
@@ -194,7 +195,7 @@ const SingleEvent = ({ eventId }) => {
                     </a>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -203,4 +204,7 @@ const SingleEvent = ({ eventId }) => {
   );
 };
 
+SingleEvent.propTypes = {
+  eventId: PropTypes.string,
+};
 export default SingleEvent;

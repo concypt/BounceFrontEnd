@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 
 import styles from "./eventFilterCheckbox.module.css";
-const EventFilterCheckbox = ({ id, value, label, updateSelectedCount }) => {
+const EventFilterCheckbox = ({ id, value, label, handleCatCheck }) => {
   return (
     <div>
       <input
@@ -9,7 +9,7 @@ const EventFilterCheckbox = ({ id, value, label, updateSelectedCount }) => {
         id={id}
         name="categories"
         value={value}
-        onChange={updateSelectedCount}
+        onChange={handleCatCheck}
       />
       <label className={styles.checkboxTag} htmlFor={id}>
         {label}
@@ -22,6 +22,6 @@ EventFilterCheckbox.propTypes = {
   id: PropTypes.string,
   value: PropTypes.number,
   label: PropTypes.string,
-  updateSelectedCount: PropTypes.func,
+  handleCatCheck: PropTypes.func,
 };
 export default EventFilterCheckbox;

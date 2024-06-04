@@ -15,9 +15,13 @@ function Events() {
       <EventFilter
         setSearchKeywords={setSearchKeywords}
         setSelectedCategories={setSelectedCategories}
+        selectedCategories={selectedCategories}
         setLocation={setLocation}
+        location={location}
         setLocationMiles={setLocationMiles}
+        locationMiles={locationMiles}
         setDateParameter={setDateParameter}
+        dateParameter={dateParameter}
       />
       <EventList
         searchKeywords={searchKeywords}
