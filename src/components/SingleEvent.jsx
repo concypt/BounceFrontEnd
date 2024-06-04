@@ -1,5 +1,8 @@
+import { useState } from "react";
+import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import LoadingBar from "react-top-loading-bar";
 import FollowUnfollowBtn from "./FollowUnfollowBtn";
 import styles from "../components/singleEvent.module.css";
 import moment from "moment";
@@ -22,14 +25,20 @@ let config = {
   },
 };
 
-const SingleEvent = ({ eventId }) => {
+const SingleEvent = () => {
+  const { eventId } = useParams();
+  const [loadingComplete, setLoadingComplete] = useState(false);
+  // Set loading complete to true when the page has finished loading
+  window.onload = () => {
+    setLoadingComplete(true);
+  };
   //const navigate = useNavigate();
 
   //const [event, setEvent] = useState(null);
   // const [loadingComplete, setLoadingComplete] = useState(false);
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
   //const location = useLocation();
-  const token = localStorage.getItem("token");
+  // const token = localStorage.getItem("token");
 
   // Function to fetch categories from API
   const fetchEventDetails = async () => {
@@ -50,17 +59,11 @@ const SingleEvent = ({ eventId }) => {
 
   if (isLoading) {
     return (
-      <div
-        style={{
-          width: "100vw",
-          height: "90vh",
-          display: "flex",
-          alignContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <p style={{ textAlign: "center", width: "100%" }}>Loading...</p>
-      </div>
+      <LoadingBar
+        color="#7e79ff"
+        height={3}
+        progress={loadingComplete ? 100 : 0}
+      />
     );
   }
   if (error) {

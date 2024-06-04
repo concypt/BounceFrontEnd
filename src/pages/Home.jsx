@@ -43,20 +43,17 @@ function Home() {
 
   //const [home, setHomeContent] = useState(null);
   const [loadingComplete, setLoadingComplete] = useState(false);
-
+  // Set loading complete to true when the page has finished loading
+  window.onload = () => {
+    setLoadingComplete(true);
+  };
   if (isLoading)
     return (
-      <div
-        style={{
-          width: "100vw",
-          height: "90vh",
-          display: "flex",
-          alignContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <p style={{ textAlign: "center", width: "100%" }}>Loading...</p>
-      </div>
+      <LoadingBar
+        color="#7e79ff"
+        height={3}
+        progress={loadingComplete ? 100 : 0}
+      />
     );
   if (error) return <p>Error: {error.message}</p>;
 
@@ -80,15 +77,14 @@ function Home() {
           <Reveal width="100%" delay=".2">
             <div className="users">
               <div className="user_imgs">
-              <img src={home.header.user1} alt={home.header.user1.alt} />
-              <img src={home.header.user2} alt={home.header.user2.alt} />
-              <img src={home.header.user3} alt={home.header.user3.alt} />
-              <img src={home.header.user4} alt={home.header.user4.alt} />
-              <img src={home.header.user5} alt={home.header.user5.alt} />
-                  <div className="user_count">
-                    <p>{home.header.user_number}+</p>
-                  </div>
-                
+                <img src={home.header.user1} alt={home.header.user1.alt} />
+                <img src={home.header.user2} alt={home.header.user2.alt} />
+                <img src={home.header.user3} alt={home.header.user3.alt} />
+                <img src={home.header.user4} alt={home.header.user4.alt} />
+                <img src={home.header.user5} alt={home.header.user5.alt} />
+                <div className="user_count">
+                  <p>{home.header.user_number}+</p>
+                </div>
               </div>
             </div>
           </Reveal>
@@ -137,10 +133,7 @@ function Home() {
       <Reveal width="100%" delay="0.2" amount="0.5">
         <div className="promote_section">
           <div className="promote_div">
-            <img
-              src={home.section_three.img1}
-              alt=""
-            />
+            <img src={home.section_three.img1} alt="" />
 
             <div className="promote_content">
               <h2>{home.section_three.title1}</h2>
@@ -175,10 +168,7 @@ function Home() {
       <Reveal width="100%" delay="0.2" amount="0.5">
         <div className="promote_section promote_second">
           <div className="promote_div">
-            <img
-              src={home.section_three.img2}
-              alt=""
-            />
+            <img src={home.section_three.img2} alt="" />
 
             <div className="promote_content">
               <h2>{home.section_three.title2}</h2>
