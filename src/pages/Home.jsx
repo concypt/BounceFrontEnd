@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { useState } from "react";
 import LoadingBar from "react-top-loading-bar";
 import TestimonialsSlider from "../components/TestimonialsSlider";
 import EventList from "../components/EventList";
