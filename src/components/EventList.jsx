@@ -9,7 +9,7 @@ import Pagination from "./Pagination";
 import PropTypes from "prop-types";
 import styles from "./eventList.module.css";
 
-const URL = "/api/attenders/events";
+const URL = "https://bounce.extrasol.co.uk/api/attenders/events";
 let config = {
   headers: {
     "Content-Type": "application/json",

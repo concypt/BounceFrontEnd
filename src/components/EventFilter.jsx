@@ -11,7 +11,7 @@ import locationImage from "../assets/images/location_grey.svg";
 import caretUp from "../assets/images/CaretUp.svg";
 import caretDown from "../assets/images/CaretDown.svg";
 
-const URL = "/api/attenders/categories";
+const URL = "https://bounce.extrasol.co.uk/api/attenders/categories";
 const config = {
   headers: {
     "Content-Type": "application/json",
