@@ -18,15 +18,14 @@ let config = {
     Authorization: `Bearer ${localStorage.getItem("token")}`,
   },
 };
-
 const fetchMarketingData = async () => {
   const { data } = await axios.get(URL, config).then((res) => res.data);
   return data;
 };
 
-
 function Marketing() {
-  const {
+
+ const {
     data: marketing,
     error,
     isLoading,
@@ -35,7 +34,6 @@ function Marketing() {
     queryFn: fetchMarketingData,
   });
   const [loadingComplete, setLoadingComplete] = useState(false);
-
   if (isLoading)
     return (
       <div
@@ -60,6 +58,7 @@ function Marketing() {
       />
     );
   }
+ 
   return (
     <div className="dashboard">
       <div>
@@ -70,8 +69,8 @@ function Marketing() {
         <div className="tablesGrid marketingGrid">
           <EmailList campaigns={marketing.campaigns} />
           <div className="promotersMain marketingSubscriber">
-            <SubscribersList subscribe_list={marketing.subscribe_list} />
-            <DiscountCodes coupons={marketing.coupon} events={marketing.events} />
+            <SubscribersList  />
+            <DiscountCodes  />
           </div>
         </div>
       </div>

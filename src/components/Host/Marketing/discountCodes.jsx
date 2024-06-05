@@ -34,9 +34,37 @@ import deleteImg from "../../../assets/images/event-dash-icon-delete.svg";
 import paginatePrev from "../../../assets/images/pagination-arrow-prev.svg";
 import paginateNext from "../../../assets/images/pagination-arrow-next.svg";
 
-const HostTicketOrders = (props) => {
+const HostTicketOrders = () => {
  
-  const { coupons,events } = props;
+
+  const [coupons, setTableData] = useState([]);
+  const [events, setEventsData] = useState([]);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(
+        "https://bounce.extrasol.co.uk/api/user/coupon",
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      const data = await response.json();
+      setTableData(data.data.coupon);
+      setEventsData(data.data.events)
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -67,7 +95,6 @@ const HostTicketOrders = (props) => {
   const closeModal = () => {
     setModalIsOpen(false);
   };
-
   const mutation = useMutation({
     mutationFn: async (formData) => {
       const response = await fetch(
@@ -100,6 +127,7 @@ const HostTicketOrders = (props) => {
         coupon_code: "",
         event_id: [],
       });
+      fetchData();
     },
     onError: (error) => {
       Swal.fire({
@@ -109,7 +137,6 @@ const HostTicketOrders = (props) => {
       });
     },
   });
-
   const handleSubmit = (e) => {
     e.preventDefault();
     mutation.mutate(formData);
@@ -128,9 +155,9 @@ const HostTicketOrders = (props) => {
       if (result.isConfirmed) {
         try {
           const response = await fetch(
-            `https://bounce.extrasol.co.uk/api/user/event-delete/${id}`,
+            `https://bounce.extrasol.co.uk/api/user/coupon/${id}`,
             {
-              method: "GET",
+              method: "DELETE",
               headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json",
@@ -138,18 +165,17 @@ const HostTicketOrders = (props) => {
               },
             }
           );
-
           if (!response.ok) {
             throw new Error("Failed to delete event");
           }
 
           setTableData((prevData) =>
-            prevData.filter((event) => event.id !== id)
+            prevData.filter((coupon) => coupon.id !== id)
           );
-          Swal.fire("Deleted!", "Your event has been deleted.", "success");
+          Swal.fire("Deleted!", "Your coupon has been deleted.", "success");
         } catch (error) {
-          console.error("Error deleting event:", error);
-          Swal.fire("Error!", "Failed to delete event.", "error");
+          console.error("Error deleting coupon:", error);
+          Swal.fire("Error!", "Failed to delete coupon.", "error");
         }
       }
     });
