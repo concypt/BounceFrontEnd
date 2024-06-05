@@ -345,7 +345,7 @@ function CreateEvent() {
                         </div>
                         <div className="eventLables">
                           <label className="fieldlabels">Tags</label>{" "}
-                          {formData.tags.map((tag, index) => (
+                          {/* {formData.tags.map((tag, index) => (
                             <input
                               key={index}
                               type="text"
@@ -354,7 +354,7 @@ function CreateEvent() {
                                 handleArrayChange(e, index, "tags")
                               }
                             />
-                          ))}
+                          ))} */}
                           {/* <select
                             className="form-select form-select-lg"
                             aria-label=".form-select-lg example"
