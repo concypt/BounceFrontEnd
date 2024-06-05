@@ -225,7 +225,7 @@
     display: block;
     position: absolute;
     top: 45px;
-    left: 40px; /* Initially hidden */
+    left: 40px;
   }
 
   .hamburger .line {

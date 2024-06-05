@@ -805,3 +805,149 @@ select {
     padding: 20px;
   }
 }
+
+/* src/Modal.module.css */
+.modalBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  /* background: #ffffff4a; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 0 20px;
+}
+
+.modalContainer {
+  background: white;
+  max-width: 1300px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 70% 30%;
+}
+
+.column {
+  padding: 20px;
+}
+
+.columnSmall {
+  background: #f0f0f0;
+  position: relative;
+}
+
+.ticketTier {
+  padding: 20px 40px;
+  margin-top: 20px;
+}
+
+.btnWrapper {
+  position: absolute;
+  bottom: 30px;
+  right: 20px;
+}
+
+/* ticket card styles */
+
+.cardTicket {
+  width: 300px;
+  border-radius: 10px;
+  background: #f7f7f7;
+  overflow: hidden;
+}
+
+.cardHeaderTicket {
+  height: 95px;
+  border-top: 10px solid #7e79ff;
+  border-bottom: 2px dotted #c7c7c7;
+  border-radius: 10px 10px 0 0;
+  position: relative;
+  padding: 20px 30px;
+}
+
+.cardHeaderTicketContent {
+  display: flex;
+  align-items: center;
+}
+
+.priceEuro {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.feeEuro,
+.cardBodyTicket p {
+  margin-left: 15px;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.cardHeaderTicket:before,
+.cardHeaderTicket:after {
+  content: "";
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  background: #fff;
+  border-radius: 100%;
+  bottom: -12px;
+  box-sizing: border-box;
+}
+
+.cardHeaderTicket:before {
+  left: -13px;
+}
+
+.cardHeaderTicket:after {
+  right: -13px;
+}
+
+.cardBodyTicket {
+  height: 200px;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  padding: 20px;
+  position: relative;
+}
+
+.cardBodyTicket input[type="number"] {
+  width: 80px;
+  height: 40px;
+  border-radius: 8px;
+  border: 1px solid #ececed;
+  padding-left: 15px;
+  font-size: 14px;
+  color: #b3b1b8;
+}
+
+.orderDiv {
+  display: flex;
+  position: absolute;
+  bottom: 20px;
+}
+
+.ticketsGridModal {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 45% 45%;
+  column-gap: 50px;
+  row-gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .modalContainer {
+    flex-direction: row;
+  }
+}
+
+@media (max-width: 767px) {
+  .column {
+    flex: 1;
+  }
+}
