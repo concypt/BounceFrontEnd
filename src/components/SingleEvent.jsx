@@ -222,12 +222,12 @@ const SingleEvent = () => {
                     <li className="tab-2-li">
                       <label htmlFor="button-2">Free</label>
                     </li>
-                    <li className="bg"></li>
+                    {/* <li className="bg"></li> */}
                   </ul>
                   <div id="shadow">
                     <div id="content">
                       <div id="tab-1">
-                        <div className="left">
+                        <div className="left tickets-modal-wrapper">
                           <div className={styles.ticketsGridModal}>
                             <div className={styles.cardTicket}>
                               <div className={styles.cardHeaderTicket}>
@@ -283,7 +283,7 @@ const SingleEvent = () => {
                                 </div>
                               </div>
                               <div className={styles.cardBodyTicket}>
-                                <p>Phase 3</p>
+                                <p>Early Bird - Sold Out</p>
                                 <div className={styles.orderDiv}>
                                   <input type="number" placeholder="1" />
                                   <a
@@ -300,7 +300,7 @@ const SingleEvent = () => {
                         <div className="right"></div>
                       </div>
                       <div id="tab-2">
-                        <div className="left">
+                        <div className="left tickets-modal-wrapper">
                           <div className={styles.ticketsGridModal}>
                             <div className={styles.cardTicket}>
                               <div className={styles.cardHeaderTicket}>
@@ -356,7 +356,7 @@ const SingleEvent = () => {
                                 </div>
                               </div>
                               <div className={styles.cardBodyTicket}>
-                                <p>Phase 3</p>
+                                <p>Early Bird - Sold Out</p>
                                 <div className={styles.orderDiv}>
                                   <input type="number" placeholder="1" />
                                   <a
@@ -383,7 +383,7 @@ const SingleEvent = () => {
                 <p>Tier 1 </p>
               </div>
               <div className={styles.btnWrapper}>
-                <div className="header_btn">
+                <div className="header_btn ticket-modal">
                   <button href="#" className="global_button_one">
                     <span>Checkout</span>
                   </button>
