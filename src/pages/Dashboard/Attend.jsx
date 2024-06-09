@@ -15,6 +15,7 @@ import emptyState from "../../assets/images/emptystate.svg";
 
 const URL = "https://bounce.extrasol.co.uk/api/user/event-liked";
 let config = {
+  
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",

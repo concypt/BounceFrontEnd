@@ -18,6 +18,7 @@ let config = {
     Authorization: `Bearer ${localStorage.getItem("token")}`,
   },
 };
+
 const fetchMarketingData = async () => {
   const { data } = await axios.get(URL, config).then((res) => res.data);
   return data;

@@ -198,6 +198,7 @@ function Dashboard() {
       </div>
       <div className="tabs">
         <div className="tabSection">
+
           <h2>Profile</h2>
           <div id="tabs">
             <input type="radio" id="button-1" name="tab" defaultChecked />
@@ -240,6 +241,7 @@ function Dashboard() {
                               : userImage || baseImage
                           }
                           alt=""
+
                         />
                       </label>
                       <div id="toast">Image Uploaded</div>
@@ -313,6 +315,7 @@ function Dashboard() {
                     ) : (
                       <UpdateHostProfile />
                     )}
+                    
                   </div>
                   <div className="right"></div>
                 </div>
