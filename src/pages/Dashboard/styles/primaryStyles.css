@@ -689,7 +689,8 @@ input[type="radio"] {
   margin-top: 20px;
 }
 
-#msform fieldset {
+#msform .fieldsetOne,
+#msform .fieldsetTwo {
   background: white;
   border: 1px solid #d8d8d8;
   box-sizing: border-box;
@@ -704,7 +705,7 @@ input[type="radio"] {
   text-align: left;
 }
 
-#msform fieldset:not(:first-of-type) {
+#msform .fieldsetTwo {
   display: none;
 }
 
@@ -1364,7 +1365,6 @@ button.delete.ml-auto {
   max-width: 50%;
 }
 
-
 @media (max-width: 1600px) {
   .hostSection {
     margin-right: 40px;
@@ -1404,7 +1404,8 @@ button.delete.ml-auto {
     flex-wrap: wrap;
     gap: 30px;
   }
-  #msform fieldset {
+  #msform .fieldsetOne,
+  #msform .fieldsetTwo {
     padding: 40px 40px;
   }
   .tablesGrid {
@@ -1581,7 +1582,7 @@ button.delete.ml-auto {
   #empty span {
     text-align: center;
   }
-  #msform fieldset {
+  #msform .fieldsetOne {
     padding: 30px 20px;
   }
   .tabs .progressCard {
