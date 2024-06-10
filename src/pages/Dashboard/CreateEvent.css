@@ -10,7 +10,12 @@
   margin: 0 auto;
 }
 
-.eventType {
+.switch-container.switchTickets {
+  width: 100%;
+}
+
+.eventType,
+.ticketType {
   font-size: 12px;
   font-weight: 500;
   color: #4f4b5c;
@@ -19,10 +24,6 @@
   padding: 10px;
   cursor: pointer;
   z-index: 1;
-}
-
-.eventType.selected {
-  /* color: #fff; */
 }
 
 .highlight {
@@ -36,10 +37,51 @@
   z-index: 0;
 }
 
-.highlight.venue {
+.highlight.venue,
+.highlight.paid {
   transform: translateX(4px);
 }
 
-.highlight.online {
+.highlight.online,
+.highlight.free {
   transform: translateX(calc(100% - 4px));
+}
+
+.plus-icon-box {
+  width: 100%;
+  height: 135px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0;
+  position: relative;
+}
+.plus-icon-box {
+  width: 100%;
+  height: 135px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0; /* Change background color as needed */
+  border: none; /* Remove default button border */
+  cursor: pointer; /* Change cursor to pointer */
+  outline: none; /* Remove default outline */
+  position: relative;
+  padding: 0; /* Remove default padding */
+}
+.plus-icon-circle {
+  width: 66px; /* Adjust the size of the circle as needed */
+  height: 66px;
+  border-radius: 50%;
+  background-color: white; /* Change background color as needed */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.plus-icon {
+  width: 20px; /* Adjust the size of the plus icon as needed */
+  height: 20px;
 }

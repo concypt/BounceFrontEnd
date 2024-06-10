@@ -744,6 +744,8 @@ input[type="radio"] {
   transition: 0.5s ease;
   margin: 0 auto;
   margin-right: 0;
+  text-align: center;
+  cursor: pointer;
 }
 
 #msform .action-button:hover,
