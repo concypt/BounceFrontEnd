@@ -805,3 +805,242 @@ select {
     padding: 20px;
   }
 }
+
+/* src/Modal.module.css */
+.modalBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* background: #000; */
+  background: #7d7d7d73;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 0 20px;
+}
+
+.modalContainer {
+  background: white;
+  max-width: 1300px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 70% 30%;
+}
+
+.column {
+  padding: 20px;
+}
+
+.columnSmall {
+  background: #f0f0f0;
+  position: relative;
+}
+
+.ticketTier {
+  padding: 20px 40px;
+  margin-top: 20px;
+}
+
+.btnWrapper {
+  position: absolute;
+  bottom: 30px;
+  right: 20px;
+}
+
+/* ticket card styles */
+
+.cardTicket {
+  width: 300px;
+  border-radius: 10px;
+  background: #f7f7f7;
+  overflow: hidden;
+}
+
+.cardHeaderTicket {
+  height: 95px;
+  border-top: 10px solid #7e79ff;
+  border-bottom: 2px dotted #c7c7c7;
+  border-radius: 10px 10px 0 0;
+  position: relative;
+  padding: 20px 30px;
+}
+
+.cardHeaderTicketContent {
+  display: flex;
+  align-items: center;
+}
+
+.priceEuro {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.feeEuro,
+.cardBodyTicket p {
+  margin-left: 15px;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.cardHeaderTicket:before,
+.cardHeaderTicket:after {
+  content: "";
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  background: #fff;
+  border-radius: 100%;
+  bottom: -12px;
+  box-sizing: border-box;
+}
+
+.cardHeaderTicket:before {
+  left: -13px;
+}
+
+.cardHeaderTicket:after {
+  right: -13px;
+}
+
+.cardBodyTicket {
+  height: 200px;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  padding: 20px;
+  position: relative;
+}
+
+.cardBodyTicket input[type="number"] {
+  width: 80px;
+  height: 40px;
+  border-radius: 8px;
+  border: 1px solid #ececed;
+  padding-left: 15px;
+  font-size: 14px;
+  color: #b3b1b8;
+}
+
+.orderDiv {
+  display: flex;
+  position: absolute;
+  bottom: 20px;
+}
+
+.ticketsGridModal {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 45% 45%;
+  column-gap: 50px;
+  row-gap: 40px;
+  min-height: 600px;
+}
+
+.columnSmall h2 {
+  font-size: 24px;
+  font-weight: 700;
+  font-family: var(--secondary-font);
+}
+
+@media (max-width: 1200px) {
+  .ticketsGridModal {
+    column-gap: 30px;
+    row-gap: 20px;
+  }
+
+  .columnLarge {
+    padding: 20px 0;
+  }
+}
+
+@media (max-width: 1025px) {
+  .cardTicket {
+    width: 270px;
+  }
+}
+
+@media (max-width: 992px) {
+  .ticketsGridModal {
+    display: block;
+  }
+
+  .modalContainer {
+    grid-template-columns: 60% 40%;
+    max-height: 80vh;
+  }
+
+  .column {
+    max-height: 80vh;
+  }
+
+  .cardTicket {
+    width: 300px;
+    margin-bottom: 20px;
+  }
+
+  .columnLarge {
+    padding-right: 20px;
+  }
+
+  .ticketsGridModal {
+    min-height: unset;
+    height: 67vh;
+  }
+}
+
+@media (max-width: 650px) {
+  .cardTicket {
+    width: 260px;
+  }
+}
+
+@media (max-width: 576px) {
+  .modalContainer {
+    display: block;
+  }
+
+  .modalContainer {
+    height: 70vh;
+    overflow-y: scroll;
+  }
+
+  .modalContainer::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #f5f5f5;
+  }
+
+  .modalContainer::-webkit-scrollbar {
+    width: 5px;
+    background-color: #f5f5f5;
+    float: right;
+  }
+
+  .modalContainer::-webkit-scrollbar-thumb {
+    background-color: #7e79ff;
+    border: 5px solid #7e79ff;
+  }
+
+  .btnWrapper {
+    position: static;
+  }
+
+  .columnSmall {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .columnLarge {
+    padding-right: 10px;
+  }
+
+  .modalBackground {
+    padding: 0 15px;
+  }
+}

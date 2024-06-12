@@ -16,9 +16,34 @@ import deleteImg from "../../../assets/images/event-dash-icon-delete.svg";
 import paginatePrev from "../../../assets/images/pagination-arrow-prev.svg";
 import paginateNext from "../../../assets/images/pagination-arrow-next.svg";
 
-const HostTicketOrders = (props) => {
-  const { subscribe_list } = props;
+const HostTicketOrders = () => {
+  const [subscribe_list, setTableData] = useState([]);
+  const fetchData = async () => {
+    try {
+      const response = await fetch(
+        "https://bounce.extrasol.co.uk/api/user/all-subscribe-list",
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      const data = await response.json();
+      setTableData(data.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
   const handleDelete = async (id) => {
+
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -30,7 +55,7 @@ const HostTicketOrders = (props) => {
       if (result.isConfirmed) {
         try {
           const response = await fetch(
-            `https://bounce.extrasol.co.uk/api/user/event-delete/${id}`,
+            `https://bounce.extrasol.co.uk/api/user/subscriber/delete/${id}`,
             {
               method: "GET",
               headers: {
@@ -42,16 +67,16 @@ const HostTicketOrders = (props) => {
           );
 
           if (!response.ok) {
-            throw new Error("Failed to delete event");
+            throw new Error("Failed to delete subscribe list");
           }
 
           setTableData((prevData) =>
-            prevData.filter((event) => event.id !== id)
+            prevData.filter((subscribe) => subscribe.id !== id)
           );
-          Swal.fire("Deleted!", "Your event has been deleted.", "success");
+          Swal.fire("Deleted!", "Your subscribe list has been deleted.", "success");
         } catch (error) {
-          console.error("Error deleting event:", error);
-          Swal.fire("Error!", "Failed to delete event.", "error");
+          console.error("Error deleting subscribe list:", error);
+          Swal.fire("Error!", "Failed to delete subscribe list.", "error");
         }
       }
     });

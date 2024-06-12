@@ -48,4 +48,5 @@ function EventSingle() {
     </div>
   );
 }
+
 export default EventSingle;
