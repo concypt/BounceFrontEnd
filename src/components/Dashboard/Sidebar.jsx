@@ -76,13 +76,7 @@ const Sidebar = () => {
                   className={styles.linkWithSublinks}
                   onClick={toggleSublinks}
                 >
-                  <span
-                    className={({ isActive }) =>
-                      isActive ? styles.activeLink : ""
-                    }
-                  >
-                    Host
-                  </span>
+                  <span>Host</span>
                 </div>
                 <ul
                   className={`${styles.sublinks} ${

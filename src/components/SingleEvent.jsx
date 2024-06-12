@@ -14,7 +14,7 @@ import calendarImage from "../assets/images/calender.svg";
 import clockImage from "../assets/images/clock_grey.svg";
 import locationImage from "../assets/images/location_grey.svg";
 
-const URL = "/api/attenders/event-detail/";
+const URL = "https://bounce.extrasol.co.uk/api/attenders/event-detail/";
 let config = {
   headers: {
     "Content-Type": "application/json",

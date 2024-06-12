@@ -1,0 +1,177 @@
+/* Switch for tickets and event type */
+.switch-container {
+  display: flex;
+  position: relative;
+  width: 50%;
+  height: 40px;
+  border-radius: 25px;
+  overflow: hidden;
+  background-color: #ececed;
+  border-radius: 12px;
+  margin: 0 auto;
+}
+
+.switch-container.switchTickets {
+  width: 100%;
+}
+
+.eventType,
+.ticketType {
+  font-size: 12px;
+  font-weight: 500;
+  color: #4f4b5c;
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.highlight {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  width: 50%; /* Adjust based on number of options */
+  background-color: #fff;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+  z-index: 0;
+}
+
+.highlight.offline,
+.highlight.paid {
+  transform: translateX(4px);
+}
+
+.highlight.online,
+.highlight.free {
+  transform: translateX(calc(100% - 4px));
+}
+
+/* Switch for tickets and event type */
+
+/* Plus icon box on ticket panel  */
+
+.plus-icon-box {
+  width: 100%;
+  height: 135px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0;
+  position: relative;
+}
+.plus-icon-box {
+  width: 100%;
+  height: 135px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0; /* Change background color as needed */
+  border: none; /* Remove default button border */
+  cursor: pointer; /* Change cursor to pointer */
+  outline: none; /* Remove default outline */
+  position: relative;
+  padding: 0; /* Remove default padding */
+}
+.plus-icon-circle {
+  width: 66px; /* Adjust the size of the circle as needed */
+  height: 66px;
+  border-radius: 50%;
+  background-color: white; /* Change background color as needed */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.plus-icon {
+  width: 20px; /* Adjust the size of the plus icon as needed */
+  height: 20px;
+}
+/* Plus icon box on ticket panel  */
+
+/* createEventTicket form */
+#msform.createEventTicket {
+  text-align: unset;
+}
+/* createEventTicket form */
+
+/* Progress bar step for createEvent and tickets */
+.progressBar {
+  padding: 0;
+  padding-top: 65px;
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+  margin: 0 auto;
+  position: relative;
+}
+
+.progressBar li {
+  position: relative;
+  list-style: none;
+}
+
+.progressBar .circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  position: absolute;
+  top: -65px;
+}
+
+.progressBar .line {
+  position: absolute;
+  top: 20px;
+  left: 65px;
+  height: 10px;
+  width: calc(100% - 168px); /* Adjust this value based on your layout */
+  border-radius: 5px;
+}
+
+.progressBar li:nth-child(2) .line {
+  display: none; /* Hide the extra line before the  step */
+}
+
+.progressBar li.grey .circle {
+  background-color: #b9b9b9;
+}
+.progressBar li.purple .circle,
+.progressBar li.purple ~ .line {
+  background-color: #aeabff;
+}
+.progressBar li.green .circle,
+.progressBar li.green ~ .line {
+  background-color: #78dfa1;
+}
+
+.progressBar h4 {
+  font-weight: 500;
+  font-size: 18px;
+  color: #c4c4c4;
+}
+.progressBar h3 {
+  font-weight: 500;
+  font-size: 24px;
+  color: #000;
+}
+.progressBar p {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 12px;
+  color: #7357ff;
+  padding: 4px 8px;
+  border-radius: 8px;
+  background-color: #e2dcff;
+}
+.progressBar li.grey p {
+  color: #4f4b5c;
+  background-color: #fff;
+}
+
+.progressBar li.green p {
+  color: #0a9c55;
+  background-color: #c6f1dd;
+}

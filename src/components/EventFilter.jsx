@@ -1,7 +1,6 @@
-import { useEffect, useState, useCallback } from "react";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { useEffect, useState, useCallback, useContext } from "react";
 import PropTypes from "prop-types";
+import { CatContext } from "../contexts/GlobalProvider";
 import EventFilterCheckbox from "./EventFilterCheckbox";
 import styles from "./eventFilter.module.css";
 import { DateRangePicker } from "react-date-range";
@@ -10,15 +9,6 @@ import "react-date-range/dist/theme/default.css";
 import locationImage from "../assets/images/location_grey.svg";
 import caretUp from "../assets/images/CaretUp.svg";
 import caretDown from "../assets/images/CaretDown.svg";
-
-const URL = "/api/attenders/categories";
-const config = {
-  headers: {
-    "Content-Type": "application/json",
-    Accept: "application/json",
-    "X-Api-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9",
-  },
-};
 
 const EventFilter = ({
   setSearchKeywords,
@@ -36,6 +26,8 @@ const EventFilter = ({
   const [isLocation, setIsLocation] = useState(false);
   const [isDate, setIsDate] = useState(false);
 
+  const { categories } = useContext(CatContext);
+
   const [dateRange, setDateRange] = useState([
     {
       startDate: null,
@@ -46,19 +38,21 @@ const EventFilter = ({
 
   const [showDatePicker, setShowDatePicker] = useState(false);
 
-  const fetchCategories = async () => {
-    const { data } = await axios.get(URL, config).then((res) => res.data);
-    return data;
-  };
+  // const fetchCategories = async () => {
+  //   const { data } = await axios.get(URL, config).then((res) => res.data);
+  //   return data;
+  // };
 
-  const {
-    data: categories,
-    error,
-    isLoading,
-  } = useQuery({
-    queryKey: ["categories"],
-    queryFn: fetchCategories,
-  });
+  // const { data, error, isLoading } = useQuery({
+  //   queryKey: ["categories"],
+  //   queryFn: fetchCategories,
+  // });
+
+  // useEffect(() => {
+  //   if (data) {
+  //     setCategories(data);
+  //   }
+  // }, [data, setCategories]);
 
   const handleCatCheck = (e) => {
     const { value, checked } = e.target;
@@ -191,25 +185,25 @@ const EventFilter = ({
     }
   }, [selectedCategories]);
 
-  if (isLoading) {
-    return (
-      <div
-        style={{
-          width: "100vw",
-          height: "90vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <p>Loading...</p>
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div
+  //       style={{
+  //         width: "100vw",
+  //         height: "90vh",
+  //         display: "flex",
+  //         alignItems: "center",
+  //         justifyContent: "center",
+  //       }}
+  //     >
+  //       <p>Loading...</p>
+  //     </div>
+  //   );
+  // }
 
-  if (error) {
-    return <p>Errors: {error.message}</p>;
-  }
+  // if (error) {
+  //   return <p>Errors: {error.message}</p>;
+  // }
 
   return (
     <div className="bounce_bg_circle">

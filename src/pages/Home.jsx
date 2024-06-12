@@ -16,7 +16,7 @@ import marketingIcon from "../assets/images/marketingicon.svg";
 import secureIcon from "../assets/images/secureicon.svg";
 import { Link } from "react-router-dom";
 
-const URL = "/api/attenders/home-content";
+const URL = "https://bounce.extrasol.co.uk/api/attenders/home-content";
 let config = {
   headers: {
     "Content-Type": "application/json",
