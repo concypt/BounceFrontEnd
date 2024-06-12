@@ -5,26 +5,26 @@ import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import "./ImageUpload.css";
 
-const ImageUpload = ({ images, onImagesChange }) => {
+const ImageUpload = ({ gallery, onImagesChange }) => {
   const onDrop = (acceptedFiles) => {
     const newImages = acceptedFiles.map((file) =>
       Object.assign(file, {
         preview: URL.createObjectURL(file),
       })
     );
-    onImagesChange([...images, ...newImages]);
+    onImagesChange([...gallery, ...newImages]);
   };
 
   const moveImage = (dragIndex, hoverIndex) => {
-    const dragImage = images[dragIndex];
-    const updatedImages = [...images];
+    const dragImage = gallery[dragIndex];
+    const updatedImages = [...gallery];
     updatedImages.splice(dragIndex, 1);
     updatedImages.splice(hoverIndex, 0, dragImage);
     onImagesChange(updatedImages);
   };
 
   const removeImage = (index) => {
-    onImagesChange(images.filter((_, i) => i !== index));
+    onImagesChange(gallery.filter((_, i) => i !== index));
   };
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -50,7 +50,7 @@ const ImageUpload = ({ images, onImagesChange }) => {
         </div>
       </div>
       <div className="image-preview-container">
-        {images.map((image, index) => (
+        {gallery.map((image, index) => (
           <ImagePreview
             key={image.preview}
             image={image}
@@ -100,7 +100,7 @@ const ImagePreview = ({ image, index, moveImage, removeImage }) => {
 };
 
 ImageUpload.propTypes = {
-  images: PropTypes.arrayOf(
+  gallery: PropTypes.arrayOf(
     PropTypes.shape({
       preview: PropTypes.string.isRequired,
     })

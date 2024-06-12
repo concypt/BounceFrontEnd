@@ -1,3 +1,4 @@
+/* Switch for tickets and event type */
 .switch-container {
   display: flex;
   position: relative;
@@ -37,7 +38,7 @@
   z-index: 0;
 }
 
-.highlight.venue,
+.highlight.offline,
 .highlight.paid {
   transform: translateX(4px);
 }
@@ -46,6 +47,10 @@
 .highlight.free {
   transform: translateX(calc(100% - 4px));
 }
+
+/* Switch for tickets and event type */
+
+/* Plus icon box on ticket panel  */
 
 .plus-icon-box {
   width: 100%;
@@ -84,4 +89,89 @@
 .plus-icon {
   width: 20px; /* Adjust the size of the plus icon as needed */
   height: 20px;
+}
+/* Plus icon box on ticket panel  */
+
+/* createEventTicket form */
+#msform.createEventTicket {
+  text-align: unset;
+}
+/* createEventTicket form */
+
+/* Progress bar step for createEvent and tickets */
+.progressBar {
+  padding: 0;
+  padding-top: 65px;
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+  margin: 0 auto;
+  position: relative;
+}
+
+.progressBar li {
+  position: relative;
+  list-style: none;
+}
+
+.progressBar .circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  position: absolute;
+  top: -65px;
+}
+
+.progressBar .line {
+  position: absolute;
+  top: 20px;
+  left: 65px;
+  height: 10px;
+  width: calc(100% - 168px); /* Adjust this value based on your layout */
+  border-radius: 5px;
+}
+
+.progressBar li:nth-child(2) .line {
+  display: none; /* Hide the extra line before the  step */
+}
+
+.progressBar li.grey .circle {
+  background-color: #b9b9b9;
+}
+.progressBar li.purple .circle,
+.progressBar li.purple ~ .line {
+  background-color: #aeabff;
+}
+.progressBar li.green .circle,
+.progressBar li.green ~ .line {
+  background-color: #78dfa1;
+}
+
+.progressBar h4 {
+  font-weight: 500;
+  font-size: 18px;
+  color: #c4c4c4;
+}
+.progressBar h3 {
+  font-weight: 500;
+  font-size: 24px;
+  color: #000;
+}
+.progressBar p {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 12px;
+  color: #7357ff;
+  padding: 4px 8px;
+  border-radius: 8px;
+  background-color: #e2dcff;
+}
+.progressBar li.grey p {
+  color: #4f4b5c;
+  background-color: #fff;
+}
+
+.progressBar li.green p {
+  color: #0a9c55;
+  background-color: #c6f1dd;
 }
