@@ -62,7 +62,12 @@ function Navbar() {
             </div>
           </ul>
           <div className={styles.host_and_signin}>
-            <button className={styles.global_button_one}>Host an event</button>
+            <NavLink
+              to="/dashboard-create-event"
+              className={`${styles.global_button_one} ${styles.nav_btn}`}
+            >
+              Host an Event
+            </NavLink>
             {/* <NavLink to="/login" className={styles.loginBtn}>
               Sign In
             </NavLink> */}

@@ -51,7 +51,7 @@ const FollowUnfollowBtn = ({ organisationId }) => {
 
       return true;
     } catch (error) {
-      console.error("Toggle follow API error:", error);
+      //console.error("Toggle follow API error:", error);
       Swal.fire({
         icon: "error",
         title: "Oops...",

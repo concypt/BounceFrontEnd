@@ -92,7 +92,7 @@ header.App_header {
 }
 
 /* global button one */
-button.global_button_one {
+.global_button_one {
   padding: 13px 44px;
   border: none;
   outline: none;
@@ -106,11 +106,11 @@ button.global_button_one {
   font-weight: 600;
 }
 
-button.global_button_one:hover {
+.global_button_one:hover {
   color: #fff;
 }
 
-button.global_button_one::before {
+.global_button_one::before {
   content: "";
   position: absolute;
   left: 4px;
@@ -122,21 +122,21 @@ button.global_button_one::before {
   z-index: -1;
   transition: 200ms;
 }
-button.global_button_one::after {
+.global_button_one::after {
   content: attr(data);
   font-size: 16px;
   background: var(--linear-gradient-border);
   color: transparent;
   transition: 200ms;
 }
-button.global_button_one:hover::before {
+.global_button_one:hover::before {
   opacity: 0;
   top: 0px;
   right: 0px;
   bottom: 0px;
   left: 0px;
 }
-button.global_button_one:hover::after {
+.global_button_one:hover::after {
   color: transparent;
 }
 
