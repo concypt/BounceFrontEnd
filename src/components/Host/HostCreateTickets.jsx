@@ -3,30 +3,9 @@ import PropTypes from "prop-types";
 import Swal from "sweetalert2";
 import { useMutation } from "@tanstack/react-query";
 import DateTimePicker from "./DateTimePicker";
-import axios from "axios";
+import { createTickets } from "../../api/secureService";
 import HostTicketCard from "./HostTicketCard";
 import iconPlus from "../../assets/images/plusgrey.svg";
-
-const URL = "https://bounce.extrasol.co.uk/api/user/ticket-create";
-let config = {
-  headers: {
-    "Content-Type": "application/json",
-    Accept: "application/json",
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
-  },
-};
-
-const createTickets = async (ticketsDataToSubmit, eventId) => {
-  const payload = {
-    tickets: ticketsDataToSubmit,
-    event_id: eventId,
-  };
-
-  console.log(payload);
-
-  const response = await axios.post(URL, payload, config);
-  return response.data;
-};
 
 const HostCreateTickets = ({ setFormStep, eventId }) => {
   const [tickets, setTickets] = useState([]);

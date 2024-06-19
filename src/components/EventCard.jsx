@@ -53,9 +53,12 @@ function EventCard({ event }) {
               Buy Tickets
             </span>
           </a>
-          <a className="bgGlobalBtn borderGlobalBtn" href="">
+          <Link
+            to={`/events/${event.id}`}
+            className="bgGlobalBtn borderGlobalBtn"
+          >
             <span>Find out more</span>
-          </a>
+          </Link>
         </div>
       </div>
     </div>

@@ -1,16 +1,17 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./sidebar.module.css";
+import { UserContext } from "../../contexts/UserProvider";
 
 // images
 import dashLogoImage from "../../assets/images/dashboard/dash-logo.svg";
 
 const Sidebar = () => {
+  const { user } = useContext(UserContext);
   const [showSidebar, setShowSidebar] = useState(false);
   const [showSublinks, setShowSublinks] = useState(false);
 
-  const hostName = localStorage.getItem("hostName");
-  const isHostNull = hostName === null || hostName === "null";
+  const isHostNull = user.org_role === 1 ? true : false;
 
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);

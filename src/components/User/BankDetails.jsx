@@ -1,110 +1,58 @@
-import { useState, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { UserContext } from "../../contexts/UserProvider";
+import { fetchBankDetails, updateBankDetails } from "../../api/secureService";
 import styles from "./user.module.css";
 import Swal from "sweetalert2";
 
 const BankDetailsForm = () => {
-  const [bankDetails, setBankDetails] = useState(null);
-  const [initialBankDetails, setInitialBankDetails] = useState(null);
+  const { user } = useContext(UserContext);
+  const queryClient = useQueryClient();
+
+  const { data: bankDetails, isLoading } = useQuery({
+    queryKey: ["bankDetails"],
+    queryFn: fetchBankDetails,
+  });
+  const [formData, setFormData] = useState();
 
   useEffect(() => {
-    fetchBankDetails();
-  }, []);
+    setFormData(bankDetails);
+  }, [bankDetails]);
 
-  const fetchBankDetails = () => {
-    fetch("https://bounce.extrasol.co.uk/api/user/bank-details", {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.data !== 1) {
-          setBankDetails(data.data);
-          setInitialBankDetails(data.data);
-        } else {
-          // No bank details available yet
-          setBankDetails({
-            bank_name: "",
-            account_title: "",
-            account_number: "",
-            sort_code: "",
-            iban: "",
-            country: "1",
-          });
-          setInitialBankDetails({
-            bank_name: "",
-            account_title: "",
-            account_number: "",
-            sort_code: "",
-            iban: "",
-            country: "1",
-          });
-        }
-      })
-      .catch((error) => console.error("Error fetching bank details:", error));
-  };
+  const mutation = useMutation({
+    mutationFn: updateBankDetails,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["bankDetails"]);
+      Swal.fire({
+        icon: "success",
+        title: "Success",
+        text: "Bank details updated successfully",
+      });
+    },
+    onError: () => {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Failed to update bank details",
+      });
+    },
+  });
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setBankDetails((prevState) => ({
+    setFormData((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
 
-  // Define hasInputChanged function within the component
-  const hasInputChanged = (currentInputs, initialInputs) => {
-    return JSON.stringify(currentInputs) !== JSON.stringify(initialInputs);
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Current bank details:", bankDetails);
-    console.log("Initial bank details:", initialBankDetails);
-    if (!hasInputChanged(bankDetails, initialBankDetails)) {
-      // No data to update, show an alert
-      Swal.fire({
-        icon: "info",
-        title: "No Changes",
-        text: "There are no changes to update.",
-      });
-      return;
-    }
-
-    fetch("https://bounce.extrasol.co.uk/api/user/edit-bank-details", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-      body: JSON.stringify(bankDetails),
-    })
-      .then((response) => {
-        if (response.ok) {
-          Swal.fire({
-            icon: "success",
-            title: "Success",
-            text: "Bank details updated successfully",
-          });
-        } else {
-          throw new Error("Failed to update bank details");
-        }
-      })
-      .catch((error) => {
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: "Failed to update bank details",
-        });
-        console.error("Error updating bank details:", error);
-      });
+    mutation.mutate(formData);
   };
 
-  if (!bankDetails) {
-    return <div>Loading...</div>;
+  if (isLoading || !formData) {
+    return <div>Loading....</div>;
   }
 
   return (
@@ -116,7 +64,7 @@ const BankDetailsForm = () => {
             type="text"
             id="bank_name"
             name="bank_name"
-            value={bankDetails.bank_name}
+            value={formData.bank_name}
             onChange={handleInputChange}
             className={styles.dashboardInput}
           />
@@ -127,7 +75,7 @@ const BankDetailsForm = () => {
             type="text"
             id="account_title"
             name="account_title"
-            value={bankDetails.account_title}
+            value={formData.account_title}
             onChange={handleInputChange}
             className={styles.dashboardInput}
           />
@@ -138,7 +86,7 @@ const BankDetailsForm = () => {
         <select
           id="country"
           name="country"
-          value={bankDetails.country}
+          value={formData.country}
           onChange={handleInputChange}
           className={styles.countrySelect}
         >
@@ -146,7 +94,7 @@ const BankDetailsForm = () => {
           <option value="2">Abroad</option>
         </select>
       </div>
-      {bankDetails.country === "1" && (
+      {formData.country === "1" && (
         <div className={styles.twoInputFields}>
           <div className={styles.halfInputField}>
             <label htmlFor="account_number">Account Number:</label>
@@ -154,7 +102,7 @@ const BankDetailsForm = () => {
               type="text"
               id="account_number"
               name="account_number"
-              value={bankDetails.account_number}
+              value={formData.account_number}
               onChange={handleInputChange}
               className={styles.dashboardInput}
             />
@@ -165,28 +113,27 @@ const BankDetailsForm = () => {
               type="text"
               id="sort_code"
               name="sort_code"
-              value={bankDetails.sort_code}
+              value={formData.sort_code}
               onChange={handleInputChange}
               className={styles.dashboardInput}
             />
           </div>
         </div>
       )}
-      {bankDetails.country === "2" && (
+      {formData.country === "2" && (
         <div className={styles.fullInputField}>
           <label htmlFor="iban">IBAN:</label>
           <input
             type="text"
             id="iban"
             name="iban"
-            value={bankDetails.iban}
+            value={formData.iban}
             onChange={handleInputChange}
             className={styles.dashboardInput}
           />
           <br />
         </div>
       )}
-
       <button className={styles.saveChangesBtn} type="submit">
         <span>Save Changes</span>
       </button>

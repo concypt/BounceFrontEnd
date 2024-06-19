@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
-import moment from 'moment';
+import moment from "moment";
 import styles from "./eventslider.module.css";
 // import "swiper/css/pagination";
 import { Navigation } from "swiper/modules";
@@ -41,23 +41,20 @@ const EventSlider = (props) => {
         modules={[Navigation]}
         className={styles.mySwiper}
       >
-        {events.map(event => (
-        <SwiperSlide className={styles.eventSlide}>
-          <div className={styles.swiperCard}>
-            <img src={event.image} alt="" />
-            <div className={styles.cardBody}>
-              <h3>{event.name}</h3>
-              <p>{event.start_time}</p>
-              <p>{event.location}</p>
+        {events.map((event) => (
+          <SwiperSlide key={event.id} className={styles.eventSlide}>
+            <div className={styles.swiperCard}>
+              <img src={event.image} alt="" />
+              <div className={styles.cardBody}>
+                <h3>{event.name}</h3>
+                <p>{event.start_time}</p>
+                <p>{event.location}</p>
+              </div>
             </div>
-          </div>
-        </SwiperSlide>
+          </SwiperSlide>
         ))}
-        
-    
       </Swiper>
     </>
   );
 };
 export default EventSlider;
-

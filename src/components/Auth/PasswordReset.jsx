@@ -1,68 +1,166 @@
-import { useState } from "react";
-import styles from "./auth.module.css";
+// import { useState, useContext } from "react";
+// import { UserContext } from "../../contexts/UserProvider";
+// import { changePassword } from "../../api/secureService"; // Ensure this path is correct
+// import styles from "./auth.module.css";
+// import Swal from "sweetalert2";
+// import lockImage from "../../assets/images/lock.svg";
+
+// const PasswordReset = () => {
+//   const { user } = useContext(UserContext);
+//   const [oldPassword, setOldPassword] = useState('');
+//   const [password, setPassword] = useState('');
+//   const [confirmPassword, setConfirmPassword] = useState('');
+
+//   const handleChangePassword = async (e) => {
+//     e.preventDefault();
+
+//     if (password !== confirmPassword) {
+//       Swal.fire({
+//         icon: "error",
+//         title: "Error",
+//         text: "Passwords do not match",
+//       });
+//       return;
+//     }
+
+//     try {
+//       const response = await axios.post("/user/change-password", {
+//         old_password: oldPassword,
+//         password: password,
+//         password_confirmation: confirmPassword,
+//       });
+
+//       const responseData = response.data;
+
+//       if (responseData.success === false) {
+//         Swal.fire({
+//           icon: "info",
+//           title: "Error",
+//           text: responseData.msg || "Please check again",
+//         });
+//       } else {
+//         Swal.fire({
+//           icon: "success",
+//           title: "Success",
+//           text: responseData.msg || "Password has been reset successfully!",
+//         });
+//       }
+//     } catch (error) {
+//       Swal.fire({
+//         icon: "error",
+//         title: "Error",
+//         text: error.response?.data?.message || "Failed to reset password",
+//       });
+//     }
+//   };
+
+//   return (
+//     <div>
+//       <div className={styles.formsSection}>
+//         <form onSubmit={handleChangePassword}>
+//           <div className={styles.inputFields}>
+//             <input
+//               type="password"
+//               value={oldPassword}
+//               onChange={(e) => setOldPassword(e.target.value)}
+//               required
+//               placeholder="Old Password"
+//               className={styles.dashboardInput}
+//             />
+//           </div>
+//           <div className={styles.inputFields}>
+//             <input
+//               type="password"
+//               value={password}
+//               onChange={(e) => setPassword(e.target.value)}
+//               required
+//               placeholder="Password"
+//               className={styles.dashboardInput}
+//             />
+//             <img src={lockImage} className={styles.inputImgs} alt="Lock" />
+//           </div>
+//           <div className={styles.inputFields}>
+//             <input
+//               type="password"
+//               value={confirmPassword}
+//               onChange={(e) => setConfirmPassword(e.target.value)}
+//               required
+//               placeholder="Confirm Password"
+//               className={styles.dashboardInput}
+//             />
+//             <img src={lockImage} className={styles.inputImgs} alt="Lock" />
+//           </div>
+//           <div className={styles.header_btn}>
+//             <button className={styles.resetPasswordButton} type="submit">
+//               <span>Change Password</span>
+//             </button>
+//           </div>
+//         </form>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default PasswordReset;
+
+import { useState, useContext } from "react";
+import { UserContext } from "../../contexts/UserProvider";
+import { useMutation } from "@tanstack/react-query";
+import { changePassword } from "../../api/secureService";
 import Swal from "sweetalert2";
+import styles from "./auth.module.css";
+import lockImage from "../../assets/images/lock.svg";
 
 const PasswordReset = () => {
+  const { user } = useContext(UserContext);
   const [oldPassword, setOldPassword] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleChangePassword = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch(
-        "https://bounce.extrasol.co.uk/api/user/change-password",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          body: JSON.stringify({
-            old_password: oldPassword,
-            password,
-            password_confirmation: confirmPassword,
-          }),
-        }
-      );
-      const responseData = await response.json();
-      if (!response.ok) {
-        console.log("responseData", responseData);
-        throw new Error(responseData.message || "Failed to reset password");
-      }
-      if (responseData.success === false) {
+  const mutation = useMutation({
+    mutationFn: ({ oldPassword, newPassword, newPasswordConfirmation }) =>
+      changePassword(oldPassword, newPassword, newPasswordConfirmation),
+    onSuccess: (data) => {
+      if (data.success === false) {
         Swal.fire({
           icon: "info",
           title: "Error",
-          text: responseData.msg || "Please check again",
+          text: data.msg || "Please check again",
         });
       } else {
         Swal.fire({
           icon: "success",
           title: "Success",
-          text: responseData.msg || "Password has been reset successfully!",
+          text: data.msg || "Password has been reset successfully!",
         });
       }
-    } catch (error) {
+    },
+    onError: (error) => {
       Swal.fire({
         icon: "error",
         title: "Error",
         text: error.message || "Failed to reset password",
       });
+    },
+  });
+
+  const handleChangePassword = async (e) => {
+    e.preventDefault();
+
+    if (password !== confirmPassword) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Passwords do not match",
+      });
+      return;
     }
-  };
 
-  const handleChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleConfirmChange = (e) => {
-    setConfirmPassword(e.target.value);
-  };
-
-  const handleOldPasswordChange = (e) => {
-    setOldPassword(e.target.value);
+    mutation.mutate({
+      oldPassword,
+      newPassword: password,
+      newPasswordConfirmation: confirmPassword,
+    });
   };
 
   return (
@@ -73,7 +171,7 @@ const PasswordReset = () => {
             <input
               type="password"
               value={oldPassword}
-              onChange={handleOldPasswordChange}
+              onChange={(e) => setOldPassword(e.target.value)}
               required
               placeholder="Old Password"
               className={styles.dashboardInput}
@@ -83,26 +181,30 @@ const PasswordReset = () => {
             <input
               type="password"
               value={password}
-              onChange={handleChange}
+              onChange={(e) => setPassword(e.target.value)}
               required
               placeholder="Password"
               className={styles.dashboardInput}
             />
-            <img src="images/lock.svg" className={styles.inputImgs} alt="" />
+            <img src={lockImage} className={styles.inputImgs} alt="Lock" />
           </div>
           <div className={styles.inputFields}>
             <input
               type="password"
               value={confirmPassword}
-              onChange={handleConfirmChange}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               required
               placeholder="Confirm Password"
               className={styles.dashboardInput}
             />
-            <img src="images/lock.svg" className={styles.inputImgs} alt="" />
+            <img src={lockImage} className={styles.inputImgs} alt="Lock" />
           </div>
           <div className={styles.header_btn}>
-            <button className={styles.resetPasswordButton} type="submit">
+            <button
+              className={styles.resetPasswordButton}
+              type="submit"
+              disabled={mutation.isLoading}
+            >
               <span>Change Password</span>
             </button>
           </div>

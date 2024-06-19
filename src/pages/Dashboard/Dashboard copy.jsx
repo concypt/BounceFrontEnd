@@ -1,12 +1,11 @@
 import { useEffect, useState, useRef, useContext } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+// import { useNavigate } from "react-router-dom";
 import Header from "../../components/Dashboard/Header";
 import Sidebar from "../../components/Dashboard/Sidebar";
 import PasswordReset from "../../components/Auth/PasswordReset";
 import BankDetails from "../../components/User/BankDetails";
 import UpdateHostProfile from "../../components/Host/UpdateHostProfile";
 import { UserContext } from "../../contexts/UserProvider";
-import { updateUserProfile } from "../../api/secureService";
 import "./styles/primaryStyles.css";
 import "./styles/comonStyles.css";
 import Swal from "sweetalert2";
@@ -17,8 +16,8 @@ import phone from "../../assets/images/phone.png";
 import baseImage from "../../assets/images/base.svg";
 
 function Dashboard() {
-  const { user, updateUser } = useContext(UserContext);
-  const queryClient = useQueryClient();
+  const { user } = useContext(UserContext);
+  // const navigate = useNavigate();
   const fileInputRef = useRef(null);
 
   const [formData, setFormData] = useState({
@@ -26,23 +25,6 @@ function Dashboard() {
     last_name: user?.last_name || "",
     phone: user?.phone || "",
     image: user.image,
-  });
-
-  const mutation = useMutation({
-    mutationFn: updateUserProfile,
-    onSuccess: (data) => {
-      updateUser(data); // Update the user context with the new data
-
-      queryClient.invalidateQueries(["user"]);
-      Swal.fire(
-        "Updated!",
-        "Profile information updated successfully",
-        "success"
-      );
-    },
-    onError: () => {
-      Swal.fire("Error!", "Failed to update profile information.", "error");
-    },
   });
 
   useEffect(() => {
@@ -106,7 +88,24 @@ function Dashboard() {
         formDataToSend.has("phone") ||
         formDataToSend.has("image")
       ) {
-        mutation.mutate(formDataToSend);
+        const response = await fetch(
+          "https://bounce.extrasol.co.uk/api/user/edit-profile",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+            body: formDataToSend,
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const data = await response.json();
+        updateUser(data); // Update the user context with the new data
+        console.log("Profile information updated successfully:", data);
       } else {
         console.log("No data to update");
       }
@@ -131,14 +130,56 @@ function Dashboard() {
       return;
     }
 
-    await handleProfileInfoUpdate();
+    try {
+      await handleProfileInfoUpdate();
+      let anyFieldUpdated = false;
+
+      if (formData.first_name) {
+        anyFieldUpdated = true;
+      }
+      if (formData.last_name) {
+        anyFieldUpdated = true;
+      }
+      if (formData.phone) {
+        anyFieldUpdated = true;
+      }
+
+      if (formData.image) {
+        // Display image preview
+        const reader = new FileReader();
+        reader.onload = () => {
+          // Store image data in context
+          updateUser((prevUser) => ({
+            ...prevUser,
+            userImage: reader.result,
+          }));
+        };
+        reader.readAsDataURL(formData.image);
+        anyFieldUpdated = true;
+      }
+
+      if (anyFieldUpdated) {
+        Swal.fire(
+          "Updated!",
+          "Profile information updated successfully",
+          "success"
+        );
+      }
+
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    } catch (error) {
+      console.error("Error submitting changes:", error.message);
+      Swal.fire("Error!", "Failed to update profile information.", "error");
+    }
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
-      [name]: value,
+      [name]: prevState[name] !== value ? value : prevState[name],
     }));
   };
 

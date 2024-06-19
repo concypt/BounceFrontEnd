@@ -1,5 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import {
   useTable,
   useFilters,
@@ -11,42 +10,48 @@ import PropTypes from "prop-types";
 import "../../pages/Dashboard/styles/primaryStyles.css";
 import "../../pages/Dashboard/styles/comonStyles.css";
 
-// images
+//images
 import viewImg from "../../assets/images/event-dash-icon-view.svg";
 import paginatePrev from "../../assets/images/pagination-arrow-prev.svg";
 import paginateNext from "../../assets/images/pagination-arrow-next.svg";
-import { fetchTicketOrders } from "../../api/secureService";
-import LoadingBar from "react-top-loading-bar";
 
 const HostTicketOrders = () => {
-  const { eventId } = useParams();
   const [tableData, setTableData] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true);
     const fetchData = async () => {
       try {
-        const data = await fetchTicketOrders(eventId);
-        setTableData(data);
+        const response = await fetch(
+          "https://bounce.extrasol.co.uk/api/user/all-orders",
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        const data = await response.json();
+        setTableData(data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
       }
     };
 
     fetchData();
-  }, [eventId]);
+  }, []);
 
   const handleView = (id) => {
     console.log(`View button clicked for row with id: ${id}`);
   };
 
-  const columns = useMemo(
+  const columns = React.useMemo(
     () => [
       {
-        Header: "Order ID",
+        Header: "Name",
         accessor: "order_id",
         sortType: "basic",
       },
@@ -98,12 +103,16 @@ const HostTicketOrders = () => {
 
   const { globalFilter, pageIndex, pageSize } = state;
 
-  if (loading) {
-    return <LoadingBar color="#7e79ff" height={3} progress={10} />;
-  }
-
   return (
-    <div>
+    <div className="tableOne">
+      <div className="searchBar">
+        <h2>Ticket Orders</h2>
+        <input
+          value={globalFilter || ""}
+          onChange={(e) => setGlobalFilter(e.target.value)}
+          placeholder="Search your orders"
+        />
+      </div>
       <div className="table-container">
         <table {...getTableProps()} className="table your-events-table">
           <thead>
@@ -121,7 +130,7 @@ const HostTicketOrders = () => {
             {page.map((row) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()} key={row.original.order_id}>
+                <tr {...row.getRowProps()} key={row.id}>
                   {row.cells.map((cell) => (
                     <td {...cell.getCellProps()} key={cell.column.id}>
                       {cell.render("Cell")}

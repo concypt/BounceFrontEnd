@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
-import { requestPasswordReset } from "../../api/publicService";
 import styles from "./auth.module.css";
 //images
 import whiteLogo from "../../assets/images/whiteLogo.svg";
@@ -13,31 +11,42 @@ const ForgotPasswordRequest = () => {
   const [error, setError] = useState(null);
   const [infoMessage, setInfoMessage] = useState(null);
   const [success, setSuccess] = useState(false); // Add success state
-
-  const mutation = useMutation({
-    mutationFn: requestPasswordReset,
-    mutationKey: [requestPasswordReset],
-    onSuccess: (data) => {
-      setSuccess(true); // Set success state to true
-      setInfoMessage(data.msg);
-      console.log(infoMessage);
-      setTimeout(() => {
-        navigate("/login");
-      }, 6000);
-    },
-    onError: (error) => {
-      setError(error.message);
-    },
-  });
+  const [isSubmitting, setIsSubmitting] = useState(false); // Add state to track form submission
 
   const handleChange = (e) => {
     setEmail(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null);
-    mutation.mutate(email);
+    setIsSubmitting(true); // Disable form submission
+
+    try {
+      const response = await fetch(
+        "https://bounce.extrasol.co.uk/api/forget-password",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({ email }),
+        }
+      );
+      const responseData = await response.json();
+      if (!responseData.success) {
+        throw new Error(responseData.msg);
+      }
+      setSuccess(true); // Set success state to true
+      setInfoMessage(responseData.msg);
+      setTimeout(() => {
+        navigate("/login");
+      }, 4000);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setIsSubmitting(false); // Enable form submission
+    }
   };
 
   return (
@@ -88,7 +97,7 @@ const ForgotPasswordRequest = () => {
                     onChange={handleChange}
                     required
                     placeholder="Email"
-                    disabled={mutation.isLoading} // Disable input during form submission
+                    disabled={isSubmitting} // Disable input during form submission
                   />
                   <img src={mailIcon} className={styles.inputImgs} alt="" />
                 </div>
@@ -96,9 +105,9 @@ const ForgotPasswordRequest = () => {
                   <button
                     className={styles.loginButton}
                     type="submit"
-                    disabled={mutation.isLoading} // Disable button during form submission
+                    disabled={isSubmitting} // Disable button during form submission
                   >
-                    {mutation.isLoading ? (
+                    {isSubmitting ? (
                       "Sending..."
                     ) : (
                       <span>Get a reset code</span>

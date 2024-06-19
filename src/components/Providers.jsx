@@ -2,19 +2,19 @@
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import PropTypes from "prop-types";
-import GlobalProvider from "../contexts/GlobalProvider"; // Example provider
-// import { AuthProvider } from "./AuthProvider"; // Example provider
+import GlobalProvider from "../contexts/GlobalProvider";
+import UserProvider from "../contexts/UserProvider";
 
 const queryClient = new QueryClient();
 
 const Providers = ({ children }) => (
   <QueryClientProvider client={queryClient}>
-    {/* <AuthProvider> */}
-    <GlobalProvider>
-      {children}
-      <ReactQueryDevtools />
-    </GlobalProvider>
-    {/* </AuthProvider> */}
+    <UserProvider>
+      <GlobalProvider>
+        {children}
+        <ReactQueryDevtools />
+      </GlobalProvider>
+    </UserProvider>
   </QueryClientProvider>
 );
 Providers.propTypes = {

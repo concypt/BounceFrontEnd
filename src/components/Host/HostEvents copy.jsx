@@ -9,9 +9,6 @@ import {
 } from "react-table";
 import PropTypes from "prop-types";
 import Swal from "sweetalert2";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { fetchEvents, deleteEvent } from "../../api/secureService";
-
 import "../../pages/Dashboard/styles/primaryStyles.css";
 import "../../pages/Dashboard/styles/comonStyles.css";
 
@@ -25,43 +22,39 @@ import paginateNext from "../../assets/images/pagination-arrow-next.svg";
 
 const HostEvents = () => {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
   const [tableData, setTableData] = useState([]);
 
-  const {
-    data: apiResponse = [],
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["events"],
-    queryFn: fetchEvents,
-    keepPreviousData: true,
-  });
-
   useEffect(() => {
-    // Ensure apiResponse is not empty before setting tableData
-    if (apiResponse && apiResponse.length > 0) {
-      setTableData(apiResponse);
-    }
-  }, [apiResponse]);
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "https://bounce.extrasol.co.uk/api/user/all-event",
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        const data = await response.json();
+        setTableData(data.data.events);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
 
-  const mutation = useMutation({
-    mutationFn: deleteEvent,
-    onSuccess: () => {
-      queryClient.invalidateQueries(["events"]);
-      Swal.fire("Deleted!", "Your event has been deleted.", "success");
-    },
-    onError: () => {
-      Swal.fire("Error!", "Failed to delete event.", "error");
-    },
-  });
+    fetchData();
+  }, []);
 
   const handleView = (id) => {
     navigate(`/dashboard-single-event/${id}`);
   };
 
-  const handleDelete = (id) => {
-    console.log("handleDelete called with id:", id);
+  const handleDelete = async (id) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -69,9 +62,33 @@ const HostEvents = () => {
       showCancelButton: true,
       confirmButtonColor: "#7357FF",
       confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        mutation.mutate(id);
+        try {
+          const response = await fetch(
+            `https://bounce.extrasol.co.uk/api/user/event-delete/${id}`,
+            {
+              method: "GET",
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error("Failed to delete event");
+          }
+
+          setTableData((prevData) =>
+            prevData.filter((event) => event.id !== id)
+          );
+          Swal.fire("Deleted!", "Your event has been deleted.", "success");
+        } catch (error) {
+          console.error("Error deleting event:", error);
+          Swal.fire("Error!", "Failed to delete event.", "error");
+        }
       }
     });
   };
@@ -178,13 +195,6 @@ const HostEvents = () => {
   );
 
   const { globalFilter, pageIndex, pageSize } = state;
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-  if (error) {
-    console.log(error);
-  }
 
   return (
     <div className="tableOne">

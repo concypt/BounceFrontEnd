@@ -1,14 +1,14 @@
-// export default EditHost;
 import { useState, useContext } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { UserContext } from "../../contexts/UserProvider";
+
+import "../../pages/Dashboard/styles/primaryStyles.css";
+import "../../pages/Dashboard/styles/comonStyles.css";
 import Swal from "sweetalert2";
+//images
 import greyInsta from "../../assets/images/greyInsta.svg";
-import { updateHostProfile } from "../../api/secureService";
 
 function EditHost() {
-  const { user, updateUser } = useContext(UserContext);
-  const queryClient = useQueryClient();
+  const { user } = useContext(UserContext);
 
   const [formData, setFormData] = useState({
     name: user.name || "",
@@ -17,51 +17,95 @@ function EditHost() {
     bio: user.bio || "",
   });
 
-  const mutation = useMutation({
-    mutationFn: (formDataToSend) =>
-      updateHostProfile(formDataToSend, user.token),
-    onSuccess: (data) => {
-      updateUser(data); // Assuming updateUser updates the user context
-      Swal.fire("Updated!", "Host information updated successfully", "success");
-      queryClient.invalidateQueries(["user"]); // Invalidate user query
-    },
-    onError: (error) => {
-      console.error("Error updating Host information:", error.message);
-      Swal.fire("Error!", "Failed to update Host information", "error");
-    },
-  });
+  const handleHostInfoUpdate = async () => {
+    try {
+      const formDataToSend = new FormData();
 
-  const handleSubmit = (e) => {
+      // Append non-empty fields to the form data
+      if (formData.name.trim() !== "") {
+        formDataToSend.append("name", formData.name);
+      }
+      if (formData.instagram.trim() !== "") {
+        formDataToSend.append("instagram", formData.instagram);
+      }
+      if (formData.bio.trim() !== "") {
+        formDataToSend.append("bio", formData.bio);
+      }
+
+      // Check if any data is being sent
+      if (
+        formDataToSend.has("name") ||
+        formDataToSend.has("instagram") ||
+        formDataToSend.has("website") ||
+        formDataToSend.has("bio")
+      ) {
+        const response = await fetch(
+          "https://bounce.extrasol.co.uk/api/user/edit-profile",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+            body: formDataToSend,
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        console.log("Host information updated successfully:", response.data);
+      } else {
+        console.log("No data to update");
+      }
+    } catch (error) {
+      console.error("Error updating Host information:", error.message);
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Prepare formDataToSend
-    const formDataToSend = new FormData();
+    // Check if either Host information or image is updated
+    const isHostInfoUpdated =
+      formData.name !== hname ||
+      formData.instagram !== insta ||
+      formData.website !== web ||
+      formData.bio !== bio;
 
-    // Append non-empty fields to the form data
-    if (formData.name.trim() !== "") {
-      formDataToSend.append("name", formData.name);
-    }
-    if (formData.instagram.trim() !== "") {
-      formDataToSend.append("instagram", formData.instagram);
-    }
-    if (formData.bio.trim() !== "") {
-      formDataToSend.append("bio", formData.bio);
-    }
-    if (formData.website.trim() !== "") {
-      formDataToSend.append("website", formData.website);
-    }
-
-    // Check if any data is being sent
-    if (
-      formDataToSend.has("name") ||
-      formDataToSend.has("instagram") ||
-      formDataToSend.has("website") ||
-      formDataToSend.has("bio")
-    ) {
-      mutation.mutate(formDataToSend);
-    } else {
-      console.log("No data to update");
+    if (!isHostInfoUpdated) {
+      console.log("No changes to submit");
       Swal.fire("", "Nothing to Update", "warning");
+      return;
+    }
+
+    try {
+      await handleHostInfoUpdate();
+      let anyFieldUpdated = false;
+
+      if (formData.name) {
+        localStorage.setItem("hostName", formData.name);
+        anyFieldUpdated = true;
+      }
+      if (formData.website) {
+        localStorage.setItem("website", formData.website);
+        anyFieldUpdated = true;
+      }
+      if (formData.bio) {
+        localStorage.setItem("bio", formData.bio);
+        anyFieldUpdated = true;
+      }
+
+      if (anyFieldUpdated) {
+        Swal.fire(
+          "Updated!",
+          "Host information updated successfully",
+          "success"
+        );
+      }
+    } catch (error) {
+      console.error("Error submitting changes:", error.message);
+      Swal.fire("Error!", "Failed to update Host information.", "error");
     }
   };
 
@@ -69,7 +113,7 @@ function EditHost() {
     const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
-      [name]: value,
+      [name]: prevState[name] !== value ? value : prevState[name],
     }));
   };
 

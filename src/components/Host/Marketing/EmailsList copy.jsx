@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   useTable,
   useFilters,
@@ -8,15 +8,10 @@ import {
 } from "react-table";
 import PropTypes from "prop-types";
 import Swal from "sweetalert2";
-import Modal from "react-modal";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import "../../../pages/Dashboard/styles/primaryStyles.css";
 import "../../../pages/Dashboard/styles/comonStyles.css";
-import {
-  fetchCoupons,
-  addCoupon,
-  deleteCoupon,
-} from "../../../api/secureService";
+import Modal from "react-modal";
+import * as XLSX from "xlsx";
 
 // Styles for Modal
 const customStyles = {
@@ -33,102 +28,19 @@ const customStyles = {
 };
 
 Modal.setAppElement("#root");
-// images
+
+//images
 import deleteImg from "../../../assets/images/event-dash-icon-delete.svg";
 import paginatePrev from "../../../assets/images/pagination-arrow-prev.svg";
 import paginateNext from "../../../assets/images/pagination-arrow-next.svg";
 
-const HostTicketOrders = () => {
-  const [coupons, setTableData] = useState([]);
-  const [events, setEventsData] = useState([]);
-
-  const queryClient = useQueryClient();
-
-  const {
-    data: fetchedData,
-    error,
-    isLoading,
-  } = useQuery({
-    queryKey: ["coupons"],
-    queryFn: fetchCoupons,
-    keepPreviousData: true,
-  });
-
-  useEffect(() => {
-    // Ensure apiResponse is not empty before setting tableData
-    if (fetchedData && fetchedData.length > 0) {
-      console.log(fetchedData.data);
-      setTableData(fetchedData.data.coupon);
-      setEventsData(fetchedData.data.events);
-    }
-  }, [fetchedData]);
+const EmailList = (props) => {
+  const { campaigns } = props;
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    discount: "",
-    coupon_code: "",
-    event_id: [],
-  });
-
-  const mutation = useMutation({
-    mutationFn: addCoupon,
-    mutationKey: [addCoupon],
-    onSuccess: () => {
-      Swal.fire({
-        icon: "success",
-        title: "Success",
-        text: "Coupon added successfully!",
-        timer: 2000,
-      });
-      setFormData({
-        name: "",
-        discount: "",
-        coupon_code: "",
-        event_id: [],
-      });
-      queryClient.invalidateQueries("coupons");
-      setModalIsOpen(false);
-    },
-    onError: (error) => {
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: `Error submitting form: ${error.message}`,
-      });
-    },
-  });
-
-  const deleteMutation = useMutation({
-    mutationFn: deleteCoupon,
-    mutationKey: [deleteCoupon],
-    onSuccess: () => {
-      queryClient.invalidateQueries("coupons");
-      Swal.fire("Deleted!", "Your coupon has been deleted.", "success");
-    },
-    onError: (error) => {
-      Swal.fire("Error!", "Failed to delete coupon.", error);
-    },
-  });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleEventIdChange = (e) => {
-    const { options } = e.target;
-    const selectedOptions = Array.from(options)
-      .filter((option) => option.selected)
-      .map((option) => option.value);
-    setFormData({
-      ...formData,
-      event_id: selectedOptions,
-    });
-  };
+  const [fileName, setFileName] = useState("");
+  const [entryCount, setEntryCount] = useState(0);
+  const [fileUploaded, setFileUploaded] = useState(false);
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -138,12 +50,33 @@ const HostTicketOrders = () => {
     setModalIsOpen(false);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    mutation.mutate(formData);
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFileName(file.name);
+      setFileUploaded(true); // Set fileUploaded to true when a file is uploaded
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const binaryStr = event.target.result;
+        const workbook = XLSX.read(binaryStr, { type: "binary" });
+        const sheetName = workbook.SheetNames[0];
+        const sheet = workbook.Sheets[sheetName];
+        const data = XLSX.utils.sheet_to_json(sheet);
+        setEntryCount(data.length);
+      };
+      reader.readAsBinaryString(file);
+    }
   };
 
-  const handleDelete = (id) => {
+  const handleImport = () => {
+    // Here you can perform any action with the imported data
+    console.log("Importing data...");
+    // For demonstration purposes, let's just close the modal
+    closeModal();
+  };
+
+  const handleDelete = async (id) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -151,14 +84,38 @@ const HostTicketOrders = () => {
       showCancelButton: true,
       confirmButtonColor: "#7357FF",
       confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        deleteMutation.mutate(id);
+        try {
+          const response = await fetch(
+            `https://bounce.extrasol.co.uk/api/user/event-delete/${id}`,
+            {
+              method: "GET",
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error("Failed to delete event");
+          }
+
+          setTableData((prevData) =>
+            prevData.filter((event) => event.id !== id)
+          );
+          Swal.fire("Deleted!", "Your event has been deleted.", "success");
+        } catch (error) {
+          console.error("Error deleting event:", error);
+          Swal.fire("Error!", "Failed to delete event.", "error");
+        }
       }
     });
   };
 
-  const columns = useMemo(
+  const columns = React.useMemo(
     () => [
       {
         Header: "ID",
@@ -174,32 +131,17 @@ const HostTicketOrders = () => {
         ),
       },
       {
-        Header: "Coupon Code",
-        accessor: "coupon_code",
+        Header: "Subject",
+        accessor: "subject",
         sortType: "basic",
         Cell: ({ value }) => (
           <div>{value.length > 20 ? value.slice(0, 20) + "..." : value}</div>
         ),
       },
       {
-        Header: "Events",
-        accessor: "events",
-        sortType: "basic",
-        Cell: ({ row }) => (
-          <div>
-            {row.original.events
-              ? row.original.events.slice(0, 3).map((event) => (
-                  <span key={event.id}>
-                    {event.name.length > 15
-                      ? event.name.slice(0, 15) + "..."
-                      : event.name}
-                    {row.original.events.indexOf(event) < 2 && ", "}
-                  </span>
-                ))
-              : ""}
-            {row.original.events && row.original.events.length > 3 ? "..." : ""}
-          </div>
-        ),
+        Header: "Status",
+        accessor: "status",
+        Cell: ({ value }) => (value === 1 ? "Active" : "Inactive"),
       },
       {
         Header: "Actions",
@@ -231,11 +173,7 @@ const HostTicketOrders = () => {
     setPageSize,
     prepareRow,
   } = useTable(
-    {
-      columns,
-      data: coupons || [],
-      initialState: { pageIndex: 0, pageSize: 5 },
-    },
+    { columns, data: campaigns, initialState: { pageIndex: 0, pageSize: 10 } },
     useFilters,
     useGlobalFilter,
     useSortBy,
@@ -247,9 +185,9 @@ const HostTicketOrders = () => {
   return (
     <div className="ticketOrders">
       <div className="searchBar">
-        <h2>Discount codes</h2>
+        <h2>Emails</h2>
         <button className="loginButton" onClick={openModal} type="submit">
-          <span>Create new code</span>
+          <span>Create new campaign</span>
         </button>
       </div>
       <div className="table-container">
@@ -329,65 +267,33 @@ const HostTicketOrders = () => {
           contentLabel="Upload Excel File"
         >
           <h2>Create a new list</h2>
-          <form onSubmit={handleSubmit}>
+          <input type="text" placeholder="Name" className="popupInput" />
+          <form>
             <div className="label-with-button">
-              <input
-                type="text"
-                placeholder="Name"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                className="popupInput"
-              />
-            </div>
-            <div className="label-with-button">
-              <input
-                type="text"
-                placeholder="Coupon Code"
-                name="coupon_code"
-                value={formData.coupon_code}
-                onChange={handleInputChange}
-                className="popupInput"
-              />
-            </div>
-            <div className="label-with-button">
-              <input
-                type="number"
-                placeholder="Discount"
-                name="discount"
-                value={formData.discount}
-                onChange={handleInputChange}
-                className="popupInput"
-              />
-            </div>
-            <div className="label-with-button">
-              <select
-                multiple
-                name="event_id"
-                value={formData.event_id}
-                onChange={handleEventIdChange}
-                className="popupInput"
+              <label
+                htmlFor="file-upload"
+                className={`custom-file-upload ${
+                  fileUploaded ? "file-uploaded" : ""
+                }`}
               >
-                {/* Dynamically render options */}
-                {events.map((event) => (
-                  <option key={event.id} value={event.id}>
-                    {event.name.length > 15
-                      ? event.name.slice(0, 15) + "..."
-                      : event.name}
-                  </option>
-                ))}
-              </select>
+                {fileName ? fileName : "Upload CSV"}
+              </label>
+              <p>Please ensure the CSV has two columns, ‘name’ and ‘email’.</p>
             </div>
+            <input
+              id="file-upload"
+              type="file"
+              className="file-input"
+              accept=".xlsx, .xls"
+              onChange={handleFileUpload}
+            />
+            {entryCount > 0 && <p>Found {entryCount} contacts.</p>}
             <div className="popup-buttons">
               <button type="button" onClick={closeModal}>
                 Cancel
               </button>
-              <button
-                type="submit"
-                className="global_button_on"
-                disabled={mutation.isLoading}
-              >
-                <span>{mutation.isLoading ? "requesting..." : "Submit"}</span>
+              <button type="button" onClick={handleImport}>
+                Import
               </button>
             </div>
           </form>
@@ -397,9 +303,9 @@ const HostTicketOrders = () => {
   );
 };
 
-HostTicketOrders.propTypes = {
+EmailList.propTypes = {
   value: PropTypes.number,
   row: PropTypes.number,
 };
 
-export default HostTicketOrders;
+export default EmailList;

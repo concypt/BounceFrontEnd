@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { useState } from "react";
 import LoadingBar from "react-top-loading-bar";
+import { fetchHomeData } from "../api/publicService.js";
 import TestimonialsSlider from "../components/TestimonialsSlider";
 import EventList from "../components/EventList";
 import Reveal from "../components/utils/Reveal.jsx";
@@ -16,20 +16,6 @@ import listingsIcon from "../assets/images/listingsicon.svg";
 import marketingIcon from "../assets/images/marketingicon.svg";
 import secureIcon from "../assets/images/secureicon.svg";
 import { Link } from "react-router-dom";
-
-const URL = "https://bounce.extrasol.co.uk/api/attenders/home-content";
-let config = {
-  headers: {
-    "Content-Type": "application/json",
-    Accept: "application/json",
-    "X-Api-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9",
-  },
-};
-
-const fetchHomeData = async () => {
-  const { data } = await axios.get(URL, config).then((res) => res.data);
-  return data;
-};
 
 function Home() {
   const {

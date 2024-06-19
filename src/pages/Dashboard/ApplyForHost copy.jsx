@@ -1,13 +1,10 @@
 import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
 import Header from "../../components/Dashboard/Header";
 import Sidebar from "../../components/Dashboard/Sidebar";
-import { applyHost } from "../../api/secureService";
 import "./styles/primaryStyles.css";
 import "./styles/comonStyles.css";
-import greyInsta from "../../assets/images/greyInsta.svg";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 function HostDashboard() {
   const navigate = useNavigate();
@@ -18,33 +15,6 @@ function HostDashboard() {
     bio: "",
   });
 
-  const mutation = useMutation({
-    mutationFn: applyHost,
-    mutationKey: [applyHost],
-    onSuccess: (data) => {
-      Swal.fire({
-        icon: "success",
-        title: "Success",
-        text: "Congrats! You are now a host.",
-        timer: 2000,
-      }).then(() => {
-        localStorage.setItem("hostName", data.data.name);
-        localStorage.setItem("instagram", data.data.instagram);
-        localStorage.setItem("website", data.data.website);
-        localStorage.setItem("bio", data.data.bio);
-        navigate("/dashboard");
-      });
-    },
-    onError: (error) => {
-      console.error("Error submitting host application:", error);
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "There was an issue submitting your application. Please try again.",
-      });
-    },
-  });
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -52,7 +22,34 @@ function HostDashboard() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    mutation.mutate(formData);
+    fetch("https://bounce.extrasol.co.uk/api/user/apply-host", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Congrats! You are host now.",
+          timer: 2000,
+        }).then(() => {
+          localStorage.setItem("hostName", response.data.name);
+          localStorage.setItem("instagram", response.data.instagram);
+          localStorage.setItem("website", response.data.website);
+          localStorage.setItem("bio", response.data.bio);
+          navigate("/dashboard");
+        });
+      })
+      .catch((error) => {
+        console.error("Error submitting host application:", error);
+        // Handle error
+      });
   };
 
   return (
@@ -88,7 +85,11 @@ function HostDashboard() {
                     value={formData.instagram}
                     onChange={handleChange}
                   />
-                  <img src={greyInsta} className="inputImgs" alt="" />
+                  <img
+                    src="images/greyInsta.svg"
+                    className="inputImgs"
+                    alt=""
+                  />
                 </div>
                 <div className="inputFields">
                   <label htmlFor="website">Website (optional)</label>
@@ -121,5 +122,4 @@ function HostDashboard() {
     </div>
   );
 }
-
 export default HostDashboard;

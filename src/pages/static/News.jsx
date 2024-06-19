@@ -1,45 +1,30 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import LoadingBar from "react-top-loading-bar";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import moment from 'moment';
+import moment from "moment";
 
 import styles from "./news.module.css";
 import { Link, NavLink } from "react-router-dom";
+import { fetchNews } from "../../api/publicService";
 import "react-date-range/dist/styles.css"; // Main css file
 import "react-date-range/dist/theme/default.css"; // Theme css file
-import Reveal from "../../components/utils/Reveal.jsx";
 
 // imaages
-import promoteImg2 from "../../assets/images/promote_img2.png";
+// import promoteImg2 from "../../assets/images/promote_img2.png";
 import calender from "../../assets/images/calender.svg";
-import promoteImg from "../../assets/images/promote_img.png";
+// import promoteImg from "../../assets/images/promote_img.png";
 
-const URL = "https://bounce.extrasol.co.uk/api/attenders/news";
-let config = {
-  headers: {
-    "Content-Type": "application/json",
-    Accept: "application/json",
-    "X-Api-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9",
-  },
-};
-
-
-const fetchNewsData = async () => {
-  const { data } = await axios.get(URL, config).then((res) => res.data);
-  return data;
-};
-
-  function News() {
-    const {
-      data: news,
-      error,
-      isLoading,
-    } = useQuery({
-      queryKey: ["newsDataFetch"],
-      queryFn: fetchNewsData,
-    });
-  const [loadingComplete, setLoadingComplete] = useState(false);
+function News() {
+  const {
+    data: news,
+    error,
+    isLoading,
+  } = useQuery({
+    queryKey: ["News"],
+    queryFn: fetchNews,
+  });
+  // const [loadingComplete, setLoadingComplete] = useState(false);
 
   if (isLoading)
     return (
@@ -56,36 +41,37 @@ const fetchNewsData = async () => {
       </div>
     );
   if (error) return <p>Error: {error.message}</p>;
-  if (!news) {
-    return (
-      <LoadingBar
-        color="#7e79ff"
-        height={3}
-        progress={loadingComplete ? 10 : 0}
-      />
-    );
-  }
+
   return (
     <>
       <div className="bounce_bg_circle">
         <div className={styles.aboutMain}>
           <dir className={`header_div ${styles.headerBlog}`}>
-            <div class={styles.cardContainer}>
+            <div className={styles.cardContainer}>
               <h1>Latest News</h1>
               <div className={styles.mainBlog}>
-              {news.map(newsrow => (
-                <div key={newsrow.id} className={styles.blogCards}>
-                  <Link  to={`/news/${newsrow.id}`}>
-                    <img src={`${newsrow.imagePath}${newsrow.image}`} alt="" />
-                    <h2>
-                      {newsrow.title.length > 50 ? `${newsrow.title.substring(0, 50)}...` : newsrow.title}
-                    </h2>
-                  </Link>
-                  <div className={styles.blogInfo}>
-                    <img src={calender} className={styles.blogCalnder} alt="" />
-                    <p>{moment(newsrow.created_at).format('DD MMM.YYYY')}</p>
+                {news.map((newsrow) => (
+                  <div key={newsrow.id} className={styles.blogCards}>
+                    <Link to={`/news/${newsrow.id}`}>
+                      <img
+                        src={`${newsrow.imagePath}${newsrow.image}`}
+                        alt=""
+                      />
+                      <h2>
+                        {newsrow.title.length > 50
+                          ? `${newsrow.title.substring(0, 50)}...`
+                          : newsrow.title}
+                      </h2>
+                    </Link>
+                    <div className={styles.blogInfo}>
+                      <img
+                        src={calender}
+                        className={styles.blogCalnder}
+                        alt=""
+                      />
+                      <p>{moment(newsrow.created_at).format("DD MMM.YYYY")}</p>
+                    </div>
                   </div>
-                </div>
                 ))}
               </div>
             </div>

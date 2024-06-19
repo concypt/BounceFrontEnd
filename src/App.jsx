@@ -6,6 +6,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 // import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import ProtectedRoute from "./components/ProtectedRoute";
 import MainLayout from "./layouts/MainLayout.jsx";
 import Home from "./pages/Home";
 import Events from "./pages/Events";
@@ -57,16 +58,18 @@ const router = createBrowserRouter(
         </Route>
       </Route>
       {/* Should be in dashboard layout  */}
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/dashboard-host" element={<ApplyHost />} />
-      <Route path="/dashboard-event" element={<Event />} />
-      <Route
-        path="/dashboard-single-event/:eventId"
-        element={<EventSingle />}
-      />
-      <Route path="/dashboard-marketing" element={<Marketing />} />
-      <Route path="/dashboard-create-event" element={<CreateEvent />} />
-      <Route path="/Attend" element={<Attend />} />
+      <Route element={<ProtectedRoute />}>
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard-host" element={<ApplyHost />} />
+        <Route path="/dashboard-event" element={<Event />} />
+        <Route
+          path="/dashboard-single-event/:eventId"
+          element={<EventSingle />}
+        />
+        <Route path="/dashboard-marketing" element={<Marketing />} />
+        <Route path="/dashboard-create-event" element={<CreateEvent />} />
+        <Route path="/Attend" element={<Attend />} />
+      </Route>
       {/* without layout pages */}
       <Route path="/register" element={<Register />} />
       <Route path="/verification" element={<Verification />} />

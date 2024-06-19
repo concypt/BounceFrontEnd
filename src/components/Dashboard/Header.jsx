@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../../contexts/UserProvider";
 import styles from "./header.module.css";
 import Swal from "sweetalert2";
 
@@ -10,9 +12,7 @@ import dashboardLogout from "../../assets/images/dashboard/dashboardLogout.svg";
 
 const Header = () => {
   const navigate = useNavigate();
-  const fname = localStorage.getItem("fname");
-  const lname = localStorage.getItem("lname");
-  const userImage = localStorage.getItem("userImage");
+  const { user, logout } = useContext(UserContext);
 
   const handleLogout = () => {
     Swal.fire({
@@ -24,18 +24,7 @@ const Header = () => {
       cancelButtonText: "No",
     }).then((result) => {
       if (result.isConfirmed) {
-        // Remove token from local storage
-        localStorage.removeItem("token");
-        localStorage.removeItem("fname");
-        localStorage.removeItem("lname");
-        localStorage.removeItem("hostName");
-        localStorage.removeItem("followingArray");
-        localStorage.removeItem("phoneNumber");
-        localStorage.removeItem("userImage");
-        localStorage.removeItem("instagram");
-        localStorage.removeItem("website");
-        localStorage.removeItem("bio");
-        // Redirect to login page
+        logout();
         navigate("/login");
       }
     });
@@ -51,8 +40,9 @@ const Header = () => {
         aria-haspopup="true"
         aria-expanded="false"
       >
-        <h3>{fname + " " + lname}</h3> <span className={styles.caret}></span>
-        <img src={userImage ? userImage : baseImage} alt="" />
+        <h3>{user?.first_name + " " + user?.last_name}</h3>{" "}
+        <span className={styles.caret}></span>
+        <img src={user?.image ? user.image : baseImage} alt="" />
         <ul className={`${styles.dropdownMenu} ${styles.dropdownMenu1}`}>
           <li>
             <Link to={`/dashboard`}>

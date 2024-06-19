@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { fetchEventDetails } from "../api/publicService";
 import LoadingBar from "react-top-loading-bar";
 import FollowUnfollowBtn from "./FollowUnfollowBtn";
 import PropTypes from "prop-types";
@@ -17,15 +17,6 @@ import calendarImage from "../assets/images/calender.svg";
 import clockImage from "../assets/images/clock_grey.svg";
 import locationImage from "../assets/images/location_grey.svg";
 
-const URL = "https://bounce.extrasol.co.uk/api/attenders/event-detail/";
-let config = {
-  headers: {
-    "Content-Type": "application/json",
-    Accept: "application/json",
-    "X-Api-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9",
-  },
-};
-
 const SingleEvent = () => {
   const { eventId } = useParams();
   const [loadingComplete, setLoadingComplete] = useState(false);
@@ -38,21 +29,13 @@ const SingleEvent = () => {
     setIsModalOpen(!isModalOpen);
   };
 
-  // Function to fetch categories from API
-  const fetchEventDetails = async () => {
-    const { data } = await axios
-      .get(`${URL}${eventId}`, config)
-      .then((res) => res.data);
-    return data;
-  };
-
   const {
     data: event,
     error,
     isLoading,
   } = useQuery({
     queryKey: ["eventDetails", eventId],
-    queryFn: fetchEventDetails,
+    queryFn: () => fetchEventDetails(eventId),
   });
 
   if (isLoading) {

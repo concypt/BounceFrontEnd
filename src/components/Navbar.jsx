@@ -1,24 +1,29 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
-
+import { UserContext } from "../contexts/UserProvider";
 import styles from "./navbar.module.css";
 import logo from "../assets/images/logo.svg";
 
 function Navbar() {
   const [isActive, setIsActive] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
+  const { isAuthenticated, reToken } = useContext(UserContext);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      if (!isAuthenticated) {
+        try {
+          await reToken(); // This should be a silent login or token refresh
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+    checkAuth();
+  }, [isAuthenticated, reToken]);
 
   const toggleActiveClass = () => {
     setIsActive(!isActive);
   };
-
-  useEffect(() => {
-    // Check user's login status when component mounts
-    const userToken = localStorage.getItem("token");
-    if (userToken) {
-      setLoggedIn(true);
-    }
-  }, []);
 
   const linkClass = ({ isActive }) =>
     isActive
@@ -71,7 +76,7 @@ function Navbar() {
             {/* <NavLink to="/login" className={styles.loginBtn}>
               Sign In
             </NavLink> */}
-            {loggedIn ? (
+            {isAuthenticated ? (
               <NavLink to="/dashboard" className={styles.loginBtn}>
                 Dashboard
               </NavLink>

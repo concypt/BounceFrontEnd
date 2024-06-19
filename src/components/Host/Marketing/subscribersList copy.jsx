@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   useTable,
   useFilters,
@@ -8,67 +8,42 @@ import {
 } from "react-table";
 import PropTypes from "prop-types";
 import Swal from "sweetalert2";
-import Modal from "react-modal";
-import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import "../../../pages/Dashboard/styles/primaryStyles.css";
 import "../../../pages/Dashboard/styles/comonStyles.css";
-import {
-  fetchSubscribeList,
-  deleteSubscriber,
-} from "../../../api/secureService";
 
 //images
 import deleteImg from "../../../assets/images/event-dash-icon-delete.svg";
 import paginatePrev from "../../../assets/images/pagination-arrow-prev.svg";
 import paginateNext from "../../../assets/images/pagination-arrow-next.svg";
 
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    borderRadius: "32px",
-    maxWidth: "700px",
-  },
-};
-
-Modal.setAppElement("#root");
-
-const SubscribersList = () => {
-  const queryClient = useQueryClient();
-
-  const {
-    data: subscribeList = [],
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["subscribeList"],
-    queryFn: fetchSubscribeList,
-    onSuccess: (data) => {
-      setTableData(data);
-    },
-  });
-
-  const { mutate: deleteSubscriberMutation } = useMutation({
-    mutationFn: deleteSubscriber,
-    onSuccess: (data, variables) => {
-      queryClient.invalidateQueries("subscribeList");
-      setTableData((prevData) =>
-        prevData.filter((subscriber) => subscriber.id !== variables.id)
+const HostTicketOrders = () => {
+  const [subscribe_list, setTableData] = useState([]);
+  const fetchData = async () => {
+    try {
+      const response = await fetch(
+        "https://bounce.extrasol.co.uk/api/user/all-subscribe-list",
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
       );
-      Swal.fire("Deleted!", "Your subscribe list has been deleted.", "success");
-    },
-    onError: (error) => {
-      Swal.fire("Error!", "Failed to delete subscribe list.", "error");
-    },
-  });
-
-  const [tableData, setTableData] = React.useState(subscribeList);
-
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      const data = await response.json();
+      setTableData(data.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
   const handleDelete = async (id) => {
+
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -79,7 +54,26 @@ const SubscribersList = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await deleteSubscriberMutation({ id });
+          const response = await fetch(
+            `https://bounce.extrasol.co.uk/api/user/subscriber/delete/${id}`,
+            {
+              method: "GET",
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error("Failed to delete subscribe list");
+          }
+
+          setTableData((prevData) =>
+            prevData.filter((subscribe) => subscribe.id !== id)
+          );
+          Swal.fire("Deleted!", "Your subscribe list has been deleted.", "success");
         } catch (error) {
           console.error("Error deleting subscribe list:", error);
           Swal.fire("Error!", "Failed to delete subscribe list.", "error");
@@ -109,7 +103,7 @@ const SubscribersList = () => {
         Cell: ({ row }) => (
           <div className="actionsColumn">
             <button onClick={() => handleDelete(row.original.id)}>
-              <img src={deleteImg} alt="Delete" />
+              <img src={deleteImg} alt="View" />
             </button>
           </div>
         ),
@@ -135,7 +129,7 @@ const SubscribersList = () => {
   } = useTable(
     {
       columns,
-      data: tableData,
+      data: subscribe_list,
       initialState: { pageIndex: 0, pageSize: 5 },
     },
     useFilters,
@@ -145,14 +139,6 @@ const SubscribersList = () => {
   );
 
   const { pageIndex, pageSize } = state;
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error fetching data</div>;
-  }
 
   return (
     <div className="ticketOrders promotertable">
@@ -237,9 +223,9 @@ const SubscribersList = () => {
   );
 };
 
-SubscribersList.propTypes = {
+HostTicketOrders.propTypes = {
   value: PropTypes.number,
   row: PropTypes.number,
 };
 
-export default SubscribersList;
+export default HostTicketOrders;

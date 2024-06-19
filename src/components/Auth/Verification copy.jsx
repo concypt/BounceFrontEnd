@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
-import { verifyOTP, resendOTP } from "../../api/publicService";
 import styles from "./auth.module.css";
 //images
 import whiteLogo from "../../assets/images/whiteLogo.svg";
@@ -12,8 +10,6 @@ const OTPVerificationPage = () => {
   const location = useLocation();
 
   const [otp, setOTP] = useState("");
-  const [token, setToken] = useState("");
-
   const [loading, setLoading] = useState(false);
   const [loading2, setLoading2] = useState(false);
   const [error, setError] = useState(null);
@@ -30,41 +26,6 @@ const OTPVerificationPage = () => {
     console.log("token=>" + token);
   }, [location, navigate]);
 
-  const mutation = useMutation({
-    mutationFn: verifyOTP,
-    mutationKey: ["verifyOTP"],
-    onSuccess: (data) => {
-      console.log(data);
-      setVerificationStatus("success");
-      setLoading(false);
-      // Redirect after 2 seconds only if verification is successful
-      setTimeout(() => {
-        navigate("/login"); // Redirect to home page
-      }, 3000);
-    },
-    onError: (error) => {
-      console.error("OTP failed:", error);
-    },
-  });
-
-  const mutationResend = useMutation({
-    mutationFn: resendOTP,
-    mutationKey: ["resendOTP"],
-    onSuccess: (data) => {
-      console.log(data);
-      setResendCount((prevCount) => prevCount + 1);
-      setVerificationStatus("success");
-      setLoading(false);
-      // Redirect after 2 seconds only if verification is successful
-      setTimeout(() => {
-        navigate("/login"); // Redirect to home page
-      }, 3000);
-    },
-    onError: (error) => {
-      console.error("OTP failed:", error);
-    },
-  });
-
   const handleChange = (e) => {
     setOTP(e.target.value);
   };
@@ -78,12 +39,90 @@ const OTPVerificationPage = () => {
     // Disable button and set loading state
     setLoading(true);
 
-    //call mutation here
+    try {
+      const response = await fetch(
+        "https://bounce.extrasol.co.uk/api/user/verify-email",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `Bearer ${location.state.token}`,
+          },
+          body: JSON.stringify({ otp }),
+        }
+      );
 
-    mutation.mutate(otp, location.state.token);
+      const responseData = await response.json();
+      console.log("response =>", responseData);
+
+      if (!responseData.success) {
+        // If OTP verification fails, display error message
+        throw new Error(responseData.msg);
+      }
+
+      // OTP verification successful
+      setVerificationStatus("success");
+
+      // Clear the token from local storage
+      localStorage.removeItem("token");
+
+      // Redirect after 2 seconds only if verification is successful
+      const redirectTimer = setTimeout(() => {
+        navigate("/login"); // Redirect to home page
+      }, 3000);
+
+      // Clean up timer to prevent memory leaks
+      return () => clearTimeout(redirectTimer);
+    } catch (error) {
+      // If OTP verification fails, display error message
+      setError(error.message);
+      // Clear success status if verification fails
+      setVerificationStatus(null);
+    } finally {
+      // Re-enable button and clear loading state
+      setLoading(false);
+    }
   };
+
   const handleResendOTP = async () => {
-    mutationResend.mutate(location.state.token);
+    // Clear previous errors
+    setError(null);
+
+    // Clear the OTP input field
+    setOTP("");
+
+    // Disable button and set loading state
+    setLoading2(true);
+
+    try {
+      const response = await fetch(
+        "https://bounce.extrasol.co.uk/api/user/resend-otp",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `Bearer ${location.state.token}`, // Pass token in header
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to resend OTP. Please try again later.");
+      }
+
+      // OTP resent successfully
+      setResendCount((prevCount) => prevCount + 1);
+      // You can set a success message or update the UI as needed
+
+      // Now verify the resent OTP
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      // Re-enable button and clear loading state
+      setLoading2(false);
+    }
   };
 
   return (

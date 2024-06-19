@@ -1,7 +1,5 @@
-import { useState, useContext } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
-import { UserContext } from "../../contexts/UserProvider";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./auth.module.css";
 import "react-toastify/dist/ReactToastify.css";
 //images
@@ -11,35 +9,9 @@ import lockIcon from "../../assets/images/lock.svg";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const { login } = useContext(UserContext);
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
-
-  const mutation = useMutation({
-    mutationFn: login,
-    mutationKey: [login],
-    onSuccess: (data) => {
-      console.log(data);
-      setSuccess(true);
-      setError(null);
-      const followingArray = data.following;
-      localStorage.setItem("followingArray", JSON.stringify(followingArray));
-
-      if (data && data.status !== 1) {
-        navigate("/verification", {
-          state: { token: data.access_token },
-        });
-      } else {
-        const redirectTo = location.state?.from || "/dashboard";
-        navigate(redirectTo);
-      }
-    },
-    onError: (error) => {
-      console.error("Login failed:", error);
-    },
-  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -48,7 +20,72 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    mutation.mutate(formData);
+    try {
+      const response = await fetch("https://bounce.extrasol.co.uk/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        setError(errorData.msg || "An error occurred. Please try again.");
+        setSuccess(false);
+        return;
+      }
+
+      const responseData = await response.json();
+      if (!responseData.success) {
+        setError(responseData.msg || "An error occurred. Please try again.");
+        setSuccess(false);
+        return;
+      }
+
+      // Store the token in local storage
+      localStorage.setItem("token", responseData.data.token);
+      localStorage.setItem("fname", responseData.data.first_name);
+      localStorage.setItem("lname", responseData.data.last_name);
+      localStorage.setItem("phoneNumber", responseData.data.phone);
+      localStorage.setItem("userImage", responseData.data.imagePath);
+      localStorage.setItem("hostName", responseData.data.name);
+      localStorage.setItem("instagram", responseData.data.instagram);
+      localStorage.setItem("website", responseData.data.website);
+      localStorage.setItem("bio", responseData.data.bio);
+
+      const followingArray = responseData.data.following;
+      localStorage.setItem("followingArray", JSON.stringify(followingArray));
+      // Login successful
+      setSuccess(true);
+      setError(null);
+
+      // Redirect to OTP verification page if status is not 1
+      if (responseData.data && responseData.data.status !== 1) {
+        navigate("/verification", {
+          state: { token: responseData.data.token },
+        });
+      } else {
+        // Redirect to dashboard or desired page
+        const redirectEventPage = localStorage.getItem("redirectEventPage");
+        if (redirectEventPage) {
+          // Clear the stored URL
+          localStorage.removeItem("redirectEventPage");
+          // Navigate the user back to the original page
+          setTimeout(() => {
+            navigate(redirectEventPage);
+          }, 2000); // Redirect to follow
+        } else {
+          setTimeout(() => {
+            navigate("/dashboard");
+          }, 2000); // Redirect to dashboard page
+        }
+      }
+    } catch (error) {
+      setError("An error occurred. Please try again later.");
+      setSuccess(false);
+    }
   };
 
   return (
@@ -118,6 +155,7 @@ const LoginPage = () => {
                 </div>
                 <div className={styles.header_btn}>
                   <button className={styles.loginButton} type="submit">
+                    {" "}
                     <span>Sign in</span>
                   </button>
                 </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import {
   useTable,
   useFilters,
@@ -7,6 +7,8 @@ import {
   usePagination,
 } from "react-table";
 import PropTypes from "prop-types";
+import { useQuery } from "@tanstack/react-query";
+import { fetchOrders } from "../../api/secureService";
 import "../../pages/Dashboard/styles/primaryStyles.css";
 import "../../pages/Dashboard/styles/comonStyles.css";
 
@@ -18,37 +20,28 @@ import paginateNext from "../../assets/images/pagination-arrow-next.svg";
 const HostTicketOrders = () => {
   const [tableData, setTableData] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "https://bounce.extrasol.co.uk/api/user/all-orders",
-          {
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
-        const data = await response.json();
-        setTableData(data.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+  const {
+    data: apiResponse = [],
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["orders"],
+    queryFn: fetchOrders,
+    keepPreviousData: true,
+  });
 
-    fetchData();
-  }, []);
+  useEffect(() => {
+    // Ensure apiResponse is not empty before setting tableData
+    if (apiResponse && apiResponse.length > 0) {
+      setTableData(apiResponse);
+    }
+  }, [apiResponse]);
 
   const handleView = (id) => {
     console.log(`View button clicked for row with id: ${id}`);
   };
 
-  const columns = React.useMemo(
+  const columns = useMemo(
     () => [
       {
         Header: "Name",
@@ -103,6 +96,13 @@ const HostTicketOrders = () => {
 
   const { globalFilter, pageIndex, pageSize } = state;
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  if (error) {
+    console.log(error);
+  }
+
   return (
     <div className="tableOne">
       <div className="searchBar">
@@ -113,35 +113,41 @@ const HostTicketOrders = () => {
           placeholder="Search your orders"
         />
       </div>
-      <div className="table-container">
-        <table {...getTableProps()} className="table your-events-table">
-          <thead>
-            {headerGroups.map((headerGroup, index) => (
-              <tr {...headerGroup.getHeaderGroupProps()} key={index}>
-                {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps()} key={column.id}>
-                    {column.render("Header")}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {page.map((row) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()} key={row.id}>
-                  {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()} key={cell.column.id}>
-                      {cell.render("Cell")}
-                    </td>
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : error ? (
+        <p>Error loading data</p>
+      ) : (
+        <div className="table-container">
+          <table {...getTableProps()} className="table your-events-table">
+            <thead>
+              {headerGroups.map((headerGroup, index) => (
+                <tr {...headerGroup.getHeaderGroupProps()} key={index}>
+                  {headerGroup.headers.map((column) => (
+                    <th {...column.getHeaderProps()} key={column.id}>
+                      {column.render("Header")}
+                    </th>
                   ))}
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+              ))}
+            </thead>
+            <tbody {...getTableBodyProps()}>
+              {page.map((row) => {
+                prepareRow(row);
+                return (
+                  <tr {...row.getRowProps()} key={row.id}>
+                    {row.cells.map((cell) => (
+                      <td {...cell.getCellProps()} key={cell.column.id}>
+                        {cell.render("Cell")}
+                      </td>
+                    ))}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
       <div className="pagination">
         <div className="pagination-btns">
           <button

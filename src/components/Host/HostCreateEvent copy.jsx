@@ -1,14 +1,38 @@
 import { useState, useContext, useRef, useCallback } from "react";
 import { useJsApiLoader, StandaloneSearchBox } from "@react-google-maps/api";
 import { useMutation } from "@tanstack/react-query";
-import { createEvent } from "../../api/secureService";
 import PropTypes from "prop-types";
 import TagsInput from "../Host/TagsInput";
 import Loader from "../utils/Loader";
 import { CatContext } from "../../contexts/GlobalProvider";
 import ImageUpload from "../ImageUpload";
+import axios from "axios";
 import Swal from "sweetalert2";
 import DateTimePicker from "./DateTimePicker";
+
+const URL = "https://bounce.extrasol.co.uk/api/user/event-create";
+let config = {
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  },
+};
+
+const createEvent = async (eventDataToSubmit) => {
+  const formattedEventData = {
+    ...eventDataToSubmit,
+    category_id: Number(eventDataToSubmit.category_id),
+    featured: Number(eventDataToSubmit.featured),
+    lat: Number(eventDataToSubmit.lat),
+    lang: Number(eventDataToSubmit.lang),
+    radius: Number(eventDataToSubmit.radius),
+    event_status: Number(eventDataToSubmit.event_status),
+  };
+
+  const response = await axios.post(URL, formattedEventData, config);
+  return response.data;
+};
 
 const HostCreateEvent = ({ setFormStep, setEventId }) => {
   const [libraries] = useState(["places"]);

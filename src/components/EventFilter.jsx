@@ -38,22 +38,6 @@ const EventFilter = ({
 
   const [showDatePicker, setShowDatePicker] = useState(false);
 
-  // const fetchCategories = async () => {
-  //   const { data } = await axios.get(URL, config).then((res) => res.data);
-  //   return data;
-  // };
-
-  // const { data, error, isLoading } = useQuery({
-  //   queryKey: ["categories"],
-  //   queryFn: fetchCategories,
-  // });
-
-  // useEffect(() => {
-  //   if (data) {
-  //     setCategories(data);
-  //   }
-  // }, [data, setCategories]);
-
   const handleCatCheck = (e) => {
     const { value, checked } = e.target;
     setSelectedCategories((prevSelected) => {

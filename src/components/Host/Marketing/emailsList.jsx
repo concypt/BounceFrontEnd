@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useState, useEffect, useMemo } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   useTable,
   useFilters,
@@ -8,10 +9,11 @@ import {
 } from "react-table";
 import PropTypes from "prop-types";
 import Swal from "sweetalert2";
-import "../../../pages/Dashboard/styles/primaryStyles.css";
-import "../../../pages/Dashboard/styles/comonStyles.css";
 import Modal from "react-modal";
 import * as XLSX from "xlsx";
+import { fetchTicketOrders, deleteEvent } from "../../../api/secureService";
+import "../../../pages/Dashboard/styles/primaryStyles.css";
+import "../../../pages/Dashboard/styles/comonStyles.css";
 
 // Styles for Modal
 const customStyles = {
@@ -29,18 +31,28 @@ const customStyles = {
 
 Modal.setAppElement("#root");
 
-//images
+// images
 import deleteImg from "../../../assets/images/event-dash-icon-delete.svg";
 import paginatePrev from "../../../assets/images/pagination-arrow-prev.svg";
 import paginateNext from "../../../assets/images/pagination-arrow-next.svg";
 
-const HostTicketOrders = (props) => {
-  const { campaigns } = props;
-
+const EmailList = ({ campaigns }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [fileName, setFileName] = useState("");
   const [entryCount, setEntryCount] = useState(0);
   const [fileUploaded, setFileUploaded] = useState(false);
+
+  const deleteMutation = useMutation({
+    mutationFn: deleteEvent,
+    mutationKey: [deleteEvent],
+    onSuccess: () => {
+      Swal.fire("Deleted!", "Your event has been deleted.", "success");
+    },
+    onError: (error) => {
+      console.error("Error deleting event:", error);
+      Swal.fire("Error!", "Failed to delete event.", "error");
+    },
+  });
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -76,7 +88,7 @@ const HostTicketOrders = (props) => {
     closeModal();
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -84,38 +96,14 @@ const HostTicketOrders = (props) => {
       showCancelButton: true,
       confirmButtonColor: "#7357FF",
       confirmButtonText: "Yes, delete it!",
-    }).then(async (result) => {
+    }).then((result) => {
       if (result.isConfirmed) {
-        try {
-          const response = await fetch(
-            `https://bounce.extrasol.co.uk/api/user/event-delete/${id}`,
-            {
-              method: "GET",
-              headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-              },
-            }
-          );
-
-          if (!response.ok) {
-            throw new Error("Failed to delete event");
-          }
-
-          setTableData((prevData) =>
-            prevData.filter((event) => event.id !== id)
-          );
-          Swal.fire("Deleted!", "Your event has been deleted.", "success");
-        } catch (error) {
-          console.error("Error deleting event:", error);
-          Swal.fire("Error!", "Failed to delete event.", "error");
-        }
+        deleteMutation.mutate(id);
       }
     });
   };
 
-  const columns = React.useMemo(
+  const columns = useMemo(
     () => [
       {
         Header: "ID",
@@ -149,7 +137,7 @@ const HostTicketOrders = (props) => {
         Cell: ({ row }) => (
           <div className="actionsColumn">
             <button onClick={() => handleDelete(row.original.id)}>
-              <img src={deleteImg} alt="View" />
+              <img src={deleteImg} alt="Delete" />
             </button>
           </div>
         ),
@@ -182,11 +170,19 @@ const HostTicketOrders = (props) => {
 
   const { pageIndex, pageSize } = state;
 
+  // if (isLoading) {
+  //   return <p>Loading...</p>;
+  // }
+
+  // if (error) {
+  //   return <p>Error: {error.message}</p>;
+  // }
+
   return (
     <div className="ticketOrders">
       <div className="searchBar">
         <h2>Emails</h2>
-        <button className="loginButton" onClick={openModal} type="submit">
+        <button className="loginButton" onClick={openModal} type="button">
           <span>Create new campaign</span>
         </button>
       </div>
@@ -303,9 +299,8 @@ const HostTicketOrders = (props) => {
   );
 };
 
-HostTicketOrders.propTypes = {
-  value: PropTypes.number,
-  row: PropTypes.number,
+EmailList.propTypes = {
+  eventId: PropTypes.number.isRequired,
 };
 
-export default HostTicketOrders;
+export default EmailList;

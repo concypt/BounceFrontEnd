@@ -1,55 +1,29 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import LoadingBar from "react-top-loading-bar";
 import { Link } from "react-router-dom";
-// import { format, parseISO } from "date-fns";
+import { fetchEventDetails } from "../../api/secureService";
+
+import calendarIcon from "../../assets/images/calender.svg";
+import clockIcon from "../../assets/images/clock_grey.svg";
+import locationIcon from "../../assets/images/location_grey.svg";
+
 const EventInfoComponent = ({ eventId }) => {
-  const [eventData, setEventData] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true); // Start loading
-      try {
-        const response = await fetch(
-          `https://bounce.extrasol.co.uk/api/user/event-edit/${eventId}`,
-          {
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
-        // console.log("response=>", response);
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
-        const responseData = await response.json();
-        // console.log("responseData", responseData);
-        setEventData(responseData.data.event);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [eventId]);
-
-  useEffect(() => {
-    // console.log("eventData updated=>", eventData);
-  }, [eventData]);
-
-  if (!eventData) {
-    return (
-      <LoadingBar color="#7e79ff" height={3} progress={setLoading ? 10 : 0} />
-    );
+  const {
+    data: eventData,
+    isLoading,
+    error,
+  } = useQuery({
+    queryFn: () => fetchEventDetails(eventId),
+    queryKey: ["EventInfo", eventId],
+    enabled: !!eventId, // Ensure eventId is truthy before making the request
+  });
+  if (isLoading) {
+    return <LoadingBar color="#7e79ff" height={3} progress={10} />;
   }
 
-  //   const startTime = parseISO(event.start_time);
-  //   const formattedDate = format(startTime, "EEEE d MMMM yyyy");
-  //   const hours = format(startTime, "h:mm a");
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
 
   return (
     <div className="singleEvent">
@@ -61,19 +35,14 @@ const EventInfoComponent = ({ eventId }) => {
       </div>
       <div className="cardDescription">
         <p className="event_date">
-          <img src="/images/calender.svg" className="descriptionImg" alt="" />{" "}
+          <img src={calendarIcon} className="descriptionImg" alt="" />{" "}
           {eventData.start_time}
         </p>
         <p>
-          <img src="/images/clock_grey.svg" className="descriptionImg" alt="" />{" "}
-          5PM
+          <img src={clockIcon} className="descriptionImg" alt="" /> 5PM
         </p>
         <p>
-          <img
-            src="/images/location_grey.svg"
-            className="descriptionImg"
-            alt=""
-          />{" "}
+          <img src={locationIcon} className="descriptionImg" alt="" />{" "}
           {eventData.address ? eventData.address : "No location Entered"}
         </p>
       </div>
