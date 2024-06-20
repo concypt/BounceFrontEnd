@@ -90,7 +90,6 @@ const HostTicketOrders = () => {
     canNextPage,
     canPreviousPage,
     state,
-    setGlobalFilter,
     gotoPage,
     pageCount,
     setPageSize,
@@ -103,7 +102,7 @@ const HostTicketOrders = () => {
     usePagination
   );
 
-  const { globalFilter, pageIndex, pageSize } = state;
+  const { pageIndex, pageSize } = state;
 
   return (
     <div>
@@ -121,18 +120,26 @@ const HostTicketOrders = () => {
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {page.map((row) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()} key={row.original.order_id}>
-                  {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()} key={cell.column.id}>
-                      {cell.render("Cell")}
-                    </td>
-                  ))}
-                </tr>
-              );
-            })}
+            {tableData.length === 0 ? (
+              <tr>
+                <td colSpan={columns.length} style={{ textAlign: "center" }}>
+                  No tickets found
+                </td>
+              </tr>
+            ) : (
+              page.map((row) => {
+                prepareRow(row);
+                return (
+                  <tr {...row.getRowProps()} key={row.original.order_id}>
+                    {row.cells.map((cell) => (
+                      <td {...cell.getCellProps()} key={cell.column.id}>
+                        {cell.render("Cell")}
+                      </td>
+                    ))}
+                  </tr>
+                );
+              })
+            )}
           </tbody>
         </table>
       </div>

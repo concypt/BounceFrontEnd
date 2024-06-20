@@ -1,12 +1,13 @@
-import { Link, useNavigate } from "react-router-dom";
+// import { Link, useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
-import moment from 'moment';
+import PropTypes from "prop-types";
+// import moment from "moment";
 import styles from "./eventslider.module.css";
 // import "swiper/css/pagination";
 import { Navigation } from "swiper/modules";
 
 // images
-import staticCard from "../../assets/images/staticCard.png";
+// import staticCard from "../../assets/images/staticCard.png";
 
 const EventSlider = (props) => {
   const { events } = props;
@@ -41,23 +42,33 @@ const EventSlider = (props) => {
         modules={[Navigation]}
         className={styles.mySwiper}
       >
-        {events.map(event => (
-        <SwiperSlide className={styles.eventSlide}>
-          <div className={styles.swiperCard}>
-            <img src={event.image} alt="" />
-            <div className={styles.cardBody}>
-              <h3>{event.name}</h3>
-              <p>{event.start_time}</p>
-              <p>{event.location}</p>
+        {events.map((event, index) => (
+          <SwiperSlide key={index} className={styles.eventSlide}>
+            <div className={styles.swiperCard}>
+              <img src={event.image} alt="" />
+              <div className={styles.cardBody}>
+                <h3>{event.name}</h3>
+                <p>{event.start_time}</p>
+                <p>{event.location}</p>
+              </div>
             </div>
-          </div>
-        </SwiperSlide>
+          </SwiperSlide>
         ))}
-        
-    
       </Swiper>
     </>
   );
 };
-export default EventSlider;
 
+EventSlider.propTypes = {
+  events: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+      image: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      start_time: PropTypes.string.isRequired,
+      location: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+};
+
+export default EventSlider;
