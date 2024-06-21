@@ -1,13 +1,12 @@
-// import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
-import PropTypes from "prop-types";
-// import moment from "moment";
+import moment from "moment";
 import styles from "./eventslider.module.css";
-// import "swiper/css/pagination";
+import "swiper/css/pagination";
 import { Navigation } from "swiper/modules";
 
 // images
-// import staticCard from "../../assets/images/staticCard.png";
+import staticCard from "../../assets/images/staticCard.png";
 
 const EventSlider = (props) => {
   const { events } = props;
@@ -25,17 +24,6 @@ const EventSlider = (props) => {
           },
           768: {
             slidesPerView: 2,
-          },
-          1080: {
-            slidesPerView: 3,
-          },
-
-          1280: {
-            slidesPerView: 3,
-          },
-
-          1400: {
-            slidesPerView: 4,
           },
         }}
         navigation={true}
@@ -57,18 +45,6 @@ const EventSlider = (props) => {
       </Swiper>
     </>
   );
-};
-
-EventSlider.propTypes = {
-  events: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-      image: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      start_time: PropTypes.string.isRequired,
-      location: PropTypes.string.isRequired,
-    })
-  ).isRequired,
 };
 
 export default EventSlider;
