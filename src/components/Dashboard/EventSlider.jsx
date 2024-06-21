@@ -9,7 +9,9 @@ import { Navigation } from "swiper/modules";
 import staticCard from "../../assets/images/staticCard.png";
 
 const EventSlider = (props) => {
-  const { events } = props;
+  const { events, slides } = props;
+  const qS = parseInt(slides);
+
   return (
     <>
       <Swiper
@@ -20,21 +22,22 @@ const EventSlider = (props) => {
             slidesPerView: 1,
           },
           640: {
-            slidesPerView: 2,
+            slidesPerView: 1,
           },
           768: {
-            slidesPerView: 2,
+            slidesPerView: 1,
           },
+
           1080: {
-            slidesPerView: 3,
+            slidesPerView: qS === 4 ? 2 : 1,
           },
 
           1280: {
-            slidesPerView: 3,
+            slidesPerView: qS === 4 ? 3 : 2,
           },
 
           1400: {
-            slidesPerView: 4,
+            slidesPerView: qS,
           },
         }}
         navigation={true}

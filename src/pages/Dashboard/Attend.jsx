@@ -37,12 +37,15 @@ function Attend() {
     return <p>Error: {error.message}</p>;
   }
 
+  console.log(events);
+
   return (
     <div className="dashboard">
       <div>
         <Header />
         <Sidebar />
       </div>
+
       <div className="dataTables">
         {events?.upcoming?.length > 0 ? (
           <div className="upcomingEvents">
@@ -52,7 +55,7 @@ function Attend() {
                 <span>Browse All Events</span>
               </button>
             </div>
-            <EventSlider events={events.upcoming} />
+            <EventSlider events={events.upcoming} slides="4" />
           </div>
         ) : (
           <div className="upcomingEvents">
@@ -78,7 +81,7 @@ function Attend() {
               <div className="upcomingDiv">
                 <h2>Liked Events</h2>
               </div>
-              <EventSlider events={events.liked} />
+              <EventSlider events={events.liked} slides="2" />
             </div>
           ) : (
             <div className="upcomingEvents">
@@ -93,7 +96,7 @@ function Attend() {
               <div className="upcomingDiv">
                 <h2>Events you may like</h2>
               </div>
-              <EventSlider events={events.unlikeevents} />
+              <EventSlider events={events.unlikeevents} slides="2" />
             </div>
           ) : (
             <div className="upcomingEvents">
