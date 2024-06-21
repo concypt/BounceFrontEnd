@@ -10,7 +10,7 @@ import FAQs from "../components/HomePage/FAQs.jsx";
 //images below
 
 import tick from "../assets/images/tick.svg";
-import rightArrow from "../assets/images/right_arrow.svg";
+//import rightArrow from "../assets/images/right_arrow.svg";
 import analyticsIcon from "../assets/images/analyticsicon.svg";
 import listingsIcon from "../assets/images/listingsicon.svg";
 import marketingIcon from "../assets/images/marketingicon.svg";

@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// Instance for secure API calls
 const axiosInstance = axios.create({
   baseURL: "https://bounce.extrasol.co.uk/api",
   headers: {

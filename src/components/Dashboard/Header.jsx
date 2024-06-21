@@ -42,7 +42,7 @@ const Header = () => {
       >
         <h3>{user?.first_name + " " + user?.last_name}</h3>{" "}
         <span className={styles.caret}></span>
-        <img src={user?.image ? user.image : baseImage} alt="" />
+        <img src={user?.imagepath ? user.imagepath : baseImage} alt="" />
         <ul className={`${styles.dropdownMenu} ${styles.dropdownMenu1}`}>
           <li>
             <Link to={`/dashboard`}>
