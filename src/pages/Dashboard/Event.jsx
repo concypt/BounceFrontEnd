@@ -1,12 +1,45 @@
 import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import Header from "../../components/Dashboard/Header";
 import Sidebar from "../../components/Dashboard/Sidebar";
 import HostEvents from "../../components/Host/HostEvents";
 import HostIicketOrders from "../../components/Host/HostTicketOrders";
+import { fetchEarningsData } from "../../api/masabService";
+import LoadingBar from "react-top-loading-bar";
 import "./styles/primaryStyles.css";
 import "./styles/comonStyles.css";
 
 function EventDashboard() {
+  const [loadingComplete, setLoadingComplete] = useState(false);
+  // Set loading complete to true when the page has finished loading
+  window.onload = () => {
+    setLoadingComplete(true);
+  };
+
+  const {
+    data: earnings,
+    error,
+    isLoading,
+  } = useQuery({
+    queryKey: ["earningsDataFetch"],
+    queryFn: fetchEarningsData,
+  });
+
+  if (isLoading) {
+    return (
+      <LoadingBar
+        color="#7e79ff"
+        height={3}
+        progress={loadingComplete ? 100 : 0}
+      />
+    );
+  }
+
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
+
   return (
     <div className="dashboard">
       <div>
@@ -29,12 +62,16 @@ function EventDashboard() {
               <h2>Earnings</h2>
               <div className="earningMain">
                 <div className="earnings">
-                  <p>Current Balance</p>
-                  <h3>£78.00</h3>
+                  <p>Net Sales</p>
+                  <h3>£{earnings.net_sales}</h3>
                 </div>
                 <div className="earnings">
-                  <p>Total All Time</p>
-                  <h3>£123.60</h3>
+                  <p>Gross Sales</p>
+                  <h3>£1{earnings.gross_sales}</h3>
+                </div>
+                <div className="earnings">
+                  <p>Bounce fees</p>
+                  <h3>£1{earnings.bounce_fees}</h3>
                 </div>
               </div>
             </div>

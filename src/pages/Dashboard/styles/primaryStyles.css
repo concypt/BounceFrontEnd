@@ -481,9 +481,10 @@ input[type="radio"] {
 
 .earningMain {
   display: flex;
-  gap: 100px;
-  margin-top: 50px;
-  justify-content: center;
+  column-gap: 10%;
+  row-gap: 20px;
+  margin-top: 30px;
+  flex-wrap: wrap;
 }
 
 .earningMain p {
@@ -495,7 +496,7 @@ input[type="radio"] {
 
 .earningMain h3 {
   font-family: var(--secondary-font);
-  font-size: 48px;
+  font-size: 40px;
   color: var(--linear-gradient-border);
   background: var(--linear-gradient-border);
   -webkit-background-clip: text;
@@ -1373,6 +1374,11 @@ button.delete.ml-auto {
   max-width: 50%;
 }
 
+.bgGlobalBtn.borderGlobalBtn.qrBtn {
+  margin-left: 0;
+  height: 49px;
+}
+
 @media (max-width: 1600px) {
   .hostSection {
     margin-right: 40px;
@@ -2022,5 +2028,8 @@ table.your-events-table th {
 @media screen and (max-width: 480px) {
   .tabSection.ticket-popup {
     padding-left: 10px;
+  }
+  .earningMain {
+    gap: 10px;
   }
 }

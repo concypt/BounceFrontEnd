@@ -39,8 +39,6 @@ function Attend() {
     return <p>Error: {error.message}</p>;
   }
 
-  console.log(events);
-
   return (
     <div className="dashboard">
       <div>
