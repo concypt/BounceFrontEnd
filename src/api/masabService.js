@@ -9,3 +9,15 @@ export const fetchEarningsData = async () => {
     );
   }
 };
+
+export const requestRefund = async (formData) => {
+  try {
+    const response = await axiosInstance.post("/user/request-refund", formData);
+
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message || "Failed to update host profile"
+    );
+  }
+};

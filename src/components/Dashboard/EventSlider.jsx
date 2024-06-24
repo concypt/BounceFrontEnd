@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { useMutation } from "@tanstack/react-query";
+import { requestRefund } from "../../api/masabService";
+import Swal from "sweetalert2";
 import Modal from "react-modal";
 import QRCode from "qrcode.react";
 import moment from "moment";
@@ -22,22 +25,28 @@ import popupShareBtn from "../../assets/images/popup-share-btn.svg";
 
 Modal.setAppElement("#root");
 
-const tickets = [
-  { id: 1, info: "Ticket 1 Info" },
-  { id: 2, info: "Ticket 2 Info" },
-  { id: 3, info: "Ticket 3 Info" },
-];
-
 const EventSlider = (props) => {
   const { events, slides } = props;
   const qS = parseInt(slides);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [eventInfo, setEventInfo] = useState({
+    name: "event",
+    location: "location",
+  });
+  const [tickets, setTickets] = useState([
+    { id: 1, info: "Ticket 1 Info" },
+    { id: 2, info: "Ticket 2 Info" },
+    { id: 3, info: "Ticket 3 Info" },
+    { id: 4, info: "Ticket 4 Info" },
+  ]);
 
-  const openModal = () => {
+  const openModal = (event) => {
     setModalIsOpen(true);
     setCurrentSlide(0);
+    setEventInfo(event);
+    setTickets(event.orders_tickets[0].child_orders);
   };
 
   const closeModal = () => {
@@ -103,6 +112,45 @@ const EventSlider = (props) => {
     }
   };
 
+  // for request refund
+  const [show, setShow] = useState(false);
+  const [description, setDescription] = useState("");
+
+  const mutation = useMutation({
+    mutationFn: requestRefund,
+    mutationKey: [requestRefund],
+    onSuccess: (data) => {
+      Swal.fire({
+        title: "Success!",
+        text: "Your Refund Request Send Successfully.",
+        icon: "success",
+        confirmButtonText: "OK",
+      });
+      handleClose();
+    },
+    onError: (error) => {
+      Swal.fire({
+        title: "Error!",
+        text: "Request not Successfull",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+    },
+  });
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const formData = new FormData();
+    formData.append("id", { orderId });
+    formData.append("description", description);
+
+    mutation.mutate(formData);
+  };
+
   return (
     <>
       <Swiper
@@ -150,8 +198,7 @@ const EventSlider = (props) => {
                   alt="Event image"
                 />
                 <div className={styles.eventCategoryButton}>
-                  {/* {event.category} */}
-                  Sports
+                  {event.category}
                 </div>
               </div>
               <div className={styles.eventCardDetails}>
@@ -177,7 +224,7 @@ const EventSlider = (props) => {
                   {qS === 4 ? (
                     <div
                       className="bgGlobalBtn borderGlobalBtn"
-                      onClick={openModal}
+                      onClick={() => openModal(event)}
                     >
                       <span>View ticket details</span>
                     </div>
@@ -192,6 +239,9 @@ const EventSlider = (props) => {
           </SwiperSlide>
         ))}
       </Swiper>
+
+      {/* tickets modal */}
+
       <div className={styles.modalWrapper}>
         <Modal
           isOpen={modalIsOpen}
@@ -231,9 +281,7 @@ const EventSlider = (props) => {
           <div className={styles.modalContent}>
             <div className={styles.ticketInfo}>
               <div className={styles.titleWrapper}>
-                <h1 className={styles.ticketTitle}>
-                  Ticket {tickets[currentSlide].id}
-                </h1>
+                <h1 className={styles.ticketTitle}>{eventInfo.name}</h1>
                 <Link to="/home" className={styles.detailLink}>
                   View event page
                 </Link>
@@ -242,7 +290,7 @@ const EventSlider = (props) => {
                 <div className={styles.eventDetailsList}>
                   <img src={popupCalendar} className={styles.iconImg} alt="" />
                   <p className={styles.listParagraph}>
-                    Saturday 23rd March 2024
+                    {moment(eventInfo.date).format("dddd Do MMMM YYYY")}
                   </p>
                 </div>
                 <div className={styles.eventDetailsList}>
@@ -251,23 +299,27 @@ const EventSlider = (props) => {
                 </div>
                 <div className={styles.eventDetailsList}>
                   <img src={popupLocation} className={styles.iconImg} alt="" />
-                  <p className={styles.listParagraph}>
-                    7 Scott Street, London EN12 9GN
-                  </p>
+                  <p className={styles.listParagraph}>{eventInfo.location}</p>
                   <Link to="/home" className={styles.detailLink}>
                     Get directions
                   </Link>
                 </div>
                 <div className={styles.paymentSection}>
                   <h3 className={styles.paymentHeading}>Payment</h3>
-                  <p className={styles.orderNumber}>Order number B001</p>
+                  <p className={styles.orderNumber}>
+                    Order number {tickets[currentSlide].order_id}
+                  </p>
                   <span className={styles.paymentDone}>
                     <img src={popupPaymentDone} alt="" />
                     <p className={styles.paymentDoneText}>
                       Paid £28.00 for 4 tickets on the 28th April 2023 by card.
                     </p>
                   </span>
-                  <Link to="/home" className={styles.detailLink}>
+                  <Link
+                    to=""
+                    className={styles.detailLink}
+                    onClick={handleShow}
+                  >
                     Request Refund
                   </Link>
                 </div>
@@ -294,6 +346,30 @@ const EventSlider = (props) => {
           </div>
         </Modal>
       </div>
+
+      {show && (
+        <div className={styles.modalRefund}>
+          <div className={styles.modalContentRefund}>
+            <span className={styles.closeBtn} onClick={handleClose}>
+              &times;
+            </span>
+            <h2>Submit Form</h2>
+            <form onSubmit={handleSubmit}>
+              <input type="hidden" value={orderId} />
+              <div className={styles.formGroup}>
+                <label>Description</label>
+                <input
+                  type="text"
+                  placeholder="Enter description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+              </div>
+              <button type="submit">Submit</button>
+            </form>
+          </div>
+        </div>
+      )}
     </>
   );
 };
