@@ -27,7 +27,8 @@ export const refreshAccessToken = async () => {
     const response = await axiosInstance.get("/refresh-access");
     return response.data.access_token;
   } catch (error) {
-    throw new Error("Token refresh failed");
+    console.error("Error refreshing token", error);
+    throw error; // Ensure the error is thrown
   }
 };
 

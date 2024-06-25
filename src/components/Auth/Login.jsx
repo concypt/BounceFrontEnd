@@ -21,7 +21,6 @@ const LoginPage = () => {
     mutationFn: login,
     mutationKey: [login],
     onSuccess: (data) => {
-      console.log(data);
       setSuccess(true);
       setError(null);
       const followingArray = data.following;
@@ -32,12 +31,18 @@ const LoginPage = () => {
           state: { token: data.access_token },
         });
       } else {
-        const redirectTo = location.state?.from || "/dashboard";
-        navigate(redirectTo);
+        const redirectPath =
+          localStorage.getItem("redirectPath") || "/dashboard";
+        localStorage.removeItem("redirectPath");
+        navigate(redirectPath);
+
+        // const redirectTo = location.state?.from?.pathname || "/dashboard";
+        // navigate(redirectTo);
       }
     },
     onError: (error) => {
-      console.error("Login failed:", error);
+      setError(error.message);
+      //console.error("Login failed:", error);
     },
   });
 
@@ -121,6 +126,7 @@ const LoginPage = () => {
                     <span>Sign in</span>
                   </button>
                 </div>
+
                 {error && <div className={styles.error}>{error}</div>}
                 {success && !error && (
                   <div className={styles.success}>Login successful!</div>

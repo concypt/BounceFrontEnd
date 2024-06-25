@@ -22,10 +22,12 @@ const ProtectedRoute = () => {
     const checkAuth = async () => {
       try {
         if (!isAuthenticated) {
+          //console.log("Not authenticated, trying to reToken");
           await reToken(); // This should be a silent login or token refresh
         }
         setLoading(false);
       } catch (error) {
+        //console.error("Error during authentication check", error);
         setLoading(false);
       }
     };
@@ -36,7 +38,12 @@ const ProtectedRoute = () => {
     return <div>Loading...</div>;
   }
 
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
+  if (!isAuthenticated) {
+    localStorage.setItem("redirectPath", location.pathname);
+    return <Navigate to="/login" />;
+  }
+
+  return <Outlet />;
 };
 
 export default ProtectedRoute;
