@@ -34,6 +34,12 @@ const EventSlider = (props) => {
   const [eventInfo, setEventInfo] = useState({
     name: "event",
     location: "location",
+    orders_tickets: [
+      {
+        order_id: "Order Id",
+        payment: "Payment",
+      },
+    ],
   });
   const [tickets, setTickets] = useState([
     { id: 1, info: "Ticket 1 Info" },
@@ -46,6 +52,7 @@ const EventSlider = (props) => {
     setModalIsOpen(true);
     setCurrentSlide(0);
     setEventInfo(event);
+    setSelectedTicket(event.orders_tickets[0].child_orders[0]);
     setTickets(event.orders_tickets[0].child_orders);
   };
 
@@ -66,15 +73,16 @@ const EventSlider = (props) => {
     );
   };
 
-  const downloadQR = () => {
+  const downloadQR = (ticketId) => {
     const canvas = document.getElementById("qr-code");
+    setSelectedTicket(ticketId);
     if (selectedTicket && canvas) {
       const pngUrl = canvas
         .toDataURL("image/png")
         .replace("image/png", "image/octet-stream");
       let downloadLink = document.createElement("a");
       downloadLink.href = pngUrl;
-      downloadLink.download = `ticket-${selectedTicket.id}-qr.png`;
+      downloadLink.download = `bounce-ticket-${ticketId}-qr.png`;
       document.body.appendChild(downloadLink);
       downloadLink.click();
       document.body.removeChild(downloadLink);
@@ -83,12 +91,13 @@ const EventSlider = (props) => {
     }
   };
 
-  const shareQR = () => {
+  const shareQR = (ticketId) => {
+    setSelectedTicket(ticketId);
     if (navigator.share && selectedTicket) {
       const canvas = document.getElementById("qr-code");
       if (canvas) {
         canvas.toBlob((blob) => {
-          const file = new File([blob], `ticket-${selectedTicket.id}-qr.png`, {
+          const file = new File([blob], `bounce-ticket-${ticketId}-qr.png`, {
             type: "image/png",
           });
           navigator
@@ -114,21 +123,30 @@ const EventSlider = (props) => {
 
   // for request refund
   const [show, setShow] = useState(false);
+  const [orderId, setOrderId] = useState("");
   const [description, setDescription] = useState("");
 
   const mutation = useMutation({
     mutationFn: requestRefund,
     mutationKey: [requestRefund],
-    onSuccess: (data) => {
+    onSuccess: () => {
       Swal.fire({
         title: "Success!",
         text: "Your Refund Request Send Successfully.",
         icon: "success",
         confirmButtonText: "OK",
+      }).then(() => {
+        setDescription("");
+        handleClose();
       });
-      handleClose();
     },
     onError: (error) => {
+      console.error(
+        "Error response:",
+        error.response || error.message || error
+      );
+      setDescription("");
+      handleClose();
       Swal.fire({
         title: "Error!",
         text: "Request not Successfull",
@@ -139,16 +157,23 @@ const EventSlider = (props) => {
   });
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = (orderId) => {
+    setOrderId(orderId);
+    setShow(true);
+  };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
     const formData = new FormData();
-    formData.append("id", { orderId });
+    formData.append("order_id", orderId);
     formData.append("description", description);
 
     mutation.mutate(formData);
+  };
+
+  const handleDescriptionChange = (event) => {
+    setDescription(event.target.value);
   };
 
   return (
@@ -307,18 +332,23 @@ const EventSlider = (props) => {
                 <div className={styles.paymentSection}>
                   <h3 className={styles.paymentHeading}>Payment</h3>
                   <p className={styles.orderNumber}>
-                    Order number {tickets[currentSlide].order_id}
+                    Order number {eventInfo.orders_tickets[0].order_id}
                   </p>
                   <span className={styles.paymentDone}>
                     <img src={popupPaymentDone} alt="" />
                     <p className={styles.paymentDoneText}>
-                      Paid £28.00 for 4 tickets on the 28th April 2023 by card.
+                      Paid £{eventInfo.orders_tickets[0].payment} for{" "}
+                      {tickets.length} tickets on the{" "}
+                      {moment(eventInfo.orders_tickets[0].created_at).format(
+                        "dddd Do MMMM YYYY"
+                      )}{" "}
+                      by card.
                     </p>
                   </span>
                   <Link
                     to=""
                     className={styles.detailLink}
-                    onClick={handleShow}
+                    onClick={() => handleShow(eventInfo.orders_tickets[0].id)}
                   >
                     Request Refund
                   </Link>
@@ -334,11 +364,14 @@ const EventSlider = (props) => {
               <div className={styles.modalActions}>
                 <button
                   className="bgGlobalBtn borderGlobalBtn qrBtn"
-                  onClick={downloadQR}
+                  onClick={() => downloadQR(tickets[currentSlide].id)}
                 >
                   <span>Download QR</span>
                 </button>
-                <button onClick={shareQR} className={styles.shareBtn}>
+                <button
+                  onClick={() => shareQR(tickets[currentSlide].id)}
+                  className={styles.shareBtn}
+                >
                   <img src={popupShareBtn} alt="" />
                 </button>
               </div>
@@ -353,19 +386,25 @@ const EventSlider = (props) => {
             <span className={styles.closeBtn} onClick={handleClose}>
               &times;
             </span>
-            <h2>Submit Form</h2>
+            <h2>Request Refund</h2>
             <form onSubmit={handleSubmit}>
-              <input type="hidden" value={orderId} />
+              <input type="hidden" name="order_id" value={orderId} />
               <div className={styles.formGroup}>
-                <label>Description</label>
-                <input
+                <label className={styles.labelDescription}>Description</label>
+                <textarea
                   type="text"
-                  placeholder="Enter description"
+                  placeholder="Please enter reason for refund"
+                  required
                   value={description}
-                  onChange={(e) => setDescription(e.target.value)}
+                  onChange={handleDescriptionChange}
                 />
               </div>
-              <button type="submit">Submit</button>
+              <button
+                type="submit"
+                className="bgGlobalBtn borderGlobalBtn qrBtn"
+              >
+                <span>Submit Request</span>
+              </button>
             </form>
           </div>
         </div>

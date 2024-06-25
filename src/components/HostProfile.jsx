@@ -22,6 +22,10 @@ const HostProfile = () => {
   const [loadingComplete, setLoadingComplete] = useState(false);
   const { organisationId } = useParams();
 
+  window.onload = () => {
+    setLoadingComplete(true);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {

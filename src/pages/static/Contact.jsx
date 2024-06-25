@@ -4,6 +4,7 @@ import styles from "./contact.module.css";
 import { Link } from "react-router-dom";
 import Reveal from "../../components/utils/Reveal.jsx";
 import { useMutation } from "@tanstack/react-query";
+import { contactUsForm } from "../../api/masabService";
 
 function ContactUs() {
   const [formData, setFormData] = useState({
@@ -19,24 +20,8 @@ function ContactUs() {
   };
 
   const mutation = useMutation({
-    mutationFn: async (formData) => {
-      const response = await fetch(
-        "https://bounce.extrasol.co.uk/api/attenders/contact-us",
-        {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            "X-Api-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
-      if (!response.ok) {
-        throw new Error("Failed to submit form");
-      }
-      return response.json();
-    },
+    mutationFn: contactUsForm,
+    mutationKey: [contactUsForm],
     onSuccess: () => {
       Swal.fire({
         icon: "success",

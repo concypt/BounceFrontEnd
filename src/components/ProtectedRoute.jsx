@@ -13,6 +13,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../contexts/UserProvider";
 import { useEffect, useState } from "react";
+import LoadingBar from "react-top-loading-bar";
 
 const ProtectedRoute = () => {
   const { isAuthenticated, reToken } = useAuth();
@@ -35,7 +36,9 @@ const ProtectedRoute = () => {
   }, [isAuthenticated, reToken]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <LoadingBar color="#7e79ff" height={3} progress={loading ? 100 : 0} />
+    );
   }
 
   if (!isAuthenticated) {

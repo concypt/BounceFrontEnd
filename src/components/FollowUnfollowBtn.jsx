@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -92,6 +93,10 @@ const FollowUnfollowBtn = ({ organisationId }) => {
       </button>
     </div>
   );
+};
+
+FollowUnfollowBtn.propTypes = {
+  organisationId: PropTypes.number,
 };
 
 export default FollowUnfollowBtn;

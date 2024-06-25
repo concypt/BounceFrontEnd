@@ -1573,6 +1573,11 @@ button.delete.ml-auto {
   .dataTables .loginButton span {
     font-size: 16px;
   }
+
+  .dataTables .marketingGrid .loginButton {
+    width: unset;
+    padding: 4px 20px;
+  }
   .tableContent {
     font-size: 16px;
     line-height: 130%;

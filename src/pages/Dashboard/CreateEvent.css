@@ -175,3 +175,27 @@
   color: #0a9c55;
   background-color: #c6f1dd;
 }
+
+@media (max-width: 1024px) {
+  .progressBar {
+    width: 70%;
+  }
+}
+
+@media (max-width: 768px) {
+  .progressBar {
+    width: 60%;
+  }
+}
+
+@media (max-width: 576px) {
+  .progressBar {
+    width: 80%;
+  }
+}
+
+@media (max-width: 480px) {
+  .progressBar {
+    width: 100%;
+  }
+}

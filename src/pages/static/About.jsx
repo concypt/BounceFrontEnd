@@ -46,12 +46,12 @@ function About() {
                       </p>
                     </div>
                   </div>
-                  <div className="promote_btn">
+                  {/* <div className="promote_btn">
                     <a href="" className="global_button_one">
                       {" "}
                       <span>Discover more</span>
                     </a>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

@@ -1,4 +1,6 @@
 import { axiosInstance } from "./axiosInstance";
+import { axiosPInstance } from "./axiosInstance";
+
 export const fetchEarningsData = async () => {
   try {
     const response = await axiosInstance.get("/user/events-earning");
@@ -18,6 +20,22 @@ export const requestRefund = async (formData) => {
   } catch (error) {
     throw new Error(
       error.response?.data?.message || "Failed to update host profile"
+    );
+  }
+};
+
+// contact us public service
+export const contactUsForm = async (formData) => {
+  try {
+    const response = await axiosPInstance.post(
+      "/attenders/contact-us",
+      formData
+    );
+
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message || "Failed to submit contact form"
     );
   }
 };

@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import styles from "./privacy.module.css";
 import "react-date-range/dist/styles.css"; // Main css file
 import "react-date-range/dist/theme/default.css"; // Theme css file

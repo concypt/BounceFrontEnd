@@ -150,11 +150,12 @@ function Navbar() {
               </NavLink>
             </li>
             <div className="navbtn_div">
-              <button
+              <NavLink
+                to="/dashboard-create-event"
                 className={`${styles.global_button_one} ${styles.nav_btn}`}
               >
                 Host an event
-              </button>
+              </NavLink>
             </div>
           </ul>
           <div className={styles.host_and_signin}>

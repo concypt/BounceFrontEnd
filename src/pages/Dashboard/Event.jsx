@@ -80,7 +80,7 @@ function EventDashboard() {
         <div className="secondTables">
           <div className="tablesGrid">
             <HostIicketOrders />
-            <div className="secondActionsDiv">
+            {/* <div className="secondActionsDiv">
               <div className="tableOne">
                 <div className="searchBar">
                   <div className="payout">
@@ -99,7 +99,7 @@ function EventDashboard() {
                   after automatically.
                 </p>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

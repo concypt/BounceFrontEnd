@@ -1,19 +1,16 @@
 import { useState } from "react";
 import LoadingBar from "react-top-loading-bar";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import moment from "moment";
 
 import styles from "./news.module.css";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { fetchNews } from "../../api/publicService";
 import "react-date-range/dist/styles.css"; // Main css file
 import "react-date-range/dist/theme/default.css"; // Theme css file
 
 // imaages
-// import promoteImg2 from "../../assets/images/promote_img2.png";
 import calender from "../../assets/images/calender.svg";
-// import promoteImg from "../../assets/images/promote_img.png";
 
 function News() {
   const {
@@ -24,21 +21,19 @@ function News() {
     queryKey: ["News"],
     queryFn: fetchNews,
   });
-  // const [loadingComplete, setLoadingComplete] = useState(false);
+
+  const [loadingComplete, setLoadingComplete] = useState(false);
+  window.onload = () => {
+    setLoadingComplete(true);
+  };
 
   if (isLoading)
     return (
-      <div
-        style={{
-          width: "100vw",
-          height: "90vh",
-          display: "flex",
-          alignContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <p style={{ textAlign: "center", width: "100%" }}>Loading...</p>
-      </div>
+      <LoadingBar
+        color="#7e79ff"
+        height={3}
+        progress={loadingComplete ? 100 : 0}
+      />
     );
   if (error) return <p>Error: {error.message}</p>;
 

@@ -5,8 +5,8 @@
   margin: 0 auto;
 }
 
-.aboutMain .headerBlog{
-    max-width: 100%;
+.aboutMain .headerBlog {
+  max-width: 100%;
 }
 
 .mainBlog {
@@ -52,4 +52,28 @@
 .blogInfo p {
   margin: 0;
   line-height: normal;
+}
+
+@media (max-width: 992px) {
+  .mainBlog {
+    grid-template-columns: 50% 50%;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .mainBlog {
+    display: block;
+  }
+
+  .blogCards {
+    max-width: 100%;
+    margin-bottom: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .aboutMain .cardContainer {
+    padding: 0;
+  }
 }

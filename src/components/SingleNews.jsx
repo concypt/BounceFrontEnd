@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 import styles from "../components/singleEvent.module.css";
 import LoadingBar from "react-top-loading-bar";
 import { fetchNewsDetails } from "../api/publicService.js";
@@ -8,6 +9,11 @@ import { useQuery } from "@tanstack/react-query";
 
 const SingleNews = ({ newsId }) => {
   //const [news, setNews] = useState(null);
+
+  window.onload = () => {
+    setLoadingComplete(true);
+  };
+
   const [loadingComplete, setLoadingComplete] = useState(false);
 
   const {
@@ -98,6 +104,10 @@ const SingleNews = ({ newsId }) => {
       </div>
     </>
   );
+};
+
+SingleNews.propTypes = {
+  newsId: PropTypes.number,
 };
 
 export default SingleNews;

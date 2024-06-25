@@ -148,7 +148,7 @@ header.App_header {
     width: 100%;
   }
 
-  button.global_button_one {
+  .global_button_one {
     padding: 13px 20px;
   }
 }
@@ -203,15 +203,18 @@ header.App_header {
     /* width: 235px; */
   }
 
-  button.global_button_one {
-    padding: 6px 20px;
+  .global_button_one {
+    padding: 6px 0;
     font-size: 14px;
     padding-bottom: 10px;
+    min-width: 120px;
+    text-align: center;
+    margin-right: 10px;
   }
 
   .navMenu {
     width: calc(100% - 140px - 250px - 30px);
-    max-width: none;
+    /* max-width: none; */
   }
 
   .navbar {
@@ -350,6 +353,10 @@ header.App_header {
 
   .loginBtn {
     margin-left: 0;
+  }
+
+  .host_and_signin .global_button_one {
+    display: none;
   }
 }
 

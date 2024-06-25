@@ -145,3 +145,14 @@
     padding: 12px 12px;
   }
 }
+
+@media (max-width: 420px) {
+  .headerProfile h3 {
+    font-size: 18px;
+  }
+
+  .headerProfile img {
+    width: 35px;
+    height: 35px;
+  }
+}
