@@ -1,13 +1,21 @@
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import Header from "../../components/Dashboard/Header";
 import Sidebar from "../../components/Dashboard/Sidebar";
 import EventSlider from "../../components/Dashboard/EventSlider";
+import LoadingBar from "react-top-loading-bar";
 import "./styles/primaryStyles.css";
 import "./styles/comonStyles.css";
 import { fetchEventData } from "../../api/secureService";
 import emptyState from "../../assets/images/emptystate.svg";
 
 function Attend() {
+  const [loadingComplete, setLoadingComplete] = useState(false);
+  // Set loading complete to true when the page has finished loading
+  window.onload = () => {
+    setLoadingComplete(true);
+  };
+
   const {
     data: events,
     error,
@@ -19,25 +27,17 @@ function Attend() {
 
   if (isLoading) {
     return (
-      <div
-        style={{
-          width: "100vw",
-          height: "90vh",
-          display: "flex",
-          alignContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <p style={{ textAlign: "center", width: "100%" }}>Loading...</p>
-      </div>
+      <LoadingBar
+        color="#7e79ff"
+        height={3}
+        progress={loadingComplete ? 100 : 0}
+      />
     );
   }
 
   if (error) {
     return <p>Error: {error.message}</p>;
   }
-
-  console.log(events);
 
   return (
     <div className="dashboard">
@@ -48,7 +48,7 @@ function Attend() {
 
       <div className="dataTables">
         {events?.upcoming?.length > 0 ? (
-          <div className="upcomingEvents">
+          <div className="upcomingEvents row-one">
             <div className="upcomingDiv">
               <h2>Upcoming Events</h2>
               <button className="loginButton" type="submit">
@@ -58,7 +58,7 @@ function Attend() {
             <EventSlider events={events.upcoming} slides="4" />
           </div>
         ) : (
-          <div className="upcomingEvents">
+          <div className="upcomingEvents row-two">
             <div className="upcomingDiv">
               <h2>Upcoming Events</h2>
             </div>
@@ -77,7 +77,7 @@ function Attend() {
         )}
         <div className="likedEvents">
           {events?.liked?.length > 0 ? (
-            <div className="upcomingEvents">
+            <div className="upcomingEvents row-two">
               <div className="upcomingDiv">
                 <h2>Liked Events</h2>
               </div>
@@ -92,7 +92,7 @@ function Attend() {
             </div>
           )}
           {events?.unlikeevents?.length > 0 ? (
-            <div className="upcomingEvents">
+            <div className="upcomingEvents row-two">
               <div className="upcomingDiv">
                 <h2>Events you may like</h2>
               </div>

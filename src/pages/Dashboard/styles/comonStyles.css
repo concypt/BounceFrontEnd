@@ -71,4 +71,19 @@
     padding-left: 20px;
     padding-right: 20px;
   }
+
+  .upcomingEvents .upcomingDiv {
+    padding: 0 30px;
+  }
+}
+
+@media (max-width: 380px) {
+  .dashboard {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .upcomingEvents .upcomingDiv {
+    padding: 0 20px;
+  }
 }
