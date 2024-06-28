@@ -25,9 +25,10 @@ function Marketing() {
     try {
       await queryClient.invalidateQueries("fetchMarketingData");
     } catch (error) {
-      console.error("Error deleting campaign:", error);
+      console.error("Error deleting campaign: ", error);
     }
   };
+
   if (isLoading && !marketing)
     return (
       <div

@@ -5,7 +5,6 @@ import {
   useGlobalFilter,
   useSortBy,
   usePagination,
-
 } from "react-table";
 import PropTypes from "prop-types";
 import Swal from "sweetalert2";

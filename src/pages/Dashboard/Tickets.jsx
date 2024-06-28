@@ -9,8 +9,6 @@ import OrdersData from "../../components/Host/Marketing/OrdersData";
 import "./styles/primaryStyles.css";
 import "./styles/comonStyles.css";
 import { fetchEventTickets } from "../../api/musecureService";
-
-
 function Tickets() {
   const { eventId } = useParams();
   const {
