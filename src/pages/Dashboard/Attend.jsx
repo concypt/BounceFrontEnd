@@ -1,9 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-<<<<<<< HEAD
 import { useState } from "react";
-=======
 import { Link } from "react-router-dom";
->>>>>>> dev-muhammad
 import Header from "../../components/Dashboard/Header";
 import Sidebar from "../../components/Dashboard/Sidebar";
 import EventSlider from "../../components/Dashboard/EventSlider";
