@@ -9,14 +9,13 @@ import {
 import PropTypes from "prop-types";
 import Swal from "sweetalert2";
 import Modal from "react-modal";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation , useQueryClient } from "@tanstack/react-query";
 import "../../../pages/Dashboard/styles/primaryStyles.css";
 import "../../../pages/Dashboard/styles/comonStyles.css";
 import {
-  fetchCoupons,
-  addCoupon,
-  deleteCoupon,
-} from "../../../api/secureService";
+  requestRefundAction,
+  ticketsSend,
+} from "../../../api/musecureService";
 
 // Styles for Modal
 const customStyles = {
@@ -37,36 +36,39 @@ Modal.setAppElement("#root");
 import deleteImg from "../../../assets/images/event-dash-icon-delete.svg";
 import paginatePrev from "../../../assets/images/pagination-arrow-prev.svg";
 import paginateNext from "../../../assets/images/pagination-arrow-next.svg";
+import viewImg from "../../../assets/images/event-dash-icon-view.svg";
 
-
-const HostTicketOrders = ({ coupons , onDeleteCampaign , events }) => {
-
+const HostTicketOrders = ({ ordersData  , event,sold_tickets , total_tickets , tickets}) => {
+ 
   const queryClient = useQueryClient();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [formData, setFormData] = useState({
-    name: "",
-    discount: "",
-    coupon_code: "",
-    event_id: [],
+    first_name: "",
+    last_name: "",
+    email: "",
+    tickets_id: [],
+    quantities: {},
+    event_id: event.id
   });
-
-  const mutation = useMutation({
-    mutationFn: addCoupon,
-    mutationKey: ["addCoupon"],
+  const mutations = useMutation({
+    mutationFn: ticketsSend,
+    mutationKey: ["ticketsSend"],
     onSuccess: () => {
       Swal.fire({
         icon: "success",
         title: "Success",
-        text: "Coupon added successfully!",
+        text: "Ticket Send successfully!",
         timer: 2000,
       });
       setFormData({
-        name: "",
-        discount: "",
-        coupon_code: "",
-        event_id: [],
+    first_name: "",
+    last_name: "",
+    email: "",
+    tickets_id: [],
+    quantities: {},
+    event_id: ""
       });
-      queryClient.invalidateQueries("coupons");
+      queryClient.invalidateQueries("ordersData");
       setModalIsOpen(false);
     },
     onError: (error) => {
@@ -78,19 +80,6 @@ const HostTicketOrders = ({ coupons , onDeleteCampaign , events }) => {
     },
   });
 
-  const deleteMutation = useMutation({
-    mutationFn: deleteCoupon,
-    mutationKey: ["deleteCoupon"],
-    onSuccess: () => {
-      queryClient.invalidateQueries("coupons");
-      Swal.fire("Deleted!", "Your coupon has been deleted.", "success");
-
-    },
-    onError: (error) => {
-      Swal.fire("Error!", "Failed to delete coupon.", error);
-    },
-  });
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -98,19 +87,45 @@ const HostTicketOrders = ({ coupons , onDeleteCampaign , events }) => {
       [name]: value,
     });
   };
-
-  const handleEventIdChange = (e) => {
+  
+  const handleTicketChange = (e) => {
     const { options } = e.target;
     const selectedOptions = Array.from(options)
       .filter((option) => option.selected)
       .map((option) => option.value);
     setFormData({
       ...formData,
-      event_id: selectedOptions,
+      tickets_id: selectedOptions,
     });
   };
+   // Handle change for quantity input
+   const handleQuantityChange = (ticketId, quantity) => {
+    setFormData({
+      ...formData,
+      quantities: {
+        ...formData.quantities,
+        [ticketId]: quantity
+      }
+    });
+  };
+  // Function to add a quantity input field
+  const addQuantityInput = (ticketId) => {
+    return (
+      <div key={ticketId} className="label-with-button">
+        <input
+          type="number"
+          placeholder="Quantity"
+          name="quantities"
+          value={formData.quantities[ticketId] || ''}
+          onChange={(e) => handleQuantityChange(ticketId, e.target.value)}
+          className="popupInput"
+        />
+      </div>
+    );
+  };
 
-  const openModal = () => {
+ // Seelect Tickets
+ const openModal = () => {
     setModalIsOpen(true);
   };
 
@@ -120,21 +135,59 @@ const HostTicketOrders = ({ coupons , onDeleteCampaign , events }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    mutation.mutate(formData);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to submit the form?",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: "#7357FF",
+      confirmButtonText: "Yes!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setModalIsOpen(false);
+        mutations.mutate(formData);
+      }
+    });
   };
+  // Modal End 
 
-  const handleDelete = (id) => {
+  const mutation = useMutation({
+    mutationFn: requestRefundAction,
+    mutationKey: ["applrequestRefundActionyHost"],
+    onSuccess: (data) => {
+      Swal.fire({
+        icon: "success",
+        title: "Success",
+        text: "Congrats! You are now a submit.",
+        timer: 2000,
+      }).then(() => {
+        navigate("/dashboard");
+      });
+    },
+    onError: (error) => {
+      console.error("Error submitting host application:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "There was an issue submitting your application. Please try again.",
+      });
+    },
+  });
+  const handleRefund = (id,status) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#7357FF",
-      confirmButtonText: "Yes, delete it!",
+      confirmButtonText: "Yes!",
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteMutation.mutate(id);
-        onDeleteCampaign(id); // Inform parent component about delete action
+        const formData = {
+          refund_id: id,
+          status: status,
+        };
+        mutation.mutate(formData);
       }
     });
   };
@@ -147,16 +200,16 @@ const HostTicketOrders = ({ coupons , onDeleteCampaign , events }) => {
         Cell: ({ row }) => <div>{row.index + 1}</div>,
       },
       {
-        Header: "Name",
-        accessor: "name",
+        Header: "Order#",
+        accessor: "order_id",
         sortType: "basic",
         Cell: ({ value }) => (
           <div>{value.length > 20 ? value.slice(0, 20) + "..." : value}</div>
         ),
       },
       {
-        Header: "Coupon Code",
-        accessor: "coupon_code",
+        Header: "Customer Name",
+        accessor: (row) => `${row.customer.first_name} ${row.customer.last_name}`,
         sortType: "basic",
         Cell: ({ value }) => (
           <div>{value.length > 20 ? value.slice(0, 20) + "..." : value}</div>
@@ -164,31 +217,26 @@ const HostTicketOrders = ({ coupons , onDeleteCampaign , events }) => {
       },
       {
         Header: "Events",
-        accessor: "events",
-        sortType: "basic",
-        Cell: ({ row }) => (
-          <div>
-            {row.original.events
-              ? row.original.events.slice(0, 3).map((event) => (
-                  <span key={event.id}>
-                    {event.name.length > 15
-                      ? event.name.slice(0, 15) + "..."
-                      : event.name}
-                    {row.original.events.indexOf(event) < 2 && ", "}
-                  </span>
-                ))
-              : ""}
-            {row.original.events && row.original.events.length > 3 ? "..." : ""}
-          </div>
+        Cell: () => (
+          <div>{event.name}</div>
         ),
       },
+      {
+        Header: "Payment",
+        accessor: "payment",
+        sortType: "basic",
+        Cell: ({ value }) => (
+          <div>{value.length > 20 ? "£" + value.slice(0, 20) + "..." : "£" + value}</div>
+        ),
+      },
+      
       {
         Header: "Actions",
         accessor: "actions",
         Cell: ({ row }) => (
           <div className="actionsColumn">
-            <button onClick={() => handleDelete(row.original.id)}>
-              <img src={deleteImg} alt="View" />
+            <button onClick={() => handleRefund(row.original.refund_details.id,2)}>
+              <img src={viewImg} alt="View" />
             </button>
           </div>
         ),
@@ -214,7 +262,7 @@ const HostTicketOrders = ({ coupons , onDeleteCampaign , events }) => {
   } = useTable(
     {
       columns,
-      data: coupons ,
+      data: ordersData ,
       initialState: { pageIndex: 0, pageSize: 5 },
     },
     useFilters,
@@ -228,11 +276,11 @@ const HostTicketOrders = ({ coupons , onDeleteCampaign , events }) => {
   return (
     <div className="ticketOrders">
       <div className="searchBar">
-        <h2>Discount codes</h2>
-        <button className="loginButton" onClick={openModal} type="submit">
-          <span>Create new code</span>
-        </button>
+      <h2>Tickets Orders</h2>
+      <button className="loginButton" onClick={openModal} type="submit"> <span>Send tickets</span></button>
+      <h2>{sold_tickets}/{total_tickets} Available</h2>
       </div>
+             
       <div className="table-container">
         <table {...getTableProps()} className="table your-events-table">
           <thead>
@@ -314,9 +362,9 @@ const HostTicketOrders = ({ coupons , onDeleteCampaign , events }) => {
             <div className="label-with-button">
               <input
                 type="text"
-                placeholder="Name"
-                name="name"
-                value={formData.name}
+                placeholder="First Name"
+                name="first_name"
+                value={formData.first_name}
                 onChange={handleInputChange}
                 className="popupInput"
               />
@@ -324,19 +372,19 @@ const HostTicketOrders = ({ coupons , onDeleteCampaign , events }) => {
             <div className="label-with-button">
               <input
                 type="text"
-                placeholder="Coupon Code"
-                name="coupon_code"
-                value={formData.coupon_code}
+                placeholder="Last Name"
+                name="last_name"
+                value={formData.last_name}
                 onChange={handleInputChange}
                 className="popupInput"
               />
             </div>
             <div className="label-with-button">
               <input
-                type="number"
-                placeholder="Discount"
-                name="discount"
-                value={formData.discount}
+                type="email"
+                placeholder="Email"
+                name="email"
+                value={formData.email}
                 onChange={handleInputChange}
                 className="popupInput"
               />
@@ -344,21 +392,22 @@ const HostTicketOrders = ({ coupons , onDeleteCampaign , events }) => {
             <div className="label-with-button">
               <select
                 multiple
-                name="event_id"
-                value={formData.event_id}
-                onChange={handleEventIdChange}
+                name="tickets_id"
+                value={formData.tickets_id}
+                onChange={handleTicketChange}
                 className="popupInput"
               >
                 {/* Dynamically render options */}
-                {events.map((event) => (
-                  <option key={event.id} value={event.id}>
-                    {event.name.length > 15
-                      ? event.name.slice(0, 15) + "..."
-                      : event.name}
+                {tickets.map((ticket) => (
+                  <option key={ticket.id} value={ticket.id}>
+                    {ticket.name.length > 15
+                      ? ticket.name.slice(0, 15) + "..."
+                      : ticket.name}
                   </option>
                 ))}
               </select>
             </div>
+            {formData.tickets_id.map((ticketId) => addQuantityInput(ticketId))}
             <div className="popup-buttons">
               <button type="button" onClick={closeModal}>
                 Cancel

@@ -1,15 +1,20 @@
-import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useState , useContext } from "react";
+import { useMutation , useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import Header from "../../components/Dashboard/Header";
 import Sidebar from "../../components/Dashboard/Sidebar";
+import { UserContext } from "../../contexts/UserProvider";
 import { applyHost } from "../../api/secureService";
 import "./styles/primaryStyles.css";
 import "./styles/comonStyles.css";
 import greyInsta from "../../assets/images/greyInsta.svg";
 
 function HostDashboard() {
+  
+  const { user, updateUser } = useContext(UserContext);
+  const queryClient = useQueryClient();
+
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
@@ -20,18 +25,16 @@ function HostDashboard() {
 
   const mutation = useMutation({
     mutationFn: applyHost,
-    mutationKey: [applyHost],
+    mutationKey: ["applyHost"],
     onSuccess: (data) => {
+      updateUser(data);
+      queryClient.invalidateQueries(["user"]);
       Swal.fire({
         icon: "success",
         title: "Success",
         text: "Congrats! You are now a host.",
         timer: 2000,
       }).then(() => {
-        localStorage.setItem("hostName", data.data.name);
-        localStorage.setItem("instagram", data.data.instagram);
-        localStorage.setItem("website", data.data.website);
-        localStorage.setItem("bio", data.data.bio);
         navigate("/dashboard");
       });
     },

@@ -19,7 +19,7 @@ const LoginPage = () => {
 
   const mutation = useMutation({
     mutationFn: login,
-    mutationKey: [login],
+    mutationKey: ["login"],
     onSuccess: (data) => {
       console.log(data);
       setSuccess(true);
