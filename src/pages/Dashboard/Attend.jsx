@@ -16,7 +16,6 @@ function Attend() {
   window.onload = () => {
     setLoadingComplete(true);
   };
-
   const {
     data: events,
     error,
