@@ -1,6 +1,7 @@
 // Providers.js
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { BrowserRouter as Router } from "react-router-dom";
 import PropTypes from "prop-types";
 import GlobalProvider from "../contexts/GlobalProvider";
 import UserProvider from "../contexts/UserProvider";

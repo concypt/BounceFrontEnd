@@ -47,7 +47,7 @@ const HostCreateEvent = ({ setFormStep, setEventId }) => {
       Swal.fire("Success!", "Event created successfully!", "success").then(
         () => {
           // After the user clicks "OK" on the popup, set the form step to 2
-          console.log(data);
+          //console.log(data);
           setEventId(data.request);
           setFormStep(2);
         }
@@ -77,7 +77,12 @@ const HostCreateEvent = ({ setFormStep, setEventId }) => {
   };
 
   const handleImagesChange = (gallery) => {
-    setEventData({ ...eventData, gallery });
+    if (gallery && gallery.length > 0) {
+      setEventData({ ...eventData, gallery });
+    } else {
+      // Handle empty gallery case ( send empty array )
+      setEventData({ ...eventData, gallery: [] });
+    }
   };
 
   const onPlacesChanged = () => {

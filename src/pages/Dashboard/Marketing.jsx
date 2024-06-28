@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import LoadingBar from "react-top-loading-bar";
 import Header from "../../components/Dashboard/Header";
 import Sidebar from "../../components/Dashboard/Sidebar";
-import EmailList from "../../components/Host/Marketing/EmailsList";
+import EmailList from "../../components/Host/Marketing/emailsList";
 import DiscountCodes from "../../components/Host/Marketing/discountCodes";
 import SubscribersList from "../../components/Host/Marketing/subscribersList";
 import { fetchMarketingData } from "../../api/secureService";

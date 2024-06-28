@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { followUnfollow } from "../api/secureService";
-import { useMutation } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
+
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -23,12 +24,37 @@ const FollowUnfollowBtn = ({ organisationId }) => {
     }
   }, [organisationId]);
 
-  const mutation = useMutation({
-    mutationFn: followUnfollow,
-    onMutate: () => {
+  const toggleFollow = async () => {
+    const { data, isLoading, error } = useQuery({
+      queryKey: ["followUnfollow"],
+      queryFn: () => followUnfollow(followUnfollow),
+    });
+
+    if (isLoading) {
+      return <div>Loading...</div>;
+    }
+    if (error) {
+      return <p>Errors: {error.message}</p>;
+    }
+
+    try {
+      const url = `https://bounce.extrasol.co.uk/api/user/add-followList/${organisationId}`;
+
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to toggle follow status");
+      }
+
       const userFollowingArray =
         JSON.parse(localStorage.getItem("followingArray")) || [];
-      console.log(userFollowingArray);
       const updatedFollowingArray = isFollowingState
         ? userFollowingArray.filter((id) => id !== organisationId)
         : [...userFollowingArray, organisationId];
@@ -37,42 +63,34 @@ const FollowUnfollowBtn = ({ organisationId }) => {
         JSON.stringify(updatedFollowingArray)
       );
 
-      // Optionally return a context with the previous following state
-      return { previousFollowingArray: userFollowingArray };
-    },
-    onError: (error, variables, context) => {
-      // Revert to the previous following state
-      localStorage.setItem(
-        "followingArray",
-        JSON.stringify(context.previousFollowingArray)
-      );
-
+      return true;
+    } catch (error) {
+      //console.error("Toggle follow API error:", error);
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: error.message,
+        text: "Something went wrong!",
       });
-    },
-    onSuccess: (data, variables, context) => {
-      const message = isFollowingState
-        ? "Unfollowed successfully!"
-        : "Followed successfully!";
-      Swal.fire({
-        icon: "success",
-        title: message,
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      setIsFollowingState((prevState) => !prevState); // Update state after successful toggle
-    },
-    onSettled: () => {
-      // Any additional logic after mutation is completed (either success or error)
-    },
-  });
+      return false;
+    }
+  };
 
   const handleFollow = () => {
     if (isLoggedIn) {
-      mutation.mutate(organisationId);
+      toggleFollow().then((success) => {
+        if (success) {
+          const message = isFollowingState
+            ? "Unfollowed successfully!"
+            : "Followed successfully!";
+          Swal.fire({
+            icon: "success",
+            title: message,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          setIsFollowingState((prevState) => !prevState); // Update state after successful toggle
+        }
+      });
     } else {
       localStorage.setItem("redirectEventPage", window.location.pathname);
       setTimeout(() => {

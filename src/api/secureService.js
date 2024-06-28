@@ -191,21 +191,96 @@ export const deleteSubscriber = async (id, token) => {
 };
 
 //HostCreateEvent.jsx
-export const createEvent = async (eventDataToSubmit) => {
-  const formattedEventData = {
-    ...eventDataToSubmit,
-    category_id: Number(eventDataToSubmit.category_id),
-    featured: Number(eventDataToSubmit.featured),
-    lat: Number(eventDataToSubmit.lat),
-    lang: Number(eventDataToSubmit.lang),
-    radius: Number(eventDataToSubmit.radius),
-    event_status: Number(eventDataToSubmit.event_status),
-  };
+// export const createEvent = async (eventDataToSubmit) => {
+//   const formattedEventData = {
+//     ...eventDataToSubmit,
+//     category_id: Number(eventDataToSubmit.category_id),
+//     featured: Number(eventDataToSubmit.featured),
+//     lat: Number(eventDataToSubmit.lat),
+//     lang: Number(eventDataToSubmit.lang),
+//     radius: Number(eventDataToSubmit.radius),
+//     event_status: Number(eventDataToSubmit.event_status),
+//   };
 
-  const response = await axiosInstance.post(
-    "/user/event-create",
-    formattedEventData
-  );
+//   const response = await axiosInstance.post(
+//     "/user/event-create",
+//     formattedEventData
+//   );
+//   return response.data;
+// };
+
+// export const createEvent = async (eventDataToSubmit) => {
+//   const formData = new FormData();
+
+//   // Append fields to the FormData object
+//   Object.keys(eventDataToSubmit).forEach((key) => {
+//     formData.append(key, eventDataToSubmit[key]);
+//   });
+
+//   // Append number fields explicitly if needed
+//   formData.append("category_id", Number(eventDataToSubmit.category_id));
+//   formData.append("featured", Number(eventDataToSubmit.featured));
+//   formData.append("lat", Number(eventDataToSubmit.lat));
+//   formData.append("lang", Number(eventDataToSubmit.lang));
+//   formData.append("radius", Number(eventDataToSubmit.radius));
+//   formData.append("event_status", Number(eventDataToSubmit.event_status));
+
+//   const response = await axiosInstance.post("/user/event-create", formData, {
+//     headers: {
+//       "Content-Type": "multipart/form-data",
+//     },
+//   });
+
+//   return response.data;
+// };
+
+export const createEvent = async (eventDataToSubmit) => {
+  const formData = new FormData();
+
+  // Append other fields to the FormData object
+  Object.keys(eventDataToSubmit).forEach((key) => {
+    if (key !== "gallery" && key !== "tag") {
+      // Skip the gallery and tags fields for now
+      formData.append(key, eventDataToSubmit[key]);
+    }
+  });
+
+  // Append number fields explicitly if needed
+  formData.append("category_id", Number(eventDataToSubmit.category_id));
+  formData.append("featured", Number(eventDataToSubmit.featured));
+  formData.append("lat", Number(eventDataToSubmit.lat));
+  formData.append("lang", Number(eventDataToSubmit.lang));
+  formData.append("radius", Number(eventDataToSubmit.radius));
+  formData.append("event_status", Number(eventDataToSubmit.event_status));
+
+  // Append tags as an array or an empty array
+  const tag = eventDataToSubmit.tag || [];
+  tag.forEach((ta, index) => {
+    formData.append(`tag[${index}]`, ta);
+  });
+
+  // Append each file in the gallery array to the FormData object
+  console.log(eventDataToSubmit);
+  // Append gallery as an array of files or an empty array
+  const gallery = eventDataToSubmit.gallery || [];
+  gallery.forEach((imageObj, index) => {
+    formData.append(`gallery[${index}]`, imageObj.file); // Append the actual File object
+  });
+
+  // Ensure gallery or tag is sent even if it's empty
+  if (gallery.length === 0) {
+    formData.append("gallery", []);
+  }
+  if (tag.length === 0) {
+    formData.append("tag", []);
+  }
+
+  const response = await axiosInstance.post("/user/event-create", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
   return response.data;
 };
 
@@ -217,5 +292,15 @@ export const createTickets = async (ticketsDataToSubmit, eventId) => {
   };
 
   const response = await axiosInstance.post("/user/ticket-create", payload);
+  return response.data;
+};
+
+//FollowUnfollowBtn.jsx
+export const followUnfollow = async (organisationId) => {
+  console.log(organisationId);
+  const response = await axiosInstance.get(
+    `user/add-followList/${organisationId}`
+  );
+  console.log(response);
   return response.data;
 };

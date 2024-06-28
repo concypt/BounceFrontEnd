@@ -19,11 +19,14 @@ const LoginPage = () => {
 
   const mutation = useMutation({
     mutationFn: login,
-    mutationKey: [login],
+    mutationKey: ["login"],
     onSuccess: (data) => {
       setSuccess(true);
       setError(null);
-      const followingArray = data.following;
+      const followingArray = data.following.split(",").map((x) => {
+        return parseInt(x);
+      });
+
       localStorage.setItem("followingArray", JSON.stringify(followingArray));
 
       if (data && data.status !== 1) {
@@ -35,9 +38,6 @@ const LoginPage = () => {
           localStorage.getItem("redirectPath") || "/dashboard";
         localStorage.removeItem("redirectPath");
         navigate(redirectPath);
-
-        // const redirectTo = location.state?.from?.pathname || "/dashboard";
-        // navigate(redirectTo);
       }
     },
     onError: (error) => {

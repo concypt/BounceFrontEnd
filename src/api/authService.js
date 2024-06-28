@@ -15,7 +15,6 @@ export const login = async (credentials) => {
 export const logout = async () => {
   try {
     const response = await axiosInstance.get("/user/logout");
-    console.log(response.data);
     return response.data;
   } catch (error) {
     throw new Error("Logout failed");
@@ -25,6 +24,7 @@ export const logout = async () => {
 export const refreshAccessToken = async () => {
   try {
     const response = await axiosInstance.get("/refresh-access");
+    console.log("re re re", response.data.access_token);
     return response.data.access_token;
   } catch (error) {
     console.error("Error refreshing token", error);
