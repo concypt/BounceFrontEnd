@@ -11,8 +11,8 @@ const Sidebar = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [showSublinks, setShowSublinks] = useState(false);
 
-  const isHostNull = user.org_role === 1 ? true : false;
-
+  const isHostNull = user.org_role == 0 ? true : false;
+ 
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
   };
@@ -61,7 +61,7 @@ const Sidebar = () => {
             </NavLink>
           </li>
           <li>
-            {isHostNull ? (
+            { isHostNull ? (
               <NavLink
                 to="/dashboard-host"
                 className={({ isActive }) =>

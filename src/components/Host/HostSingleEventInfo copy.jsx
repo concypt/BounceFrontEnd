@@ -3,6 +3,25 @@ import LoadingBar from "react-top-loading-bar";
 import { Link } from "react-router-dom";
 // import { format, parseISO } from "date-fns";
 const EventInfoComponent = ({ eventId }) => {
+
+  // const {
+  //   data: eventData,
+  //   isLoading,
+  //   error,
+  // } = useQuery({
+  //   queryFn: () => fetchEventDetails(eventId),
+  //   queryKey: ["EventInfo", eventId],
+  //   enabled: !!eventId, // Ensure eventId is truthy before making the request
+  // });
+  // if (isLoading) {
+  //   return <LoadingBar color="#7e79ff" height={3} progress={10} />;
+  // }
+
+  // if (error) {
+  //   return <p>Error: {error.message}</p>;
+  // }
+
+
   const [eventData, setEventData] = useState(null);
   const [loading, setLoading] = useState(true);
 

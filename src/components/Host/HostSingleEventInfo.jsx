@@ -1,30 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import LoadingBar from "react-top-loading-bar";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate } from "react-router-dom";
 import { fetchEventDetails } from "../../api/secureService";
 
 import calendarIcon from "../../assets/images/calender.svg";
 import clockIcon from "../../assets/images/clock_grey.svg";
 import locationIcon from "../../assets/images/location_grey.svg";
+import { format, parseISO } from 'date-fns';
 
-const EventInfoComponent = ({ eventId }) => {
-  const {
-    data: eventData,
-    isLoading,
-    error,
-  } = useQuery({
-    queryFn: () => fetchEventDetails(eventId),
-    queryKey: ["EventInfo", eventId],
-    enabled: !!eventId, // Ensure eventId is truthy before making the request
-  });
-  if (isLoading) {
-    return <LoadingBar color="#7e79ff" height={3} progress={10} />;
-  }
-
-  if (error) {
-    return <p>Error: {error.message}</p>;
-  }
-
+const EventInfoComponent = ({ eventData }) => {
+ 
   return (
     <div className="singleEvent">
       <div className="singleEventHeader">
@@ -43,16 +28,20 @@ const EventInfoComponent = ({ eventId }) => {
         </p>
         <p>
           <img src={locationIcon} className="descriptionImg" alt="" />{" "}
-          {eventData.address ? eventData.address : "No location Entered"}
+          {eventData.location ? eventData.location : "No location Entered"}
         </p>
       </div>
       <div className="singleEventBtn">
-        <button className="loginButton" type="button">
+        
+        <button className="loginButton" >
           <span>Edit event</span>
         </button>
-        <button className="loginButton" type="button">
+       
+        <Link to={`/dashboard-event-tickets/${eventData.id}`} >
+        <button className="loginButton" type="button" >
           <span>Manage tickets</span>
         </button>
+        </Link>
       </div>
     </div>
   );

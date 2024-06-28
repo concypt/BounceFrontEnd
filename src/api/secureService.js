@@ -79,6 +79,7 @@ export const deleteEvent = async (id) => {
   }
 };
 
+
 //HostTicketOrders.jsx
 export const fetchOrders = async () => {
   try {
@@ -165,18 +166,6 @@ export const addCoupon = async (formData) => {
 export const deleteCoupon = async (id) => {
   const response = await axiosInstance.delete(`/user/coupon/${id}`);
   return response.data;
-};
-
-//subscribersList.jsx
-export const fetchSubscribeList = async (token) => {
-  const response = await axiosInstance.get("/user/all-subscribe-list", {
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  return response.data.data || [];
 };
 
 export const deleteSubscriber = async (id, token) => {

@@ -1,5 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
+<<<<<<< HEAD
 import { useState } from "react";
+=======
+import { Link } from "react-router-dom";
+>>>>>>> dev-muhammad
 import Header from "../../components/Dashboard/Header";
 import Sidebar from "../../components/Dashboard/Sidebar";
 import EventSlider from "../../components/Dashboard/EventSlider";
@@ -51,9 +55,11 @@ function Attend() {
           <div className="upcomingEvents row-one">
             <div className="upcomingDiv">
               <h2>Upcoming Events</h2>
+              <Link to="/events?page=1">
               <button className="loginButton" type="submit">
-                <span>Browse All Events</span>
-              </button>
+              <span>Browse All Events</span>
+               </button>
+               </Link>
             </div>
             <EventSlider events={events.upcoming} slides="4" />
           </div>
