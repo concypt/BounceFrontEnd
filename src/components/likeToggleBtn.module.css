@@ -1,0 +1,31 @@
+.heart_icon {
+  position: absolute;
+  bottom: 45px;
+  right: 45px;
+  height: 82px;
+  width: 82px;
+  background-color: #bebbdd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100px;
+}
+
+.heart_icon img {
+  width: 42px;
+  height: 42px;
+}
+
+@media (max-width: 767px) {
+  .heart_icon {
+    top: 22px;
+    right: 22px;
+    height: 48px;
+    width: 48px;
+  }
+
+  .heart_icon img {
+    width: 24px;
+    height: 24px;
+  }
+}

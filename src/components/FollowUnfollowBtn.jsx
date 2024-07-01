@@ -75,7 +75,7 @@ const FollowUnfollowBtn = ({ organisationId }) => {
     if (isLoggedIn) {
       mutation.mutate(organisationId);
     } else {
-      localStorage.setItem("redirectEventPage", window.location.pathname);
+      localStorage.setItem("redirectPath", window.location.pathname);
       setTimeout(() => {
         navigate("/login");
       }, 1500);

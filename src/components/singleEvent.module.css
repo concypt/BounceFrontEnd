@@ -1,104 +1,3 @@
-/* .eventsGrid {
-  display: grid;
-  grid-template-columns: 32% 32% 32%;
-  row-gap: 60px;
-  justify-content: space-between;
-  padding-top: 50px;
-}
-
-.eventsGrid a {
-  text-decoration: none;
-}
-
-.eventCard {
-  max-width: 516px;
-  box-shadow: 0px 0px 10px 5px rgba(155, 154, 197, 0.15);
-  border-radius: 18px;
-  overflow: hidden;
-  background: #f9f9f9;
-  position: relative;
-  padding-bottom: 70px;
-}
-
-.eventCard h2 {
-  font-family: var(--primary-font);
-  font-size: 32px;
-  line-height: 36px;
-  font-weight: 700;
-  color: #242424;
-  margin: 0;
-  overflow: hidden;
-  text-overflow: clip;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-}
-
-.eventCardImage {
-  position: relative;
-}
-
-
-
-.eventCategoryButton {
-  position: absolute;
-  background-color: #aeabff;
-  display: inline-block;
-  color: #fff;
-  font-size: 14px;
-  line-height: 24px;
-  border-radius: 30px;
-  padding: 3px 24px;
-  left: 25px;
-  bottom: 20px;
-}
-
-.dateRemainingDaysDiv {
-  margin-top: 20px;
-}
-
-.remainingDaysBtn {
-  background-color: #f0677f;
-  display: inline-block;
-  color: #fff;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 24px;
-  border-radius: 30px;
-  padding: 3px 20px;
-  margin-left: 20px;
-}
-
-.eventCardDetails {
-  padding: 18px 28px;
-}
-
-.eventCardDetails span.time,
-.eventCardDetails span.location {
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.eventCardDetails span.time img {
-  margin-right: 10px;
-  margin-left: 2px;
-}
-
-.eventCardDetails span.location img {
-  margin-right: 5px;
-  margin-left: 0;
-}
-
-.locationDiv {
-  margin-top: 10px;
-}
-
-.ticketsFindMore {
-  display: flex;
-  position: absolute;
-  bottom: 23px;
-} */
-
 /* event-detail */
 .eventImg {
   width: 100%;
@@ -126,24 +25,6 @@
 .category_main h5 {
   margin: 0;
   font-size: 18px;
-}
-
-.heart_icon {
-  position: absolute;
-  bottom: 45px;
-  right: 45px;
-  height: 82px;
-  width: 82px;
-  background-color: #bebbdd;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 100px;
-}
-
-.heart_icon img {
-  width: 42px;
-  height: 42px;
 }
 
 .event_detail_content {
@@ -612,18 +493,6 @@ select {
 
   .details {
     padding: 25px;
-  }
-
-  .heart_icon {
-    top: 22px;
-    right: 22px;
-    height: 48px;
-    width: 48px;
-  }
-
-  .heart_icon img {
-    width: 24px;
-    height: 24px;
   }
 
   .category_main {

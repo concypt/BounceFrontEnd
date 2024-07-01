@@ -1,15 +1,21 @@
 import { useState } from "react";
+import { useParams } from "react-router-dom";
+
 import Header from "../../components/Dashboard/Header";
 import Sidebar from "../../components/Dashboard/Sidebar";
 import HostCreateEvent from "../../components/Host/HostCreateEvent";
 import "./styles/primaryStyles.css";
 import "./styles/comonStyles.css";
-import "./CreateEvent.css";
+import "./HostEvent.css";
 import HostCreateTickets from "../../components/Host/HostCreateTickets";
 
-const CreateEvent = () => {
+const HostEvent = () => {
+  const { id } = useParams();
+
+  console.log(id);
+
   const [formStep, setFormStep] = useState(1);
-  const [eventId, setEventId] = useState(null);
+  const [eventId, setEventId] = useState(id ? parseInt(id) : null);
 
   return (
     <div className="dashboard">
@@ -49,6 +55,7 @@ const CreateEvent = () => {
                       <HostCreateEvent
                         setFormStep={setFormStep}
                         setEventId={setEventId}
+                        eventId={eventId}
                       />
                     </div>
                     <div
@@ -75,4 +82,4 @@ const CreateEvent = () => {
   );
 };
 
-export default CreateEvent;
+export default HostEvent;

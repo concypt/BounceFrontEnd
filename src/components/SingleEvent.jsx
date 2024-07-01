@@ -12,10 +12,10 @@ import { Link } from "react-router-dom";
 //import Swal from "sweetalert2";
 
 //images
-import heartImage from "../assets/images/heart.svg";
 import calendarImage from "../assets/images/calender.svg";
 import clockImage from "../assets/images/clock_grey.svg";
 import locationImage from "../assets/images/location_grey.svg";
+import LikeToggleBtn from "./LikeToggleBtn";
 
 const SingleEvent = () => {
   const { eventId } = useParams();
@@ -72,9 +72,7 @@ const SingleEvent = () => {
             <div className={styles.category_main}>
               <h5 className={styles.category_name}>{event.category.name}</h5>
             </div>
-            <div className={styles.heart_icon}>
-              <img src={heartImage} alt="" />
-            </div>
+            <LikeToggleBtn eventId={event.id} />
           </div>
           <div className="row">
             <div className="col-md-12 col-lg-7">

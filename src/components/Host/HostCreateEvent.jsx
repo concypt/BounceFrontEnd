@@ -1,7 +1,7 @@
-import { useState, useContext, useRef, useCallback } from "react";
+import { useState, useContext, useRef, useCallback, useEffect } from "react";
 import { useJsApiLoader, StandaloneSearchBox } from "@react-google-maps/api";
-import { useMutation } from "@tanstack/react-query";
-import { createEvent } from "../../api/secureService";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { createEvent, getEvent, updateEvent } from "../../api/secureService";
 import PropTypes from "prop-types";
 import TagsInput from "../Host/TagsInput";
 import Loader from "../utils/Loader";
@@ -10,7 +10,18 @@ import ImageUpload from "../ImageUpload";
 import Swal from "sweetalert2";
 import DateTimePicker from "./DateTimePicker";
 
-const HostCreateEvent = ({ setFormStep, setEventId }) => {
+function separateDateTime(datetimeString) {
+  // Split the datetime string into date and time components
+  const [date, timeWithMs] = datetimeString.split("T");
+  // Remove the milliseconds and timezone part from the time component
+  const time = timeWithMs.split(".")[0].slice(0, 5);
+
+  const dateTime = date + " " + time;
+
+  return dateTime;
+}
+
+const HostCreateEvent = ({ setFormStep, setEventId, eventId }) => {
   const [libraries] = useState(["places"]);
   const [eventData, setEventData] = useState({
     event_name: "",
@@ -30,6 +41,54 @@ const HostCreateEvent = ({ setFormStep, setEventId }) => {
     event_status: 0,
   });
 
+  const {
+    data: fectchedEvent,
+    isError,
+    isLoading,
+  } = useQuery({
+    queryKey: ["editEvent", eventId],
+    queryFn: () => getEvent(eventId),
+    enabled: !!eventId,
+  });
+
+  if (isLoading) console.log("loading event");
+  if (isError) console.log(isError);
+  //console.log(fectchedEvent);
+  // useEffect(() => {
+  //   console.log(eventData);
+  // }, [eventData]);
+
+  useEffect(() => {
+    if (fectchedEvent) {
+      const fGallery = fectchedEvent.gallery.map((url) => ({
+        file: null,
+        preview: url,
+      }));
+
+      const fStartDateTime = separateDateTime(fectchedEvent.start_time);
+
+      const fEndDateTime = separateDateTime(fectchedEvent.end_time);
+
+      setEventData({
+        event_name: fectchedEvent.name,
+        category_id: fectchedEvent.category_id,
+        tag: fectchedEvent.tags.split(",") || [],
+        featured: fectchedEvent.featured,
+        event_start_time: fStartDateTime,
+        event_end_time: fEndDateTime,
+        event_type: fectchedEvent.type,
+        address: fectchedEvent.address,
+        lat: fectchedEvent.lat,
+        lang: fectchedEvent.lang,
+        radius: null,
+        link: fectchedEvent.link,
+        event_description: fectchedEvent.description,
+        gallery: fGallery || [],
+        event_status: fectchedEvent.event_status,
+      });
+    }
+  }, [fectchedEvent]);
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const searchBoxRef = useRef(null);
@@ -42,13 +101,32 @@ const HostCreateEvent = ({ setFormStep, setEventId }) => {
 
   const mutation = useMutation({
     mutationFn: createEvent,
-    mutationKey: [createEvent],
+    mutationKey: ["createEvent"],
     onSuccess: (data) => {
       Swal.fire("Success!", "Event created successfully!", "success").then(
         () => {
           // After the user clicks "OK" on the popup, set the form step to 2
           //console.log(data);
           setEventId(data.request);
+          setFormStep(2);
+        }
+      );
+    },
+    onError: (error) => {
+      Swal.fire("Error!", `Failed to create event: ${error.message}`, "error");
+      // Error actions
+    },
+  });
+
+  const mutationUpdate = useMutation({
+    mutationFn: (eventData) => updateEvent(eventData, eventId),
+    mutationKey: ["updateEvent"],
+    onSuccess: (data) => {
+      Swal.fire("Success!", "Event updated successfully!", "success").then(
+        () => {
+          // After the user clicks "OK" on the popup, set the form step to 2
+          console.log(data);
+
           setFormStep(2);
         }
       );
@@ -98,15 +176,20 @@ const HostCreateEvent = ({ setFormStep, setEventId }) => {
     }
   };
 
-  const handleNext = () => {
-    //setFormStep(2);
-    //console.log(eventData);
-  };
+  // const handleNext = () => {
+  //   //setFormStep(2);
+  //   //console.log(eventData);
+  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("handle submit");
-    mutation.mutate(eventData);
+    if (eventId != null || eventId != "") {
+      console.log("submit::", eventId);
+      mutationUpdate.mutate(eventData);
+    } else {
+      mutation.mutate(eventData);
+    }
   };
 
   const { isLoaded, loadError } = useJsApiLoader({
@@ -185,7 +268,8 @@ const HostCreateEvent = ({ setFormStep, setEventId }) => {
             <TagsInput tags={eventData.tag} onTagsChange={handleTagsChange} />
           </div>
           <DateTimePicker
-            initialData={eventData}
+            initialStartTime={eventData.event_start_time}
+            initialEndTime={eventData.event_end_time}
             onDateTimeChange={handleDateTimeChange}
           />
           {/* <EventDateTime eventData={eventData} setEventData={setEventData} /> */}
@@ -290,5 +374,6 @@ const HostCreateEvent = ({ setFormStep, setEventId }) => {
 HostCreateEvent.propTypes = {
   setFormStep: PropTypes.func,
   setEventId: PropTypes.func,
+  eventId: PropTypes.number,
 };
 export default HostCreateEvent;

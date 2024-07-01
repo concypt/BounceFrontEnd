@@ -23,11 +23,18 @@ const LoginPage = () => {
     onSuccess: (data) => {
       setSuccess(true);
       setError(null);
-      const followingArray = data.following.split(",").map((x) => {
+      const followingArray = data.following?.split(",").map((x) => {
         return parseInt(x);
       });
-
+      const favEvents = data.favorite?.split(",").map((x) => {
+        return parseInt(x);
+      });
+      const favBlogs = data.favorite_blog?.split(",").map((x) => {
+        return parseInt(x);
+      });
       localStorage.setItem("followingArray", JSON.stringify(followingArray));
+      localStorage.setItem("favEvents", JSON.stringify(favEvents));
+      localStorage.setItem("favBlogs", JSON.stringify(favBlogs));
 
       if (data && data.status !== 1) {
         navigate("/verification", {

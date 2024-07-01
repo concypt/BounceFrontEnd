@@ -1,32 +1,25 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
-const DateTimePicker = ({ initialData, onDateTimeChange }) => {
-  const [startDate, setStartDate] = useState("");
-  const [startTime, setStartTime] = useState("00:00");
-  const [endDate, setEndDate] = useState("");
-  const [endTime, setEndTime] = useState("");
+const DateTimePicker = ({
+  initialStartTime,
+  initialEndTime,
+  onDateTimeChange,
+}) => {
+  const inSD = initialStartTime.split(" ")[0] || "";
+  const inST = initialStartTime.split(" ")[1] || "";
+  const inED = initialEndTime.split(" ")[0] || "";
+  const inET = initialEndTime.split(" ")[1] || "";
 
-  useEffect(() => {
-    const today = new Date().toISOString().split("T")[0];
-    if (initialData.startDate) {
-      setStartDate(initialData.startDate);
-    } else {
-      setStartDate(today);
-    }
+  const initialStart = new Date().toISOString().split("T")[0];
+  let initialEnd = new Date();
+  initialEnd.setDate(initialEnd.getDate() + 7);
+  initialEnd = initialEnd.toISOString().split("T")[0];
 
-    if (initialData.startTime) {
-      setStartTime(initialData.startTime);
-    }
-
-    if (initialData.endDate) {
-      setEndDate(initialData.endDate);
-    }
-
-    if (initialData.endTime) {
-      setEndTime(initialData.endTime);
-    }
-  }, [initialData]);
+  const [startDate, setStartDate] = useState(inSD != "" ? inSD : initialStart);
+  const [startTime, setStartTime] = useState(inST != "" ? inST : "00:00");
+  const [endDate, setEndDate] = useState(inED != "" ? inED : initialEnd);
+  const [endTime, setEndTime] = useState(inET != "" ? inET : "00:00");
 
   useEffect(() => {
     const formattedStartDateTime = `${startDate} ${startTime}:00`;
@@ -78,12 +71,8 @@ const DateTimePicker = ({ initialData, onDateTimeChange }) => {
 };
 
 DateTimePicker.propTypes = {
-  initialData: PropTypes.shape({
-    startDate: PropTypes.string,
-    startTime: PropTypes.string,
-    endDate: PropTypes.string,
-    endTime: PropTypes.string,
-  }),
+  initialStartTime: PropTypes.string,
+  initialEndTime: PropTypes.string,
   onDateTimeChange: PropTypes.func.isRequired,
 };
 

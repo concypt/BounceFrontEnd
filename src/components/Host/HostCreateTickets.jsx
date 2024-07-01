@@ -222,7 +222,8 @@ const HostCreateTickets = ({ setFormStep, eventId }) => {
                 />
                 <div className="datetime">
                   <DateTimePicker
-                    initialData={ticketData}
+                    initialStartTime={ticketData.ticket_start_time}
+                    initialEndTime={ticketData.ticket_end_time}
                     onDateTimeChange={handleDateTimeChange}
                   />
                 </div>

@@ -25,7 +25,7 @@ import LoadingBar from "react-top-loading-bar";
 import Tickets from "./pages/Dashboard/Tickets.jsx";
 import EventSingle from "./pages/Dashboard/EventSingle.jsx";
 import Marketing from "./pages/Dashboard/Marketing.jsx";
-import CreateEvent from "./pages/Dashboard/CreateEvent.jsx";
+import HostEvent from "./pages/Dashboard/HostEvent.jsx";
 import Attend from "./pages/Dashboard/Attend.jsx";
 import PrivacyPolicy from "./pages/static/PrivacyPolicy.jsx";
 import About from "./pages/static/About.jsx";
@@ -67,12 +67,10 @@ const router = createBrowserRouter(
           path="/dashboard-single-event/:eventId"
           element={<EventSingle />}
         />
-        <Route
-          path="/dashboard-event-tickets/:eventId"
-          element={<Tickets />}
-        />
+        <Route path="/dashboard-event-tickets/:eventId" element={<Tickets />} />
         <Route path="/dashboard-marketing" element={<Marketing />} />
-        <Route path="/dashboard-create-event" element={<CreateEvent />} />
+        <Route path="/host-event/new" element={<HostEvent />} />
+        <Route path="/host-event/edit/:id" element={<HostEvent />} />
         <Route path="/Attend" element={<Attend />} />
       </Route>
       {/* without layout pages */}
