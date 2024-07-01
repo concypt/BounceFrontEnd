@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   useTable,
@@ -26,6 +26,7 @@ const customStyles = {
     transform: "translate(-50%, -50%)",
     borderRadius: "32px",
     maxWidth: "700px",
+    width: "95%",
   },
 };
 
@@ -285,11 +286,19 @@ const EmailList = ({ campaigns }) => {
             />
             {entryCount > 0 && <p>Found {entryCount} contacts.</p>}
             <div className="popup-buttons">
-              <button type="button" onClick={closeModal}>
-                Cancel
+              <button
+                className="loginButton"
+                onClick={closeModal}
+                type="button"
+              >
+                <span>Cancel</span>
               </button>
-              <button type="button" onClick={handleImport}>
-                Import
+              <button
+                className="loginButton"
+                onClick={handleImport}
+                type="button"
+              >
+                <span>Import</span>
               </button>
             </div>
           </form>

@@ -4,6 +4,7 @@ import { CatContext } from "../contexts/GlobalProvider";
 import EventFilterCheckbox from "./EventFilterCheckbox";
 import styles from "./eventFilter.module.css";
 import { DateRangePicker } from "react-date-range";
+import { CustomDateRangePicker } from "./DateRangePickerStyles";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import locationImage from "../assets/images/location_grey.svg";
@@ -315,16 +316,18 @@ const EventFilter = ({
                     readOnly
                   />
                   {showDatePicker && (
-                    <DateRangePicker
-                      onChange={(item) => setDateRange([item.selection])}
-                      className={styles.rdrDateRangePickerWrapper}
-                      months={isMobile ? 1 : 2}
-                      direction={isMobile ? "horizontal" : "horizontal"}
-                      ranges={dateRange}
-                      editableDateInputs={true}
-                      showMonthAndYearPickers={true}
-                      showMonthArrow={true}
-                    />
+                    <CustomDateRangePicker>
+                      <DateRangePicker
+                        onChange={(item) => setDateRange([item.selection])}
+                        className={styles.rdrDateRangePickerWrapper}
+                        months={isMobile ? 1 : 2}
+                        direction={isMobile ? "horizontal" : "horizontal"}
+                        ranges={dateRange}
+                        editableDateInputs={true}
+                        showMonthAndYearPickers={true}
+                        showMonthArrow={true}
+                      />
+                    </CustomDateRangePicker>
                   )}
                 </div>
               </div>

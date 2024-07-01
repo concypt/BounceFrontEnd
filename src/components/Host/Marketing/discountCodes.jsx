@@ -29,6 +29,7 @@ const customStyles = {
     transform: "translate(-50%, -50%)",
     borderRadius: "32px",
     maxWidth: "700px",
+    width: "95%",
   },
 };
 
@@ -38,9 +39,7 @@ import deleteImg from "../../../assets/images/event-dash-icon-delete.svg";
 import paginatePrev from "../../../assets/images/pagination-arrow-prev.svg";
 import paginateNext from "../../../assets/images/pagination-arrow-next.svg";
 
-
-const HostTicketOrders = ({ coupons , onDeleteCampaign , events }) => {
-
+const HostTicketOrders = ({ coupons, onDeleteCampaign, events }) => {
   const queryClient = useQueryClient();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -84,7 +83,6 @@ const HostTicketOrders = ({ coupons , onDeleteCampaign , events }) => {
     onSuccess: () => {
       queryClient.invalidateQueries("coupons");
       Swal.fire("Deleted!", "Your coupon has been deleted.", "success");
-
     },
     onError: (error) => {
       Swal.fire("Error!", "Failed to delete coupon.", error);
@@ -214,7 +212,7 @@ const HostTicketOrders = ({ coupons , onDeleteCampaign , events }) => {
   } = useTable(
     {
       columns,
-      data: coupons ,
+      data: coupons,
       initialState: { pageIndex: 0, pageSize: 5 },
     },
     useFilters,
@@ -309,64 +307,75 @@ const HostTicketOrders = ({ coupons , onDeleteCampaign , events }) => {
           style={customStyles}
           contentLabel="Upload Excel File"
         >
-          <h2>Create a new list</h2>
           <form onSubmit={handleSubmit}>
-            <div className="label-with-button">
-              <input
-                type="text"
-                placeholder="Name"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                className="popupInput"
-              />
-            </div>
-            <div className="label-with-button">
-              <input
-                type="text"
-                placeholder="Coupon Code"
-                name="coupon_code"
-                value={formData.coupon_code}
-                onChange={handleInputChange}
-                className="popupInput"
-              />
-            </div>
-            <div className="label-with-button">
-              <input
-                type="number"
-                placeholder="Discount"
-                name="discount"
-                value={formData.discount}
-                onChange={handleInputChange}
-                className="popupInput"
-              />
-            </div>
-            <div className="label-with-button">
-              <select
-                multiple
-                name="event_id"
-                value={formData.event_id}
-                onChange={handleEventIdChange}
-                className="popupInput"
-              >
-                {/* Dynamically render options */}
-                {events.map((event) => (
-                  <option key={event.id} value={event.id}>
-                    {event.name.length > 15
-                      ? event.name.slice(0, 15) + "..."
-                      : event.name}
-                  </option>
-                ))}
-              </select>
+            <div className="discount-grid-popup">
+              <div className="discount-grid-column">
+                <h2>Create a discount code</h2>
+                <div className="label-with-button">
+                  <input
+                    type="text"
+                    placeholder="Name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    className="popupInput"
+                  />
+                </div>
+                <div className="label-with-button">
+                  <input
+                    type="text"
+                    placeholder="Coupon Code"
+                    name="coupon_code"
+                    value={formData.coupon_code}
+                    onChange={handleInputChange}
+                    className="popupInput"
+                  />
+                </div>
+                <div className="label-with-button">
+                  <input
+                    type="number"
+                    placeholder="Discount"
+                    name="discount"
+                    value={formData.discount}
+                    onChange={handleInputChange}
+                    className="popupInput"
+                  />
+                </div>
+              </div>
+              <div className="label-with-button">
+                <label htmlFor="" className="multiple-events-discount-label">
+                  Applies to
+                </label>
+                <select
+                  multiple
+                  name="event_id"
+                  value={formData.event_id}
+                  onChange={handleEventIdChange}
+                  className="popupInputTextarea"
+                >
+                  {/* Dynamically render options */}
+                  {events.map((event) => (
+                    <option key={event.id} value={event.id}>
+                      {event.name.length > 15
+                        ? event.name.slice(0, 15) + "..."
+                        : event.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
             <div className="popup-buttons">
-              <button type="button" onClick={closeModal}>
-                Cancel
+              <button
+                className="loginButton"
+                onClick={closeModal}
+                type="button"
+              >
+                <span>Cancel</span>
               </button>
               <button
-                type="submit"
-                className="global_button_on"
+                className="loginButton"
                 disabled={mutation.isLoading}
+                type="submit"
               >
                 <span>{mutation.isLoading ? "requesting..." : "Submit"}</span>
               </button>

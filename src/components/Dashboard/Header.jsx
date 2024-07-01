@@ -46,7 +46,11 @@ const Header = () => {
         <ul className={`${styles.dropdownMenu} ${styles.dropdownMenu1}`}>
           <li>
             <Link to={`/dashboard`}>
-              <img src={dashboardProfile} alt="Profile" />
+              <img
+                src={dashboardProfile}
+                className={styles.dashboardProfileIcon}
+                alt="Profile"
+              />
               Profile
             </Link>
           </li>

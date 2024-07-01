@@ -200,7 +200,7 @@ const EventSlider = (props) => {
             slidesPerView: qS === 4 ? 3 : 2,
           },
 
-          1400: {
+          1800: {
             slidesPerView: qS,
             spaceBetween: 10,
           },
@@ -231,7 +231,7 @@ const EventSlider = (props) => {
                 <div className={styles.dateRemainingDaysDiv}>
                   <span className={styles.time}>
                     <img src={clockIcon} alt="" />{" "}
-                    {moment(event.start_time).format("YYYY-MM-DD")}
+                    {moment(event.start_time).format("YYYY/MM/DD")}
                   </span>
                   <div className={styles.remainingDaysBtn}>
                     <>{event.daysCount}</>

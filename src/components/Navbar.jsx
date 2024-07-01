@@ -46,7 +46,7 @@ function Navbar() {
             </li>
             <div className="navbtn_div">
               <NavLink
-                to="/dashboard-create-event"
+                to="/host-event/new"
                 className={`${styles.global_button_one} ${styles.nav_btn}`}
               >
                 Host an event
@@ -55,7 +55,7 @@ function Navbar() {
           </ul>
           <div className={styles.host_and_signin}>
             <NavLink
-              to="/dashboard-create-event"
+              to="/host-event/new"
               className={`${styles.global_button_one} ${styles.nav_btn}`}
             >
               Host an Event

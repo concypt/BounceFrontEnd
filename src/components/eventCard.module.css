@@ -99,6 +99,18 @@
   }
 }
 
+@media (max-width: 900px) {
+  .eventCardDetails {
+    padding: 18px 20px;
+  }
+
+  .remainingDaysBtn {
+    margin-left: 10px;
+    font-size: 12px;
+    padding: 3px 10px;
+  }
+}
+
 @media (max-width: 767px) {
   .eventCard {
     width: 100%;

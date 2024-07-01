@@ -661,9 +661,9 @@ select {
     padding: 20px 10px;
   }
 
-  .eventImg {
+  /* .eventImg {
     min-height: calc(100vh - 215px);
-  }
+  } */
 
   .event_detail_card {
     padding: 15px 15px;

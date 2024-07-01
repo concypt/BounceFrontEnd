@@ -101,6 +101,10 @@
   border-radius: 0px;
 }
 
+.dropdownMenu .dashboardProfileIcon {
+  height: 20px;
+}
+
 .dropdownMenu .lastLi {
   margin-bottom: 0;
 }
@@ -133,13 +137,9 @@
   .headerProfile h3 {
     font-size: 22px;
   }
-  .headerProfile img {
+  .headerProfile > img {
     height: 40px;
     width: 40px;
-  }
-  .dropdownMenu img {
-    width: 18px;
-    height: 18px;
   }
   .dropdownMenu {
     padding: 12px 12px;
@@ -151,7 +151,7 @@
     font-size: 18px;
   }
 
-  .headerProfile img {
+  .headerProfile > img {
     width: 35px;
     height: 35px;
   }

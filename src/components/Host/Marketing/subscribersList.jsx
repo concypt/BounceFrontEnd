@@ -12,8 +12,8 @@ import Modal from "react-modal";
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import "../../../pages/Dashboard/styles/primaryStyles.css";
 import "../../../pages/Dashboard/styles/comonStyles.css";
-import { deleteSubscriber  } from "../../../api/secureService";
-import { subscriberList , fetchEditData} from "../../../api/musecureService";
+import { deleteSubscriber } from "../../../api/secureService";
+import { subscriberList, fetchEditData } from "../../../api/musecureService";
 
 //images
 
@@ -21,7 +21,6 @@ import paginatePrev from "../../../assets/images/pagination-arrow-prev.svg";
 import paginateNext from "../../../assets/images/pagination-arrow-next.svg";
 import viewImg from "../../../assets/images/event-dash-icon-view.svg";
 import editImg from "../../../assets/images/event-dash-icon-edit.svg";
-
 
 const customStyles = {
   content: {
@@ -33,19 +32,20 @@ const customStyles = {
     transform: "translate(-50%, -50%)",
     borderRadius: "32px",
     maxWidth: "700px",
+    width: "95%",
   },
 };
 
 Modal.setAppElement("#root");
 
-const SubscribersList = ({subscribe_list,onDeleteCampaign}) => {
+const SubscribersList = ({ subscribe_list, onDeleteCampaign }) => {
   const queryClient = useQueryClient();
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  
+
   // Function to open the modal for creating new item
   const openModal = () => {
     setFormData({
-      name: '',
+      name: "",
       // Clear other fields as needed
     });
     setEditItemId(null);
@@ -55,14 +55,13 @@ const SubscribersList = ({subscribe_list,onDeleteCampaign}) => {
   const closeModal = () => {
     setModalIsOpen(false);
     setFormData({
-      name: '',
+      name: "",
       // Clear other fields as needed
     });
     setEditItemId(null);
   };
 
   const openEditModal = (id) => {
-   
     const {
       data: itemToEdit,
       error,
@@ -85,9 +84,9 @@ const SubscribersList = ({subscribe_list,onDeleteCampaign}) => {
           <p style={{ textAlign: "center", width: "100%" }}>Loading...</p>
         </div>
       );
-      if (error) {
-        return <p>Error: {error.message}</p>;
-      }
+    if (error) {
+      return <p>Error: {error.message}</p>;
+    }
     console.log(itemToEdit);
     setFormData({
       name: itemToEdit.name,
@@ -113,7 +112,7 @@ const SubscribersList = ({subscribe_list,onDeleteCampaign}) => {
         timer: 2000,
       });
       setFormData({
-       name: " ",
+        name: " ",
       });
       queryClient.invalidateQueries("subscriberList");
       setModalIsOpen(false);
@@ -126,7 +125,6 @@ const SubscribersList = ({subscribe_list,onDeleteCampaign}) => {
       });
     },
   });
-
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -145,7 +143,7 @@ const SubscribersList = ({subscribe_list,onDeleteCampaign}) => {
       Swal.fire({
         title: "Are you sure?",
         text: "Do you want to submit the form?",
-        icon: 'question',
+        icon: "question",
         showCancelButton: true,
         confirmButtonColor: "#7357FF",
         confirmButtonText: "Yes!",
@@ -155,10 +153,9 @@ const SubscribersList = ({subscribe_list,onDeleteCampaign}) => {
         }
       });
     }
-    
+
     setModalIsOpen(false);
   };
-
 
   const deleteSubscriberMutation = useMutation({
     mutationFn: deleteSubscriber,
@@ -166,7 +163,6 @@ const SubscribersList = ({subscribe_list,onDeleteCampaign}) => {
     onSuccess: () => {
       queryClient.invalidateQueries("subscribe_list");
       Swal.fire("Deleted!", "Your subscribe list has been deleted.", "success");
-
     },
     onError: (error) => {
       Swal.fire("Error!", "Failed to delete subscribe list.", "error");
@@ -189,7 +185,6 @@ const SubscribersList = ({subscribe_list,onDeleteCampaign}) => {
     });
   };
 
- 
   const columns = useMemo(
     () => [
       {
@@ -202,7 +197,9 @@ const SubscribersList = ({subscribe_list,onDeleteCampaign}) => {
         accessor: "name",
         sortType: "basic",
         Cell: ({ value }) => (
-          <div>{value && value.length > 20 ? value.slice(0, 20) + "..." : value}</div>
+          <div>
+            {value && value.length > 20 ? value.slice(0, 20) + "..." : value}
+          </div>
         ),
       },
       {
@@ -210,7 +207,7 @@ const SubscribersList = ({subscribe_list,onDeleteCampaign}) => {
         accessor: "actions",
         Cell: ({ row }) => (
           <div className="actionsColumn">
-             <button  onClick={() => openEditModal(row.original.id)}>
+            <button onClick={() => openEditModal(row.original.id)}>
               <img src={editImg} alt="Delete" />
             </button>
             <button onClick={() => handleDelete(row.original.id)}>
@@ -251,12 +248,11 @@ const SubscribersList = ({subscribe_list,onDeleteCampaign}) => {
 
   const { pageIndex, pageSize } = state;
 
- 
   return (
     <div className="ticketOrders promotertable">
       <div className="searchBar">
         <h2>Subscriber Lists</h2>
-        <button className="loginButton" onClick={openModal} >
+        <button className="loginButton" onClick={openModal}>
           <span>Create new list</span>
         </button>
       </div>
@@ -337,7 +333,7 @@ const SubscribersList = ({subscribe_list,onDeleteCampaign}) => {
           contentLabel="Upload Excel File"
         >
           <h2>Create a new list</h2>
-      
+
           <form onSubmit={handleSubmit}>
             <div className="label-with-button">
               <input
@@ -350,11 +346,19 @@ const SubscribersList = ({subscribe_list,onDeleteCampaign}) => {
               />
             </div>
             <div className="popup-buttons">
-              <button type="button" onClick={closeModal}>
-                Cancel
+              <button
+                className="loginButton"
+                onClick={closeModal}
+                type="button"
+              >
+                <span>Cancel</span>
               </button>
-              <button type="submit" disabled={mutations.isLoading}>
-                Submit
+              <button
+                className="loginButton"
+                disabled={mutations.isLoading}
+                type="submit"
+              >
+                <span>Submit</span>
               </button>
             </div>
           </form>
