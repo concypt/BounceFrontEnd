@@ -19,7 +19,7 @@ export const requestRefund = async (formData) => {
     return response.data;
   } catch (error) {
     throw new Error(
-      error.response?.data?.message || "Failed to update host profile"
+      error.response?.data?.message || "Failed to request refund"
     );
   }
 };
