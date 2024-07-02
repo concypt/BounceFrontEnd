@@ -52,20 +52,25 @@ function News() {
                         src={`${newsrow.imagePath}${newsrow.image}`}
                         alt=""
                       />
-                      <h2>
-                        {newsrow.title.length > 50
-                          ? `${newsrow.title.substring(0, 50)}...`
-                          : newsrow.title}
-                      </h2>
+                      <div className={styles.cardBody}>
+                        {" "}
+                        <h2>
+                          {newsrow.title.length > 50
+                            ? `${newsrow.title.substring(0, 50)}...`
+                            : newsrow.title}
+                        </h2>
+                        <div className={styles.blogInfo}>
+                          <img
+                            src={calender}
+                            className={styles.blogCalnder}
+                            alt=""
+                          />
+                          <p>
+                            {moment(newsrow.created_at).format("DD MMM.YYYY")}
+                          </p>
+                        </div>
+                      </div>
                     </Link>
-                    <div className={styles.blogInfo}>
-                      <img
-                        src={calender}
-                        className={styles.blogCalnder}
-                        alt=""
-                      />
-                      <p>{moment(newsrow.created_at).format("DD MMM.YYYY")}</p>
-                    </div>
                   </div>
                 ))}
               </div>

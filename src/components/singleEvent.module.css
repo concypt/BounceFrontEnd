@@ -1,4 +1,14 @@
-/* event-detail */
+.details {
+  font-family: var(--secondary-font);
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 0px 10px 0 #9b9ac573;
+  color: black;
+  backdrop-filter: blur(20px);
+  margin-top: 44px;
+}
+
 .eventImg {
   width: 100%;
   object-fit: cover;
@@ -36,17 +46,6 @@
 
 .event_detail {
   padding-top: 215px;
-}
-
-.details {
-  font-family: var(--secondary-font);
-  background: white;
-  padding: 40px;
-  margin-top: 44px;
-  border-radius: 20px;
-  box-shadow: 0 0px 10px 0 #9b9ac573;
-  color: black;
-  backdrop-filter: blur(20px);
 }
 
 .details h2 {
@@ -426,6 +425,56 @@ select {
   z-index: 2;
 }
 
+/* news-detail */
+.newsDetailMainWrapper .details {
+  max-width: 800px;
+  margin: 0 auto;
+  margin-top: 44px;
+  width: 95%;
+}
+
+.description_heading ul,
+.description_heading div,
+.description_heading a,
+.description_heading img,
+.description_heading p,
+.description_heading h1,
+.description_heading h2,
+.description_heading h3,
+.description_heading h4,
+.description_heading h5,
+.description_heading h6 {
+  width: 100% !important;
+  font-family: var(--primary-font) !important;
+  line-height: 1.1 !important;
+}
+
+.description_heading img {
+  border-radius: 20px !important;
+}
+
+.description_heading h1 {
+  font-size: 50px !important;
+}
+
+.description_heading h2 {
+  font-size: 40px !important;
+}
+
+.description_heading h3 {
+  font-size: 28px !important;
+}
+
+.description_heading h4 {
+  font-size: 22px !important;
+}
+
+.description_heading p {
+  font-size: 22px !important;
+}
+
+/* news detail end */
+
 @media (max-width: 1440px) {
   .details h2 {
     font-size: 42px;
@@ -501,6 +550,10 @@ select {
     padding: 7px 16px;
   }
 
+  .newsDetailMainWrapper .category_main {
+    bottom: 60px;
+  }
+
   .category_main h5 {
     font-size: 14px;
   }
@@ -519,6 +572,10 @@ select {
 
   .filters {
     padding: 25px 20px;
+  }
+
+  .event_detail_content .eventImg {
+    height: calc(70vh - 215px);
   }
 }
 
@@ -653,6 +710,34 @@ select {
 
   .dateFields input {
     width: 100%;
+  }
+
+  .newsDetailMainWrapper .category_main {
+    left: 10px;
+  }
+
+  .event_detail_content .eventImg {
+    height: calc(65vh - 215px);
+  }
+
+  .description_heading h1 {
+    font-size: 35px !important;
+  }
+
+  .description_heading h2 {
+    font-size: 30px !important;
+  }
+
+  .description_heading h3 {
+    font-size: 24px !important;
+  }
+
+  .description_heading h4 {
+    font-size: 20px !important;
+  }
+
+  .description_heading p {
+    font-size: 20px !important;
   }
 }
 

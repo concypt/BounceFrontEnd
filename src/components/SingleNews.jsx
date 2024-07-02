@@ -70,32 +70,30 @@ const SingleNews = ({ newsId }) => {
 
   return (
     <>
-      <div className={`${styles.event_detail} bounce_bg_circle`}>
-        <div className={styles.event_detail_content}>
-          <div className={styles.event_main_img}>
-            <img
-              className={styles.eventImg}
-              src={`${news.imagePath}${news.image}`}
-              alt="San Francisco"
-            />
-            <div className={styles.category_main}>
-              <h5 className={styles.category_name}>{news.title}</h5>
+      <div className={styles.newsDetailMainWrapper}>
+        <div className={`${styles.event_detail} bounce_bg_circle`}>
+          <div className={styles.event_detail_content}>
+            <div className={styles.event_main_img}>
+              <img
+                className={styles.eventImg}
+                src={`${news.imagePath}${news.image}`}
+                alt="San Francisco"
+              />
+              <div className={styles.category_main}>
+                <h5 className={styles.category_name}>{news.title}</h5>
+              </div>
+              <div className={styles.heart_icon}>
+                <img src="/images/heart.svg" alt="" />
+              </div>
             </div>
-            <div className={styles.heart_icon}>
-              <img src="/images/heart.svg" alt="" />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-12 col-lg-12">
-              <div className={styles.details}>
-                <h2>{news.title}</h2>
-                <div className={styles.description_heading}>
-                  <div style={{ maxWidth: "100%" }}>
-                    Description:
-                    <div
-                      dangerouslySetInnerHTML={{ __html: news.description }}
-                    ></div>
-                  </div>
+            <div className={styles.details}>
+              <h2>{news.title}</h2>
+              <div className={styles.description_heading}>
+                <div style={{ maxWidth: "100%" }}>
+                  Description:
+                  <div
+                    dangerouslySetInnerHTML={{ __html: news.description }}
+                  ></div>
                 </div>
               </div>
             </div>

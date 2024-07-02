@@ -275,12 +275,3 @@ select {
     right: 0;
   }
 }
-
-/* custom-date-range-picker.css */
-.rdrCalendarWrapper .rdrNextPrevButton i {
-  border-color: transparent rgb(52, 73, 94) transparent transparent !important;
-}
-
-.rdrCalendarWrapper .rdrDayNumber span {
-  color: #8d8a95 !important;
-}

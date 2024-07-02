@@ -326,6 +326,7 @@ const EventFilter = ({
                         editableDateInputs={true}
                         showMonthAndYearPickers={true}
                         showMonthArrow={true}
+                        rangeColors={["#7357ff"]}
                       />
                     </CustomDateRangePicker>
                   )}
