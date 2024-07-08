@@ -23,9 +23,11 @@ import ApplyHost from "./pages/Dashboard/ApplyForHost";
 import Event from "./pages/Dashboard/Event";
 import LoadingBar from "react-top-loading-bar";
 import Tickets from "./pages/Dashboard/Tickets.jsx";
+import SubscribeList from "./pages/Dashboard/SubscribeList.jsx";
 import EventSingle from "./pages/Dashboard/EventSingle.jsx";
 import Marketing from "./pages/Dashboard/Marketing.jsx";
 import HostEvent from "./pages/Dashboard/HostEvent.jsx";
+import HostCampaigns from "./pages/Dashboard/HostCampaigns.jsx";
 import Attend from "./pages/Dashboard/Attend.jsx";
 import PrivacyPolicy from "./pages/static/PrivacyPolicy.jsx";
 import About from "./pages/static/About.jsx";
@@ -68,8 +70,11 @@ const router = createBrowserRouter(
           element={<EventSingle />}
         />
         <Route path="/dashboard-event-tickets/:eventId" element={<Tickets />} />
+        <Route path="/host-subscribe-list/:subscribelist_Id" element={<SubscribeList />} />
         <Route path="/dashboard-marketing" element={<Marketing />} />
         <Route path="/host-event/new" element={<HostEvent />} />
+        <Route path="/host-campaigns/new" element={<HostCampaigns />} />
+        <Route path="/host-campaigns-edit/:id" element={<HostCampaigns />} />
         <Route path="/host-event/edit/:id" element={<HostEvent />} />
         <Route path="/Attend" element={<Attend />} />
       </Route>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   useTable,
   useFilters,
@@ -6,23 +6,14 @@ import {
   useSortBy,
   usePagination,
 } from "react-table";
-import { Link ,useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import Swal from "sweetalert2";
 import Modal from "react-modal";
-import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
+import { useMutation , useQueryClient,useQuery } from "@tanstack/react-query";
 import "../../../pages/Dashboard/styles/primaryStyles.css";
 import "../../../pages/Dashboard/styles/comonStyles.css";
-import { deleteSubscriber } from "../../../api/secureService";
-import { subscriberList, fetchEditData } from "../../../api/musecureService";
-
-//images
-
-import paginatePrev from "../../../assets/images/pagination-arrow-prev.svg";
-import paginateNext from "../../../assets/images/pagination-arrow-next.svg";
-import viewImg from "../../../assets/images/event-dash-icon-view.svg";
-import editImg from "../../../assets/images/event-dash-icon-edit.svg";
-
+import * as XLSX from "xlsx";
+// Styles for Modal
 const customStyles = {
   content: {
     top: "50%",
@@ -38,74 +29,91 @@ const customStyles = {
 };
 
 Modal.setAppElement("#root");
+import deleteImg from "../../../assets/images/event-dash-icon-delete.svg";
+import paginatePrev from "../../../assets/images/pagination-arrow-prev.svg";
+import paginateNext from "../../../assets/images/pagination-arrow-next.svg";
+import { deleteSubscriber , subscriberListPostData} from "../../../api/musecureService";
 
-const SubscribersList = ({ subscribe_list, onDeleteCampaign }) => {
-  const queryClient = useQueryClient();
+
+const ManageSubscribeList = ({subscribelist_Id , subscribeListData , onDeleteSubscribeList}) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-
-  // Function to open the modal for creating new item
-  const openModal = () => {
-    setFormData({
-      name: "",
-      // Clear other fields as needed
+  const [fileName, setFileName] = useState("");
+  const [entryCount, setEntryCount] = useState(0);
+  const [fileUploaded, setFileUploaded] = useState(false);
+  const [fileData, setFileData] = useState(null);
+  const queryClient = useQueryClient();
+  const [formData, setFormData] = useState({
+    file: '',
+    subscribe_list: "",
+  });
+  
+  const deleteMutation = useMutation({
+    mutationFn: deleteSubscriber,
+    mutationKey: ["deleteSubscriber"],
+    onSuccess: () => {
+      Swal.fire("Deleted!", "Your subscriber has been deleted.", "success");
+    },
+    onError: (error) => {
+      Swal.fire("Error!", "Failed to delete subscriber.", error);
+    },
+  });
+  
+  const handleDelete = (id) => {
+    
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#7357FF",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteMutation.mutate(id);
+        onDeleteSubscribeList(id); 
+      }
     });
-    setEditItemId(null);
+  };
+  const openModal = () => {
     setModalIsOpen(true);
   };
-
   const closeModal = () => {
     setModalIsOpen(false);
-    setFormData({
-      name: "",
-      // Clear other fields as needed
-    });
-    setEditItemId(null);
   };
+  
 
-  const openEditModal = (id) => {
-    const {
-      data: itemToEdit,
-      error,
-      isLoading,
-    } = useQuery({
-      queryKey: ["fetchEditData"],
-      queryFn: fetchEditData,
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    setFileData({
+      fileData: file,
     });
-    if (isLoading && !marketing)
-      return (
-        <div
-          style={{
-            width: "100vw",
-            height: "90vh",
-            display: "flex",
-            alignContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <p style={{ textAlign: "center", width: "100%" }}>Loading...</p>
-        </div>
-      );
-    if (error) {
-      return <p>Error: {error.message}</p>;
-    }
-    console.log(itemToEdit);
     setFormData({
-      name: itemToEdit.name,
-      // Add other fields as needed
-    });
-    setEditItemId(id);
-    setModalIsOpen(true);
-  };
-
-  //Form Submit
-  const [formData, setFormData] = useState({
-    name: " ",
+      ...formData,
+      file: file,
+      subscribe_list: subscribelist_Id,
   });
-  const [editItemId, setEditItemId] = useState(null);
+    if (file) {
+      setFileName(file.name);
+      setFileUploaded(true); // Set fileUploaded to true when a file is uploaded
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const binaryStr = event.target.result;
+        const workbook = XLSX.read(binaryStr, { type: "binary" });
+        const sheetName = workbook.SheetNames[0];
+        const sheet = workbook.Sheets[sheetName];
+        const data = XLSX.utils.sheet_to_json(sheet);
+        setEntryCount(data.length);
+      };
+      reader.readAsBinaryString(file);
+    }
+  };
+
   const mutations = useMutation({
-    mutationFn: subscriberList,
-    mutationKey: ["subscriberList"],
-    onSuccess: () => {
+    mutationFn: subscriberListPostData,
+    mutationKey: ["subscriberListPostData"],
+    onSuccess: (data, variables, context) => {
+      console.log("Success response data:", data);
       Swal.fire({
         icon: "success",
         title: "Success",
@@ -113,9 +121,14 @@ const SubscribersList = ({ subscribe_list, onDeleteCampaign }) => {
         timer: 2000,
       });
       setFormData({
-        name: " ",
+        file: " ",
+        subscribe_list:" "
       });
-      queryClient.invalidateQueries("subscriberList");
+      setFileData({
+        fileData: "",
+      });
+      
+      queryClient.invalidateQueries("subscriberListPostData");
       setModalIsOpen(false);
     },
     onError: (error) => {
@@ -126,66 +139,34 @@ const SubscribersList = ({ subscribe_list, onDeleteCampaign }) => {
       });
     },
   });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (editItemId) {
-      // Handle update logic using editItemId
-      // Example: await updateItem(editItemId, formData);
-    } else {
+    
+    if (fileData) {
       Swal.fire({
-        title: "Are you sure?",
-        text: "Do you want to submit the form?",
-        icon: "question",
+        title: 'Are you sure?',
+        text: 'Do you want to upload the file?',
+        icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: "#7357FF",
-        confirmButtonText: "Yes!",
+        confirmButtonText: 'Yes, upload it!',
+        cancelButtonText: 'No, cancel!',
       }).then((result) => {
         if (result.isConfirmed) {
+         
+          console.log(formData);
           mutations.mutate(formData);
+          setFormData({ subscribe_list: '' }); // Reset form data state
+          setFileData(null); // Reset fileData state
+          setFileName(''); // Reset fileName state
+          setFileUploaded(false); // Reset fileUploaded state
+          setEntryCount(0);
+         
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          Swal.fire('Cancelled', 'Upload cancelled :)', 'info');
         }
       });
     }
-
-    setModalIsOpen(false);
   };
-
-  const deleteSubscriberMutation = useMutation({
-    mutationFn: deleteSubscriber,
-    mutationKey: ["deleteSubscriber"],
-    onSuccess: () => {
-      queryClient.invalidateQueries("subscribe_list");
-      Swal.fire("Deleted!", "Your subscribe list has been deleted.", "success");
-    },
-    onError: (error) => {
-      Swal.fire("Error!", "Failed to delete subscribe list.", "error");
-    },
-  });
-
-  const handleDelete = (id) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#7357FF",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        deleteSubscriberMutation.mutate(id);
-        onDeleteCampaign(id); // Inform parent component about delete action
-      }
-    });
-  };
-
   const columns = useMemo(
     () => [
       {
@@ -195,12 +176,26 @@ const SubscribersList = ({ subscribe_list, onDeleteCampaign }) => {
       },
       {
         Header: "Name",
-        accessor: "name",
+        accessor: (row) => `${row.first_name} ${row.last_name}`,
         sortType: "basic",
         Cell: ({ value }) => (
-          <div>
-            {value && value.length > 20 ? value.slice(0, 20) + "..." : value}
-          </div>
+          <div>{value.length > 30 ? value.slice(0, 30) + "..." : value}</div>
+        ),
+      },
+      {
+        Header: "Email",
+        accessor: "email",
+        sortType: "basic",
+        Cell: ({ value }) => (
+          <div>{value.length > 20 ? value.slice(0, 20) + "..." : value}</div>
+        ),
+      },
+      {
+        Header: "Status",
+        accessor: "status",
+        sortType: "basic",
+        Cell: ({ value }) => (
+          <div>{value == 1 ? "Active" : "Inactive"}</div>
         ),
       },
       {
@@ -208,14 +203,10 @@ const SubscribersList = ({ subscribe_list, onDeleteCampaign }) => {
         accessor: "actions",
         Cell: ({ row }) => (
           <div className="actionsColumn">
-           
-            <Link to={`/host-subscribe-list/${row.original.id}`} >
-            <button >
-              <img src={viewImg} alt="Delete" />
+            <button onClick={() => handleDelete(row.original.id)}>
+              <img src={deleteImg} alt="Delete" />
             </button>
-            </Link>
-            </div>
-          
+          </div>
         ),
       },
     ],
@@ -239,7 +230,7 @@ const SubscribersList = ({ subscribe_list, onDeleteCampaign }) => {
   } = useTable(
     {
       columns,
-      data: subscribe_list,
+      data: subscribeListData ,
       initialState: { pageIndex: 0, pageSize: 5 },
     },
     useFilters,
@@ -249,13 +240,13 @@ const SubscribersList = ({ subscribe_list, onDeleteCampaign }) => {
   );
 
   const { pageIndex, pageSize } = state;
-
+  
   return (
-    <div className="ticketOrders promotertable">
+    <div className="ticketOrders">
       <div className="searchBar">
-        <h2>Subscriber Lists</h2>
+        <h2>Subscribers Details</h2>
         <button className="loginButton" onClick={openModal}>
-          <span>Create new list</span>
+          <span>Import new list</span>
         </button>
       </div>
       <div className="table-container">
@@ -334,19 +325,28 @@ const SubscribersList = ({ subscribe_list, onDeleteCampaign }) => {
           style={customStyles}
           contentLabel="Upload Excel File"
         >
-          <h2>Create a new list</h2>
-
+          <h2>Create  list</h2>
           <form onSubmit={handleSubmit}>
             <div className="label-with-button">
-              <input
-                type="text"
-                placeholder="Name"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                className="popupInput"
-              />
+              <label
+                htmlFor="file-upload"
+                className={`custom-file-upload ${
+                  fileUploaded ? "file-uploaded" : ""
+                }`}
+              >
+                {fileName ? fileName : "Upload CSV"}
+              </label>
+              <p>Please ensure the CSV has two columns, ‘name’ and ‘email’.</p>
             </div>
+            <input
+              id="file-upload"
+              type="file"
+              name="file"
+              className="file-input"
+               accept=".csv"
+              onChange={handleFileUpload}
+            />
+            {entryCount > 0 && <p>Found {entryCount} contacts.</p>}
             <div className="popup-buttons">
               <button
                 className="loginButton"
@@ -357,10 +357,10 @@ const SubscribersList = ({ subscribe_list, onDeleteCampaign }) => {
               </button>
               <button
                 className="loginButton"
-                disabled={mutations.isLoading}
                 type="submit"
+                disabled={mutations.isLoading}
               >
-                <span>Submit</span>
+                <span>Import</span>
               </button>
             </div>
           </form>
@@ -370,9 +370,10 @@ const SubscribersList = ({ subscribe_list, onDeleteCampaign }) => {
   );
 };
 
-SubscribersList.propTypes = {
+
+ManageSubscribeList.propTypes = {
   value: PropTypes.number,
   row: PropTypes.number,
 };
 
-export default SubscribersList;
+export default ManageSubscribeList;

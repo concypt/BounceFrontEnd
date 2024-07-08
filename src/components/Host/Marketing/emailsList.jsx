@@ -7,13 +7,16 @@ import {
   useSortBy,
   usePagination,
 } from "react-table";
+import { useNavigate  } from 'react-router-dom';
 import PropTypes from "prop-types";
 import Swal from "sweetalert2";
 import Modal from "react-modal";
 import * as XLSX from "xlsx";
-import { fetchTicketOrders, deleteEvent } from "../../../api/secureService";
+import { SendCampaign } from "../../../api/musecureService";
 import "../../../pages/Dashboard/styles/primaryStyles.css";
 import "../../../pages/Dashboard/styles/comonStyles.css";
+import viewImg from "../../../assets/images/event-dash-icon-view.svg";
+import editImg from "../../../assets/images/event-dash-icon-edit.svg";
 
 // Styles for Modal
 const customStyles = {
@@ -36,6 +39,7 @@ Modal.setAppElement("#root");
 import deleteImg from "../../../assets/images/event-dash-icon-delete.svg";
 import paginatePrev from "../../../assets/images/pagination-arrow-prev.svg";
 import paginateNext from "../../../assets/images/pagination-arrow-next.svg";
+import { Link } from "react-router-dom";
 
 const EmailList = ({ campaigns }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -43,22 +47,24 @@ const EmailList = ({ campaigns }) => {
   const [entryCount, setEntryCount] = useState(0);
   const [fileUploaded, setFileUploaded] = useState(false);
 
-  const deleteMutation = useMutation({
-    mutationFn: deleteEvent,
-    mutationKey: [deleteEvent],
+  const SendCampaignMutation = useMutation({
+    mutationFn: SendCampaign,
+    mutationKey: ['SendCampaignMutation'],
     onSuccess: () => {
-      Swal.fire("Deleted!", "Your event has been deleted.", "success");
+      Swal.fire("Send!", "Your Campaign send successfully.", "success");
     },
     onError: (error) => {
-      console.error("Error deleting event:", error);
+      console.error("Error Campaign:", error);
       Swal.fire("Error!", "Failed to delete event.", "error");
     },
   });
-
+  const navigate = useNavigate();
+  const handleEditCampaign = (id) => {
+    navigate(`/host-campaigns-edit/${id}`);
+  };
   const openModal = () => {
     setModalIsOpen(true);
   };
-
   const closeModal = () => {
     setModalIsOpen(false);
   };
@@ -89,17 +95,18 @@ const EmailList = ({ campaigns }) => {
     closeModal();
   };
 
-  const handleDelete = (id) => {
+  const handleSendCampaign = (campaign_id) => {
+    console.log(campaign_id);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#7357FF",
-      confirmButtonText: "Yes, delete it!",
+      confirmButtonText: "Yes, Send it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteMutation.mutate(id);
+        SendCampaignMutation.mutate(campaign_id);
       }
     });
   };
@@ -130,15 +137,18 @@ const EmailList = ({ campaigns }) => {
       {
         Header: "Status",
         accessor: "status",
-        Cell: ({ value }) => (value === 1 ? "Active" : "Inactive"),
+        Cell: ({ value }) => (value == 1 ? "Active" : "Inactive"),
       },
       {
         Header: "Actions",
         accessor: "actions",
         Cell: ({ row }) => (
           <div className="actionsColumn">
-            <button onClick={() => handleDelete(row.original.id)}>
-              <img src={deleteImg} alt="Delete" />
+            <button onClick={() => handleEditCampaign(row.original.id)}>
+              <img src={editImg} alt="Delete" />
+            </button>
+            <button onClick={() => handleSendCampaign(row.original.id)}>
+              <img src={viewImg} alt="Campaign" />
             </button>
           </div>
         ),
@@ -182,10 +192,12 @@ const EmailList = ({ campaigns }) => {
   return (
     <div className="ticketOrders">
       <div className="searchBar">
-        <h2>Emails</h2>
-        <button className="loginButton" onClick={openModal} type="button">
+        <h2>Campaigns</h2>
+        <Link to={"/host-campaigns/new"}>
+        <button className="loginButton" type="button">
           <span>Create new campaign</span>
         </button>
+        </Link>
       </div>
       <div className="table-container">
         <table {...getTableProps()} className="table your-events-table">
