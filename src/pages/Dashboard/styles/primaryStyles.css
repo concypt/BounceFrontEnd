@@ -2025,6 +2025,10 @@ table.your-events-table th {
   cursor: pointer;
 }
 
+/* .oneColumnTable .tablesGrid {
+  max-width: 641px;
+} */
+
 @media screen and (max-width: 1100px) {
   .actionsColumn button {
     width: 30px;

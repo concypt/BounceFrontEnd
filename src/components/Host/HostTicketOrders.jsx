@@ -7,18 +7,33 @@ import {
   usePagination,
 } from "react-table";
 import PropTypes from "prop-types";
+import Modal from "react-modal";
+import QRCode from "qrcode.react";
+import moment from "moment";
+import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { fetchOrders } from "../../api/secureService";
 import "../../pages/Dashboard/styles/primaryStyles.css";
 import "../../pages/Dashboard/styles/comonStyles.css";
+import styles from "../Dashboard/eventslider.module.css";
 
 //images
 import viewImg from "../../assets/images/event-dash-icon-view.svg";
 import paginatePrev from "../../assets/images/pagination-arrow-prev.svg";
 import paginateNext from "../../assets/images/pagination-arrow-next.svg";
+//images
+import closeIcon from "../../assets/images/close-icon.svg";
+import popupCalendar from "../../assets/images/popup-calendar.svg";
+import popupClock from "../../assets/images/popup-clock.svg";
+import popupLocation from "../../assets/images/popup-location.svg";
+import popupPaymentDone from "../../assets/images/popup-payment-done.svg";
+import popupShareBtn from "../../assets/images/popup-share-btn.svg";
 
 const HostTicketOrders = () => {
   const [tableData, setTableData] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [eventInfo, setEventInfo] = useState(null);
+  const [selectedTicket, setSelectedTicket] = useState(null);
 
   const {
     data: apiResponse = [],
@@ -37,8 +52,14 @@ const HostTicketOrders = () => {
     }
   }, [apiResponse]);
 
-  const handleView = (id) => {
-    console.log(`View button clicked for row with id: ${id}`);
+  const handleView = (event) => {
+    setEventInfo(event);
+    setIsModalOpen(true);
+    console.log(`View button clicked for row with id: ${event.id}`);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   const columns = useMemo(
@@ -61,7 +82,7 @@ const HostTicketOrders = () => {
         accessor: "actions",
         Cell: ({ row }) => (
           <div className="actionsColumn">
-            <button onClick={() => handleView(row.original.id)}>
+            <button onClick={() => handleView(row.original)}>
               <img src={viewImg} alt="View" />
             </button>
           </div>
@@ -70,6 +91,54 @@ const HostTicketOrders = () => {
     ],
     []
   );
+
+  const downloadQR = (ticketId) => {
+    const canvas = document.getElementById("qr-code");
+    setSelectedTicket(ticketId);
+    if (selectedTicket && canvas) {
+      const pngUrl = canvas
+        .toDataURL("image/png")
+        .replace("image/png", "image/octet-stream");
+      let downloadLink = document.createElement("a");
+      downloadLink.href = pngUrl;
+      downloadLink.download = `bounce-ticket-${ticketId}-qr.png`;
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    } else {
+      console.error("Selected ticket or QR code canvas element not found");
+    }
+  };
+
+  const shareQR = (ticketId) => {
+    setSelectedTicket(ticketId);
+    if (navigator.share && selectedTicket) {
+      const canvas = document.getElementById("qr-code");
+      if (canvas) {
+        canvas.toBlob((blob) => {
+          const file = new File([blob], `bounce-ticket-${ticketId}-qr.png`, {
+            type: "image/png",
+          });
+          navigator
+            .share({
+              title: "Ticket QR Code",
+              text: "Here is the QR code for your ticket",
+              files: [file],
+            })
+            .then(() => {
+              console.log("Shared successfully");
+            })
+            .catch((error) => {
+              console.error("Share failed:", error);
+            });
+        }, "image/png");
+      } else {
+        console.error("QR code canvas element not found");
+      }
+    } else {
+      alert("Sharing is not supported in this browser or no ticket selected.");
+    }
+  };
 
   const {
     getTableProps,
@@ -104,93 +173,189 @@ const HostTicketOrders = () => {
   }
 
   return (
-    <div className="tableOne">
-      <div className="searchBar">
-        <h2>Ticket Orders</h2>
-        <input
-          value={globalFilter || ""}
-          onChange={(e) => setGlobalFilter(e.target.value)}
-          placeholder="Search your orders"
-        />
-      </div>
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p>Error loading data</p>
-      ) : (
-        <div className="table-container">
-          <table {...getTableProps()} className="table your-events-table">
-            <thead>
-              {headerGroups.map((headerGroup, index) => (
-                <tr {...headerGroup.getHeaderGroupProps()} key={index}>
-                  {headerGroup.headers.map((column) => (
-                    <th {...column.getHeaderProps()} key={column.id}>
-                      {column.render("Header")}
-                    </th>
-                  ))}
-                </tr>
-              ))}
-            </thead>
-            <tbody {...getTableBodyProps()}>
-              {page.map((row) => {
-                prepareRow(row);
-                return (
-                  <tr {...row.getRowProps()} key={row.id}>
-                    {row.cells.map((cell) => (
-                      <td {...cell.getCellProps()} key={cell.column.id}>
-                        {cell.render("Cell")}
-                      </td>
+    <>
+      <div className="tableOne">
+        <div className="searchBar">
+          <h2>Ticket Orders</h2>
+          <input
+            value={globalFilter || ""}
+            onChange={(e) => setGlobalFilter(e.target.value)}
+            placeholder="Search your orders"
+          />
+        </div>
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : error ? (
+          <p>Error loading data</p>
+        ) : (
+          <div className="table-container">
+            <table {...getTableProps()} className="table your-events-table">
+              <thead>
+                {headerGroups.map((headerGroup, index) => (
+                  <tr {...headerGroup.getHeaderGroupProps()} key={index}>
+                    {headerGroup.headers.map((column) => (
+                      <th {...column.getHeaderProps()} key={column.id}>
+                        {column.render("Header")}
+                      </th>
                     ))}
                   </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      )}
-      <div className="pagination">
-        <div className="pagination-btns">
-          <button
-            className="control-btn"
-            onClick={() => previousPage()}
-            disabled={!canPreviousPage}
-            aria-label="Previous page"
-          >
-            <img src={paginatePrev} alt="Previous" />
-          </button>
-          {[...Array(pageCount)].map((_, index) => (
+                ))}
+              </thead>
+              <tbody {...getTableBodyProps()}>
+                {page.map((row) => {
+                  prepareRow(row);
+                  return (
+                    <tr {...row.getRowProps()} key={row.id}>
+                      {row.cells.map((cell) => (
+                        <td {...cell.getCellProps()} key={cell.column.id}>
+                          {cell.render("Cell")}
+                        </td>
+                      ))}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
+        <div className="pagination">
+          <div className="pagination-btns">
             <button
-              key={index}
-              onClick={() => gotoPage(index)}
-              className={pageIndex === index ? "active" : ""}
+              className="control-btn"
+              onClick={() => previousPage()}
+              disabled={!canPreviousPage}
+              aria-label="Previous page"
             >
-              {index + 1}
+              <img src={paginatePrev} alt="Previous" />
             </button>
-          ))}
-          <button
-            className="control-btn"
-            onClick={() => nextPage()}
-            disabled={!canNextPage}
-            aria-label="Next page"
-          >
-            <img src={paginateNext} alt="Next" />
-          </button>
-        </div>
-        <div className="item-show-per-page">
-          <span>Results per page:</span>
-          <select
-            value={pageSize}
-            onChange={(e) => setPageSize(Number(e.target.value))}
-          >
-            {[5, 10, 20, 30, 50].map((size) => (
-              <option key={size} value={size}>
-                {size}
-              </option>
+            {[...Array(pageCount)].map((_, index) => (
+              <button
+                key={index}
+                onClick={() => gotoPage(index)}
+                className={pageIndex === index ? "active" : ""}
+              >
+                {index + 1}
+              </button>
             ))}
-          </select>
+            <button
+              className="control-btn"
+              onClick={() => nextPage()}
+              disabled={!canNextPage}
+              aria-label="Next page"
+            >
+              <img src={paginateNext} alt="Next" />
+            </button>
+          </div>
+          <div className="item-show-per-page">
+            <span>Results per page:</span>
+            <select
+              value={pageSize}
+              onChange={(e) => setPageSize(Number(e.target.value))}
+            >
+              {[5, 10, 20, 30, 50].map((size) => (
+                <option key={size} value={size}>
+                  {size}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
-    </div>
+      <div className={styles.modalWrapper}>
+        <Modal
+          isOpen={isModalOpen}
+          onRequestClose={closeModal}
+          contentLabel="Ticket Modal"
+          className={styles.modal}
+          overlayClassName={styles.overlay}
+        >
+          <img
+            src={closeIcon}
+            alt="Close"
+            className={styles.closeIcon}
+            onClick={closeModal}
+          />
+          {eventInfo && (
+            <div className={styles.modalContent}>
+              <div className={styles.ticketInfo}>
+                <div className={styles.titleWrapper}>
+                  <h1 className={styles.ticketTitle}>{eventInfo.event.name}</h1>
+                  <Link to="/home" className={styles.detailLink}>
+                    View event page
+                  </Link>
+                </div>
+                <div className={styles.infoWrapper}>
+                  <div className={styles.eventDetailsList}>
+                    <img
+                      src={popupCalendar}
+                      className={styles.iconImg}
+                      alt=""
+                    />
+                    <p className={styles.listParagraph}>
+                      {moment(eventInfo.date).format("dddd Do MMMM YYYY")}
+                    </p>
+                  </div>
+                  <div className={styles.eventDetailsList}>
+                    <img src={popupClock} className={styles.iconImg} alt="" />
+                    <p className={styles.listParagraph}>5.00 PM</p>
+                  </div>
+                  <div className={styles.eventDetailsList}>
+                    <img
+                      src={popupLocation}
+                      className={styles.iconImg}
+                      alt=""
+                    />
+                    <p className={styles.listParagraph}>
+                      {eventInfo.event.address}
+                    </p>
+                    <Link to="/home" className={styles.detailLink}>
+                      Get directions
+                    </Link>
+                  </div>
+                  <div className={styles.paymentSection}>
+                    <h3 className={styles.paymentHeading}>Payment</h3>
+                    <p className={styles.orderNumber}>
+                      Order number {eventInfo.order_id}
+                    </p>
+                    <span className={styles.paymentDone}>
+                      <img src={popupPaymentDone} alt="" />
+                      <p className={styles.paymentDoneText}>
+                        Paid £{eventInfo.payment} for 1 ticket on the{" "}
+                        {moment(eventInfo.created_at).format(
+                          "dddd Do MMMM YYYY"
+                        )}{" "}
+                        by card.
+                      </p>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className={styles.qrCode}>
+                <QRCode
+                  id="qr-code"
+                  value={`Ticket ID: ${eventInfo.id}`}
+                  className={styles.qrCodeImgCanva}
+                />
+                <div className={styles.modalActions}>
+                  <button
+                    className="bgGlobalBtn borderGlobalBtn qrBtn"
+                    onClick={() => downloadQR(eventInfo.id)}
+                  >
+                    <span>Download QR</span>
+                  </button>
+                  <button
+                    onClick={() => shareQR(eventInfo.id)}
+                    className={styles.shareBtn}
+                  >
+                    <img src={popupShareBtn} alt="" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </Modal>
+      </div>
+    </>
   );
 };
 

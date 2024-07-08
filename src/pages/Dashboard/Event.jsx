@@ -77,7 +77,7 @@ function EventDashboard() {
             </div>
           </div>
         </div>
-        <div className="secondTables">
+        <div className="secondTables oneColumnTable">
           <div className="tablesGrid">
             <HostIicketOrders />
             {/* <div className="secondActionsDiv">

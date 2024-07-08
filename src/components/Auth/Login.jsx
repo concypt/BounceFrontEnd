@@ -5,6 +5,8 @@ import { UserContext } from "../../contexts/UserProvider";
 import styles from "./auth.module.css";
 import "react-toastify/dist/ReactToastify.css";
 //images
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import whiteLogo from "../../assets/images/whiteLogo.svg";
 import mailIcon from "../../assets/images/mailIcon.svg";
 import lockIcon from "../../assets/images/lock.svg";
@@ -16,6 +18,11 @@ const LoginPage = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const mutation = useMutation({
     mutationFn: login,
@@ -115,7 +122,7 @@ const LoginPage = () => {
                 <div>
                   <div className={styles.inputFields}>
                     <input
-                      type="password"
+                      type={showPassword ? "text" : "password"}
                       name="password"
                       value={formData.password}
                       onChange={handleChange}
@@ -123,6 +130,23 @@ const LoginPage = () => {
                       placeholder="Password"
                     />
                     <img src={lockIcon} className={styles.inputImgs} alt="" />
+                    <span
+                      onClick={togglePasswordVisibility}
+                      style={{
+                        position: "absolute",
+                        right: "10px",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        background: "none",
+                        border: "none",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <FontAwesomeIcon
+                        icon={showPassword ? faEyeSlash : faEye}
+                        className="viewPasswordEyeButton"
+                      />
+                    </span>
                   </div>
                   <div className={styles.forgetDiv}>
                     <a href="/forgot-password-request">Forgot password?</a>

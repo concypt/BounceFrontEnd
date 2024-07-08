@@ -110,12 +110,17 @@ import { changePassword } from "../../api/secureService";
 import Swal from "sweetalert2";
 import styles from "./auth.module.css";
 import lockImage from "../../assets/images/lock.svg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 const PasswordReset = () => {
   const { user } = useContext(UserContext);
   const [oldPassword, setOldPassword] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword1, setShowPassword1] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
+  const [showPassword3, setShowPassword3] = useState(false);
 
   const mutation = useMutation({
     mutationFn: ({ oldPassword, newPassword, newPasswordConfirmation }) =>
@@ -169,17 +174,35 @@ const PasswordReset = () => {
         <form onSubmit={handleChangePassword}>
           <div className={styles.inputFields}>
             <input
-              type="password"
+              type={showPassword1 ? "text" : "password"}
               value={oldPassword}
               onChange={(e) => setOldPassword(e.target.value)}
               required
               placeholder="Old Password"
               className={styles.dashboardInput}
             />
+            <img src={lockImage} className={styles.inputImgs} alt="Lock" />
+            <span
+              onClick={() => setShowPassword1(!showPassword1)}
+              style={{
+                position: "absolute",
+                right: "10px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+              }}
+            >
+              <FontAwesomeIcon
+                icon={showPassword1 ? faEyeSlash : faEye}
+                className="viewPasswordEyeButton"
+              />
+            </span>
           </div>
           <div className={styles.inputFields}>
             <input
-              type="password"
+              type={showPassword2 ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -187,10 +210,27 @@ const PasswordReset = () => {
               className={styles.dashboardInput}
             />
             <img src={lockImage} className={styles.inputImgs} alt="Lock" />
+            <span
+              onClick={() => setShowPassword2(!showPassword2)}
+              style={{
+                position: "absolute",
+                right: "10px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+              }}
+            >
+              <FontAwesomeIcon
+                icon={showPassword2 ? faEyeSlash : faEye}
+                className="viewPasswordEyeButton"
+              />
+            </span>
           </div>
           <div className={styles.inputFields}>
             <input
-              type="password"
+              type={showPassword3 ? "text" : "password"}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
@@ -198,6 +238,23 @@ const PasswordReset = () => {
               className={styles.dashboardInput}
             />
             <img src={lockImage} className={styles.inputImgs} alt="Lock" />
+            <span
+              onClick={() => setShowPassword3(!showPassword3)}
+              style={{
+                position: "absolute",
+                right: "10px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+              }}
+            >
+              <FontAwesomeIcon
+                icon={showPassword3 ? faEyeSlash : faEye}
+                className="viewPasswordEyeButton"
+              />
+            </span>
           </div>
           <div className={styles.header_btn}>
             <button

@@ -1062,6 +1062,22 @@ button.global_button_one.follow_btn {
   margin: 0;
 }
 
+.custom-datetime-picker {
+  color: red;
+}
+
+.custom-datetime-picker .react-datetime-picker__wrapper {
+  border-color: red;
+}
+
+.custom-datetime-picker .react-datetime-picker__inputGroup__input {
+  color: red;
+}
+
+.viewPasswordEyeButton {
+  color: grey;
+}
+
 @media (max-width: 1280px) {
   .slider_section .swiper_div {
     padding: 0 20px;

@@ -271,7 +271,6 @@ const HostCreateEvent = ({ setFormStep, setEventId, eventId }) => {
             initialStartTime={eventData.event_start_time}
             initialEndTime={eventData.event_end_time}
             onDateTimeChange={handleDateTimeChange}
-            rangeColors={["#7357ff"]}
           />
           {/* <EventDateTime eventData={eventData} setEventData={setEventData} /> */}
           <div className="switch-container">
