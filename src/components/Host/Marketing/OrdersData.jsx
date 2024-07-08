@@ -9,13 +9,14 @@ import {
 import PropTypes from "prop-types";
 import Swal from "sweetalert2";
 import Modal from "react-modal";
-import { useMutation , useQueryClient } from "@tanstack/react-query";
+import QRCode from "qrcode.react";
+import moment from "moment";
+import { Link } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import "../../../pages/Dashboard/styles/primaryStyles.css";
 import "../../../pages/Dashboard/styles/comonStyles.css";
-import {
-  requestRefundAction,
-  ticketsSend,
-} from "../../../api/musecureService";
+import styles from "../../Dashboard/eventslider.module.css";
+import { requestRefundAction, ticketsSend } from "../../../api/musecureService";
 
 // Styles for Modal
 const customStyles = {
@@ -37,18 +38,34 @@ import deleteImg from "../../../assets/images/event-dash-icon-delete.svg";
 import paginatePrev from "../../../assets/images/pagination-arrow-prev.svg";
 import paginateNext from "../../../assets/images/pagination-arrow-next.svg";
 import viewImg from "../../../assets/images/event-dash-icon-view.svg";
+//images
+import closeIcon from "../../../assets/images/close-icon.svg";
+import popupCalendar from "../../../assets/images/popup-calendar.svg";
+import popupClock from "../../../assets/images/popup-clock.svg";
+import popupLocation from "../../../assets/images/popup-location.svg";
+import popupPaymentDone from "../../../assets/images/popup-payment-done.svg";
+import popupShareBtn from "../../../assets/images/popup-share-btn.svg";
 
-const HostTicketOrders = ({ ordersData  , event,sold_tickets , total_tickets , tickets}) => {
- 
+const HostTicketOrders = ({
+  ordersData,
+  event,
+  sold_tickets,
+  total_tickets,
+  tickets,
+}) => {
   const queryClient = useQueryClient();
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [orderInfo, setorderInfo] = useState(null);
+  const [selectedTicket, setSelectedTicket] = useState(null);
+
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
     email: "",
     tickets_id: [],
     quantities: {},
-    event_id: event.id
+    event_id: event.id,
   });
   const mutations = useMutation({
     mutationFn: ticketsSend,
@@ -61,12 +78,12 @@ const HostTicketOrders = ({ ordersData  , event,sold_tickets , total_tickets , t
         timer: 2000,
       });
       setFormData({
-    first_name: "",
-    last_name: "",
-    email: "",
-    tickets_id: [],
-    quantities: {},
-    event_id: ""
+        first_name: "",
+        last_name: "",
+        email: "",
+        tickets_id: [],
+        quantities: {},
+        event_id: "",
       });
       queryClient.invalidateQueries("ordersData");
       setModalIsOpen(false);
@@ -87,7 +104,7 @@ const HostTicketOrders = ({ ordersData  , event,sold_tickets , total_tickets , t
       [name]: value,
     });
   };
-  
+
   const handleTicketChange = (e) => {
     const { options } = e.target;
     const selectedOptions = Array.from(options)
@@ -98,14 +115,14 @@ const HostTicketOrders = ({ ordersData  , event,sold_tickets , total_tickets , t
       tickets_id: selectedOptions,
     });
   };
-   // Handle change for quantity input
-   const handleQuantityChange = (ticketId, quantity) => {
+  // Handle change for quantity input
+  const handleQuantityChange = (ticketId, quantity) => {
     setFormData({
       ...formData,
       quantities: {
         ...formData.quantities,
-        [ticketId]: quantity
-      }
+        [ticketId]: quantity,
+      },
     });
   };
   // Function to add a quantity input field
@@ -116,7 +133,7 @@ const HostTicketOrders = ({ ordersData  , event,sold_tickets , total_tickets , t
           type="number"
           placeholder="Quantity"
           name="quantities"
-          value={formData.quantities[ticketId] || ''}
+          value={formData.quantities[ticketId] || ""}
           onChange={(e) => handleQuantityChange(ticketId, e.target.value)}
           className="popupInput"
         />
@@ -124,8 +141,8 @@ const HostTicketOrders = ({ ordersData  , event,sold_tickets , total_tickets , t
     );
   };
 
- // Seelect Tickets
- const openModal = () => {
+  // Select Tickets
+  const openModal = () => {
     setModalIsOpen(true);
   };
 
@@ -138,7 +155,7 @@ const HostTicketOrders = ({ ordersData  , event,sold_tickets , total_tickets , t
     Swal.fire({
       title: "Are you sure?",
       text: "Do you want to submit the form?",
-      icon: 'question',
+      icon: "question",
       showCancelButton: true,
       confirmButtonColor: "#7357FF",
       confirmButtonText: "Yes!",
@@ -149,7 +166,7 @@ const HostTicketOrders = ({ ordersData  , event,sold_tickets , total_tickets , t
       }
     });
   };
-  // Modal End 
+  // Modal End
 
   const mutation = useMutation({
     mutationFn: requestRefundAction,
@@ -173,7 +190,8 @@ const HostTicketOrders = ({ ordersData  , event,sold_tickets , total_tickets , t
       });
     },
   });
-  const handleRefund = (id,status) => {
+
+  const handleRefund = (id, status) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -192,6 +210,67 @@ const HostTicketOrders = ({ ordersData  , event,sold_tickets , total_tickets , t
     });
   };
 
+  //Ticket order modal start
+  const handleView = (event) => {
+    console.log("event", event);
+    setorderInfo(event);
+    setIsModalOpen(true);
+    console.log(`View button clicked for row with id: ${event.id}`);
+  };
+
+  const closeTicketModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const downloadQR = (ticketId) => {
+    const canvas = document.getElementById("qr-code");
+    setSelectedTicket(ticketId);
+    if (selectedTicket && canvas) {
+      const pngUrl = canvas
+        .toDataURL("image/png")
+        .replace("image/png", "image/octet-stream");
+      let downloadLink = document.createElement("a");
+      downloadLink.href = pngUrl;
+      downloadLink.download = `bounce-ticket-${ticketId}-qr.png`;
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    } else {
+      console.error("Selected ticket or QR code canvas element not found");
+    }
+  };
+
+  const shareQR = (ticketId) => {
+    setSelectedTicket(ticketId);
+    if (navigator.share && selectedTicket) {
+      const canvas = document.getElementById("qr-code");
+      if (canvas) {
+        canvas.toBlob((blob) => {
+          const file = new File([blob], `bounce-ticket-${ticketId}-qr.png`, {
+            type: "image/png",
+          });
+          navigator
+            .share({
+              title: "Ticket QR Code",
+              text: "Here is the QR code for your ticket",
+              files: [file],
+            })
+            .then(() => {
+              console.log("Shared successfully");
+            })
+            .catch((error) => {
+              console.error("Share failed:", error);
+            });
+        }, "image/png");
+      } else {
+        console.error("QR code canvas element not found");
+      }
+    } else {
+      alert("Sharing is not supported in this browser or no ticket selected.");
+    }
+  };
+
+  //table start
   const columns = useMemo(
     () => [
       {
@@ -209,7 +288,8 @@ const HostTicketOrders = ({ ordersData  , event,sold_tickets , total_tickets , t
       },
       {
         Header: "Customer Name",
-        accessor: (row) => `${row.customer.first_name} ${row.customer.last_name}`,
+        accessor: (row) =>
+          `${row.customer.first_name} ${row.customer.last_name}`,
         sortType: "basic",
         Cell: ({ value }) => (
           <div>{value.length > 20 ? value.slice(0, 20) + "..." : value}</div>
@@ -217,25 +297,25 @@ const HostTicketOrders = ({ ordersData  , event,sold_tickets , total_tickets , t
       },
       {
         Header: "Events",
-        Cell: () => (
-          <div>{event.name}</div>
-        ),
+        Cell: () => <div>{event.name}</div>,
       },
       {
         Header: "Payment",
         accessor: "payment",
         sortType: "basic",
         Cell: ({ value }) => (
-          <div>{value.length > 20 ? "£" + value.slice(0, 20) + "..." : "£" + value}</div>
+          <div>
+            {value.length > 20 ? "£" + value.slice(0, 20) + "..." : "£" + value}
+          </div>
         ),
       },
-      
+
       {
         Header: "Actions",
         accessor: "actions",
         Cell: ({ row }) => (
           <div className="actionsColumn">
-            <button onClick={() => handleRefund(row.original.refund_details.id,2)}>
+            <button onClick={() => handleView(row.original)}>
               <img src={viewImg} alt="View" />
             </button>
           </div>
@@ -262,7 +342,7 @@ const HostTicketOrders = ({ ordersData  , event,sold_tickets , total_tickets , t
   } = useTable(
     {
       columns,
-      data: ordersData ,
+      data: ordersData,
       initialState: { pageIndex: 0, pageSize: 5 },
     },
     useFilters,
@@ -276,11 +356,16 @@ const HostTicketOrders = ({ ordersData  , event,sold_tickets , total_tickets , t
   return (
     <div className="ticketOrders">
       <div className="searchBar">
-      <h2>Tickets Orders</h2>
-      <button className="loginButton" onClick={openModal} type="submit"> <span>Send tickets</span></button>
-      <h2>{sold_tickets}/{total_tickets} Available</h2>
+        <h2>Tickets Orders</h2>
+        <button className="loginButton" onClick={openModal} type="submit">
+          {" "}
+          <span>Send tickets</span>
+        </button>
+        <h2>
+          {sold_tickets}/{total_tickets} Available
+        </h2>
       </div>
-             
+
       <div className="table-container">
         <table {...getTableProps()} className="table your-events-table">
           <thead>
@@ -422,6 +507,100 @@ const HostTicketOrders = ({ ordersData  , event,sold_tickets , total_tickets , t
             </div>
           </form>
         </Modal>
+
+        {/* tickets modal */}
+        <div className={styles.modalWrapper}>
+          <Modal
+            isOpen={isModalOpen}
+            onRequestClose={closeModal}
+            contentLabel="Ticket Modal"
+            className={styles.modal}
+            overlayClassName={styles.overlay}
+          >
+            <img
+              src={closeIcon}
+              alt="Close"
+              className={styles.closeIcon}
+              onClick={closeTicketModal}
+            />
+            {orderInfo && (
+              <div className={styles.modalContent}>
+                <div className={styles.ticketInfo}>
+                  <div className={styles.titleWrapper}>
+                    <h1 className={styles.ticketTitle}>{event.name}</h1>
+                    <Link to="/home" className={styles.detailLink}>
+                      View event page
+                    </Link>
+                  </div>
+                  <div className={styles.infoWrapper}>
+                    <div className={styles.eventDetailsList}>
+                      <img
+                        src={popupCalendar}
+                        className={styles.iconImg}
+                        alt=""
+                      />
+                      <p className={styles.listParagraph}>
+                        {moment(event.date).format("dddd Do MMMM YYYY")}
+                      </p>
+                    </div>
+                    <div className={styles.eventDetailsList}>
+                      <img src={popupClock} className={styles.iconImg} alt="" />
+                      <p className={styles.listParagraph}>5.00 PM</p>
+                    </div>
+                    <div className={styles.eventDetailsList}>
+                      <img
+                        src={popupLocation}
+                        className={styles.iconImg}
+                        alt=""
+                      />
+                      <p className={styles.listParagraph}>{event.address}</p>
+                      <Link to="/home" className={styles.detailLink}>
+                        Get directions
+                      </Link>
+                    </div>
+                    <div className={styles.paymentSection}>
+                      <h3 className={styles.paymentHeading}>Payment</h3>
+                      <p className={styles.orderNumber}>
+                        Order number {orderInfo.order_id}
+                      </p>
+                      <span className={styles.paymentDone}>
+                        <img src={popupPaymentDone} alt="" />
+                        <p className={styles.paymentDoneText}>
+                          Paid £{orderInfo.payment} for 1 ticket on the{" "}
+                          {moment(orderInfo.created_at).format(
+                            "dddd Do MMMM YYYY"
+                          )}{" "}
+                          by card.
+                        </p>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className={styles.qrCode}>
+                  <QRCode
+                    id="qr-code"
+                    value={`Ticket ID: ${orderInfo.id}`}
+                    className={styles.qrCodeImgCanva}
+                  />
+                  <div className={styles.modalActions}>
+                    <button
+                      className="bgGlobalBtn borderGlobalBtn qrBtn"
+                      onClick={() => downloadQR(orderInfo.id)}
+                    >
+                      <span>Download QR</span>
+                    </button>
+                    <button
+                      onClick={() => shareQR(orderInfo.id)}
+                      className={styles.shareBtn}
+                    >
+                      <img src={popupShareBtn} alt="" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </Modal>
+        </div>
       </div>
     </div>
   );
