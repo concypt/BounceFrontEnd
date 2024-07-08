@@ -10,7 +10,6 @@ import SubscribersList from "../../components/Host/Marketing/subscribersList";
 import "./styles/primaryStyles.css";
 import "./styles/comonStyles.css";
 import { fetchMarketingData } from "../../api/musecureService";
-
 function Marketing() {
   const queryClient = useQueryClient();
  const {

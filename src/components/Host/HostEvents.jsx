@@ -27,7 +27,6 @@ const HostEvents = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [tableData, setTableData] = useState([]);
-
   const {
     data: apiResponse = [],
     isLoading,
