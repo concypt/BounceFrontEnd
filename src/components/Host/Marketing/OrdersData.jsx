@@ -316,7 +316,11 @@ const HostTicketOrders = ({
         accessor: "actions",
         Cell: ({ row }) => (
           <div className="actionsColumn">
+<<<<<<< HEAD
             <button onClick={() => handleView(row.original)}>
+=======
+            <button onClick={() => handleRefund(row.original.id,2)}>
+>>>>>>> dev-muhammad
               <img src={viewImg} alt="View" />
             </button>
           </div>
