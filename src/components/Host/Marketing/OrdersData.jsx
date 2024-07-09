@@ -29,6 +29,7 @@ const customStyles = {
     transform: "translate(-50%, -50%)",
     borderRadius: "32px",
     maxWidth: "700px",
+    width: "95%",
   },
 };
 
@@ -442,68 +443,81 @@ const HostTicketOrders = ({
           style={customStyles}
           contentLabel="Upload Excel File"
         >
-          <h2>Create a new list</h2>
+          <h2>Send Tickets</h2>
           <form onSubmit={handleSubmit}>
-            <div className="label-with-button">
-              <input
-                type="text"
-                placeholder="First Name"
-                name="first_name"
-                value={formData.first_name}
-                onChange={handleInputChange}
-                className="popupInput"
-              />
-            </div>
-            <div className="label-with-button">
-              <input
-                type="text"
-                placeholder="Last Name"
-                name="last_name"
-                value={formData.last_name}
-                onChange={handleInputChange}
-                className="popupInput"
-              />
-            </div>
-            <div className="label-with-button">
-              <input
-                type="email"
-                placeholder="Email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                className="popupInput"
-              />
-            </div>
-            <div className="label-with-button">
-              <select
-                multiple
-                name="tickets_id"
-                value={formData.tickets_id}
-                onChange={handleTicketChange}
-                className="popupInput"
-              >
-                {/* Dynamically render options */}
-                {tickets.map((ticket) => (
-                  <option key={ticket.id} value={ticket.id}>
-                    {ticket.name.length > 15
-                      ? ticket.name.slice(0, 15) + "..."
-                      : ticket.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            {formData.tickets_id.map((ticketId) => addQuantityInput(ticketId))}
-            <div className="popup-buttons">
-              <button type="button" onClick={closeModal}>
-                Cancel
-              </button>
-              <button
-                type="submit"
-                className="global_button_on"
-                disabled={mutation.isLoading}
-              >
-                <span>{mutation.isLoading ? "requesting..." : "Submit"}</span>
-              </button>
+            <div className="discount-grid-popup">
+              <div className="discount-grid-column">
+                <div className="label-with-button">
+                  <input
+                    type="text"
+                    placeholder="First Name"
+                    name="first_name"
+                    value={formData.first_name}
+                    onChange={handleInputChange}
+                    className="popupInput"
+                  />
+                </div>
+                <div className="label-with-button">
+                  <input
+                    type="text"
+                    placeholder="Last Name"
+                    name="last_name"
+                    value={formData.last_name}
+                    onChange={handleInputChange}
+                    className="popupInput"
+                  />
+                </div>
+                <div className="label-with-button">
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className="popupInput"
+                  />
+                </div>
+              </div>
+              <div className="label-with-button">
+                <label htmlFor="" className="multiple-events-discount-label">
+                  Applies to
+                </label>
+                <select
+                  multiple
+                  name="tickets_id"
+                  value={formData.tickets_id}
+                  onChange={handleTicketChange}
+                  className="popupInput"
+                >
+                  {/* Dynamically render options */}
+                  {tickets.map((ticket) => (
+                    <option key={ticket.id} value={ticket.id}>
+                      {ticket.name.length > 15
+                        ? ticket.name.slice(0, 15) + "..."
+                        : ticket.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              {formData.tickets_id.map((ticketId) =>
+                addQuantityInput(ticketId)
+              )}
+              <div className="popup-buttons">
+                <button
+                  className="loginButton"
+                  onClick={closeModal}
+                  type="button"
+                >
+                  <span>Cancel</span>
+                </button>
+                <button
+                  className="loginButton"
+                  disabled={mutation.isLoading}
+                  type="submit"
+                >
+                  <span>{mutation.isLoading ? "requesting..." : "Submit"}</span>
+                </button>
+              </div>
             </div>
           </form>
         </Modal>

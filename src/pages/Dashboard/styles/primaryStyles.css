@@ -248,7 +248,8 @@ input[type="radio"] {
 }
 
 .ticketOrders .loginButton,
-.popup-buttons .loginButton {
+.popup-buttons .loginButton,
+.tablesGrid .loginButton {
   z-index: 0;
   margin-top: 0;
 }
@@ -1877,13 +1878,18 @@ table.your-events-table th {
   height: 90%;
   max-height: 178px;
   overflow-y: scroll;
-  padding: 0 20px;
+  padding-left: 25px;
   padding-top: 10px;
+  padding-right: 0;
 }
 
 .popupInputTextarea option {
   color: #000;
   height: 35px;
+}
+
+.popupInputTextarea label {
+  font-size: 17px;
 }
 
 .popupInputTextarea::-webkit-scrollbar-track {
@@ -1905,6 +1911,44 @@ table.your-events-table th {
 .multiple-events-discount-label {
   font-size: 12px;
   color: #bbbbbb;
+}
+
+input[type="checkbox"].myCustomMultiSelectCheckboxes {
+  display: inline-block;
+  position: relative;
+  border: 2px solid #7357ff;
+  border-radius: 6px;
+  background: none;
+  cursor: pointer;
+  line-height: 0;
+  margin: 0 0.6em 0 0;
+  outline: 0;
+  padding: 0 !important;
+  vertical-align: text-top;
+  height: 18px;
+  width: 18px;
+  -webkit-appearance: none;
+  opacity: 0.5;
+}
+
+input[type="checkbox"].myCustomMultiSelectCheckboxes:before {
+  content: "";
+  position: absolute;
+  right: 50%;
+  top: 50%;
+  width: 5px;
+  height: 10px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  margin: -1px -1px 0 -1px;
+  transform: rotate(45deg) translate(-50%, -50%);
+  z-index: 2;
+}
+
+input[type="checkbox"].myCustomMultiSelectCheckboxes:checked {
+  background-color: #7357ff;
+  box-shadow: 0 0px 4px 0 #7357ff;
+  opacity: 1;
 }
 
 /* Hide the default file input */

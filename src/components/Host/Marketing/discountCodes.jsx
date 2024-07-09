@@ -115,7 +115,7 @@ const HostTicketOrders = ({ coupons, onDeleteCampaign, events }) => {
     if (checked) {
       updatedEventIds.push(value); // Add the value to the array if checkbox is checked
     } else {
-      updatedEventIds = updatedEventIds.filter(id => id !== value); // Remove the value if checkbox is unchecked
+      updatedEventIds = updatedEventIds.filter((id) => id !== value); // Remove the value if checkbox is unchecked
     }
 
     setFormData({
@@ -362,26 +362,30 @@ const HostTicketOrders = ({ coupons, onDeleteCampaign, events }) => {
                 <label htmlFor="" className="multiple-events-discount-label">
                   Applies to
                 </label>
-                <div className="popupInputTextarea" style={{ display: 'flex', flexDirection: 'column' }}>
-  {/* Dynamically render checkboxes */}
-  {events.map((event) => (
-    <div key={event.id} style={{ marginBottom: '10px' }}>
-      <input
-        type="checkbox"
-        id={`event_${event.id}`}
-        name={`event_id`}
-        value={event.id} 
-        onChange={handleCheckboxChange}
-        style={{ marginRight: '5px' }} // Optional: Add spacing between checkbox and label
-      />
-      <label htmlFor={`event_${event.id}`}>
-        {event.name.length > 15 ? event.name.slice(0, 15) + "..." : event.name}
-      </label>
-    </div>
-  ))}
-</div>
-
-     
+                <div
+                  className="popupInputTextarea"
+                  style={{ display: "flex", flexDirection: "column" }}
+                >
+                  {/* Dynamically render checkboxes */}
+                  {events.map((event) => (
+                    <div key={event.id} style={{ marginBottom: "15px" }}>
+                      <input
+                        type="checkbox"
+                        id={`event_${event.id}`}
+                        name={`event_id`}
+                        value={event.id}
+                        className="myCustomMultiSelectCheckboxes"
+                        onChange={handleCheckboxChange}
+                        style={{ marginRight: "13px" }} // Optional: Add spacing between checkbox and label
+                      />
+                      <label htmlFor={`event_${event.id}`}>
+                        {event.name.length > 20
+                          ? event.name.slice(0, 20) + "..."
+                          : event.name}
+                      </label>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
             <div className="popup-buttons">
