@@ -235,7 +235,7 @@ const HostTicketOrders = ({ ordersData  , event,sold_tickets , total_tickets , t
         accessor: "actions",
         Cell: ({ row }) => (
           <div className="actionsColumn">
-            <button onClick={() => handleRefund(row.original.refund_details.id,2)}>
+            <button onClick={() => handleRefund(row.original.id,2)}>
               <img src={viewImg} alt="View" />
             </button>
           </div>
