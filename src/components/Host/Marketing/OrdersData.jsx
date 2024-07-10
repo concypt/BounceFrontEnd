@@ -106,14 +106,21 @@ const HostTicketOrders = ({
     });
   };
 
-  const handleTicketChange = (e) => {
-    const { options } = e.target;
-    const selectedOptions = Array.from(options)
-      .filter((option) => option.selected)
-      .map((option) => option.value);
+  
+
+  const handleCheckboxChange = (e) => {
+    const { value, checked } = e.target;
+    let updatedEventIds = [...formData.tickets_id]; // Make a copy of the current event_ids array
+
+    if (checked) {
+      updatedEventIds.push(value); // Add the value to the array if checkbox is checked
+    } else {
+      updatedEventIds = updatedEventIds.filter((id) => id !== value); // Remove the value if checkbox is unchecked
+    }
+
     setFormData({
       ...formData,
-      tickets_id: selectedOptions,
+      tickets_id: updatedEventIds, // Update the event_ids array in the formData state
     });
   };
   // Handle change for quantity input
@@ -192,24 +199,7 @@ const HostTicketOrders = ({
     },
   });
 
-  const handleRefund = (id, status) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#7357FF",
-      confirmButtonText: "Yes!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const formData = {
-          refund_id: id,
-          status: status,
-        };
-        mutation.mutate(formData);
-      }
-    });
-  };
+
 
   //Ticket order modal start
   const handleView = (event) => {
@@ -316,11 +306,7 @@ const HostTicketOrders = ({
         accessor: "actions",
         Cell: ({ row }) => (
           <div className="actionsColumn">
-<<<<<<< HEAD
             <button onClick={() => handleView(row.original)}>
-=======
-            <button onClick={() => handleRefund(row.original.id,2)}>
->>>>>>> dev-muhammad
               <img src={viewImg} alt="View" />
             </button>
           </div>
@@ -486,22 +472,31 @@ const HostTicketOrders = ({
                 <label htmlFor="" className="multiple-events-discount-label">
                   Applies to
                 </label>
-                <select
-                  multiple
-                  name="tickets_id"
-                  value={formData.tickets_id}
-                  onChange={handleTicketChange}
-                  className="popupInput"
+                <div
+                  className="popupInputTextarea"
+                  style={{ display: "flex", flexDirection: "column" }}
                 >
-                  {/* Dynamically render options */}
+                  {/* Dynamically render checkboxes */}
                   {tickets.map((ticket) => (
-                    <option key={ticket.id} value={ticket.id}>
-                      {ticket.name.length > 15
-                        ? ticket.name.slice(0, 15) + "..."
-                        : ticket.name}
-                    </option>
+                    <div key={ticket.id} style={{ marginBottom: "15px" }}>
+                      <input
+                        type="checkbox"
+                        id={`event_${ticket.id}`}
+                        name={`tickets_id`}
+                        value={ticket.id}
+                        className="myCustomMultiSelectCheckboxes"
+                        onChange={handleCheckboxChange}
+                        style={{ marginRight: "13px" }} // Optional: Add spacing between checkbox and label
+                      />
+                      <label htmlFor={`ticket_${ticket.id}`}>
+                        {ticket.name.length > 20
+                          ? ticket.name.slice(0, 20) + "..."
+                          : ticket.name}
+                      </label>
+                    </div>
                   ))}
-                </select>
+                </div>
+              
               </div>
               {formData.tickets_id.map((ticketId) =>
                 addQuantityInput(ticketId)

@@ -55,7 +55,7 @@ function EventSingle() {
        <HostSingleEventInfo eventData={parsedData.event} />
           <div className="ticketOrders">
             <div className="searchBar">
-              <OrdersData ordersData={parsedData.orders} event={parsedData.event} sold_tickets={parsedData.sold_tickets} total_tickets={parsedData.total_tickets} tickets={parsedData.availableTickets} />
+              <OrdersData ordersData={parsedData.orders} event={parsedData.event} sold_tickets={parsedData.sold_tickets} total_tickets={parsedData.total_tickets} tickets={parsedData.availableTickets}  />
             </div>
             <div className="table-container">
           

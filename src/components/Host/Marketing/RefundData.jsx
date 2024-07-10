@@ -17,11 +17,11 @@ import {
 } from "../../../api/musecureService";
 
 // images
-import deleteImg from "../../../assets/images/event-dash-icon-delete.svg";
+import decline from "../../../assets/images/close-icon.svg";
 import paginatePrev from "../../../assets/images/pagination-arrow-prev.svg";
 import paginateNext from "../../../assets/images/pagination-arrow-next.svg";
 import approve from "../../../assets/images/accept-icon.svg";
-import decline from "../../../assets/images/close-icon.svg";
+
 
 const HostTicketOrders = ({ refundData , eventname }) => {
  
@@ -50,7 +50,7 @@ const HostTicketOrders = ({ refundData , eventname }) => {
     },
   });
 
-  const handleRefund = (id,status) => {
+  const handleRefund = (id,order_id,status) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -63,6 +63,7 @@ const HostTicketOrders = ({ refundData , eventname }) => {
         const formData = {
           refund_id: id,
           status: status,
+          order_id:order_id
         };
         mutation.mutate(formData);
       }
@@ -112,10 +113,10 @@ const HostTicketOrders = ({ refundData , eventname }) => {
         accessor: "actions",
         Cell: ({ row }) => (
           <div className="actionsColumn">
-            <button onClick={() => handleRefund(row.original.refund_details.id,2)}>
+            <button onClick={() => handleRefund(row.original.refund_details.id,row.original.id,2)}>
               <img src={approve} alt="View" />
             </button>
-            <button onClick={() => handleRefund(row.original.refund_details.id,3)}>
+            <button onClick={() => handleRefund(row.original.refund_details.id,row.original.id,3)}>
               <img src={decline} alt="View" />
             </button>
           </div>

@@ -28,21 +28,22 @@ const HostCreateCampaigns = ({ list }) => {
     queryFn: fetchCampaignData, // Your function to fetch campaign data
     enabled: !!campData.campaign_id, // Only fetch data if campaign_id is truthy
   });
-
+  
   useEffect(() => {
     if (campaignData) {
       // Update campData state with fetched campaignData
+      
       setCampData({
         ...campData,
         name: campaignData.name,
         subject: campaignData.subject,
-        audience: campaignData.audience.split(',').map(Number),
-        event_id: campaignData.event_id.split(',').map(Number),
+        audience: campaignData.audience ? campaignData.audience.split(',').map(Number) : [],
+        event_id: campaignData.event_id ? campaignData.event_id.split(',').map(Number) : [],
         body: campaignData.body,
       });
     }
   }, [campaignData]);
-  
+
 
   const mutation = useMutation({
     mutationFn: createCampaign,
@@ -55,6 +56,7 @@ const HostCreateCampaigns = ({ list }) => {
         text: "Campaign created successfully!",
         timer: 2000,
       });
+      navigate(`/dashboard-marketing`);
       setCampData({
       name: "",
       subject: "",
@@ -83,6 +85,37 @@ const HostCreateCampaigns = ({ list }) => {
       Swal.fire("Error!", `Failed to create event: ${error.message}`, "error");
     },
   });
+   // Function to handle checkbox change
+   const handleCheckboxChange = (e) => {
+    const { value, checked } = e.target;
+    let updatedEventIds = [...campData.event_id];
+  
+    if (checked) {
+      updatedEventIds.push(Number(value)); // Push the number value to the array
+    } else {
+      updatedEventIds = updatedEventIds.filter((id) => id !== Number(value));
+    }
+  
+    setCampData({
+      ...campData,
+      event_id: updatedEventIds,
+    });
+  };
+  const handleCheckboxChangeSubscriber = (e) => {
+    const { value, checked } = e.target;
+    let updatedaudiance = [...campData.audience]; // Make a copy of the current event_ids array
+
+    if (checked) {
+      updatedaudiance.push(value); // Add the value to the array if checkbox is checked
+    } else {
+      updatedaudiance = updatedaudiance.filter((id) => id !== value); // Remove the value if checkbox is unchecked
+    }
+
+    setCampData({
+      ...campData,
+      audience: updatedaudiance, // Update the event_ids array in the formData state
+    });
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -166,45 +199,66 @@ const HostCreateCampaigns = ({ list }) => {
       <div className="eventFields">
           <div className="eventLables">
                 <label  className="fieldlabels">
-                  Audiance  List
+                Event Audience
                 </label>
-                <select
-                  multiple
-                  name="event_id"
-                  value={campData.event_id || [] }
-                  onChange={handleEventIdChange}
+                <div
                   className="popupInputTextarea"
+                  style={{ display: "flex", flexDirection: "column" }}
                 >
-                  {/* Dynamically render options */}
+                  {/* Dynamically render checkboxes */}
                   {list.events.map((event) => (
-                    <option key={event.id} value={event.id}  selected={(Array.isArray(campData.event_id) && campData.event_id.includes(event.id))}>
-                      {event.name.length > 35
-                        ? event.name.slice(0, 35) + "..."
-                        : event.name}
-                    </option>
+                    <div key={event.id} style={{ marginBottom: "15px" }}>
+                      <input
+                        type="checkbox"
+                        id={`event_${event.id}`}
+                        name={`event_id`}
+                        value={event.id}
+                        checked={campData && campData.event_id.includes(event.id)}
+                        className="myCustomMultiSelectCheckboxes"
+                        onChange={handleCheckboxChange}
+                        style={{ marginRight: "13px" }} // Optional: Add spacing between checkbox and label
+                      />
+                      <label htmlFor={`event_${event.id}`}>
+                        {event.name.length > 20
+                          ? event.name.slice(0, 20) + "..."
+                          : event.name}
+                         
+                      </label>
+                    </div>
                   ))}
-                </select>
+                </div>
+                
+               
           </div>
           <div className="eventLables">
                 <label  className="fieldlabels">
-                Event Audience
+                Audiance  List
                 </label>
-                <select
-                  multiple
-                  name="audience"
-                  value={campData.audience || []}
-                  onChange={handleAudienceChange}
+                <div
                   className="popupInputTextarea"
+                  style={{ display: "flex", flexDirection: "column" }}
                 >
-                  {/* Dynamically render options */}
+                  {/* Dynamically render checkboxes */}
                   {list.subscribe.map((row) => (
-                    <option key={row.id} value={row.id} selected={(Array.isArray(campData.audience) && campData.audience.includes(row.id))}>
-                      {row.name.length > 35
-                        ? row.name.slice(0, 35) + "..."
-                        : row.name}
-                    </option>
+                    <div key={row.id} style={{ marginBottom: "15px" }}>
+                      <input
+                        type="checkbox"
+                        id={`subscriber_${row.id}`}
+                        name={`audience`}
+                        value={row.id}
+                        className="myCustomMultiSelectCheckboxes"
+                        onChange={handleCheckboxChangeSubscriber}
+                        style={{ marginRight: "13px" }} // Optional: Add spacing between checkbox and label
+                      />
+                      <label htmlFor={`subscriber_${row.id}`}>
+                        {row.name.length > 20
+                          ? row.name.slice(0, 20) + "..."
+                          : row.name}
+                      </label>
+                    </div>
                   ))}
-                </select>
+                </div>
+                
           </div>
       </div>
       <div className="eventFields">

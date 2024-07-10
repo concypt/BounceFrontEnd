@@ -28,6 +28,22 @@ const customStyles = {
 };
 
 Modal.setAppElement("#root");
+<select
+multiple
+name="event_id"
+value={campData.event_id || [] }
+onChange={handleEventIdChange}
+className="popupInputTextarea"
+>
+{/* Dynamically render options */}
+{list.events.map((event) => (
+  <option key={event.id} value={event.id}  selected={(Array.isArray(campData.event_id) && campData.event_id.includes(event.id))}>
+    {event.name.length > 35
+      ? event.name.slice(0, 35) + "..."
+      : event.name}
+  </option>
+))}
+</select>
 
 //images
 import deleteImg from "../../../assets/images/event-dash-icon-delete.svg";
@@ -183,6 +199,22 @@ const EmailList = (props) => {
   const { pageIndex, pageSize } = state;
 
   return (
+    // <select
+    //               multiple
+    //               name="audience"
+    //               value={campData.audience || []}
+    //               onChange={handleAudienceChange}
+    //               className="popupInputTextarea"
+    //             >
+    //               {/* Dynamically render options */}
+    //               {list.subscribe.map((row) => (
+    //                 <option key={row.id} value={row.id} selected={(Array.isArray(campData.audience) && campData.audience.includes(row.id))}>
+    //                   {row.name.length > 35
+    //                     ? row.name.slice(0, 35) + "..."
+    //                     : row.name}
+    //                 </option>
+    //               ))}
+    //             </select>
     <div className="ticketOrders">
       <div className="searchBar">
         <h2>Emails</h2>
