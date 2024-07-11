@@ -14,7 +14,7 @@ import { Navigation } from "swiper/modules";
 //images
 import clockIcon from "../../assets/images/clock.svg";
 import locationIcon from "../../assets/images/location.svg";
-import closeIcon from "../../assets/images/close-icon.svg";
+import closeIcon from "../../assets/images/closeicon.svg";
 import popupCalendar from "../../assets/images/popup-calendar.svg";
 import popupClock from "../../assets/images/popup-clock.svg";
 import popupLeftArrow from "../../assets/images/popup-left-arrow.svg";

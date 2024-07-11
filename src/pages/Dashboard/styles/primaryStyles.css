@@ -1668,6 +1668,10 @@ button.delete.ml-auto {
   text-align: center;
 }
 
+.promotersMain .your-events-table th:nth-child(4) {
+  text-align: left;
+}
+
 .your-events-table td:nth-child(3) {
   font-size: 12px;
 }
@@ -1774,7 +1778,7 @@ table.your-events-table th {
   align-items: center;
   justify-content: center;
   border-radius: 8px;
-  border: 1px solid #ececed;
+  border: 1px solid transparent;
   background: transparent;
 }
 
@@ -1890,6 +1894,8 @@ table.your-events-table th {
 
 .popupInputTextarea label {
   font-size: 17px;
+  height: 25px;
+  overflow: hidden;
 }
 
 .popupInputTextarea::-webkit-scrollbar-track {
@@ -1913,7 +1919,8 @@ table.your-events-table th {
   color: #bbbbbb;
 }
 
-input[type="checkbox"].myCustomMultiSelectCheckboxes {
+input[type="checkbox"].myCustomMultiSelectCheckboxes,
+#msform input[type="checkbox"].myCustomMultiSelectCheckboxes {
   display: inline-block;
   position: relative;
   border: 2px solid #7357ff;
@@ -1927,11 +1934,14 @@ input[type="checkbox"].myCustomMultiSelectCheckboxes {
   vertical-align: text-top;
   height: 18px;
   width: 18px;
+  min-height: 18px;
+  min-width: 18px;
   -webkit-appearance: none;
   opacity: 0.5;
 }
 
-input[type="checkbox"].myCustomMultiSelectCheckboxes:before {
+input[type="checkbox"].myCustomMultiSelectCheckboxes:before,
+#msform input[type="checkbox"].myCustomMultiSelectCheckboxes:before {
   content: "";
   position: absolute;
   right: 50%;
@@ -1945,10 +1955,16 @@ input[type="checkbox"].myCustomMultiSelectCheckboxes:before {
   z-index: 2;
 }
 
-input[type="checkbox"].myCustomMultiSelectCheckboxes:checked {
+input[type="checkbox"].myCustomMultiSelectCheckboxes:checked,
+#msform input[type="checkbox"].myCustomMultiSelectCheckboxes:checked {
   background-color: #7357ff;
   box-shadow: 0 0px 4px 0 #7357ff;
   opacity: 1;
+}
+
+#msform .popupInputTextarea {
+  max-width: 100%;
+  max-height: 176px;
 }
 
 /* Hide the default file input */
@@ -1997,7 +2013,7 @@ input[type="checkbox"].myCustomMultiSelectCheckboxes:checked {
 
 .discount-grid-popup {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 20px;
 }
 
@@ -2116,6 +2132,10 @@ input[type="checkbox"].myCustomMultiSelectCheckboxes:checked {
   .tickets-modal-wrapper {
     height: 67vh;
   }
+
+  .popupInputTextarea {
+    padding-left: 15px;
+  }
 }
 
 @media screen and (max-width: 576px) {
@@ -2130,6 +2150,14 @@ input[type="checkbox"].myCustomMultiSelectCheckboxes:checked {
   .ticket-modal .global_button_one {
     width: 170px;
     margin-left: 0;
+  }
+
+  .create-compaign-form .eventFields {
+    gap: 10px;
+  }
+
+  .discount-grid-popup {
+    flex-wrap: wrap;
   }
 }
 

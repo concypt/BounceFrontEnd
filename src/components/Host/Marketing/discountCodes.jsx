@@ -28,7 +28,7 @@ const customStyles = {
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
     borderRadius: "32px",
-    maxWidth: "700px",
+    maxWidth: "750px",
     width: "95%",
   },
 };
@@ -368,7 +368,14 @@ const HostTicketOrders = ({ coupons, onDeleteCampaign, events }) => {
                 >
                   {/* Dynamically render checkboxes */}
                   {events.map((event) => (
-                    <div key={event.id} style={{ marginBottom: "15px" }}>
+                    <div
+                      key={event.id}
+                      style={{
+                        marginBottom: "15px",
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
                       <input
                         type="checkbox"
                         id={`event_${event.id}`}
@@ -379,8 +386,8 @@ const HostTicketOrders = ({ coupons, onDeleteCampaign, events }) => {
                         style={{ marginRight: "13px" }} // Optional: Add spacing between checkbox and label
                       />
                       <label htmlFor={`event_${event.id}`}>
-                        {event.name.length > 20
-                          ? event.name.slice(0, 20) + "..."
+                        {event.name.length > 30
+                          ? event.name.slice(0, 30) + "..."
                           : event.name}
                       </label>
                     </div>
