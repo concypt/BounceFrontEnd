@@ -106,8 +106,6 @@ const HostTicketOrders = ({
     });
   };
 
-  
-
   const handleCheckboxChange = (e) => {
     const { value, checked } = e.target;
     let updatedEventIds = [...formData.tickets_id]; // Make a copy of the current event_ids array
@@ -198,8 +196,6 @@ const HostTicketOrders = ({
       });
     },
   });
-
-
 
   //Ticket order modal start
   const handleView = (event) => {
@@ -468,55 +464,63 @@ const HostTicketOrders = ({
                   />
                 </div>
               </div>
-              <div className="label-with-button">
-                <label htmlFor="" className="multiple-events-discount-label">
-                  Applies to
-                </label>
-                <div
-                  className="popupInputTextarea"
-                  style={{ display: "flex", flexDirection: "column" }}
-                >
-                  {/* Dynamically render checkboxes */}
-                  {tickets.map((ticket) => (
-                    <div key={ticket.id} style={{ marginBottom: "15px" }}>
-                      <input
-                        type="checkbox"
-                        id={`event_${ticket.id}`}
-                        name={`tickets_id`}
-                        value={ticket.id}
-                        className="myCustomMultiSelectCheckboxes"
-                        onChange={handleCheckboxChange}
-                        style={{ marginRight: "13px" }} // Optional: Add spacing between checkbox and label
-                      />
-                      <label htmlFor={`ticket_${ticket.id}`}>
-                        {ticket.name.length > 20
-                          ? ticket.name.slice(0, 20) + "..."
-                          : ticket.name}
-                      </label>
-                    </div>
-                  ))}
+              <div className="discount-grid-column">
+                <div className="label-with-button">
+                  <label htmlFor="" className="multiple-events-discount-label">
+                    Applies to
+                  </label>
+                  <div
+                    className="popupInputTextarea"
+                    style={{ display: "flex", flexDirection: "column" }}
+                  >
+                    {/* Dynamically render checkboxes */}
+                    {tickets.map((ticket) => (
+                      <div
+                        key={ticket.id}
+                        style={{
+                          marginBottom: "15px",
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                      >
+                        <input
+                          type="checkbox"
+                          id={`event_${ticket.id}`}
+                          name={`tickets_id`}
+                          value={ticket.id}
+                          className="myCustomMultiSelectCheckboxes"
+                          onChange={handleCheckboxChange}
+                          style={{ marginRight: "13px" }} // Optional: Add spacing between checkbox and label
+                        />
+                        <label htmlFor={`ticket_${ticket.id}`}>
+                          {ticket.name.length > 40
+                            ? ticket.name.slice(0, 40) + "..."
+                            : ticket.name}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              
+                {formData.tickets_id.map((ticketId) =>
+                  addQuantityInput(ticketId)
+                )}
               </div>
-              {formData.tickets_id.map((ticketId) =>
-                addQuantityInput(ticketId)
-              )}
-              <div className="popup-buttons">
-                <button
-                  className="loginButton"
-                  onClick={closeModal}
-                  type="button"
-                >
-                  <span>Cancel</span>
-                </button>
-                <button
-                  className="loginButton"
-                  disabled={mutation.isLoading}
-                  type="submit"
-                >
-                  <span>{mutation.isLoading ? "requesting..." : "Submit"}</span>
-                </button>
-              </div>
+            </div>
+            <div className="popup-buttons">
+              <button
+                className="loginButton"
+                onClick={closeModal}
+                type="button"
+              >
+                <span>Cancel</span>
+              </button>
+              <button
+                className="loginButton"
+                disabled={mutation.isLoading}
+                type="submit"
+              >
+                <span>{mutation.isLoading ? "requesting..." : "Submit"}</span>
+              </button>
             </div>
           </form>
         </Modal>

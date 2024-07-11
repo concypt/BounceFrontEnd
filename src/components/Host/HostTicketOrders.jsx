@@ -22,7 +22,7 @@ import viewImg from "../../assets/images/event-dash-icon-view.svg";
 import paginatePrev from "../../assets/images/pagination-arrow-prev.svg";
 import paginateNext from "../../assets/images/pagination-arrow-next.svg";
 //images
-import closeIcon from "../../assets/images/close-icon.svg";
+import closeIcon from "../../assets/images/closeicon.svg";
 import popupCalendar from "../../assets/images/popup-calendar.svg";
 import popupClock from "../../assets/images/popup-clock.svg";
 import popupLocation from "../../assets/images/popup-location.svg";
