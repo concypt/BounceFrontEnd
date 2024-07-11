@@ -27,6 +27,7 @@ const HostTicketOrders = ({ refundData , eventname }) => {
  
   const queryClient = useQueryClient();
 
+
   const mutation = useMutation({
     mutationFn: requestRefundAction,
     mutationKey: ["applrequestRefundActionyHost"],
@@ -51,6 +52,32 @@ const HostTicketOrders = ({ refundData , eventname }) => {
   });
 
   const handleRefund = (id,order_id,status) => {
+    if (status === 2) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#7357FF",
+        confirmButtonText: "Yes!",
+        input: "text", // Add input field for description
+        inputPlaceholder: "Enter Description"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const description = result.value || ''; // Get the description from the input
+          const formData = {
+            refund_id: id,
+            status: status,
+            order_id: order_id,
+            description: description // Include description in formData
+          };
+          // Now you can send formData with description included
+          mutation.mutate(formData);
+        }
+      });
+    }
+
+    else{
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -68,6 +95,8 @@ const HostTicketOrders = ({ refundData , eventname }) => {
         mutation.mutate(formData);
       }
     });
+
+  }
   };
 
   const columns = useMemo(
@@ -108,21 +137,23 @@ const HostTicketOrders = ({ refundData , eventname }) => {
         ),
       },
       
+
       {
         Header: "Actions",
         accessor: "actions",
         Cell: ({ row }) => (
           <div className="actionsColumn">
-            <button onClick={() => handleRefund(row.original.refund_details.id,row.original.id,2)}>
+            <button onClick={() => handleRefund(row.original.refund_details.id,row.original.id,1)}>
               <img src={approve} alt="View" />
             </button>
-            <button onClick={() => handleRefund(row.original.refund_details.id,row.original.id,3)}>
+            <button onClick={() => handleRefund(row.original.refund_details.id,row.original.id,2)}>
               <img src={decline} alt="View" />
             </button>
           </div>
         ),
       },
     ],
+
     []
   );
 
