@@ -1,5 +1,6 @@
 import { event } from "jquery";
 import { axiosInstance } from "./axiosInstance";
+import { array } from "prop-types";
 
 //Dashboard after login
 export const fetchBankDetails = async () => {
@@ -187,7 +188,7 @@ export const getEvent = async (eventId) => {
 
 export const createEvent = async (eventDataToSubmit) => {
   const formData = new FormData();
-
+  console.log(eventDataToSubmit);
   // Append other fields to the FormData object
   Object.keys(eventDataToSubmit).forEach((key) => {
     if (key !== "gallery" && key !== "tag") {
@@ -202,7 +203,7 @@ export const createEvent = async (eventDataToSubmit) => {
   formData.append("lat", Number(eventDataToSubmit.lat));
   formData.append("lang", Number(eventDataToSubmit.lang));
   formData.append("radius", Number(eventDataToSubmit.radius));
-  formData.append("event_status", Number(eventDataToSubmit.event_status));
+  formData.append("event_status", Number(eventDataToSubmit.status));
 
   // Append tags as an array or an empty array
   const tag = eventDataToSubmit.tag || [];
@@ -226,6 +227,11 @@ export const createEvent = async (eventDataToSubmit) => {
     formData.append("tag", []);
   }
 
+  //this is how we can console formData
+  for (let pair of formData.entries()) {
+    console.log(pair[0] + ": " + pair[1]);
+  }
+
   const response = await axiosInstance.post("/user/event-create", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
@@ -236,13 +242,11 @@ export const createEvent = async (eventDataToSubmit) => {
 };
 
 export const updateEvent = async (eventDataToSubmit, eventId) => {
-  console.log("servic:::", eventId);
   const formData = new FormData();
 
   // Append other fields to the FormData object
   Object.keys(eventDataToSubmit).forEach((key) => {
     if (key !== "gallery" && key !== "tag") {
-      // Skip the gallery and tags fields for now
       formData.append(key, eventDataToSubmit[key]);
     }
   });
@@ -253,7 +257,7 @@ export const updateEvent = async (eventDataToSubmit, eventId) => {
   formData.append("lat", Number(eventDataToSubmit.lat));
   formData.append("lang", Number(eventDataToSubmit.lang));
   formData.append("radius", Number(eventDataToSubmit.radius));
-  formData.append("event_status", Number(eventDataToSubmit.event_status));
+  formData.append("event_status", Number(eventDataToSubmit.status));
 
   // Append tags as an array or an empty array
   const tag = eventDataToSubmit.tag || [];
@@ -261,18 +265,7 @@ export const updateEvent = async (eventDataToSubmit, eventId) => {
     formData.append(`tag[${index}]`, ta);
   });
 
-  // Append each file in the gallery array to the FormData object
-  //console.log(eventDataToSubmit);
-  // Append gallery as an array of files or an empty array
-  const gallery = eventDataToSubmit.gallery || [];
-  gallery.forEach((imageObj, index) => {
-    formData.append(`gallery[${index}]`, imageObj.file); // Append the actual File object
-  });
-
-  // Ensure gallery or tag is sent even if it's empty
-  if (gallery.length === 0) {
-    formData.append("gallery", []);
-  }
+  // Ensure tags are sent even if it's empty
   if (tag.length === 0) {
     formData.append("tag", []);
   }
@@ -290,14 +283,106 @@ export const updateEvent = async (eventDataToSubmit, eventId) => {
   return response.data;
 };
 
+export const addPicturesToEvent = async (images, eventId) => {
+  const formData = new FormData();
+  images.forEach((imageObj, index) => {
+    if (imageObj.file != null) {
+      formData.append(`gallery[${index}]`, imageObj.file);
+    }
+  });
+
+  formData.append("event_id", eventId);
+
+  //this is how we can console formData
+  // for (let pair of formData.entries()) {
+  //   console.log(pair[0] + ": " + pair[1]);
+  // }
+
+  const response = await axiosInstance.post(`/user/event-gallery`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+  return response.data;
+};
+
+export const deletePicturesFromEvent = async (imageIds, eventId) => {
+  const formData = new FormData();
+
+  //formData.append("images", imageIds);
+
+  for (var i = 0; i < imageIds.length; i++) {
+    formData.append("images[]", imageIds[i]);
+  }
+
+  formData.append("event_id", eventId);
+  //this is how we can console formData
+  // for (let pair of formData.entries()) {
+  //   console.log(pair[0] + ": " + pair[1]);
+  // }
+  const response = await axiosInstance.post(
+    `/user/remove-gallery-image`,
+    formData,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  return response.data;
+};
+
 //HostCreateTickets.jsx
 export const createTickets = async (ticketsDataToSubmit, eventId) => {
+  let ticketsArray;
+
+  if (Array.isArray(ticketsDataToSubmit)) {
+    ticketsArray = ticketsDataToSubmit;
+  } else if (typeof ticketsDataToSubmit === "object") {
+    ticketsArray = [ticketsDataToSubmit];
+  } else {
+    throw new Error("Invalid ticketsDataToSubmit type");
+  }
+
   const payload = {
-    tickets: ticketsDataToSubmit,
+    tickets: ticketsArray,
     event_id: eventId,
   };
 
   const response = await axiosInstance.post("/user/ticket-create", payload);
+  return response.data;
+};
+
+export const getTicketsByEventId = async (eventId) => {
+  const response = await axiosInstance.get(`/user/all-tickets/${eventId}`);
+
+  return response.data.data.ticket;
+};
+
+export const updateTicket = async (updatedTicket, ticketId) => {
+  const response = await axiosInstance.post(
+    `/user/ticket-update/${ticketId}`,
+    updatedTicket
+  );
+  return response.data;
+};
+
+export const deleteTicket = async (ticketId) => {
+  const response = await axiosInstance.get(`/user/ticket-delete/${ticketId}`);
+  return response.data;
+};
+
+export const updateTicketOrder = async (ticketIds) => {
+  const payload = {
+    ticket_ids: ticketIds,
+  };
+
+  const response = await axiosInstance.post(
+    "/user/tickets/update-order",
+    payload
+  );
   return response.data;
 };
 
@@ -313,8 +398,6 @@ export const followUnfollow = async (organisationId) => {
 
 //FollowUnfollowBtn.jsx
 export const likeToggle = async (eventId) => {
-  console.log(eventId);
   const response = await axiosInstance.get(`user/add-favorite/${eventId}`);
-  console.log(response);
   return response.data;
 };

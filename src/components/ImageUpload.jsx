@@ -5,7 +5,12 @@ import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import "./ImageUpload.css";
 
-const ImageUpload = ({ gallery, onImagesChange }) => {
+const ImageUpload = ({
+  gallery,
+  onImagesChange,
+  imagesToRemove,
+  setImagesToRemove,
+}) => {
   //console.log(gallery);
   const onDrop = (acceptedFiles) => {
     const newImages = acceptedFiles.map((file) => {
@@ -28,6 +33,11 @@ const ImageUpload = ({ gallery, onImagesChange }) => {
   };
 
   const removeImage = (index) => {
+    const itemToRemove = gallery[index];
+    if (itemToRemove.file == null) {
+      const fileName = itemToRemove.preview.split("/").pop();
+      setImagesToRemove([...imagesToRemove, fileName]);
+    }
     onImagesChange(gallery.filter((_, i) => i !== index));
   };
 
@@ -96,7 +106,11 @@ const ImagePreview = ({ image, index, moveImage, removeImage }) => {
       style={{ opacity: isDragging ? 0.5 : 1 }}
     >
       <img src={image.preview} alt="preview" />
-      <button className="remove-button" onClick={() => removeImage(index)}>
+      <button
+        type="button"
+        className="remove-button"
+        onClick={() => removeImage(index)}
+      >
         X
       </button>
     </div>

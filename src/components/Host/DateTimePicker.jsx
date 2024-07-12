@@ -6,25 +6,35 @@ const DateTimePicker = ({
   initialEndTime,
   onDateTimeChange,
 }) => {
-  const inSD = initialStartTime.split(" ")[0] || "";
-  const inST = initialStartTime.split(" ")[1] || "";
-  const inED = initialEndTime.split(" ")[0] || "";
-  const inET = initialEndTime.split(" ")[1] || "";
-
   const initialStart = new Date().toISOString().split("T")[0];
   let initialEnd = new Date();
   initialEnd.setDate(initialEnd.getDate() + 7);
   initialEnd = initialEnd.toISOString().split("T")[0];
 
-  const [startDate, setStartDate] = useState(inSD != "" ? inSD : initialStart);
-  const [startTime, setStartTime] = useState(inST != "" ? inST : "00:00");
-  const [endDate, setEndDate] = useState(inED != "" ? inED : initialEnd);
-  const [endTime, setEndTime] = useState(inET != "" ? inET : "00:00");
+  const [startDate, setStartDate] = useState(initialStart);
+  const [startTime, setStartTime] = useState("00:00");
+  const [endDate, setEndDate] = useState(initialEnd);
+  const [endTime, setEndTime] = useState("00:00");
 
+  // Initialize state based on props only once
   useEffect(() => {
-    const formattedStartDateTime = `${startDate} ${startTime}:00`;
+    if (initialStartTime && initialEndTime) {
+      const [startDate, startTime] = initialStartTime.split(" ");
+      const [endDate, endTime] = initialEndTime.split(" ");
+
+      // Check if the values are different before setting state
+      setStartDate((prev) => (prev !== startDate ? startDate : prev));
+      setStartTime((prev) => (prev !== startTime ? startTime : prev));
+      setEndDate((prev) => (prev !== endDate ? endDate : prev));
+      setEndTime((prev) => (prev !== endTime ? endTime : prev));
+    }
+  }, [initialStartTime, initialEndTime]);
+
+  // Notify parent about changes
+  useEffect(() => {
+    const formattedStartDateTime = `${startDate} ${startTime}`;
     const formattedEndDateTime =
-      endDate && endTime ? `${endDate} ${endTime}:00` : "";
+      endDate && endTime ? `${endDate} ${endTime}` : "";
 
     onDateTimeChange({
       startDate: formattedStartDateTime,
