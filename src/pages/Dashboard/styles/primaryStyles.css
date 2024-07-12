@@ -1088,6 +1088,10 @@ button.delete.ml-auto {
   margin-bottom: 20px;
 }
 
+.manageTickets .tickets.active {
+  border: 1px solid #7357ff;
+}
+
 .manageTickets .tickets h3 {
   font-size: 18px;
   font-weight: 600;
@@ -1103,6 +1107,9 @@ button.delete.ml-auto {
   height: 15px;
   width: 15px;
   border-radius: 50px;
+  background-color: #d0d7d3;
+}
+.manageTickets .tickets h3.active::after {
   background-color: #a9eecc;
 }
 

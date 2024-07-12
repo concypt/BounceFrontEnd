@@ -1,14 +1,21 @@
-import PropTeypes from "prop-types";
+import PropTypes from "prop-types";
 // images
 import dustbin from "../../assets/images/dustbin.svg";
 import ticketArrows from "../../assets/images/topArrow.svg";
 import pencil from "../../assets/images/pencil.svg";
 
-const HostTicketCard = ({ ticket, onDelete, onEdit, onMoveUp, onMoveDown }) => {
+const HostTicketCard = ({
+  ticket,
+  isCurrent,
+  onDelete,
+  onEdit,
+  onMoveUp,
+  onMoveDown,
+}) => {
   return (
-    <div className="tickets">
+    <div className={`tickets ${isCurrent}`}>
       <div className="ticketLeft">
-        <h3>{ticket.title}</h3>
+        <h3 className={ticket.status ? "active" : ""}>{ticket.name}</h3>
         <p>£ {ticket.price}</p>
         <p>{ticket.quantity} Available</p>
       </div>
@@ -29,10 +36,11 @@ const HostTicketCard = ({ ticket, onDelete, onEdit, onMoveUp, onMoveDown }) => {
   );
 };
 HostTicketCard.propTypes = {
-  ticket: PropTeypes.object,
-  onDelete: PropTeypes.func,
-  onEdit: PropTeypes.func,
-  onMoveUp: PropTeypes.func,
-  onMoveDown: PropTeypes.func,
+  ticket: PropTypes.object,
+  isCurrent: PropTypes.string,
+  onDelete: PropTypes.func,
+  onEdit: PropTypes.func,
+  onMoveUp: PropTypes.func,
+  onMoveDown: PropTypes.func,
 };
 export default HostTicketCard;

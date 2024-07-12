@@ -1,59 +1,146 @@
-import { useState, useCallback } from "react";
+// export default HostCreateTickets;
+import { useEffect, useState, useCallback } from "react";
 import PropTypes from "prop-types";
 import Swal from "sweetalert2";
-import { useMutation } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { useNavigate } from "react-router-dom";
 import DateTimePicker from "./DateTimePicker";
-import { createTickets } from "../../api/secureService";
+import { getTicketsByEventId } from "../../api/secureService";
+import {
+  useCreateTickets,
+  useUpdateTicket,
+  useDeleteTicket,
+  useUpdateTicketOrder,
+} from "./HostTicketsMutations";
+
 import HostTicketCard from "./HostTicketCard";
 import iconPlus from "../../assets/images/plusgrey.svg";
 
+function separateDateTime(datetimeString) {
+  if (!datetimeString || !datetimeString.includes("T")) return "";
+
+  // Split the datetime string into date and time components
+  const [date, timeWithMs] = datetimeString.split("T");
+
+  // Remove the milliseconds and timezone part from the time component
+  const time = timeWithMs.split(".")[0].slice(0, 5);
+
+  const dateTime = date + " " + time;
+
+  return dateTime;
+}
+
+const getDefaultStartDateTime = () => {
+  const now = new Date();
+  const date = now.toISOString().split("T")[0]; // Extract date part
+  return `${date}T00:00`; // Append "T00:00"
+};
+
+const getDefaultEndDateTime = () => {
+  const now = new Date();
+  now.setDate(now.getDate() + 7); // Add 7 days
+  const date = now.toISOString().split("T")[0]; // Extract date part
+  return `${date}T00:00`; // Append "T00:00"
+};
+
+const ticketSchema = z.object({
+  name: z.string().min(1, "Title is required"),
+  description: z.string().min(1, "Description is required"),
+  start_time: z.string().min(1, "Start time is required"),
+  end_time: z.string().min(1, "End time is required"),
+  type: z.enum(["paid", "free"]),
+  price: z.coerce.number().nonnegative(),
+  service_fee: z.number().nonnegative().optional(),
+  ticket_per_order: z.coerce.number().min(1),
+  quantity: z.coerce.number().min(1),
+  absorbe_fees: z.enum(["0", "1"]),
+  status: z.coerce.number().default(0),
+  is_deleted: z.number().nonnegative().optional(),
+  order: z.number().nonnegative().optional(),
+  id: z.coerce.number().nonnegative().optional(),
+});
+
 const HostCreateTickets = ({ setFormStep, eventId }) => {
-  const [tickets, setTickets] = useState([]);
-  const [currentTicketIndex, setCurrentTicketIndex] = useState(null);
-  const [ticketData, setTicketData] = useState({
-    title: "",
-    description: "",
-    ticket_start_time: "",
-    ticket_end_time: "",
-    ticket_type: "paid",
-    price: 0,
-    ticket_per_order: 1,
-    quantity: 1,
-    absorbe_fees: 0,
-    ticket_status: 0,
+  const {
+    control,
+    handleSubmit,
+    reset,
+    setValue,
+    getValues,
+    watch,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(ticketSchema),
+    defaultValues: {
+      name: "",
+      description: "",
+      start_time: "",
+      end_time: "",
+      type: "paid",
+      price: 0,
+      dummyprice: 0,
+      ticket_per_order: 1,
+      quantity: 1,
+      absorbe_fees: "0",
+      status: "0",
+      is_deleted: 0,
+      order: 0,
+      id: 0,
+    },
   });
 
-  const handleDateTimeChange = useCallback(({ startDate, endDate }) => {
-    setTicketData((prevTicketData) => ({
-      ...prevTicketData,
-      ticket_start_time: startDate,
-      ticket_end_time: endDate,
-    }));
-  }, []);
+  const [tickets, setTickets] = useState([]);
+  const [currentTicketIndex, setCurrentTicketIndex] = useState(null);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setTicketData({
-      ...ticketData,
-      [name]:
-        name === "price" ||
-        name === "ticket_per_order" ||
-        name === "quantity" ||
-        name === "ticket_status"
-          ? Number(value)
-          : value,
-    });
-  };
+  const type = watch("type");
+  const absorbeFees = watch("absorbe_fees");
+  const price = watch("price");
+  const navigate = useNavigate();
 
-  const isFormValid = () => {
-    return Object.values(ticketData).every((field) => field !== "");
-  };
+  // Fetch existing tickets data using React Query
+  const { data: existingTickets, refetch } = useQuery({
+    queryKey: ["tickets", eventId],
+    queryFn: () => getTicketsByEventId(eventId),
+    enabled: !!eventId,
+  });
 
-  const handlePrev = () => {
-    setFormStep(1);
-  };
+  const { mutate: createTicketsMutate } = useCreateTickets(eventId);
+  const { mutate: updateTicketMutate } = useUpdateTicket();
+  const { mutate: deleteTicketMutate } = useDeleteTicket(eventId);
+  const { mutate: updateTicketOrderMutate } = useUpdateTicketOrder(eventId);
 
-  const handleAddOrUpdateTicket = () => {
+  // useEffect(() => {
+  //   if (existingTickets) {
+  //     setTickets(
+  //       existingTickets.map((ticket, index) => ({ ...ticket, order: index }))
+  //     );
+  //   }
+  // }, [existingTickets]);
+
+  useEffect(() => {
+    if (existingTickets) {
+      const updatedTickets = existingTickets.map((ticket, index) => ({
+        ...ticket,
+        absorbe_fees: String(ticket.absorbe_fees), // Convert absorbe_fees to string
+        order: index,
+      }));
+      setTickets(updatedTickets);
+    }
+  }, [existingTickets]);
+
+  const handleDateTimeChange = useCallback(
+    ({ startDate, endDate }) => {
+      setValue("start_time", startDate);
+      setValue("end_time", endDate);
+    },
+    [setValue]
+  );
+
+  const handleAddOrUpdateTicket = (data) => {
+    console.log("handleAddOrUpdateTicket::: data:::", data);
     if (currentTicketIndex !== null) {
       Swal.fire({
         title: "Are you sure?",
@@ -65,22 +152,57 @@ const HostCreateTickets = ({ setFormStep, eventId }) => {
       }).then((result) => {
         if (result.isConfirmed) {
           const updatedTickets = tickets.map((ticket, index) =>
-            index === currentTicketIndex ? ticketData : ticket
+            index === currentTicketIndex ? { ...data, order: index } : ticket
           );
           setTickets(updatedTickets);
-          Swal.fire("Updated!", "Your ticket has been updated.", "success");
+          updateTicketMutate({ updatedTicket: data, ticketId: data.id });
+
           resetForm();
         }
       });
     } else {
-      setTickets([...tickets, ticketData]);
+      setTickets([...tickets, { ...data, order: tickets.length }]);
+      createTicketsMutate(data);
       resetForm();
     }
   };
 
+  const handleSaveAllTickets = () => {
+    createTicketsMutate(tickets);
+  };
+
   const handleEditTicket = (index) => {
-    setTicketData(tickets[index]);
+    const ticket = tickets[index];
+    for (const [key, value] of Object.entries(ticket)) {
+      setValue(key, value);
+    }
+    const tPrice = parseFloat(ticket.price);
+    setValue(
+      "dummyprice",
+      ticket.absorbe_fees === "1" || ticket.absorbe_fees === 1
+        ? tPrice.toFixed(2)
+        : (tPrice / 1.1).toFixed(2)
+    );
+
     setCurrentTicketIndex(index);
+  };
+
+  const resetForm = () => {
+    // reset();
+    reset({
+      name: "",
+      description: "",
+      start_time: getDefaultStartDateTime(),
+      end_time: getDefaultEndDateTime(),
+      type: "paid",
+      price: 0,
+      ticket_per_order: 1,
+      quantity: 1,
+      absorbe_fees: "0",
+      status: "0",
+      order: tickets.length,
+    });
+    setCurrentTicketIndex(null);
   };
 
   const handleDeleteTicket = (index) => {
@@ -93,8 +215,9 @@ const HostCreateTickets = ({ setFormStep, eventId }) => {
       cancelButtonText: "No, cancel!",
     }).then((result) => {
       if (result.isConfirmed) {
+        deleteTicketMutate(tickets[index].id);
         setTickets(tickets.filter((_, i) => i !== index));
-        Swal.fire("Deleted!", "Your ticket has been deleted.", "success");
+        //Swal.fire("Deleted!", "Your ticket has been deleted.", "success");
       }
     });
   };
@@ -107,6 +230,8 @@ const HostCreateTickets = ({ setFormStep, eventId }) => {
         newTickets[index],
       ];
       setTickets(newTickets);
+      updateTicketOrderMutate(newTickets.map((ticket) => ticket.id));
+      resetForm();
     }
   };
 
@@ -118,47 +243,33 @@ const HostCreateTickets = ({ setFormStep, eventId }) => {
         newTickets[index],
       ];
       setTickets(newTickets);
+      updateTicketOrderMutate(newTickets.map((ticket) => ticket.id));
+      resetForm();
     }
   };
 
-  const resetForm = () => {
-    setTicketData({
-      title: "",
-      description: "",
-      ticket_start_time: "",
-      ticket_end_time: "",
-      ticket_type: "paid",
-      price: 0,
-      ticket_per_order: 1,
-      quantity: 1,
-      absorbe_fees: 0,
-      ticket_status: 0,
-    });
-    setCurrentTicketIndex(null);
+  const handleEventEdit = () => {
+    navigate(`/host-event/edit/${eventId}`);
   };
 
-  // const mutation = useMutation((tickets) => {
-  //   return axios.post("/api/tickets", { tickets });
-  // });
-  const mutation = useMutation({
-    mutationFn: (tickets) => createTickets(tickets, eventId),
-    mutationKey: [createTickets],
-    onSuccess: () => {
-      Swal.fire("Success!", "All tickets have been saved.", "success");
-      // Success actions
-    },
-    onError: (error) => {
-      Swal.fire("Error!", `Failed to save tickets: ${error.message}`, "error");
-      // Error actions
-    },
-  });
-
-  const handleSaveAllTickets = () => {
-    mutation.mutate(tickets);
-  };
+  useEffect(() => {
+    if (type === "free") {
+      setValue("price", 0);
+      setValue("absorbe_fees", "0");
+    } else {
+      const dummyprice = parseFloat(getValues("dummyprice"));
+      //console.log(typeof dummyprice, "  -  ", absorbeFees);
+      setValue(
+        "price",
+        absorbeFees === 0 || absorbeFees === "0"
+          ? (dummyprice * 1.1).toFixed(2)
+          : dummyprice.toFixed(2)
+      );
+    }
+  }, [type, absorbeFees, setValue, getValues]);
 
   return (
-    <>
+    <form onSubmit={handleSubmit(handleAddOrUpdateTicket)}>
       <div className="form-card">
         <h2 className="fs-title">Manage Tickets</h2>
         <div className="row">
@@ -172,12 +283,13 @@ const HostCreateTickets = ({ setFormStep, eventId }) => {
                   onEdit={() => handleEditTicket(index)}
                   onMoveUp={() => handleMoveUp(index)}
                   onMoveDown={() => handleMoveDown(index)}
-                  className={currentTicketIndex === index ? "highlight" : ""}
+                  isCurrent={currentTicketIndex === index ? "active" : ""}
                 />
               ))}
               <button
                 className="plus-icon-box"
-                onClick={() => setCurrentTicketIndex(null)}
+                type="button"
+                onClick={() => resetForm()}
               >
                 <div className="plus-icon-circle">
                   <img src={iconPlus} alt="Plus Icon" className="plus-icon" />
@@ -190,149 +302,207 @@ const HostCreateTickets = ({ setFormStep, eventId }) => {
               <div className="eventFields">
                 <div className="eventLables">
                   <label className="fieldlabels">Ticket details</label>
-                  <input
-                    type="text"
-                    name="title"
-                    placeholder="Enter a descriptive name..."
-                    value={ticketData.title}
-                    onChange={handleChange}
+                  <Controller
+                    name="name"
+                    control={control}
+                    render={({ field }) => (
+                      <input
+                        type="text"
+                        placeholder="Enter a descriptive name..."
+                        {...field}
+                      />
+                    )}
                   />
+                  {errors.name && <p>{errors.name.message}</p>}
                 </div>
                 <div className="eventLables status">
                   <label className="fieldlabels">Status</label>
-                  <select
-                    className="form-select form-select-lg"
-                    aria-label=".form-select-lg example"
-                    name="ticket_status"
-                    value={ticketData.ticket_status}
-                    onChange={handleChange}
-                  >
-                    <option value="1">Active</option>
-                    <option value="0">Inactive</option>
-                  </select>
+                  <Controller
+                    name="status"
+                    control={control}
+                    render={({ field }) => (
+                      <select {...field} className="form-select form-select-lg">
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                      </select>
+                    )}
+                  />
+                  {errors.status && <p>{errors.status.message}</p>}
                 </div>
               </div>
               <div className="eventLables">
-                <input
-                  type="text"
+                <Controller
                   name="description"
-                  placeholder="Describe what’s included"
-                  value={ticketData.description}
-                  onChange={handleChange}
+                  control={control}
+                  render={({ field }) => (
+                    <input
+                      type="text"
+                      placeholder="Describe what’s included"
+                      {...field}
+                    />
+                  )}
                 />
+                {errors.description && <p>{errors.description.message}</p>}
                 <div className="datetime">
                   <DateTimePicker
-                    initialStartTime={ticketData.ticket_start_time}
-                    initialEndTime={ticketData.ticket_end_time}
+                    initialStartTime={separateDateTime(getValues("start_time"))}
+                    initialEndTime={separateDateTime(getValues("end_time"))}
                     onDateTimeChange={handleDateTimeChange}
                   />
+                  {errors.start_time && <p>{errors.start_time.message}</p>}
+                  {errors.end_time && <p>{errors.end_time.message}</p>}
                 </div>
                 <div className="switch-container switchTickets">
-                  <div
-                    className={`ticketType ${
-                      ticketData.ticket_type === "paid" ? "selected" : ""
-                    }`}
-                    onClick={() =>
-                      setTicketData({
-                        ...ticketData,
-                        ticket_type: "paid",
-                      })
-                    }
-                  >
-                    Paid
-                  </div>
-                  <div
-                    className={`ticketType ${
-                      ticketData.ticket_type === "free" ? "selected" : ""
-                    }`}
-                    onClick={() =>
-                      setTicketData({
-                        ...ticketData,
-                        ticket_type: "free",
-                        price: "0",
-                      })
-                    }
-                  >
-                    Free
-                  </div>
-                  <div className={`highlight ${ticketData.ticket_type}`}></div>
+                  <Controller
+                    name="type"
+                    control={control}
+                    render={({ field }) => (
+                      <>
+                        <div
+                          className={`ticketType ${
+                            field.value === "paid" ? "selected" : ""
+                          }`}
+                          onClick={() => field.onChange("paid")}
+                        >
+                          Paid
+                        </div>
+                        <div
+                          className={`ticketType ${
+                            field.value === "free" ? "selected" : ""
+                          }`}
+                          onClick={() => field.onChange("free")}
+                        >
+                          Free
+                        </div>
+                        <div className={`highlight ${field.value}`}></div>
+                      </>
+                    )}
+                  />
+                  {errors.type && <p>{errors.type.message}</p>}
                 </div>
                 <div
                   className="eventLables"
                   style={
-                    ticketData.ticket_type === "paid"
+                    getValues("type") === "paid"
                       ? { display: "block" }
                       : { display: "none" }
                   }
                 >
                   <label className="fieldlabels">Price</label>
-                  <input
-                    type="text"
-                    name="price"
-                    placeholder="Enter price"
-                    value={
-                      ticketData.ticket_type === "free" ? "0" : ticketData.price
-                    }
-                    onChange={handleChange}
-                    disabled={ticketData.ticket_type === "free"}
+                  <Controller
+                    name="dummyprice"
+                    control={control}
+                    render={({ field }) => (
+                      <input
+                        type="number"
+                        placeholder="Enter price"
+                        {...field}
+                        disabled={getValues("type") === "free"}
+                        onChange={(e) => {
+                          const newDummyPrice = parseFloat(e.target.value) || 0;
+
+                          const absorbeFees = getValues("absorbe_fees").trim();
+                          let newPrice = newDummyPrice;
+
+                          // If absorbe_fees is "0", add 10% to the dummy price
+                          if (absorbeFees === "0" || absorbeFees === 0) {
+                            newPrice = (newDummyPrice * 1.1).toFixed(2);
+                          }
+
+                          // Update both dummyprice and price fields
+                          setValue("dummyprice", newDummyPrice);
+                          setValue("price", newPrice);
+                        }}
+                      />
+                    )}
                   />
+
+                  {type == "paid" ? (
+                    <Controller
+                      name="price"
+                      control={control}
+                      render={({ field }) => (
+                        <input
+                          type="hidden"
+                          {...field}
+                          disabled={getValues("type") === "free"}
+                        />
+                      )}
+                    />
+                  ) : (
+                    ""
+                  )}
+                  {errors.price && <p>{errors.price.message}</p>}
                 </div>
+
                 <div className="eventLables">
                   <label className="fieldlabels">Quantity available</label>
-                  <input
-                    type="number"
+                  <Controller
                     name="quantity"
-                    placeholder="0"
-                    value={ticketData.quantity}
-                    onChange={handleChange}
+                    control={control}
+                    render={({ field }) => (
+                      <input type="number" placeholder="0" {...field} />
+                    )}
                   />
+                  {errors.quantity && <p>{errors.quantity.message}</p>}
                 </div>
                 <div className="eventLables">
                   <label className="fieldlabels">
                     Max tickets per customer
                   </label>
-                  <input
-                    type="number"
+                  <Controller
                     name="ticket_per_order"
-                    placeholder="0"
-                    value={ticketData.ticket_per_order}
-                    onChange={handleChange}
+                    control={control}
+                    render={({ field }) => (
+                      <input type="number" placeholder="0" {...field} />
+                    )}
                   />
+                  {errors.ticket_per_order && (
+                    <p>{errors.ticket_per_order.message}</p>
+                  )}
                 </div>
                 <div className="absorbFees">
-                  <div className="toggleBtn">
-                    <label className="switch">
-                      <input
-                        type="checkbox"
-                        name="absorbe_fees"
-                        checked={ticketData.absorbe_fees === 1}
-                        onChange={(e) =>
-                          setTicketData({
-                            ...ticketData,
-                            absorbe_fees: e.target.checked ? 1 : 0,
-                          })
-                        }
-                      />
-                      <div className="slider round"></div>
-                    </label>
-                    <p>Absorb Fee</p>
-                  </div>
-                  <h4>
-                    Total cost:{" "}
-                    {ticketData.ticket_type === "free"
-                      ? "Free"
-                      : `£${ticketData.price}`}
-                  </h4>
+                  {type == "paid" ? (
+                    <div className="toggleBtn">
+                      <label className="switch">
+                        <Controller
+                          name="absorbe_fees"
+                          control={control}
+                          render={({
+                            field: { value, onChange, ...field },
+                          }) => (
+                            <input
+                              type="checkbox"
+                              {...field}
+                              checked={value === "1" || value === 1}
+                              onChange={(e) =>
+                                onChange(e.target.checked ? "1" : "0")
+                              }
+                            />
+                          )}
+                        />
+                        <div className="slider round"></div>
+                      </label>
+                      <p>Absorb Fee</p>
+                      {errors.absorbe_fees && (
+                        <p>{errors.absorbe_fees.message}</p>
+                      )}
+                    </div>
+                  ) : (
+                    ""
+                  )}
+
+                  <h4>Total cost: {type === "free" ? "Free" : `£ ${price}`}</h4>
                 </div>
                 <div className="ticketBtns">
-                  <button className="loginButton" onClick={resetForm}>
-                    <span>Cancel</span>
-                  </button>
                   <button
                     className="loginButton"
-                    onClick={handleAddOrUpdateTicket}
-                    disabled={!isFormValid()}
+                    type="button"
+                    onClick={resetForm}
                   >
+                    <span>Cancel</span>
+                  </button>
+                  <button className="loginButton" type="submit">
                     <span>
                       {currentTicketIndex !== null ? "Update" : "Add"} ticket
                     </span>
@@ -345,20 +515,14 @@ const HostCreateTickets = ({ setFormStep, eventId }) => {
       </div>
       <div className="multistep-button-wrap">
         <button
-          onClick={handlePrev}
+          onClick={handleEventEdit}
           className="loginButton previous-create-event"
-        >
-          <span>Prev</span>
-        </button>
-        <button
-          className="loginButton"
           type="button"
-          onClick={handleSaveAllTickets}
         >
-          <span>Save All Tickets</span>
+          <span>Edit Event</span>
         </button>
       </div>
-    </>
+    </form>
   );
 };
 

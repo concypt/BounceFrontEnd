@@ -3,17 +3,18 @@ import { useParams } from "react-router-dom";
 
 import Header from "../../components/Dashboard/Header";
 import Sidebar from "../../components/Dashboard/Sidebar";
-import HostCreateEvent from "../../components/Host/HostCreateEvent";
+import HostCreateTickets from "../../components/Host/HostCreateTickets";
 import "./styles/primaryStyles.css";
 import "./styles/comonStyles.css";
 import "./HostEvent.css";
-import HostCreateTickets from "../../components/Host/HostCreateTickets";
 
 const HostEvent = () => {
   const { id } = useParams();
 
-  const [formStep, setFormStep] = useState(1);
-  const [eventId, setEventId] = useState(id ? parseInt(id) : null);
+  //console.log(id);
+
+  const [formStep, setFormStep] = useState(2);
+  const [eventId] = useState(id ? parseInt(id) : null);
 
   return (
     <div className="dashboard">
@@ -42,21 +43,8 @@ const HostEvent = () => {
                       </li>
                       <div className="line"></div>
                     </ul>
+
                     <div
-                      className="fieldsetOne"
-                      style={
-                        formStep === 1
-                          ? { display: "block" }
-                          : { display: "none" }
-                      }
-                    >
-                      <HostCreateEvent
-                        setFormStep={setFormStep}
-                        setEventId={setEventId}
-                        eventId={eventId}
-                      />
-                    </div>
-                    {/* <div
                       className="fieldsetTwo"
                       style={
                         formStep === 2
@@ -68,7 +56,7 @@ const HostEvent = () => {
                         eventId={eventId}
                         setFormStep={setFormStep}
                       />
-                    </div> */}
+                    </div>
                   </div>
                 </div>
               </div>

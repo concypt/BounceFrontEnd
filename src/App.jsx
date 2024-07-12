@@ -26,6 +26,7 @@ import Tickets from "./pages/Dashboard/Tickets.jsx";
 import EventSingle from "./pages/Dashboard/EventSingle.jsx";
 import Marketing from "./pages/Dashboard/Marketing.jsx";
 import HostEvent from "./pages/Dashboard/HostEvent.jsx";
+import HostEventTicket from "./pages/Dashboard/HostTicket.jsx";
 import Attend from "./pages/Dashboard/Attend.jsx";
 import PrivacyPolicy from "./pages/static/PrivacyPolicy.jsx";
 import About from "./pages/static/About.jsx";
@@ -71,6 +72,7 @@ const router = createBrowserRouter(
         <Route path="/dashboard-marketing" element={<Marketing />} />
         <Route path="/host-event/new" element={<HostEvent />} />
         <Route path="/host-event/edit/:id" element={<HostEvent />} />
+        <Route path="/host-event/:id/tickets" element={<HostEventTicket />} />
         <Route path="/Attend" element={<Attend />} />
       </Route>
       {/* without layout pages */}
