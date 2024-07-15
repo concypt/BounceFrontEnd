@@ -63,6 +63,36 @@ export const fetchEventDetails = async (eventId) => {
   return data;
 };
 
+//EventTickets.jsx
+export const fetchEventTickets = async (eventId) => {
+  const { data } = await axiosPInstance
+    .get(`/attenders/event-tickets/${eventId}`)
+    .then((res) => res.data);
+
+  return data;
+};
+
+// Check ticket availability
+export const checkTicketAvailability = async (ticketId, quantity) => {
+  console.log("quantity: ", quantity);
+  const { data } = await axiosPInstance.get(
+    `https://bounce.extrasol.co.uk/api/attenders/stock`,
+    {
+      params: { ticket_id: ticketId, quantity },
+    }
+  );
+  return data;
+};
+
+// Add tickets to the cart
+export const addToCart = async (orderDetails) => {
+  const { data } = await axiosPInstance.post(
+    `https://bounce.extrasol.co.uk/api/attenders/add-to-cart`,
+    orderDetails
+  );
+  return data;
+};
+
 //Home.jsx
 export const fetchHomeData = async () => {
   const { data } = await axiosPInstance

@@ -5,7 +5,7 @@ import { fetchEventDetails } from "../api/publicService";
 import LoadingBar from "react-top-loading-bar";
 import FollowUnfollowBtn from "./FollowUnfollowBtn";
 import PropTypes from "prop-types";
-import styles from "../components/singleEvent.module.css";
+import styles from "./singleEvent.module.css";
 import moment from "moment";
 import { Link } from "react-router-dom";
 //import { useNavigate } from "react-router-dom";
@@ -16,6 +16,7 @@ import calendarImage from "../assets/images/calender.svg";
 import clockImage from "../assets/images/clock_grey.svg";
 import locationImage from "../assets/images/location_grey.svg";
 import LikeToggleBtn from "./LikeToggleBtn";
+import EventTickets from "./EventTickets";
 
 const SingleEvent = () => {
   const { eventId } = useParams();
@@ -159,6 +160,7 @@ const SingleEvent = () => {
 
                   <div className="header_btn">
                     <button
+                      type="button"
                       href="#"
                       className="global_button_one"
                       onClick={toggleModal}
@@ -186,193 +188,7 @@ const SingleEvent = () => {
         </div>
       </div>
       {isModalOpen && (
-        <div className={styles.modalBackground} onClick={toggleModal}>
-          <div
-            className={styles.modalContainer}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className={`${styles.column} ${styles.columnLarge}`}>
-              <div className="tabSection ticket-popup">
-                <div id="tabs">
-                  <input type="radio" id="button-1" name="tab" defaultChecked />
-                  <input type="radio" id="button-2" name="tab" />
-                  <ul id="menu">
-                    <li className="tab-1-li">
-                      <label htmlFor="button-1">Paid</label>
-                    </li>
-                    <li className="tab-2-li">
-                      <label htmlFor="button-2">Free</label>
-                    </li>
-                    {/* <li className="bg"></li> */}
-                  </ul>
-                  <div id="shadow">
-                    <div id="content">
-                      <div id="tab-1">
-                        <div className="left tickets-modal-wrapper">
-                          <div className={styles.ticketsGridModal}>
-                            <div className={styles.cardTicket}>
-                              <div className={styles.cardHeaderTicket}>
-                                <div className={styles.cardHeaderTicketContent}>
-                                  <div className={styles.priceEuro}>£25.00</div>
-                                  <div className={styles.feeEuro}>
-                                    + £2.50 Fee
-                                  </div>
-                                </div>
-                              </div>
-                              <div className={styles.cardBodyTicket}>
-                                <p>Phase 3</p>
-                                <div className={styles.orderDiv}>
-                                  <input type="number" placeholder="1" />
-                                  <a
-                                    className="bgGlobalBtn borderGlobalBtn"
-                                    href=""
-                                  >
-                                    <span>Add to order</span>
-                                  </a>
-                                </div>
-                              </div>
-                            </div>
-                            <div className={styles.cardTicket}>
-                              <div className={styles.cardHeaderTicket}>
-                                <div className={styles.cardHeaderTicketContent}>
-                                  <div className={styles.priceEuro}>£22.00</div>
-                                  <div className={styles.feeEuro}>
-                                    + £2.50 Fee
-                                  </div>
-                                </div>
-                              </div>
-                              <div className={styles.cardBodyTicket}>
-                                <p>Phase 3</p>
-                                <div className={styles.orderDiv}>
-                                  <input type="number" placeholder="1" />
-                                  <a
-                                    className="bgGlobalBtn borderGlobalBtn"
-                                    href=""
-                                  >
-                                    <span>Add to order</span>
-                                  </a>
-                                </div>
-                              </div>
-                            </div>
-                            <div className={styles.cardTicket}>
-                              <div className={styles.cardHeaderTicket}>
-                                <div className={styles.cardHeaderTicketContent}>
-                                  <div className={styles.priceEuro}>£18.00</div>
-                                  <div className={styles.feeEuro}>
-                                    + £2.50 Fee
-                                  </div>
-                                </div>
-                              </div>
-                              <div className={styles.cardBodyTicket}>
-                                <p>Early Bird - Sold Out</p>
-                                <div className={styles.orderDiv}>
-                                  <input type="number" placeholder="1" />
-                                  <a
-                                    className="bgGlobalBtn borderGlobalBtn"
-                                    href=""
-                                  >
-                                    <span>Add to order</span>
-                                  </a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="right"></div>
-                      </div>
-                      <div id="tab-2">
-                        <div className="left tickets-modal-wrapper">
-                          <div className={styles.ticketsGridModal}>
-                            <div className={styles.cardTicket}>
-                              <div className={styles.cardHeaderTicket}>
-                                <div className={styles.cardHeaderTicketContent}>
-                                  <div className={styles.priceEuro}>£25.00</div>
-                                  <div className={styles.feeEuro}>
-                                    + £2.50 Fee
-                                  </div>
-                                </div>
-                              </div>
-                              <div className={styles.cardBodyTicket}>
-                                <p>Phase 3</p>
-                                <div className={styles.orderDiv}>
-                                  <input type="number" placeholder="1" />
-                                  <a
-                                    className="bgGlobalBtn borderGlobalBtn"
-                                    href=""
-                                  >
-                                    <span>Add to order</span>
-                                  </a>
-                                </div>
-                              </div>
-                            </div>
-                            <div className={styles.cardTicket}>
-                              <div className={styles.cardHeaderTicket}>
-                                <div className={styles.cardHeaderTicketContent}>
-                                  <div className={styles.priceEuro}>£22.00</div>
-                                  <div className={styles.feeEuro}>
-                                    + £2.50 Fee
-                                  </div>
-                                </div>
-                              </div>
-                              <div className={styles.cardBodyTicket}>
-                                <p>Phase 3</p>
-                                <div className={styles.orderDiv}>
-                                  <input type="number" placeholder="1" />
-                                  <a
-                                    className="bgGlobalBtn borderGlobalBtn"
-                                    href=""
-                                  >
-                                    <span>Add to order</span>
-                                  </a>
-                                </div>
-                              </div>
-                            </div>
-                            <div className={styles.cardTicket}>
-                              <div className={styles.cardHeaderTicket}>
-                                <div className={styles.cardHeaderTicketContent}>
-                                  <div className={styles.priceEuro}>£18.00</div>
-                                  <div className={styles.feeEuro}>
-                                    + £2.50 Fee
-                                  </div>
-                                </div>
-                              </div>
-                              <div className={styles.cardBodyTicket}>
-                                <p>Early Bird - Sold Out</p>
-                                <div className={styles.orderDiv}>
-                                  <input type="number" placeholder="1" />
-                                  <a
-                                    className="bgGlobalBtn borderGlobalBtn"
-                                    href=""
-                                  >
-                                    <span>Add to order</span>
-                                  </a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="right"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className={`${styles.column} ${styles.columnSmall}`}>
-              <h2>Your order</h2>
-              <div className={styles.ticketTier}>
-                <p>Tier 1 </p>
-              </div>
-              <div className={styles.btnWrapper}>
-                <div className="header_btn ticket-modal">
-                  <button href="#" className="global_button_one">
-                    <span>Checkout</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <EventTickets eventId={eventId} toggleModal={toggleModal} />
       )}
     </>
   );
