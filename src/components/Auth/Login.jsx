@@ -94,7 +94,8 @@ const LoginPage = () => {
           <div className={styles.loginForm}>
             <div className={styles.conditionsText}>
               <p className={styles.terms}>
-                <a href="#">Terms </a> | <a href="#">Privacy</a>
+                <a href="/PrivacyPolicy">Terms </a> |{" "}
+                <a href="/TermsConditions">Privacy</a>
               </p>
               <a href="#" className={styles.createAccount}>
                 Create an account

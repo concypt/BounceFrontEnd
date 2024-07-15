@@ -26,6 +26,7 @@ const customStyles = {
     right: "auto",
     bottom: "auto",
     marginRight: "-50%",
+    paddingRight: "0",
     transform: "translate(-50%, -50%)",
     borderRadius: "32px",
     maxWidth: "700px",
@@ -429,100 +430,105 @@ const HostTicketOrders = ({
           style={customStyles}
           contentLabel="Upload Excel File"
         >
-          <h2>Send Tickets</h2>
-          <form onSubmit={handleSubmit}>
-            <div className="discount-grid-popup">
-              <div className="discount-grid-column">
-                <div className="label-with-button">
-                  <input
-                    type="text"
-                    placeholder="First Name"
-                    name="first_name"
-                    value={formData.first_name}
-                    onChange={handleInputChange}
-                    className="popupInput"
-                  />
-                </div>
-                <div className="label-with-button">
-                  <input
-                    type="text"
-                    placeholder="Last Name"
-                    name="last_name"
-                    value={formData.last_name}
-                    onChange={handleInputChange}
-                    className="popupInput"
-                  />
-                </div>
-                <div className="label-with-button">
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    className="popupInput"
-                  />
-                </div>
-              </div>
-              <div className="discount-grid-column">
-                <div className="label-with-button">
-                  <label htmlFor="" className="multiple-events-discount-label">
-                    Applies to
-                  </label>
-                  <div
-                    className="popupInputTextarea"
-                    style={{ display: "flex", flexDirection: "column" }}
-                  >
-                    {/* Dynamically render checkboxes */}
-                    {tickets.map((ticket) => (
-                      <div
-                        key={ticket.id}
-                        style={{
-                          marginBottom: "15px",
-                          display: "flex",
-                          alignItems: "center",
-                        }}
-                      >
-                        <input
-                          type="checkbox"
-                          id={`event_${ticket.id}`}
-                          name={`tickets_id`}
-                          value={ticket.id}
-                          className="myCustomMultiSelectCheckboxes"
-                          onChange={handleCheckboxChange}
-                          style={{ marginRight: "13px" }} // Optional: Add spacing between checkbox and label
-                        />
-                        <label htmlFor={`ticket_${ticket.id}`}>
-                          {ticket.name.length > 40
-                            ? ticket.name.slice(0, 40) + "..."
-                            : ticket.name}
-                        </label>
-                      </div>
-                    ))}
+          <div className="send-tickets-modal-form">
+            <h2>Send Tickets</h2>
+            <form onSubmit={handleSubmit}>
+              <div className="discount-grid-popup">
+                <div className="discount-grid-column">
+                  <div className="label-with-button">
+                    <input
+                      type="text"
+                      placeholder="First Name"
+                      name="first_name"
+                      value={formData.first_name}
+                      onChange={handleInputChange}
+                      className="popupInput"
+                    />
+                  </div>
+                  <div className="label-with-button">
+                    <input
+                      type="text"
+                      placeholder="Last Name"
+                      name="last_name"
+                      value={formData.last_name}
+                      onChange={handleInputChange}
+                      className="popupInput"
+                    />
+                  </div>
+                  <div className="label-with-button">
+                    <input
+                      type="email"
+                      placeholder="Email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      className="popupInput"
+                    />
                   </div>
                 </div>
-                {formData.tickets_id.map((ticketId) =>
-                  addQuantityInput(ticketId)
-                )}
+                <div className="discount-grid-column">
+                  <div className="label-with-button">
+                    <label
+                      htmlFor=""
+                      className="multiple-events-discount-label"
+                    >
+                      Applies to
+                    </label>
+                    <div
+                      className="popupInputTextarea"
+                      style={{ display: "flex", flexDirection: "column" }}
+                    >
+                      {/* Dynamically render checkboxes */}
+                      {tickets.map((ticket) => (
+                        <div
+                          key={ticket.id}
+                          style={{
+                            marginBottom: "15px",
+                            display: "flex",
+                            alignItems: "center",
+                          }}
+                        >
+                          <input
+                            type="checkbox"
+                            id={`event_${ticket.id}`}
+                            name={`tickets_id`}
+                            value={ticket.id}
+                            className="myCustomMultiSelectCheckboxes"
+                            onChange={handleCheckboxChange}
+                            style={{ marginRight: "13px" }} // Optional: Add spacing between checkbox and label
+                          />
+                          <label htmlFor={`event_${ticket.id}`}>
+                            {ticket.name.length > 40
+                              ? ticket.name.slice(0, 40) + "..."
+                              : ticket.name}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  {formData.tickets_id.map((ticketId) =>
+                    addQuantityInput(ticketId)
+                  )}
+                </div>
               </div>
-            </div>
-            <div className="popup-buttons">
-              <button
-                className="loginButton"
-                onClick={closeModal}
-                type="button"
-              >
-                <span>Cancel</span>
-              </button>
-              <button
-                className="loginButton"
-                disabled={mutation.isLoading}
-                type="submit"
-              >
-                <span>{mutation.isLoading ? "requesting..." : "Submit"}</span>
-              </button>
-            </div>
-          </form>
+              <div className="popup-buttons">
+                <button
+                  className="loginButton"
+                  onClick={closeModal}
+                  type="button"
+                >
+                  <span>Cancel</span>
+                </button>
+                <button
+                  className="loginButton"
+                  disabled={mutation.isLoading}
+                  type="submit"
+                >
+                  <span>{mutation.isLoading ? "requesting..." : "Submit"}</span>
+                </button>
+              </div>
+            </form>
+          </div>
         </Modal>
 
         {/* tickets modal */}

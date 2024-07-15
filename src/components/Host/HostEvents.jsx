@@ -137,10 +137,18 @@ const HostEvents = () => {
             <button onClick={() => handleView(row.original.id)}>
               <img src={viewImg} alt="View" />
             </button>
-            <button className="mx-1">
+            <button
+              className="mx-1"
+              onClick={() =>
+                navigate(`/host-event/${row.original.id}/tickets/`)
+              }
+            >
               <img src={ticketImg} alt="Ticket" />
             </button>
-            <button className="me-1">
+            <button
+              className="me-1"
+              onClick={() => navigate(`/host-event/edit/${row.original.id}/`)}
+            >
               <img src={editImg} alt="Edit" />
             </button>
             <button onClick={() => handleDelete(row.original.id)}>
@@ -186,7 +194,7 @@ const HostEvents = () => {
   }
 
   return (
-    <div className="tableOne">
+    <div className="tableOne events-main-table">
       <div className="searchBar">
         <h2>Your Events</h2>
         <input

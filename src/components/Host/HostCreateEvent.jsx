@@ -383,7 +383,7 @@ const HostCreateEvent = ({ setFormStep, setEventId, eventId }) => {
             )}
           </div>
         </div>
-        <div>
+        <div className="multistep-button-wrap">
           <button
             type="submit"
             name="next"

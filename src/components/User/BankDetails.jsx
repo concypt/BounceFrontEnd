@@ -56,7 +56,7 @@ const BankDetailsForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className={styles.bankDetailsForm}>
       <div className={styles.twoInputFields}>
         <div className={styles.halfInputField}>
           <label htmlFor="bank_name">Bank Name:</label>

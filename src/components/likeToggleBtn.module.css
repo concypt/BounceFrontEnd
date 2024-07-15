@@ -9,6 +9,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 100px;
+  cursor: pointer;
 }
 
 .heart_icon img {

@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./sidebar.module.css";
 import { UserContext } from "../../contexts/UserProvider";
@@ -11,19 +11,45 @@ const Sidebar = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [showSublinks, setShowSublinks] = useState(false);
 
-  const isHostNull = user.org_role == 0 ? true : false;
- 
+  const isHostNull = user.org_role === 0;
+
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
   };
 
-  const toggleSublinks = () => {
-    setShowSublinks(!showSublinks);
+  const showSublinksOnce = () => {
+    setShowSublinks(true);
+    sessionStorage.setItem("showSublinks", "true");
   };
 
   const closeSidebar = () => {
     setShowSidebar(false);
   };
+
+  useEffect(() => {
+    // Check if the session storage has been initialized
+    if (sessionStorage.getItem("showSublinks") === null) {
+      // If not, set it to false
+      sessionStorage.setItem("showSublinks", "false");
+    } else {
+      // Otherwise, use the stored value
+      const savedShowSublinks =
+        sessionStorage.getItem("showSublinks") === "true";
+      setShowSublinks(savedShowSublinks);
+    }
+  }, []);
+
+  useEffect(() => {
+    // Reset sublinks to false on page reload
+    const handleBeforeUnload = () => {
+      sessionStorage.setItem("showSublinks", "false");
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
 
   return (
     <div>
@@ -52,16 +78,7 @@ const Sidebar = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink
-              to="/Promote"
-              className={({ isActive }) => (isActive ? styles.activeLink : "")}
-              onClick={closeSidebar}
-            >
-              Promote
-            </NavLink>
-          </li>
-          <li>
-            { isHostNull ? (
+            {isHostNull ? (
               <NavLink
                 to="/dashboard-host"
                 className={({ isActive }) =>
@@ -75,7 +92,7 @@ const Sidebar = () => {
               <>
                 <div
                   className={styles.linkWithSublinks}
-                  onClick={toggleSublinks}
+                  onClick={showSublinksOnce}
                 >
                   <span>Host</span>
                 </div>

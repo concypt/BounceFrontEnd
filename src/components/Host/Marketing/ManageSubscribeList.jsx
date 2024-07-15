@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import {
   useTable,
   useFilters,
@@ -9,7 +9,7 @@ import {
 import PropTypes from "prop-types";
 import Swal from "sweetalert2";
 import Modal from "react-modal";
-import { useMutation , useQueryClient,useQuery } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import "../../../pages/Dashboard/styles/primaryStyles.css";
 import "../../../pages/Dashboard/styles/comonStyles.css";
 import * as XLSX from "xlsx";
@@ -32,10 +32,16 @@ Modal.setAppElement("#root");
 import deleteImg from "../../../assets/images/event-dash-icon-delete.svg";
 import paginatePrev from "../../../assets/images/pagination-arrow-prev.svg";
 import paginateNext from "../../../assets/images/pagination-arrow-next.svg";
-import { deleteSubscriber , subscriberListPostData} from "../../../api/musecureService";
+import {
+  deleteSubscriber,
+  subscriberListPostData,
+} from "../../../api/musecureService";
 
-
-const ManageSubscribeList = ({subscribelist_Id , subscribeListData , onDeleteSubscribeList}) => {
+const ManageSubscribeList = ({
+  subscribelist_Id,
+  subscribeListData,
+  onDeleteSubscribeList,
+}) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [fileName, setFileName] = useState("");
   const [entryCount, setEntryCount] = useState(0);
@@ -43,10 +49,10 @@ const ManageSubscribeList = ({subscribelist_Id , subscribeListData , onDeleteSub
   const [fileData, setFileData] = useState(null);
   const queryClient = useQueryClient();
   const [formData, setFormData] = useState({
-    file: '',
+    file: "",
     subscribe_list: "",
   });
-  
+
   const deleteMutation = useMutation({
     mutationFn: deleteSubscriber,
     mutationKey: ["deleteSubscriber"],
@@ -57,9 +63,8 @@ const ManageSubscribeList = ({subscribelist_Id , subscribeListData , onDeleteSub
       Swal.fire("Error!", "Failed to delete subscriber.", error);
     },
   });
-  
+
   const handleDelete = (id) => {
-    
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -70,7 +75,7 @@ const ManageSubscribeList = ({subscribelist_Id , subscribeListData , onDeleteSub
     }).then((result) => {
       if (result.isConfirmed) {
         deleteMutation.mutate(id);
-        onDeleteSubscribeList(id); 
+        onDeleteSubscribeList(id);
       }
     });
   };
@@ -80,7 +85,6 @@ const ManageSubscribeList = ({subscribelist_Id , subscribeListData , onDeleteSub
   const closeModal = () => {
     setModalIsOpen(false);
   };
-  
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
@@ -91,7 +95,7 @@ const ManageSubscribeList = ({subscribelist_Id , subscribeListData , onDeleteSub
       ...formData,
       file: file,
       subscribe_list: subscribelist_Id,
-  });
+    });
     if (file) {
       setFileName(file.name);
       setFileUploaded(true); // Set fileUploaded to true when a file is uploaded
@@ -122,12 +126,12 @@ const ManageSubscribeList = ({subscribelist_Id , subscribeListData , onDeleteSub
       });
       setFormData({
         file: " ",
-        subscribe_list:" "
+        subscribe_list: " ",
       });
       setFileData({
         fileData: "",
       });
-      
+
       queryClient.invalidateQueries("subscriberListPostData");
       setModalIsOpen(false);
     },
@@ -141,28 +145,26 @@ const ManageSubscribeList = ({subscribelist_Id , subscribeListData , onDeleteSub
   });
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     if (fileData) {
       Swal.fire({
-        title: 'Are you sure?',
-        text: 'Do you want to upload the file?',
-        icon: 'warning',
+        title: "Are you sure?",
+        text: "Do you want to upload the file?",
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonText: 'Yes, upload it!',
-        cancelButtonText: 'No, cancel!',
+        confirmButtonText: "Yes, upload it!",
+        cancelButtonText: "No, cancel!",
       }).then((result) => {
         if (result.isConfirmed) {
-         
           console.log(formData);
           mutations.mutate(formData);
-          setFormData({ subscribe_list: '' }); // Reset form data state
+          setFormData({ subscribe_list: "" }); // Reset form data state
           setFileData(null); // Reset fileData state
-          setFileName(''); // Reset fileName state
+          setFileName(""); // Reset fileName state
           setFileUploaded(false); // Reset fileUploaded state
           setEntryCount(0);
-         
         } else if (result.dismiss === Swal.DismissReason.cancel) {
-          Swal.fire('Cancelled', 'Upload cancelled :)', 'info');
+          Swal.fire("Cancelled", "Upload cancelled :)", "info");
         }
       });
     }
@@ -194,9 +196,7 @@ const ManageSubscribeList = ({subscribelist_Id , subscribeListData , onDeleteSub
         Header: "Status",
         accessor: "status",
         sortType: "basic",
-        Cell: ({ value }) => (
-          <div>{value == 1 ? "Active" : "Inactive"}</div>
-        ),
+        Cell: ({ value }) => <div>{value == 1 ? "Active" : "Inactive"}</div>,
       },
       {
         Header: "Actions",
@@ -230,7 +230,7 @@ const ManageSubscribeList = ({subscribelist_Id , subscribeListData , onDeleteSub
   } = useTable(
     {
       columns,
-      data: subscribeListData ,
+      data: subscribeListData,
       initialState: { pageIndex: 0, pageSize: 5 },
     },
     useFilters,
@@ -240,7 +240,7 @@ const ManageSubscribeList = ({subscribelist_Id , subscribeListData , onDeleteSub
   );
 
   const { pageIndex, pageSize } = state;
-  
+
   return (
     <div className="ticketOrders">
       <div className="searchBar">
@@ -325,7 +325,7 @@ const ManageSubscribeList = ({subscribelist_Id , subscribeListData , onDeleteSub
           style={customStyles}
           contentLabel="Upload Excel File"
         >
-          <h2>Create  list</h2>
+          <h2>Create list</h2>
           <form onSubmit={handleSubmit}>
             <div className="label-with-button">
               <label
@@ -343,7 +343,7 @@ const ManageSubscribeList = ({subscribelist_Id , subscribeListData , onDeleteSub
               type="file"
               name="file"
               className="file-input"
-               accept=".csv"
+              accept=".csv"
               onChange={handleFileUpload}
             />
             {entryCount > 0 && <p>Found {entryCount} contacts.</p>}
@@ -369,7 +369,6 @@ const ManageSubscribeList = ({subscribelist_Id , subscribeListData , onDeleteSub
     </div>
   );
 };
-
 
 ManageSubscribeList.propTypes = {
   value: PropTypes.number,
