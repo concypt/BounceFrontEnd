@@ -1,15 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import LoadingBar from "react-top-loading-bar";
-import { Link ,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { fetchEventDetails } from "../../api/secureService";
 
 import calendarIcon from "../../assets/images/calender.svg";
 import clockIcon from "../../assets/images/clock_grey.svg";
 import locationIcon from "../../assets/images/location_grey.svg";
-import { format, parseISO } from 'date-fns';
+import { format, parseISO } from "date-fns";
 
 const EventInfoComponent = ({ eventData }) => {
- 
   return (
     <div className="singleEvent">
       <div className="singleEventHeader">
@@ -32,15 +31,14 @@ const EventInfoComponent = ({ eventData }) => {
         </p>
       </div>
       <div className="singleEventBtn">
-        
-        <button className="loginButton" >
+        <button className="loginButton">
           <span>Edit event</span>
         </button>
-       
-        <Link to={`/dashboard-event-tickets/${eventData.id}`} >
-        <button className="loginButton" type="button" >
-          <span>Manage tickets</span>
-        </button>
+
+        <Link to={`/host-event/${eventData.id}/tickets`}>
+          <button className="loginButton" type="button">
+            <span>Manage tickets</span>
+          </button>
         </Link>
       </div>
     </div>

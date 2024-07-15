@@ -7,7 +7,7 @@ import {
   useSortBy,
   usePagination,
 } from "react-table";
-import { useNavigate  } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import Swal from "sweetalert2";
 import Modal from "react-modal";
@@ -17,6 +17,7 @@ import "../../../pages/Dashboard/styles/primaryStyles.css";
 import "../../../pages/Dashboard/styles/comonStyles.css";
 import viewImg from "../../../assets/images/event-dash-icon-view.svg";
 import editImg from "../../../assets/images/event-dash-icon-edit.svg";
+import sendImg from "../../../assets/images/send-icon.svg";
 
 // Styles for Modal
 const customStyles = {
@@ -49,7 +50,7 @@ const EmailList = ({ campaigns }) => {
 
   const SendCampaignMutation = useMutation({
     mutationFn: SendCampaign,
-    mutationKey: ['SendCampaignMutation'],
+    mutationKey: ["SendCampaignMutation"],
     onSuccess: () => {
       Swal.fire("Send!", "Your Campaign send successfully.", "success");
     },
@@ -148,7 +149,7 @@ const EmailList = ({ campaigns }) => {
               <img src={editImg} alt="Delete" />
             </button>
             <button onClick={() => handleSendCampaign(row.original.id)}>
-              <img src={viewImg} alt="Campaign" />
+              <img src={sendImg} alt="Campaign" />
             </button>
           </div>
         ),
@@ -194,9 +195,9 @@ const EmailList = ({ campaigns }) => {
       <div className="searchBar">
         <h2>Campaigns</h2>
         <Link to={"/host-campaigns/new"}>
-        <button className="loginButton" type="button">
-          <span>Create new campaign</span>
-        </button>
+          <button className="loginButton" type="button">
+            <span>Create new campaign</span>
+          </button>
         </Link>
       </div>
       <div className="table-container">

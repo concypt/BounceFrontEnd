@@ -97,8 +97,8 @@ const Footer = () => {
             <div className={styles.copyright}>
               <p>© 2023 Bounce. All rights reserved.</p>
               <div className={styles.footer_links}>
-                <Link to="/privacy">Privacy Policy</Link>
-                <Link to="/tos">Terms of Service</Link>
+                <Link to="/PrivacyPolicy">Privacy Policy</Link>
+                <Link to="/TermsConditions">Terms of Service</Link>
               </div>
             </div>
           </div>
