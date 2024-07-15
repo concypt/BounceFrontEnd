@@ -157,11 +157,11 @@
   letter-spacing: -1px;
 }
 
-#content p {
+/* #content p {
   font-size: 1rem;
   line-height: 1.5rem;
   margin: 1.2rem 0;
-}
+} */
 
 input[type="radio"] {
   display: none;
@@ -1449,6 +1449,10 @@ button.delete.ml-auto {
   .promotersMain {
     flex-wrap: wrap;
   }
+
+  .manageTickets {
+    padding: 50px 20px;
+  }
 }
 @media (max-width: 992px) {
   .tabSection {
@@ -1469,6 +1473,12 @@ button.delete.ml-auto {
   }
   .dataTables {
     padding-right: 20px;
+  }
+}
+
+@media (max-width: 991px) {
+  .manageTickets {
+    padding: 50px 40px;
   }
 }
 
@@ -1506,6 +1516,10 @@ button.delete.ml-auto {
   }
   .ticketDetails .eventLables {
     width: 100%;
+  }
+
+  .manageTickets {
+    padding: 50px 20px;
   }
 }
 
@@ -2086,7 +2100,7 @@ input[type="checkbox"].myCustomMultiSelectCheckboxes:checked,
 
 .tickets-modal-wrapper {
   height: 615px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .tickets-modal-wrapper::-webkit-scrollbar-track {
@@ -2163,11 +2177,14 @@ input[type="checkbox"].myCustomMultiSelectCheckboxes:checked,
   }
 }
 
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 610px) {
   .tickets-modal-wrapper {
     overflow-y: hidden;
+    height: unset;
   }
+}
 
+@media screen and (max-width: 576px) {
   .tabSection.ticket-popup ul {
     flex-wrap: nowrap;
   }

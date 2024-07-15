@@ -1,0 +1,234 @@
+.details {
+  font-family: var(--secondary-font);
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 0px 10px 0 #9b9ac573;
+  color: black;
+  backdrop-filter: blur(20px);
+  margin-top: 44px;
+}
+
+.eventImg {
+  width: 100%;
+  object-fit: cover;
+  font-size: 32px;
+  line-height: 36px;
+  min-height: 275px;
+  height: calc(100vh - 265px);
+  border-radius: 20px;
+}
+.event_main_img {
+  position: relative;
+}
+
+.category_main {
+  position: absolute;
+  bottom: 45px;
+  left: 45px;
+  background: #ef5da8;
+  color: #fff;
+  padding: 10px 30px;
+  border-radius: 100px;
+}
+
+.category_main h5 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.event_detail_content {
+  width: 100%;
+  max-width: 1700px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.event_detail {
+  padding-top: 215px;
+}
+
+.details h2 {
+  font-size: 62px;
+  font-weight: 700;
+  line-height: 60px;
+  text-transform: capitalize;
+  margin-bottom: 40px;
+}
+
+/* news-detail */
+.newsDetailMainWrapper .details {
+  max-width: 800px;
+  margin: 0 auto;
+  margin-top: 44px;
+  width: 95%;
+}
+
+.description_heading ul,
+.description_heading div,
+.description_heading a,
+.description_heading img,
+.description_heading p,
+.description_heading h1,
+.description_heading h2,
+.description_heading h3,
+.description_heading h4,
+.description_heading h5,
+.description_heading h6 {
+  width: 100% !important;
+  font-family: var(--primary-font) !important;
+  line-height: 1.1 !important;
+}
+
+.description_heading img {
+  border-radius: 20px !important;
+}
+
+.description_heading h1 {
+  font-size: 50px !important;
+}
+
+.description_heading h2 {
+  font-size: 40px !important;
+}
+
+.description_heading h3 {
+  font-size: 28px !important;
+}
+
+.description_heading h4 {
+  font-size: 22px !important;
+}
+
+.description_heading p {
+  font-size: 22px !important;
+}
+
+.newsDetailMainWrapper {
+  padding: 0 20px;
+}
+
+/* news detail end */
+
+@media (max-width: 1440px) {
+  .details h2 {
+    font-size: 42px;
+    line-height: 47px;
+  }
+}
+
+@media (max-width: 767px) {
+  .eventCard {
+    width: 100%;
+  }
+
+  .event_detail {
+    padding-top: 175px;
+  }
+
+  .details h2 {
+    font-size: 30px;
+    line-height: 38px;
+  }
+
+  .event_detail_card {
+    padding: 20px 25px;
+    margin-top: 25px;
+  }
+
+  .details {
+    padding: 25px;
+  }
+
+  .category_main {
+    bottom: 22px;
+    left: 22px;
+    padding: 7px 16px;
+  }
+
+  .newsDetailMainWrapper .category_main {
+    bottom: 60px;
+  }
+
+  .category_main h5 {
+    font-size: 14px;
+  }
+
+  .eventImg {
+    height: calc(50vh - 215px);
+  }
+
+  .description_heading h2 {
+    margin-top: 40px;
+  }
+
+  .ticket_detail h3 {
+    font-size: 35px;
+  }
+
+  .event_detail_content .eventImg {
+    height: calc(70vh - 215px);
+  }
+}
+
+@media (max-width: 480px) {
+  .eventImg {
+    height: calc(50vh - 215px);
+  }
+
+  .eventCardDetails {
+    padding: 20px 15px;
+  }
+
+  .eventCategoryButton {
+    left: 15px;
+  }
+
+  .details h2 {
+    font-size: 24px;
+    line-height: 30px;
+  }
+
+  .description_heading p {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .details {
+    margin-top: 25px;
+  }
+
+  .newsDetailMainWrapper .category_main {
+    left: 10px;
+  }
+
+  .event_detail_content .eventImg {
+    height: calc(65vh - 215px);
+  }
+
+  .description_heading h1 {
+    font-size: 35px !important;
+  }
+
+  .description_heading h2 {
+    font-size: 30px !important;
+  }
+
+  .description_heading h3 {
+    font-size: 24px !important;
+  }
+
+  .description_heading h4 {
+    font-size: 20px !important;
+  }
+
+  .description_heading p {
+    font-size: 20px !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .details {
+    padding: 20px;
+  }
+}

@@ -205,8 +205,8 @@ const EventTicketCard = ({
         </div>
       </div>
       <div className={styles.cardBodyTicket}>
-        <p>{ticket.name}</p>
-        <p>{ticket.description}</p>
+        <p className={styles.ticketName}>{ticket.name}</p>
+        <p className={styles.ticketDescription}>{ticket.description}</p>
         <div className={styles.orderDiv}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <input

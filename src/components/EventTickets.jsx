@@ -451,14 +451,26 @@ const EventTickets = ({ toggleModal, eventId }) => {
           <div>
             {cart.length > 0 ? (
               <>
-                {cart.map((order, index) => (
-                  <div key={index} className={styles.ticketTier}>
-                    <div> {order.ticket_name}</div>
-                    <div> £{order.price_per_ticket}</div>
-                    <div> {order.quantity}</div>
-                    <div>£{order.total_price.toFixed(2)}</div>
-                  </div>
-                ))}
+                <table className={styles.ticketTable}>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Price</th>
+                      <th>Qt</th>
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {cart.map((order, index) => (
+                      <tr key={index}>
+                        <td>{order.ticket_name}</td>
+                        <td>£{order.price_per_ticket}</td>
+                        <td>{order.quantity}</td>
+                        <td>£{order.total_price.toFixed(2)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
                 <div className={styles.grandTotal}>
                   <p>
                     Grand Total Quantity:{" "}
@@ -471,16 +483,14 @@ const EventTickets = ({ toggleModal, eventId }) => {
                       .toFixed(2)}
                   </p>
                 </div>
+                <div className={styles.coupenWrapper}>
+                  <input type="text" placeholder="Enter Token" />
+                  <span>Apply</span>
+                </div>
               </>
             ) : (
               <p>No items in your order</p>
             )}
-          </div>
-          <div className={styles.btnWrapper}>
-            <input type="text" placeholder="Enter token" />
-            <button className="global_button_one">
-              <span>Apply Token</span>
-            </button>
           </div>
           <div className={styles.btnWrapper}>
             <button className="global_button_one">

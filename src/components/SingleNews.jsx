@@ -1,6 +1,6 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-import styles from "../components/singleEvent.module.css";
+import styles from "../components/singleNews.module.css";
 import LoadingBar from "react-top-loading-bar";
 import { fetchNewsDetails } from "../api/publicService.js";
 import { useQuery } from "@tanstack/react-query";
@@ -90,7 +90,6 @@ const SingleNews = ({ newsId }) => {
               <h2>{news.title}</h2>
               <div className={styles.description_heading}>
                 <div style={{ maxWidth: "100%" }}>
-                  Description:
                   <div
                     dangerouslySetInnerHTML={{ __html: news.description }}
                   ></div>
