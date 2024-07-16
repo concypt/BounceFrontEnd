@@ -6,22 +6,24 @@ import styles from "./eventCard.module.css";
 import clockIcon from "../assets/images/clock.svg";
 import locationIcon from "../assets/images/location.svg";
 import buyTicketIcon from "../assets/images/buy-ticket.svg";
+import { set } from "date-fns";
 
-function EventCard({ event }) {
+function EventCard({ event, setModalEventId, toggleModal }) {
   //console.log(event);
   // Parse the start time string into a Date object
   const startTime = new Date(event.start_time);
   // Format the date portion only
   const formattedDate = startTime.toLocaleDateString();
+
+  const handleBuyTickets = () => {
+    setModalEventId(event.id);
+    toggleModal();
+  };
   return (
     <div className={styles.eventCard}>
       <Link to={`/events/${event.id}`}>
         <div className={styles.eventCardImage}>
-          <img
-            className={styles.eventImg}
-            src={event.image}
-            alt="Event image"
-          />
+          <img className={styles.eventImg} src={event.image} alt={event.name} />
           <div className={styles.eventCategoryButton}>{event.category}</div>
         </div>
       </Link>
@@ -47,7 +49,7 @@ function EventCard({ event }) {
         </div>
 
         <div className={styles.ticketsFindMore}>
-          <a className="bgGlobalBtn" href="">
+          <a className="bgGlobalBtn" onClick={handleBuyTickets}>
             <span>
               <img src={buyTicketIcon} alt="" />
               Buy Tickets
@@ -66,5 +68,7 @@ function EventCard({ event }) {
 }
 EventCard.propTypes = {
   event: PropTypes.object,
+  setModalEventId: PropTypes.func,
+  toggleModal: PropTypes.func,
 };
 export default EventCard;

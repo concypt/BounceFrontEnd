@@ -21,6 +21,8 @@
 
 .event_main_img {
   position: relative;
+  border-radius: 25px;
+  overflow: hidden;
 }
 
 .category_main {

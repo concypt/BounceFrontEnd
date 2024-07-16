@@ -7,6 +7,8 @@ import EventCard from "./EventCard";
 import Pagination from "./Pagination";
 
 import PropTypes from "prop-types";
+
+import EventTickets from "./EventTickets";
 import styles from "./eventList.module.css";
 
 const URL = "https://bounce.extrasol.co.uk/api/attenders/events";
@@ -41,6 +43,12 @@ const EventList = ({
   const initialSelectedCategories = queryParams.getAll("categories[]");
   const [page, setPage] = useState(initialPage);
   const [eventsPerPage, setEventsPerPage] = useState(10);
+  const [modalEventId, setModalEventId] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
   //useEffect with empty dependency to render first time if found parameters in URL
   useEffect(() => {
     if (!limit) {
@@ -157,9 +165,21 @@ const EventList = ({
           {limit
             ? data.events
                 .slice(0, limit)
-                .map((event) => <EventCard key={event.id} event={event} />)
+                .map((event) => (
+                  <EventCard
+                    key={event.id}
+                    event={event}
+                    setModalEventId={setModalEventId}
+                    toggleModal={toggleModal}
+                  />
+                ))
             : data.events.map((event) => (
-                <EventCard key={event.id} event={event} />
+                <EventCard
+                  key={event.id}
+                  event={event}
+                  setModalEventId={setModalEventId}
+                  toggleModal={toggleModal}
+                />
               ))}
         </div>{" "}
         {limit ? (
@@ -174,6 +194,9 @@ const EventList = ({
           />
         )}
       </div>
+      {isModalOpen && (
+        <EventTickets eventId={modalEventId} toggleModal={toggleModal} />
+      )}
     </>
   );
 };

@@ -17,6 +17,7 @@ import clockImage from "../assets/images/clock_grey.svg";
 import locationImage from "../assets/images/location_grey.svg";
 import LikeToggleBtn from "./LikeToggleBtn";
 import EventTickets from "./EventTickets";
+import EventSlider from "./EventSlider";
 
 const SingleEvent = () => {
   const { eventId } = useParams();
@@ -65,15 +66,17 @@ const SingleEvent = () => {
       <div className={`${styles.event_detail} bounce_bg_circle`}>
         <div className={"custom-wrapper"}>
           <div className={styles.event_main_img}>
-            <img
+            {/* <img
               className={styles.eventImg}
               src={event.image}
               alt="San Francisco"
-            />
+            /> */}
+
             <div className={styles.category_main}>
               <h5 className={styles.category_name}>{event.category.name}</h5>
             </div>
             <LikeToggleBtn eventId={event.id} />
+            <EventSlider galleryImages={event.gallery} />
           </div>
           <div className="row">
             <div className="col-md-12 col-lg-7">
@@ -187,8 +190,9 @@ const SingleEvent = () => {
           </div>
         </div>
       </div>
+
       {isModalOpen && (
-        <EventTickets eventId={eventId} toggleModal={toggleModal} />
+        <EventTickets eventId={event.id} toggleModal={toggleModal} />
       )}
     </>
   );
