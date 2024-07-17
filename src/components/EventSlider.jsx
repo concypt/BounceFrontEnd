@@ -19,10 +19,6 @@ const EventSlider = ({ galleryImages }) => {
       console.log(progress);
       console.log(swiper);
     });
-
-    swiperElRef.current.addEventListener("swiperslidechange", (e) => {
-      console.log("slide changed");
-    });
   }, []);
 
   return (

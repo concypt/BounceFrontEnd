@@ -93,6 +93,14 @@
   margin-top: 30px;
 }
 
+.inputFieldsWrapper {
+  margin-top: 30px;
+}
+
+.inputFieldsWrapper .inputFields {
+  margin-top: 6px;
+}
+
 .loginForm input {
   height: 46px;
   width: 100%;
@@ -257,7 +265,7 @@
   z-index: 2;
   border: none;
   transition: 0.5s ease;
-  margin-top: 130px;
+  margin-top: 40px;
 }
 
 .resetPasswordButton span {

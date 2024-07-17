@@ -394,8 +394,8 @@ const HostCreateEvent = ({ setFormStep, setEventId, eventId }) => {
               {mutation.isLoading || mutationUpdate.isLoading
                 ? "Loading..."
                 : eventId
-                ? "Update Event"
-                : "Save Event"}
+                ? "Update event"
+                : "Save event"}
             </span>
           </button>
           {eventId ? (

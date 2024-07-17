@@ -58,7 +58,7 @@ function Navbar() {
               to="/host-event/new"
               className={`${styles.global_button_one} ${styles.nav_btn}`}
             >
-              Host an Event
+              Host an event
             </NavLink>
             {isUserNav === "true" ? (
               <NavLink to="/dashboard" className={styles.loginBtn}>

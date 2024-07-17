@@ -31,10 +31,11 @@ const EventInfoComponent = ({ eventData }) => {
         </p>
       </div>
       <div className="singleEventBtn">
-        <button className="loginButton">
-          <span>Edit event</span>
-        </button>
-
+        <Link to={`/host-event/edit/${eventData.id}/`}>
+          <button className="loginButton">
+            <span>Edit event</span>
+          </button>
+        </Link>
         <Link to={`/host-event/${eventData.id}/tickets`}>
           <button className="loginButton" type="button">
             <span>Manage tickets</span>

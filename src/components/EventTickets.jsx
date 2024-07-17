@@ -1,9 +1,302 @@
-import { useState } from "react";
+// import PropTypes from "prop-types";
+// import styles from "./eventTickets.module.css";
+// import EventTicketCard from "./EventTicketCard";
+// import { useQuery } from "@tanstack/react-query";
+// import { fetchEventTickets } from "../api/publicService";
+
+// const EventTickets = ({ toggleModal, eventId }) => {
+//   const {
+//     data: tickets,
+//     error,
+//     isLoading,
+//   } = useQuery({
+//     queryKey: ["eventTickets", eventId],
+//     queryFn: () => fetchEventTickets(eventId),
+//   });
+
+//   if (isLoading) return <p>Loading...</p>;
+//   if (error) return <p>error occored {error.message}</p>;
+
+//   //console.log(tickets);
+//   return (
+//     <>
+//       <div className={styles.modalBackground} onClick={toggleModal}>
+//         <div
+//           className={styles.modalContainer}
+//           onClick={(e) => e.stopPropagation()}
+//         >
+//           <div className={`${styles.column} ${styles.columnLarge}`}>
+//             <div className="tabSection ticket-popup">
+//               <div id="tabs">
+//                 <input type="radio" id="button-1" name="tab" defaultChecked />
+//                 <input type="radio" id="button-2" name="tab" />
+//                 <ul id="menu">
+//                   <li className="tab-1-li">
+//                     <label htmlFor="button-1">Paid</label>
+//                   </li>
+//                   <li className="tab-2-li">
+//                     <label htmlFor="button-2">Free</label>
+//                   </li>
+//                   {/* <li className="bg"></li> */}
+//                 </ul>
+//                 <div id="shadow">
+//                   <div id="content">
+//                     <div id="tab-1">
+//                       <div className="left tickets-modal-wrapper">
+//                         <div className={styles.ticketsGridModal}>
+//                           {tickets.paid_ticket.length > 0 ? (
+//                             tickets.paid_ticket.map((ticket, index) => (
+//                               <EventTicketCard ticket={ticket} key={index} />
+//                             ))
+//                           ) : (
+//                             <p>No paid tickets found</p>
+//                           )}
+//                         </div>
+//                       </div>
+//                       <div className="right"></div>
+//                     </div>
+//                     <div id="tab-2">
+//                       <div className="left tickets-modal-wrapper">
+//                         <div className={styles.ticketsGridModal}>
+//                           {tickets.free_ticket.length > 0 ? (
+//                             tickets.free_ticket.map((ticket, index) => (
+//                               <EventTicketCard ticket={ticket} key={index} />
+//                             ))
+//                           ) : (
+//                             <p>No free tickets found</p>
+//                           )}
+//                         </div>
+//                       </div>
+//                       <div className="right"></div>
+//                     </div>
+//                   </div>
+//                 </div>
+//               </div>
+//             </div>
+//           </div>
+//           <div className={`${styles.column} ${styles.columnSmall}`}>
+//             <h2>Your order</h2>
+//             <div className={styles.ticketTier}>
+//               <p>Tier 1 </p>
+//             </div>
+//             <div className={styles.btnWrapper}>
+//               <div className="header_btn ticket-modal">
+//                 <button href="#" className="global_button_one">
+//                   <span>Checkout</span>
+//                 </button>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </>
+//   );
+// };
+
+// EventTickets.propTypes = {
+//   eventId: PropTypes.string,
+//   toggleModal: PropTypes.func,
+// };
+
+// export default EventTickets;
+
+// import { useState } from "react";
+// import PropTypes from "prop-types";
+// import styles from "./eventTickets.module.css";
+// import EventTicketCard from "./EventTicketCard";
+// import { useQuery, useMutation } from "@tanstack/react-query";
+// import Swal from "sweetalert2";
+
+// import {
+//   fetchEventTickets,
+//   checkTicketAvailability,
+//   addToCart,
+// } from "../api/publicService";
+
+// const EventTickets = ({ toggleModal, eventId }) => {
+//   const [cart, setCart] = useState([]);
+
+//   const {
+//     data: tickets,
+//     error,
+//     isLoading,
+//   } = useQuery({
+//     queryKey: ["eventTickets", eventId],
+//     queryFn: () => fetchEventTickets(eventId),
+//   });
+
+//   const checkAvailabilityMutation = useMutation({
+//     mutationFn: ({ ticketId, quantity }) => {
+//       return checkTicketAvailability(ticketId, quantity); // Return the promise
+//     },
+//     mutationKey: ["checkTicketAvailability"],
+//     onSuccess: (data) => {
+//       console.log(data.msg);
+//       if (data.msg !== "available") {
+//         Swal.fire({
+//           icon: "error",
+//           title: "Oops...",
+//           text: "Not enough tickets available",
+//         });
+//       }
+//     },
+//     onError: (error) => {
+//       Swal.fire({
+//         icon: "error",
+//         title: "Error checking availability",
+//         text: error.message,
+//       });
+//     },
+//   });
+
+//   const addToOrderMutation = useMutation({
+//     mutationFn: (orderDetails) => addToCart(orderDetails),
+//     mutationKey: ["addToCart"],
+//     onSuccess: (data) => {
+//       Swal.fire({
+//         icon: "success",
+//         title: "Success!",
+//         text: "Order added to cart successfully!",
+//       });
+//       // Optionally update the cart state here
+//     },
+//     onError: (error) => {
+//       Swal.fire({
+//         icon: "error",
+//         title: "Error adding to cart",
+//         text: error.message,
+//       });
+//     },
+//   });
+
+//   const handleAddToOrder = (ticket, quantity) => {
+//     const orderDetails = {
+//       quantity,
+//       ticket_id: ticket.id,
+//       total_price: ticket.price * quantity,
+//       actual_price: ticket.price * quantity,
+//       coupon_id: null,
+//       type: ticket.type,
+//       ticket_name: ticket.name,
+//     };
+//     setCart((prevCart) => [...prevCart, orderDetails]);
+//   };
+
+//   if (isLoading) return <p>Loading...</p>;
+//   if (error) return <p>Error occurred: {error.message}</p>;
+
+//   return (
+//     <div className={styles.modalBackground} onClick={toggleModal}>
+//       <div
+//         className={styles.modalContainer}
+//         onClick={(e) => e.stopPropagation()}
+//       >
+//         <div className={`${styles.column} ${styles.columnLarge}`}>
+//           <div className="tabSection ticket-popup">
+//             <div id="tabs">
+//               <input type="radio" id="button-1" name="tab" defaultChecked />
+//               <input type="radio" id="button-2" name="tab" />
+//               <ul id="menu">
+//                 <li className="tab-1-li">
+//                   <label htmlFor="button-1">Paid</label>
+//                 </li>
+//                 <li className="tab-2-li">
+//                   <label htmlFor="button-2">Free</label>
+//                 </li>
+//               </ul>
+//               <div id="shadow">
+//                 <div id="content">
+//                   <div id="tab-1">
+//                     <div className="left tickets-modal-wrapper">
+//                       <div className={styles.ticketsGridModal}>
+//                         {tickets.paid_ticket.length > 0 ? (
+//                           tickets.paid_ticket.map((ticket, index) => (
+//                             <EventTicketCard
+//                               handleAddToOrder={handleAddToOrder}
+//                               checkAvailabilityMutation={
+//                                 checkAvailabilityMutation
+//                               }
+//                               ticket={ticket}
+//                               key={index}
+//                             />
+//                           ))
+//                         ) : (
+//                           <p>No paid tickets found</p>
+//                         )}
+//                       </div>
+//                     </div>
+//                     <div className="right"></div>
+//                   </div>
+//                   <div id="tab-2">
+//                     <div className="left tickets-modal-wrapper">
+//                       <div className={styles.ticketsGridModal}>
+//                         {tickets.free_ticket.length > 0 ? (
+//                           tickets.free_ticket.map((ticket, index) => (
+//                             <EventTicketCard
+//                               handleAddToOrder={handleAddToOrder}
+//                               checkAvailabilityMutation={
+//                                 checkAvailabilityMutation
+//                               }
+//                               ticket={ticket}
+//                               key={index}
+//                             />
+//                           ))
+//                         ) : (
+//                           <p>No free tickets found</p>
+//                         )}
+//                       </div>
+//                     </div>
+//                     <div className="right"></div>
+//                   </div>
+//                 </div>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//         <div className={`${styles.column} ${styles.columnSmall}`}>
+//           <h2>Your order</h2>
+//           <div>
+//             {cart.length > 0 ? (
+//               cart.map((order, index) => (
+//                 <div key={index} className={styles.ticketTier}>
+//                   <p>
+//                     Ticket: {order.ticket_name} x {order.quantity}
+//                   </p>
+//                   <p>Total Price: £{order.total_price}</p>
+//                 </div>
+//               ))
+//             ) : (
+//               <p>No items in your order</p>
+//             )}
+//           </div>
+//           <div className={styles.btnWrapper}>
+//             <div className="header_btn ticket-modal">
+//               <button className="global_button_one">
+//                 <span>Checkout</span>
+//               </button>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// EventTickets.propTypes = {
+//   eventId: PropTypes.string,
+//   toggleModal: PropTypes.func,
+// };
+
+// export default EventTickets;
+
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import styles from "./eventTickets.module.css";
 import EventTicketCard from "./EventTicketCard";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import Swal from "sweetalert2";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 
 import {
   fetchEventTickets,
@@ -109,10 +402,10 @@ const EventTickets = ({ toggleModal, eventId }) => {
               <div id="shadow">
                 <div id="content">
                   <div id="tab-1">
-                    <div className="left tickets-modal-wrapper">
-                      <div className={styles.ticketsGridModal}>
-                        {tickets.paid_ticket.length > 0 ? (
-                          tickets.paid_ticket.map((ticket, index) => (
+                    <div className="left">
+                      {tickets.paid_ticket.length > 0 ? (
+                        <div className={styles.ticketsGridModal}>
+                          {tickets.paid_ticket.map((ticket, index) => (
                             <EventTicketCard
                               handleAddToOrder={handleAddToOrder}
                               checkAvailabilityMutation={
@@ -121,19 +414,19 @@ const EventTickets = ({ toggleModal, eventId }) => {
                               ticket={ticket}
                               key={index}
                             />
-                          ))
-                        ) : (
-                          <p>No paid tickets found</p>
-                        )}
-                      </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <p>No paid tickets found</p>
+                      )}
                     </div>
                     <div className="right"></div>
                   </div>
                   <div id="tab-2">
-                    <div className="left tickets-modal-wrapper">
-                      <div className={styles.ticketsGridModal}>
-                        {tickets.free_ticket.length > 0 ? (
-                          tickets.free_ticket.map((ticket, index) => (
+                    <div className="left">
+                      {tickets.free_ticket.length > 0 ? (
+                        <div className={styles.ticketsGridModal}>
+                          {tickets.free_ticket.map((ticket, index) => (
                             <EventTicketCard
                               handleAddToOrder={handleAddToOrder}
                               checkAvailabilityMutation={
@@ -142,11 +435,11 @@ const EventTickets = ({ toggleModal, eventId }) => {
                               ticket={ticket}
                               key={index}
                             />
-                          ))
-                        ) : (
-                          <p>No free tickets found</p>
-                        )}
-                      </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <p>No free tickets found</p>
+                      )}
                     </div>
                     <div className="right"></div>
                   </div>
@@ -167,6 +460,7 @@ const EventTickets = ({ toggleModal, eventId }) => {
                       <th>Price</th>
                       <th>Qt</th>
                       <th>Total</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -176,6 +470,11 @@ const EventTickets = ({ toggleModal, eventId }) => {
                         <td>£{order.price_per_ticket}</td>
                         <td>{order.quantity}</td>
                         <td>£{order.total_price.toFixed(2)}</td>
+                        <td className="text-center">
+                          <button className={styles.removeButton}>
+                            <FontAwesomeIcon icon={faMinusCircle} />
+                          </button>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -196,15 +495,15 @@ const EventTickets = ({ toggleModal, eventId }) => {
                   <input type="text" placeholder="Enter Token" />
                   <span>Apply</span>
                 </div>
+                <div className={styles.btnWrapper}>
+                  <button className="global_button_one">
+                    <span>Checkout</span>
+                  </button>
+                </div>
               </>
             ) : (
               <p>No items in your order</p>
             )}
-          </div>
-          <div className={styles.btnWrapper}>
-            <button className="global_button_one">
-              <span>Checkout</span>
-            </button>
           </div>
         </div>
       </div>
@@ -213,7 +512,7 @@ const EventTickets = ({ toggleModal, eventId }) => {
 };
 
 EventTickets.propTypes = {
-  eventId: PropTypes.number,
+  eventId: PropTypes.string,
   toggleModal: PropTypes.func,
 };
 

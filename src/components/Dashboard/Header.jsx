@@ -56,7 +56,7 @@ const Header = () => {
           </li>
           <li>
             <img src={dashboardSetting} alt="Settings" />
-            <Link>Help</Link>
+            <Link to={`/contact`}>Help</Link>
           </li>
           <li onClick={handleLogout} className={styles.lastLi}>
             <img src={dashboardLogout} alt="Logout" />

@@ -541,6 +541,7 @@ a.global-link-arrow::after {
 
 .webflow_img img {
   width: 145px;
+  object-fit: contain;
 }
 
 .webflow_img {
@@ -1081,6 +1082,17 @@ button.global_button_one.follow_btn {
 
 .viewPasswordEyeButton {
   color: grey;
+}
+
+/* Swiper navigation button styles */
+.swiper-button-next svg,
+.swiper-button-prev svg {
+  color: red !important;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  color: darkred !important;
 }
 
 @media (max-width: 1280px) {

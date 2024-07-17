@@ -135,7 +135,7 @@ const BankDetailsForm = () => {
         </div>
       )}
       <button className={styles.saveChangesBtn} type="submit">
-        <span>Save Changes</span>
+        <span>Save changes</span>
       </button>
     </form>
   );

@@ -1,5 +1,5 @@
-import { useState , useContext } from "react";
-import { useMutation , useQueryClient } from "@tanstack/react-query";
+import { useState, useContext } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import Header from "../../components/Dashboard/Header";
@@ -11,7 +11,6 @@ import "./styles/comonStyles.css";
 import greyInsta from "../../assets/images/greyInsta.svg";
 
 function HostDashboard() {
-  
   const { user, updateUser } = useContext(UserContext);
   const queryClient = useQueryClient();
 
@@ -114,7 +113,7 @@ function HostDashboard() {
                   onChange={handleChange}
                 />
                 <button className="loginButton" type="submit">
-                  <span>Submit Application</span>
+                  <span>Submit application</span>
                 </button>
               </div>
             </div>

@@ -52,7 +52,7 @@ function EventCard({ event, setModalEventId, toggleModal }) {
           <a className="bgGlobalBtn" onClick={handleBuyTickets}>
             <span>
               <img src={buyTicketIcon} alt="" />
-              Buy Tickets
+              Buy tickets
             </span>
           </a>
           <Link

@@ -115,6 +115,7 @@ function EditHost() {
               </div>
             </div>
             <div className="inputTextarea">
+              <label htmlFor="description">Description</label>
               <textarea
                 id="bio"
                 name="bio"
@@ -122,11 +123,11 @@ function EditHost() {
                 placeholder="Tell us a little bit about the events you plan to host on Bounce..."
                 onChange={handleChange}
               />
-              <button className="loginButton" type="submit">
-                <span>Update Host Details</span>
-              </button>
             </div>
           </div>
+          <button className="loginButton" type="submit">
+            <span>Update host details</span>
+          </button>
         </form>
       </div>
     </div>

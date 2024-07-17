@@ -52,10 +52,10 @@ function Attend() {
             <div className="upcomingDiv">
               <h2>Upcoming Events</h2>
               <Link to="/events?page=1">
-              <button className="loginButton" type="submit">
-              <span>Browse All Events</span>
-               </button>
-               </Link>
+                <button className="loginButton" type="submit">
+                  <span>Browse all events</span>
+                </button>
+              </Link>
             </div>
             <EventSlider events={events.upcoming} slides="4" />
           </div>

@@ -288,7 +288,7 @@ const HostCreateCampaigns = ({ list }) => {
           </div>
         </div>
         <button name="next" className="next-create-event action-button">
-          <span>Save Campaign</span>
+          <span>Save campaign</span>
         </button>
       </form>
     </>

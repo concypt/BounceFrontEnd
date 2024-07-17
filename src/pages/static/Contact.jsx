@@ -117,7 +117,7 @@ function ContactUs() {
                         disabled={mutation.isLoading}
                       >
                         <span>
-                          {mutation.isLoading ? "Sending..." : "Send Message"}
+                          {mutation.isLoading ? "Sending..." : "Send message"}
                         </span>
                       </button>
                     </Reveal>

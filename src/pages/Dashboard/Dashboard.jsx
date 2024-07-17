@@ -148,7 +148,7 @@ function Dashboard() {
         <Header />
         <Sidebar />
       </div>
-      <div className="tabs">
+      <div className="tabs host-profile-tabs-section">
         <div className="tabSection">
           <h2>Profile</h2>
           <div id="tabs">
@@ -198,35 +198,44 @@ function Dashboard() {
                     </div>
                     <form onSubmit={handleSubmit}>
                       <div className="twoFields">
-                        <div className="inputFields">
-                          <input
-                            type="text"
-                            name="first_name"
-                            value={formData.first_name}
-                            onChange={handleChange}
-                            placeholder="First Name"
-                          />
-                          <img src={name} className="inputImgs" alt="" />
+                        <div className="inputFieldsLabelWrapper">
+                          <label htmlFor="">First Name</label>
+                          <div className="inputFields">
+                            <input
+                              type="text"
+                              name="first_name"
+                              value={formData.first_name}
+                              onChange={handleChange}
+                              placeholder="First Name"
+                            />
+                            <img src={name} className="inputImgs" alt="" />
+                          </div>
                         </div>
-                        <div className="inputFields">
-                          <input
-                            type="text"
-                            name="last_name"
-                            value={formData.last_name}
-                            onChange={handleChange}
-                            placeholder="Last Name"
-                          />
-                          <img src={name} className="inputImgs" alt="" />
+                        <div className="inputFieldsLabelWrapper">
+                          <label htmlFor="">Last Name</label>
+                          <div className="inputFields">
+                            <input
+                              type="text"
+                              name="last_name"
+                              value={formData.last_name}
+                              onChange={handleChange}
+                              placeholder="Last Name"
+                            />
+                            <img src={name} className="inputImgs" alt="" />
+                          </div>
                         </div>
-                        <div className="inputFields">
-                          <input
-                            type="tel"
-                            name="phone"
-                            value={formData.phone}
-                            onChange={handleChange}
-                            placeholder="Phone Number"
-                          />
-                          <img src={phone} className="inputImgs" alt="" />
+                        <div className="inputFieldsLabelWrapper">
+                          <label htmlFor="">Phone Number</label>
+                          <div className="inputFields">
+                            <input
+                              type="tel"
+                              name="phone"
+                              value={formData.phone}
+                              onChange={handleChange}
+                              placeholder="Phone Number"
+                            />
+                            <img src={phone} className="inputImgs" alt="" />
+                          </div>
                         </div>
                       </div>
                       <button className="loginButton" type="submit">
@@ -259,7 +268,7 @@ function Dashboard() {
                           className="loginButton"
                           type="submit"
                         >
-                          <span>Create Host Profile</span>
+                          <span>Create host profile</span>
                         </Link>
                       </div>
                     ) : (

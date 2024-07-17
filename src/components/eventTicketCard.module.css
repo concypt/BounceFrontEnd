@@ -8,12 +8,12 @@
 }
 
 .cardHeaderTicket {
-  height: 95px;
+  height: 85px;
   border-top: 10px solid #7e79ff;
   border-bottom: 2px dotted #c7c7c7;
   border-radius: 10px 10px 0 0;
   position: relative;
-  padding: 20px 30px;
+  padding: 15px 30px;
 }
 
 .cardHeaderTicketContent {
@@ -34,11 +34,23 @@
   margin-bottom: 5px;
 }
 
+.ticketName {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  line-clamp: 1;
+  -webkit-line-clamp: 1;
+}
+
 .ticketDescription {
   margin-left: 10px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
-  margin-bottom: 0;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  line-clamp: 3;
+  -webkit-line-clamp: 3;
 }
 
 .cardHeaderTicket:before,
@@ -62,7 +74,7 @@
 }
 
 .cardBodyTicket {
-  height: 200px;
+  height: 220px;
   border-top: none;
   border-radius: 0 0 10px 10px;
   padding: 20px;

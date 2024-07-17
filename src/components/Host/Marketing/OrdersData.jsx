@@ -138,7 +138,7 @@ const HostTicketOrders = ({
       <div key={ticketId} className="label-with-button">
         <input
           type="number"
-          placeholder="Quantity"
+          placeholder={`Qty of ${ticketId}`}
           name="quantities"
           value={formData.quantities[ticketId] || ""}
           onChange={(e) => handleQuantityChange(ticketId, e.target.value)}
@@ -431,10 +431,10 @@ const HostTicketOrders = ({
           contentLabel="Upload Excel File"
         >
           <div className="send-tickets-modal-form">
-            <h2>Send Tickets</h2>
             <form onSubmit={handleSubmit}>
               <div className="discount-grid-popup">
                 <div className="discount-grid-column">
+                  <h2>Send Tickets</h2>
                   <div className="label-with-button">
                     <input
                       type="text"
@@ -466,7 +466,7 @@ const HostTicketOrders = ({
                     />
                   </div>
                 </div>
-                <div className="discount-grid-column">
+                <div className="discount-grid-column second-column">
                   <div className="label-with-button">
                     <label
                       htmlFor=""
@@ -506,10 +506,12 @@ const HostTicketOrders = ({
                       ))}
                     </div>
                   </div>
-                  {formData.tickets_id.map((ticketId) =>
-                    addQuantityInput(ticketId)
-                  )}
                 </div>
+              </div>
+              <div className="ticket-chekcboxes-grid">
+                {formData.tickets_id.map((ticketId) =>
+                  addQuantityInput(ticketId)
+                )}
               </div>
               <div className="popup-buttons">
                 <button

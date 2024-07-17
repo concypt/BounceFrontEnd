@@ -273,7 +273,7 @@ const HostCreateTickets = ({ setFormStep, eventId }) => {
       <div className="form-card">
         <h2 className="fs-title">Manage Tickets</h2>
         <div className="row">
-          <div className="col-lg-6">
+          <div className="col-xl-6">
             <div className="manageTickets">
               {tickets.map((ticket, index) => (
                 <HostTicketCard
@@ -297,7 +297,7 @@ const HostCreateTickets = ({ setFormStep, eventId }) => {
               </button>
             </div>
           </div>
-          <div className="col-lg-6">
+          <div className="col-xl-6">
             <div className="ticketDetails">
               <div className="eventFields">
                 <div className="eventLables">
@@ -380,86 +380,91 @@ const HostCreateTickets = ({ setFormStep, eventId }) => {
                   />
                   {errors.type && <p>{errors.type.message}</p>}
                 </div>
-                <div
-                  className="eventLables"
-                  style={
-                    getValues("type") === "paid"
-                      ? { display: "block" }
-                      : { display: "none" }
-                  }
-                >
-                  <label className="fieldlabels">Price</label>
-                  <Controller
-                    name="dummyprice"
-                    control={control}
-                    render={({ field }) => (
-                      <input
-                        type="number"
-                        placeholder="Enter price"
-                        {...field}
-                        disabled={getValues("type") === "free"}
-                        onChange={(e) => {
-                          const newDummyPrice = parseFloat(e.target.value) || 0;
 
-                          const absorbeFees = getValues("absorbe_fees").trim();
-                          let newPrice = newDummyPrice;
-
-                          // If absorbe_fees is "0", add 10% to the dummy price
-                          if (absorbeFees === "0" || absorbeFees === 0) {
-                            newPrice = (newDummyPrice * 1.1).toFixed(2);
-                          }
-
-                          // Update both dummyprice and price fields
-                          setValue("dummyprice", newDummyPrice);
-                          setValue("price", newPrice);
-                        }}
-                      />
-                    )}
-                  />
-
-                  {type == "paid" ? (
+                <div className="event-ticket-three-field-grid">
+                  <div
+                    className="eventLables"
+                    style={
+                      getValues("type") === "paid"
+                        ? { display: "block" }
+                        : { display: "none" }
+                    }
+                  >
+                    <label className="fieldlabels">Price</label>
                     <Controller
-                      name="price"
+                      name="dummyprice"
                       control={control}
                       render={({ field }) => (
                         <input
-                          type="hidden"
+                          type="number"
+                          placeholder="Enter price"
                           {...field}
                           disabled={getValues("type") === "free"}
+                          onChange={(e) => {
+                            const newDummyPrice =
+                              parseFloat(e.target.value) || 0;
+
+                            const absorbeFees =
+                              getValues("absorbe_fees").trim();
+                            let newPrice = newDummyPrice;
+
+                            // If absorbe_fees is "0", add 10% to the dummy price
+                            if (absorbeFees === "0" || absorbeFees === 0) {
+                              newPrice = (newDummyPrice * 1.1).toFixed(2);
+                            }
+
+                            // Update both dummyprice and price fields
+                            setValue("dummyprice", newDummyPrice);
+                            setValue("price", newPrice);
+                          }}
                         />
                       )}
                     />
-                  ) : (
-                    ""
-                  )}
-                  {errors.price && <p>{errors.price.message}</p>}
-                </div>
 
-                <div className="eventLables">
-                  <label className="fieldlabels">Quantity available</label>
-                  <Controller
-                    name="quantity"
-                    control={control}
-                    render={({ field }) => (
-                      <input type="number" placeholder="0" {...field} />
+                    {type == "paid" ? (
+                      <Controller
+                        name="price"
+                        control={control}
+                        render={({ field }) => (
+                          <input
+                            type="hidden"
+                            {...field}
+                            disabled={getValues("type") === "free"}
+                          />
+                        )}
+                      />
+                    ) : (
+                      ""
                     )}
-                  />
-                  {errors.quantity && <p>{errors.quantity.message}</p>}
-                </div>
-                <div className="eventLables">
-                  <label className="fieldlabels">
-                    Max tickets per customer
-                  </label>
-                  <Controller
-                    name="ticket_per_order"
-                    control={control}
-                    render={({ field }) => (
-                      <input type="number" placeholder="0" {...field} />
+                    {errors.price && <p>{errors.price.message}</p>}
+                  </div>
+
+                  <div className="eventLables">
+                    <label className="fieldlabels">Quantity available</label>
+                    <Controller
+                      name="quantity"
+                      control={control}
+                      render={({ field }) => (
+                        <input type="number" placeholder="0" {...field} />
+                      )}
+                    />
+                    {errors.quantity && <p>{errors.quantity.message}</p>}
+                  </div>
+                  <div className="eventLables">
+                    <label className="fieldlabels">
+                      Max tickets per customer
+                    </label>
+                    <Controller
+                      name="ticket_per_order"
+                      control={control}
+                      render={({ field }) => (
+                        <input type="number" placeholder="0" {...field} />
+                      )}
+                    />
+                    {errors.ticket_per_order && (
+                      <p>{errors.ticket_per_order.message}</p>
                     )}
-                  />
-                  {errors.ticket_per_order && (
-                    <p>{errors.ticket_per_order.message}</p>
-                  )}
+                  </div>
                 </div>
                 <div className="absorbFees">
                   {type == "paid" ? (
@@ -519,7 +524,7 @@ const HostCreateTickets = ({ setFormStep, eventId }) => {
           className="loginButton previous-create-event"
           type="button"
         >
-          <span>Edit Event</span>
+          <span>Edit event</span>
         </button>
       </div>
     </form>
