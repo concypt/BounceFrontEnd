@@ -45,6 +45,9 @@
   padding: 3px 24px;
   left: 25px;
   bottom: 20px;
+  z-index: 19;
+  border: 0;
+  outline: 0;
 }
 
 .dateRemainingDaysDiv {

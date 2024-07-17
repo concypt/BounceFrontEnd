@@ -33,7 +33,7 @@
   color: #fff;
   padding: 10px 30px;
   border-radius: 100px;
-  z-index: 2;
+  z-index: 9;
 }
 
 .category_main h5 {
@@ -50,6 +50,10 @@
 
 .event_detail {
   padding-top: 215px;
+}
+
+.likeToggleBtn {
+  z-index: 9;
 }
 
 .details h2 {

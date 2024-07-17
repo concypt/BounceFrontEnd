@@ -171,6 +171,7 @@ const EventList = ({
                     event={event}
                     setModalEventId={setModalEventId}
                     toggleModal={toggleModal}
+                    setSelectedCategories={setSelectedCategories}
                   />
                 ))
             : data.events.map((event) => (
@@ -179,6 +180,7 @@ const EventList = ({
                   event={event}
                   setModalEventId={setModalEventId}
                   toggleModal={toggleModal}
+                  setSelectedCategories={setSelectedCategories}
                 />
               ))}
         </div>{" "}

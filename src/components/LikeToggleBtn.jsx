@@ -89,11 +89,6 @@ const LikeToggleBtn = ({ eventId }) => {
         <img src={likeInActive} alt="" />
       )}
     </div>
-    // <div className="header_btn">
-    //   <button className="global_button_one follow_btn" onClick={handleLike}>
-    //     <span>{isEventLiked ? "Unfollow" : "Follow"}</span>
-    //   </button>
-    // </div>
   );
 };
 

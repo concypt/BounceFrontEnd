@@ -1,5 +1,8 @@
+import { useContext } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { CatContext } from "../contexts/GlobalProvider";
+
 import styles from "./eventCard.module.css";
 
 //images
@@ -8,25 +11,43 @@ import locationIcon from "../assets/images/location.svg";
 import buyTicketIcon from "../assets/images/buy-ticket.svg";
 import { set } from "date-fns";
 
-function EventCard({ event, setModalEventId, toggleModal }) {
+function EventCard({
+  event,
+  setModalEventId,
+  toggleModal,
+  setSelectedCategories,
+}) {
+  const { categories } = useContext(CatContext);
   //console.log(event);
   // Parse the start time string into a Date object
   const startTime = new Date(event.start_time);
   // Format the date portion only
   const formattedDate = startTime.toLocaleDateString();
 
+  const handleCatChange = (catName) => {
+    const category = categories.find((category) => category.name === catName);
+    const catId = category ? category.id : null;
+    setSelectedCategories([catId]);
+  };
   const handleBuyTickets = () => {
     setModalEventId(event.id);
     toggleModal();
   };
   return (
     <div className={styles.eventCard}>
-      <Link to={`/events/${event.id}`}>
-        <div className={styles.eventCardImage}>
+      <div className={styles.eventCardImage}>
+        <button
+          type="button"
+          className={styles.eventCategoryButton}
+          onClick={() => handleCatChange(event.category)}
+        >
+          {event.category}
+        </button>
+        <Link to={`/events/${event.id}`}>
           <img className={styles.eventImg} src={event.image} alt={event.name} />
-          <div className={styles.eventCategoryButton}>{event.category}</div>
-        </div>
-      </Link>
+        </Link>
+      </div>
+
       <div className={styles.eventCardDetails}>
         <Link to={`/events/${event.id}`}>
           <h2>{event.name}</h2>
@@ -70,5 +91,6 @@ EventCard.propTypes = {
   event: PropTypes.object,
   setModalEventId: PropTypes.func,
   toggleModal: PropTypes.func,
+  setSelectedCategories: PropTypes.func,
 };
 export default EventCard;
