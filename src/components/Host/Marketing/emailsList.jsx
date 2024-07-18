@@ -173,7 +173,7 @@ const EmailList = ({ campaigns }) => {
     setPageSize,
     prepareRow,
   } = useTable(
-    { columns, data: campaigns, initialState: { pageIndex: 0, pageSize: 10 } },
+    { columns, data: campaigns, initialState: { pageIndex: 0, pageSize: 20 } },
     useFilters,
     useGlobalFilter,
     useSortBy,
@@ -191,7 +191,7 @@ const EmailList = ({ campaigns }) => {
   // }
 
   return (
-    <div className="ticketOrders">
+    <div className="ticketOrders compaign-list">
       <div className="searchBar">
         <h2>Campaigns</h2>
         <Link to={"/host-campaigns/new"}>
