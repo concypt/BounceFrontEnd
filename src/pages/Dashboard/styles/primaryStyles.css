@@ -260,8 +260,13 @@ input[type="radio"] {
   transition: background 0.5s ease;
   width: 100%;
   font-size: 18px;
-  font-weight: normal;
+  font-weight: bold;
   text-transform: math-auto;
+}
+
+.loginButton.remove-margin {
+  margin-top: 30px;
+  float: right;
 }
 
 .ticketOrders .loginButton,

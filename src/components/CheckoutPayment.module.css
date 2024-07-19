@@ -1,0 +1,295 @@
+.checkout {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  background: #fff;
+  box-shadow: 0 0px 10px 0 #9b9ac573;
+  border-radius: 17px;
+}
+
+.largeColumn {
+  width: 60%;
+  padding: 70px 40px;
+}
+
+.smallColumn {
+  width: 40%;
+  background: #f0f0f0;
+  text-align: left;
+}
+
+.paymentOptions {
+  margin-bottom: 20px;
+}
+
+.formCheckout {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.formGroup {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.formGroup input {
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.formGroup p {
+  color: red;
+  margin-top: 5px;
+}
+
+.textWithLines {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 500;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.textWithLines::before,
+.textWithLines::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #c8c8c8;
+}
+
+.paymentImages {
+  padding: 30px;
+  border: 1px solid #c8c8c8;
+  position: relative;
+  margin-top: -10px;
+  display: grid;
+  column-gap: 5px;
+  grid-template-columns: 32% 32% 32%;
+  justify-content: space-between;
+  border-radius: 8px;
+}
+
+.paymentSupportedTextWrap {
+  font-size: 24px;
+  font-weight: 500;
+  background-color: #fff;
+  text-align: center;
+  position: relative;
+  z-index: 1000;
+  margin: 0 auto;
+  width: 160px;
+  margin: 0 auto;
+  top: 7px;
+}
+
+.paymentImages img {
+  width: 100%;
+}
+
+.checkout h2 {
+  font-family: var(--secondary-font);
+  font-size: 60px;
+  font-weight: bold;
+  text-align: left;
+  color: #000;
+}
+
+.twoFormGroups {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  gap: 25px;
+}
+
+.formGroup input {
+  border: 1px solid #c8c8c8;
+  color: #4f4b5c;
+  font-size: 24px;
+  padding: 18px 22px;
+  outline: none;
+  border-radius: 8px;
+}
+
+.wrapInputIcon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.wrapInputIcon img {
+  width: 23px;
+  position: absolute;
+  left: 26px;
+  top: 30px;
+}
+
+.wrapInputIcon input {
+  padding-left: 55px;
+}
+
+.eventInfoCheckout {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  padding: 40px;
+  border-bottom: 1px solid #c1c1c1;
+}
+
+.eventInfoCheckout img {
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.eventAbout h3,
+.ticketAbout h3 {
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.eventAbout p {
+  font-size: 20px;
+  font-weight: 400;
+  margin: 0;
+}
+
+.ticketAbout,
+.ticketTotal {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.ticketAbout,
+.ticketTotal {
+  padding: 30px 40px;
+  border-bottom: 1px solid #c1c1c1;
+}
+
+.ticketAbout h5 {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.ticketAbout h3,
+.ticketAbout h5 {
+  margin: 0;
+}
+
+.ticketTotal span {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+@media (max-width: 1200px) {
+  .eventInfoCheckout,
+  .ticketAbout,
+  .ticketTotal {
+    padding-left: 20px;
+    padding-right: 20px;
+    gap: 10px;
+  }
+
+  .smallColumn,
+  .largeColumn {
+    width: 50%;
+  }
+}
+
+@media (max-width: 991px) {
+  .checkout {
+    flex-wrap: wrap;
+    /* flex-direction: column-reverse;
+    padding-bottom: 20px; */
+  }
+
+  .smallColumn,
+  .largeColumn {
+    width: 100%;
+    padding-top: 60px;
+  }
+
+  .eventInfoCheckout,
+  .ticketAbout,
+  .ticketTotal {
+    padding-left: 40px;
+    padding-right: 40px;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .eventInfoCheckout {
+    padding-top: 0;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .paymentImages {
+    display: block;
+  }
+
+  .paymentImages img {
+    max-width: 200px;
+  }
+
+  .paymentImages img:nth-child(2) {
+    margin: 5px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .checkout h2 {
+    font-size: 40px;
+  }
+  .eventInfoCheckout {
+    display: block;
+  }
+
+  .eventInfoCheckout img {
+    margin-bottom: 15px;
+  }
+
+  .eventInfoCheckout,
+  .ticketAbout,
+  .ticketTotal {
+    padding-left: 20px;
+    padding-right: 20px;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .ticketAbout {
+    display: block;
+  }
+
+  .largeColumn {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .smallColumn,
+  .largeColumn {
+    padding-top: 40px;
+  }
+
+  .twoFormGroups {
+    display: block;
+  }
+
+  .ticketAbout h5 {
+    margin-top: 10px;
+  }
+}
