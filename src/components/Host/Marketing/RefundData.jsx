@@ -9,12 +9,10 @@ import {
 import PropTypes from "prop-types";
 import Swal from "sweetalert2";
 import Modal from "react-modal";
-import { useMutation , useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import "../../../pages/Dashboard/styles/primaryStyles.css";
 import "../../../pages/Dashboard/styles/comonStyles.css";
-import {
-  requestRefundAction,
-} from "../../../api/musecureService";
+import { requestRefundAction } from "../../../api/musecureService";
 
 // images
 import decline from "../../../assets/images/close-icon.svg";
@@ -22,11 +20,8 @@ import paginatePrev from "../../../assets/images/pagination-arrow-prev.svg";
 import paginateNext from "../../../assets/images/pagination-arrow-next.svg";
 import approve from "../../../assets/images/accept-icon.svg";
 
-
-const HostTicketOrders = ({ refundData , eventname }) => {
- 
+const HostTicketOrders = ({ refundData, eventname }) => {
   const queryClient = useQueryClient();
-
 
   const mutation = useMutation({
     mutationFn: requestRefundAction,
@@ -51,7 +46,7 @@ const HostTicketOrders = ({ refundData , eventname }) => {
     },
   });
 
-  const handleRefund = (id,order_id,status) => {
+  const handleRefund = (id, order_id, status) => {
     if (status === 2) {
       Swal.fire({
         title: "Are you sure?",
@@ -61,42 +56,39 @@ const HostTicketOrders = ({ refundData , eventname }) => {
         confirmButtonColor: "#7357FF",
         confirmButtonText: "Yes!",
         input: "text", // Add input field for description
-        inputPlaceholder: "Enter Description"
+        inputPlaceholder: "Enter Description",
       }).then((result) => {
         if (result.isConfirmed) {
-          const description = result.value || ''; // Get the description from the input
+          const description = result.value || ""; // Get the description from the input
           const formData = {
             refund_id: id,
             status: status,
             order_id: order_id,
-            description: description // Include description in formData
+            description: description, // Include description in formData
           };
           // Now you can send formData with description included
           mutation.mutate(formData);
         }
       });
+    } else {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#7357FF",
+        confirmButtonText: "Yes!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const formData = {
+            refund_id: id,
+            status: status,
+            order_id: order_id,
+          };
+          mutation.mutate(formData);
+        }
+      });
     }
-
-    else{
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#7357FF",
-      confirmButtonText: "Yes!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const formData = {
-          refund_id: id,
-          status: status,
-          order_id:order_id
-        };
-        mutation.mutate(formData);
-      }
-    });
-
-  }
   };
 
   const columns = useMemo(
@@ -116,7 +108,8 @@ const HostTicketOrders = ({ refundData , eventname }) => {
       },
       {
         Header: "Customer Name",
-        accessor: (row) => `${row.customer.first_name} ${row.customer.last_name}`,
+        accessor: (row) =>
+          `${row.customer.first_name} ${row.customer.last_name}`,
         sortType: "basic",
         Cell: ({ value }) => (
           <div>{value.length > 20 ? value.slice(0, 20) + "..." : value}</div>
@@ -124,29 +117,36 @@ const HostTicketOrders = ({ refundData , eventname }) => {
       },
       {
         Header: "Events",
-        Cell: () => (
-          <div>{eventname}</div>
-        ),
+        Cell: () => <div>{eventname}</div>,
       },
       {
         Header: "Payment",
         accessor: "payment",
         sortType: "basic",
         Cell: ({ value }) => (
-          <div>{value.length > 20 ? "£" + value.slice(0, 20) + "..." : "£" + value}</div>
+          <div>
+            {value.length > 20 ? "£" + value.slice(0, 20) + "..." : "£" + value}
+          </div>
         ),
       },
-      
 
       {
         Header: "Actions",
         accessor: "actions",
         Cell: ({ row }) => (
           <div className="actionsColumn">
-            <button onClick={() => handleRefund(row.original.refund_details.id,row.original.id,1)}>
+            <button
+              onClick={() =>
+                handleRefund(row.original.refund_details.id, row.original.id, 1)
+              }
+            >
               <img src={approve} alt="View" />
             </button>
-            <button onClick={() => handleRefund(row.original.refund_details.id,row.original.id,2)}>
+            <button
+              onClick={() =>
+                handleRefund(row.original.refund_details.id, row.original.id, 2)
+              }
+            >
               <img src={decline} alt="View" />
             </button>
           </div>
@@ -174,7 +174,7 @@ const HostTicketOrders = ({ refundData , eventname }) => {
   } = useTable(
     {
       columns,
-      data: refundData ,
+      data: refundData,
       initialState: { pageIndex: 0, pageSize: 5 },
     },
     useFilters,
@@ -189,7 +189,6 @@ const HostTicketOrders = ({ refundData , eventname }) => {
     <div className="ticketOrders">
       <div className="searchBar">
         <h2>Refunds</h2>
-       
       </div>
       <div className="table-container">
         <table {...getTableProps()} className="table your-events-table">

@@ -1489,6 +1489,16 @@ button.delete.ml-auto {
     gap: 15px;
   }
 
+  .actionDiv,
+  .earningsDiv,
+  .ticketOrders {
+    border: 1px solid #d8d8d8;
+  }
+
+  .ticketOrders .ticketOrders {
+    border: none;
+  }
+
   .earningMain {
     row-gap: 15px;
   }
@@ -2105,6 +2115,11 @@ table.your-events-table th {
   padding-left: 25px;
   padding-top: 10px;
   padding-right: 0;
+  min-width: 280px;
+}
+
+.create-compaign-form .popupInputTextarea {
+  min-width: unset;
 }
 
 .send-tickets-modal-form {
@@ -2366,6 +2381,7 @@ input[type="checkbox"].myCustomMultiSelectCheckboxes:checked,
 
   .popupInputTextarea {
     padding-left: 15px;
+    max-width: 300px;
   }
 }
 
