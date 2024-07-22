@@ -12,6 +12,7 @@ import Home from "./pages/Home";
 import Events from "./pages/Events";
 import EventDetail from "./pages/EventDetail";
 import NewsDetail from "./pages/NewsDetail.jsx";
+import Checkout from "./pages/Checkout.jsx";
 import PageNotFound from "./pages/PageNotFound.jsx";
 import Register from "./components/Auth/Register";
 import Verification from "./components/Auth/Verification";
@@ -57,7 +58,7 @@ const router = createBrowserRouter(
           <Route path="/Contact" element={<Contact />} />
           <Route path="/TermsConditions" element={<TermsConditions />} />
           <Route path="/CookiePolicy" element={<CookiePolicy />} />
-
+          <Route path="/Checkout" element={<Checkout />} />
           <Route path="*" element={<PageNotFound />} />
         </Route>
       </Route>
