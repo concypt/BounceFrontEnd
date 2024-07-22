@@ -87,7 +87,7 @@ export const checkTicketAvailability = async (ticketId, quantity) => {
 // Add tickets to the cart
 export const addToCart = async (orderDetails) => {
   const { data } = await axiosPInstance.post(
-    `https://bounce.extrasol.co.uk/api/attenders/add-to-cart`,
+    `https://bounce.extrasol.co.uk/api/attenders/checkout`,
     orderDetails
   );
   return data;

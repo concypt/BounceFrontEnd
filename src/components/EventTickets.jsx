@@ -306,7 +306,35 @@ import {
 
 const EventTickets = ({ toggleModal, eventId }) => {
   const [cart, setCart] = useState([]);
-
+  const [ticket_cart, setTicket] = useState({
+    ticket_id: [],
+    quantity: [],
+    total_price:0,
+    coupon_id:0,
+    coupon_discount:0,
+    type:[],
+  });
+  
+  useEffect(() => {
+    const updatedTicketCart = cart.reduce(
+      (acc, item) => {
+        acc.ticket_id.push(item.ticket_id);
+        acc.quantity.push(item.quantity);
+        acc.total_price += item.total_price;
+        acc.type.push(item.type); // Assuming you want to keep ticket names for the type
+        return acc;
+      },
+      {
+        ticket_id: [],
+        quantity: [],
+        total_price: 0,
+        coupon_id: 0,
+        coupon_discount: 0,
+        type: [],
+      }
+    );
+    setTicket(updatedTicketCart);
+  }, [cart]);
   const {
     data: tickets,
     error,
@@ -315,14 +343,13 @@ const EventTickets = ({ toggleModal, eventId }) => {
     queryKey: ["eventTickets", eventId],
     queryFn: () => fetchEventTickets(eventId),
   });
-
   const checkAvailabilityMutation = useMutation({
     mutationFn: ({ ticketId, quantity }) => {
       return checkTicketAvailability(ticketId, quantity); // Return the promise
     },
     mutationKey: ["checkTicketAvailability"],
     onSuccess: (data) => {
-      console.log(data.msg);
+      // console.log(data.msg);
       if (data.msg !== "available") {
         Swal.fire({
           icon: "error",
@@ -350,6 +377,7 @@ const EventTickets = ({ toggleModal, eventId }) => {
         const existingItem = updatedCart[existingTicketIndex];
         const newQuantity = existingItem.quantity + quantity;
         if (newQuantity > ticket.ticket_per_order) {
+          
           Swal.fire({
             icon: "error",
             title: "Oops...",
@@ -364,6 +392,7 @@ const EventTickets = ({ toggleModal, eventId }) => {
         };
         return updatedCart;
       }
+    
       return [
         ...prevCart,
         {
@@ -372,10 +401,44 @@ const EventTickets = ({ toggleModal, eventId }) => {
           ticket_name: ticket.name,
           price_per_ticket: ticket.price,
           total_price: ticket.price * quantity,
+          type: ticket.type,
         },
       ];
-    });
+    });  
+   
   };
+   // Function to handle button click
+    const mutation = useMutation({
+    mutationFn: addToCart,
+    mutationKey: ["addToCart"],
+    onSuccess: (data) => {
+      // console.log(data.data);
+      navigate('/checkout', {
+        state: { cartData: data.data }, // Pass data as state
+      });
+    setTicket({
+    ticket_id: [],
+    quantity: [],
+    total_price:0,
+    coupon_id:0,
+    coupon_discount:0,
+    type:[],
+      });
+    },
+    onError: (error) => {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: `Error submitting form: ${error.message}`,
+      });
+    },
+  });
+ 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    mutation.mutate(ticket_cart);
+  };
+
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error occurred: {error.message}</p>;
@@ -450,6 +513,7 @@ const EventTickets = ({ toggleModal, eventId }) => {
         </div>
         <div className={`${styles.column} ${styles.columnSmall}`}>
           <h2>Your order</h2>
+          <form onSubmit={handleSubmit}>
           <div>
             {cart.length > 0 ? (
               <>
@@ -496,15 +560,17 @@ const EventTickets = ({ toggleModal, eventId }) => {
                   <span>Apply</span>
                 </div>
                 <div className={styles.btnWrapper}>
-                  <button className="global_button_one">
+                  <button className="global_button_one" type="submit">
                     <span>Checkout</span>
                   </button>
                 </div>
+                
               </>
             ) : (
               <p>No items in your order</p>
             )}
           </div>
+          </form>
         </div>
       </div>
     </div>
