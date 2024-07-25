@@ -25,15 +25,15 @@ function Attend() {
     queryFn: fetchEventData,
   });
 
-  if (isLoading) {
-    return (
-      <LoadingBar
-        color="#7e79ff"
-        height={3}
-        progress={loadingComplete ? 100 : 0}
-      />
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <LoadingBar
+  //       color="#7e79ff"
+  //       height={3}
+  //       progress={loadingComplete ? 100 : 0}
+  //     />
+  //   );
+  // }
 
   if (error) {
     return <p>Error: {error.message}</p>;

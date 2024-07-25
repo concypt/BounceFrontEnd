@@ -1447,7 +1447,7 @@ button.delete.ml-auto {
 
 .likedEvents .upcomingEvents {
   width: 100%;
-  max-width: 50%;
+  max-width: calc(50% - 10px);
 }
 
 .bgGlobalBtn.borderGlobalBtn.qrBtn {
