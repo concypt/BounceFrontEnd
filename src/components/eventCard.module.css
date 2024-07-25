@@ -52,6 +52,10 @@
 
 .dateRemainingDaysDiv {
   margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  row-gap: 5px;
 }
 
 .remainingDaysBtn {
