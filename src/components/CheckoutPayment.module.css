@@ -146,6 +146,7 @@
 .eventInfoCheckout img {
   object-fit: cover;
   border-radius: 12px;
+  max-width: 150px;;
 }
 
 .eventAbout h3,
