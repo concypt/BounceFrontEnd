@@ -168,6 +168,7 @@
   grid-template-columns: 50% 50%;
   justify-content: space-between;
   gap: 10px;
+  align-items: center;
 }
 
 .ticketAbout,
@@ -178,7 +179,7 @@
 
 .ticketAbout h5 {
   font-size: 16px;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 .ticketAbout h3,

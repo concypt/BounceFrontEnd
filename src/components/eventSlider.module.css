@@ -30,3 +30,8 @@
   max-height: 100%;
   z-index: 2;
 }
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: red !important;
+}

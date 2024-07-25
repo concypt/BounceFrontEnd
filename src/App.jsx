@@ -82,7 +82,7 @@ const router = createBrowserRouter(
         <Route path="/host-campaigns-edit/:id" element={<HostCampaigns />} />
         <Route path="/host-event/edit/:id" element={<HostEvent />} />
         <Route path="/host-event/:id/tickets" element={<HostEventTicket />} />
-        <Route path="/Attend" element={<Attend />} />
+        <Route path="/attend" element={<Attend />} />
       </Route>
       {/* without layout pages */}
       <Route path="/register" element={<Register />} />
