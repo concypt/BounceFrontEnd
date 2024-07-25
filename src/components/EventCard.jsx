@@ -2,6 +2,8 @@ import { useContext } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { CatContext } from "../contexts/GlobalProvider";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 import styles from "./eventCard.module.css";
 
@@ -41,7 +43,7 @@ function EventCard({
           className={styles.eventCategoryButton}
           onClick={() => handleCatChange(event.category)}
         >
-          {event.category}
+          {event.category || <Skeleton />}
         </button>
         <Link to={`/events/${event.id}`}>
           <img className={styles.eventImg} src={event.image} alt={event.name} />
@@ -50,14 +52,14 @@ function EventCard({
 
       <div className={styles.eventCardDetails}>
         <Link to={`/events/${event.id}`}>
-          <h2>{event.name}</h2>
+          <h2>{event.name || <Skeleton />}</h2>
         </Link>
         <div className={styles.dateRemainingDaysDiv}>
           <span className={styles.time}>
-            <img src={clockIcon} alt="" /> {formattedDate}
+            <img src={clockIcon} alt="" /> {formattedDate || <Skeleton />}
           </span>
           <div className={styles.remainingDaysBtn}>
-            <>{event.daysCount}</>
+            <>{event.daysCount || <Skeleton />}</>
           </div>
         </div>
 
@@ -73,14 +75,14 @@ function EventCard({
           <a className="bgGlobalBtn" onClick={handleBuyTickets}>
             <span>
               <img src={buyTicketIcon} alt="" />
-              Buy tickets
+              {"Buy tickets " || <Skeleton />}
             </span>
           </a>
           <Link
             to={`/events/${event.id}`}
             className="bgGlobalBtn borderGlobalBtn"
           >
-            <span>Find out more</span>
+            <span>{"Find out more" || <Skeleton />}</span>
           </Link>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 
@@ -43,7 +43,7 @@ const EventList = ({
   const initialSelectedCategories = queryParams.getAll("categories[]");
   const [page, setPage] = useState(initialPage);
   const [eventsPerPage, setEventsPerPage] = useState(10);
-  const [modalEventId, setModalEventId] = useState(null);
+  const [modalEventId, setModalEventId] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -139,21 +139,6 @@ const EventList = ({
     keepPreviousData: true,
   });
 
-  if (isLoading) {
-    return (
-      <div
-        style={{
-          width: "100vw",
-          height: "90vh",
-          display: "flex",
-          alignContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <p style={{ textAlign: "center", width: "100%" }}>Loading...</p>
-      </div>
-    );
-  }
   if (error) {
     return <p>Errors: {error.message}</p>;
   }
@@ -163,32 +148,35 @@ const EventList = ({
       <div className="custom-wrapper">
         <div className={styles.eventsGrid}>
           {limit
-            ? data.events
-                .slice(0, limit)
-                .map((event) => (
-                  <EventCard
-                    key={event.id}
-                    event={event}
-                    setModalEventId={setModalEventId}
-                    toggleModal={toggleModal}
-                    setSelectedCategories={setSelectedCategories}
-                  />
-                ))
-            : data.events.map((event) => (
+            ? (isLoading
+                ? Array(limit).fill({})
+                : data.events.slice(0, limit)
+              ).map((event, index) => (
                 <EventCard
-                  key={event.id}
+                  key={isLoading ? index : event.id}
                   event={event}
                   setModalEventId={setModalEventId}
                   toggleModal={toggleModal}
                   setSelectedCategories={setSelectedCategories}
                 />
-              ))}
-        </div>{" "}
+              ))
+            : (isLoading ? Array(eventsPerPage).fill({}) : data.events).map(
+                (event, index) => (
+                  <EventCard
+                    key={isLoading ? index : event.id}
+                    event={event}
+                    setModalEventId={setModalEventId}
+                    toggleModal={toggleModal}
+                    setSelectedCategories={setSelectedCategories}
+                  />
+                )
+              )}
+        </div>
         {limit ? (
           ""
         ) : (
           <Pagination
-            totalPosts={data.total_result}
+            totalPosts={data?.total_result || 0}
             postsPerPage={eventsPerPage}
             setEventsPerPage={setEventsPerPage}
             setPage={setPage}
