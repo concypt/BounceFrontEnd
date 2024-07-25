@@ -28,7 +28,7 @@ const customStyles = {
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
     borderRadius: "32px",
-    maxWidth: "750px",
+    maxWidth: "650px",
     width: "95%",
   },
 };

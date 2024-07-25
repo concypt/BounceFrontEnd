@@ -66,6 +66,11 @@ button {
   text-align: center;
 }
 
+.header_div.checkout {
+  max-width: 1760px;
+  padding-top: 220px;
+}
+
 .header_div h1 {
   font-size: 62px;
   font-family: var(--secondary-font);

@@ -29,7 +29,7 @@ const customStyles = {
     paddingRight: "0",
     transform: "translate(-50%, -50%)",
     borderRadius: "32px",
-    maxWidth: "700px",
+    maxWidth: "650px",
     width: "95%",
   },
 };

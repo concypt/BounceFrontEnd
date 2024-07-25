@@ -297,16 +297,64 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinusCircle } from "@fortawesome/free-solid-svg-icons";
-
+import { useNavigate } from 'react-router-dom';
 import {
   fetchEventTickets,
   checkTicketAvailability,
   addToCart,
+  couponApply
 } from "../api/publicService";
 
 const EventTickets = ({ toggleModal, eventId }) => {
+  const navigate = useNavigate();
   const [cart, setCart] = useState([]);
-
+  const [discountApplied, setDiscountApplied] = useState(false);
+  const [discountDigit, setDiscountDigit] = useState(0);
+  const [originalTotalPrice, setOriginalTotalPrice] = useState(0);
+  const [updatedPrice, setUpdatedPrice] = useState(0);
+  const [ticket_cart, setTicket] = useState({
+    ticket_id: [],
+    quantity: [],
+    total_price:0,
+    coupon_id:0,
+    coupon_discount:0,
+    type:[],
+  });
+  const [coupon_Data, couponData] = useState({
+    event_id: eventId,
+    coupon_code:'',
+  });
+  // console.log(ticket_cart);
+  const [token, setToken] = useState('');
+  const [errors, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const calculateOriginalTotalPrice = () => {
+    const totalPrice = cart.reduce((sum, order) => sum + order.total_price, 0);
+    setOriginalTotalPrice(totalPrice);
+  };
+  
+  useEffect(() => {
+    const updatedTicketCart = cart.reduce(
+      (acc, item) => {
+        acc.ticket_id.push(item.ticket_id);
+        acc.quantity.push(item.quantity);
+        acc.total_price += item.total_price;
+        acc.type.push(item.type); // Assuming you want to keep ticket names for the type
+        return acc;
+      },
+      {
+        ticket_id: [],
+        quantity: [],
+        total_price: 0,
+        coupon_id: 0,
+        coupon_discount: 0,
+        type: [],
+      }
+    );
+    setTicket(updatedTicketCart);
+    calculateOriginalTotalPrice();
+  }, [cart] );
+  
   const {
     data: tickets,
     error,
@@ -315,14 +363,13 @@ const EventTickets = ({ toggleModal, eventId }) => {
     queryKey: ["eventTickets", eventId],
     queryFn: () => fetchEventTickets(eventId),
   });
-
   const checkAvailabilityMutation = useMutation({
     mutationFn: ({ ticketId, quantity }) => {
       return checkTicketAvailability(ticketId, quantity); // Return the promise
     },
     mutationKey: ["checkTicketAvailability"],
     onSuccess: (data) => {
-      console.log(data.msg);
+      // console.log(data.msg);
       if (data.msg !== "available") {
         Swal.fire({
           icon: "error",
@@ -350,6 +397,7 @@ const EventTickets = ({ toggleModal, eventId }) => {
         const existingItem = updatedCart[existingTicketIndex];
         const newQuantity = existingItem.quantity + quantity;
         if (newQuantity > ticket.ticket_per_order) {
+          
           Swal.fire({
             icon: "error",
             title: "Oops...",
@@ -364,6 +412,7 @@ const EventTickets = ({ toggleModal, eventId }) => {
         };
         return updatedCart;
       }
+    
       return [
         ...prevCart,
         {
@@ -372,11 +421,101 @@ const EventTickets = ({ toggleModal, eventId }) => {
           ticket_name: ticket.name,
           price_per_ticket: ticket.price,
           total_price: ticket.price * quantity,
+          type: ticket.type,
         },
       ];
-    });
+    });  
+   
+  };
+   // Function to handle button click
+    const mutation = useMutation({
+    mutationFn: addToCart,
+    mutationKey: ["addToCart"],
+    onSuccess: (data) => {
+      // console.log(data.data);
+      const cartData = data.data;
+      navigate('/Checkout', { state: { cartData } });
+    setTicket({
+    ticket_id: [],
+    quantity: [],
+    total_price:0,
+    coupon_id:0,
+    coupon_discount:0,
+    type:[],
+      });
+    },
+    onError: (error) => {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: `Error submitting form: ${error.message}`,
+      });
+    },
+  });
+ 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    mutation.mutate(ticket_cart);
   };
 
+   // Function to handle button click
+   const mutations = useMutation({
+    mutationFn: couponApply,
+    mutationKey: ["couponApply"],
+    onSuccess: (data) => {
+      const couponData = data;
+      if(couponData){
+        
+        const discount = couponData.discount / 100; // Convert percentage to decimal
+        const updatedPrice = originalTotalPrice * (1 - discount); // Apply discount
+        const coupon_discount = originalTotalPrice *  discount;
+      setDiscountApplied(discount);
+      setDiscountDigit()
+      setUpdatedPrice(updatedPrice);
+      
+       // Update the cart with discounted prices if neede
+       const updatedTicketCart = {
+        ...ticket_cart, // Maintain previous state properties
+        total_price: updatedPrice,
+        coupon_id: couponData.id,
+        coupon_discount: coupon_discount,
+      };
+      
+      setTicket(updatedTicketCart);
+     
+      }
+      
+    },
+    onError: (error) => {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: `Error submitting form: ${error.message}`,
+      });
+    },
+  });
+ 
+  const handleApplyClick = async () => {
+    try {
+      
+      // Validate token
+      if (!token) {
+        setError('Token cannot be empty');
+        return;
+      } 
+       const couponApplyData = {
+        ...coupon_Data,
+        event_id: eventId,
+        coupon_code: token,
+      };
+     
+       couponData(couponApplyData);
+       mutations.mutate(coupon_Data);
+    } catch (errors) {
+      setError('An error occurred. Please try again.');
+      setSuccess('');
+    }
+  };
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error occurred: {error.message}</p>;
 
@@ -450,6 +589,7 @@ const EventTickets = ({ toggleModal, eventId }) => {
         </div>
         <div className={`${styles.column} ${styles.columnSmall}`}>
           <h2>Your order</h2>
+          <form onSubmit={handleSubmit}>
           <div>
             {cart.length > 0 ? (
               <>
@@ -471,7 +611,7 @@ const EventTickets = ({ toggleModal, eventId }) => {
                         <td>{order.quantity}</td>
                         <td>£{order.total_price.toFixed(2)}</td>
                         <td className="text-center">
-                          <button className={styles.removeButton}>
+                          <button type="button" className={styles.removeButton}>
                             <FontAwesomeIcon icon={faMinusCircle} />
                           </button>
                         </td>
@@ -485,26 +625,33 @@ const EventTickets = ({ toggleModal, eventId }) => {
                     {cart.reduce((sum, order) => sum + order.quantity, 0)}
                   </p>
                   <p>
-                    Grand Total Price: £
-                    {cart
-                      .reduce((sum, order) => sum + order.total_price, 0)
-                      .toFixed(2)}
-                  </p>
+                  Grand Total Price: £{originalTotalPrice.toFixed(2)}
+                </p>
+
+                {discountApplied && (
+                  <div>
+                    <p>Discounted Price: £{updatedPrice.toFixed(2)}</p>
+                  </div>
+                )}
                 </div>
                 <div className={styles.coupenWrapper}>
-                  <input type="text" placeholder="Enter Token" />
-                  <span>Apply</span>
+                 <input type="text" placeholder="Enter Token" value={token} onChange={(e) => setToken(e.target.value)} disabled={discountApplied}/>
+                 <span onClick={handleApplyClick}>Apply</span>
+                  {errors && <p className={styles.error}>{error}</p>}
+                  {success && <p className={styles.success}>{success}</p>}
                 </div>
                 <div className={styles.btnWrapper}>
-                  <button className="global_button_one">
+                  <button className="global_button_one" type="submit">
                     <span>Checkout</span>
                   </button>
                 </div>
+                
               </>
             ) : (
               <p>No items in your order</p>
             )}
           </div>
+          </form>
         </div>
       </div>
     </div>

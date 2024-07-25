@@ -105,6 +105,7 @@ export const fetchSingleEventDetails = async (eventId) => {
     const response = await axiosInstance.post("/user/ticket-send", formData);
     return response.data;
   };
+ 
   export const subscriberList = async (formData) => {
     const response = await axiosInstance.post("/user/subscribe-list-create", formData);
     return response.data;

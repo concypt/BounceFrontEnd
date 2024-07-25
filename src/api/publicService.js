@@ -71,6 +71,15 @@ export const fetchEventTickets = async (eventId) => {
 
   return data;
 };
+export const couponApply = async (couponData) => {
+  const couponCode = couponData.coupon_code;
+  const eventId = couponData.event_id;
+  const { data } = await axiosPInstance
+    .get(`/attenders/couponCode?coupon_code=${couponCode}&event_id=${eventId}`)
+    .then((res) => res.data);
+  return data;
+  
+};
 
 // Check ticket availability
 export const checkTicketAvailability = async (ticketId, quantity) => {
@@ -85,14 +94,21 @@ export const checkTicketAvailability = async (ticketId, quantity) => {
 };
 
 // Add tickets to the cart
+
+
+export const createOrders = async (formData) => {
+  const response = await axiosPInstance.post("/attenders/createOrder", formData);
+  return response.data;
+};
+
+// Add tickets to the cart
 export const addToCart = async (orderDetails) => {
   const { data } = await axiosPInstance.post(
-    `https://bounce.extrasol.co.uk/api/attenders/add-to-cart`,
+    `https://bounce.extrasol.co.uk/api/attenders/checkout`,
     orderDetails
   );
   return data;
 };
-
 //Home.jsx
 export const fetchHomeData = async () => {
   const { data } = await axiosPInstance
@@ -100,6 +116,7 @@ export const fetchHomeData = async () => {
     .then((res) => res.data);
   return data;
 };
+
 
 //SingleNews.jsx
 export const fetchNewsDetails = async (newsId) => {
