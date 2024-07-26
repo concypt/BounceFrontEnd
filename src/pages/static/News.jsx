@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LoadingBar from "react-top-loading-bar";
 import { useQuery } from "@tanstack/react-query";
 import moment from "moment";
@@ -9,7 +9,7 @@ import styles from "./news.module.css";
 import { Link } from "react-router-dom";
 import { fetchNews } from "../../api/publicService";
 
-// imaages
+// images
 import calender from "../../assets/images/calender.svg";
 
 function News() {
@@ -23,18 +23,61 @@ function News() {
   });
 
   const [loadingComplete, setLoadingComplete] = useState(false);
-  window.onload = () => {
-    setLoadingComplete(true);
-  };
 
-  if (isLoading)
+  useEffect(() => {
+    const handleLoad = () => {
+      setLoadingComplete(true);
+    };
+    window.addEventListener("load", handleLoad);
+    return () => {
+      window.removeEventListener("load", handleLoad);
+    };
+  }, []);
+
+  if (isLoading) {
     return (
-      <LoadingBar
-        color="#7e79ff"
-        height={3}
-        progress={loadingComplete ? 100 : 0}
-      />
+      <>
+        <LoadingBar
+          color="#7e79ff"
+          height={3}
+          progress={loadingComplete ? 100 : 0}
+        />
+        <div className="bounce_bg_circle">
+          <div className={styles.aboutMain}>
+            <div className={`header_div ${styles.headerBlog}`}>
+              <div className={styles.cardContainer}>
+                <h1>
+                  <Skeleton width={400} />
+                </h1>
+                <div className={styles.mainBlog}>
+                  {[...Array(6)].map((_, index) => (
+                    <div key={index} className={styles.blogCards}>
+                      <Skeleton
+                        height={270}
+                        borderTopRadius={18}
+                        marginbottom={10}
+                      />
+                      <div className={styles.cardBody}>
+                        <h2>
+                          <Skeleton />
+                        </h2>
+                        <div className={styles.blogInfo}>
+                          <Skeleton width={20} height={20} />
+                          <p>
+                            <Skeleton width={100} />
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
     );
+  }
 
   if (error) return <p>Error: {error.message}</p>;
 
@@ -42,7 +85,7 @@ function News() {
     <>
       <div className="bounce_bg_circle">
         <div className={styles.aboutMain}>
-          <dir className={`header_div ${styles.headerBlog}`}>
+          <div className={`header_div ${styles.headerBlog}`}>
             <div className={styles.cardContainer}>
               <h1>Latest News</h1>
               <div className={styles.mainBlog}>
@@ -54,7 +97,6 @@ function News() {
                         alt=""
                       />
                       <div className={styles.cardBody}>
-                        {" "}
                         <h2>
                           {newsrow.title.length > 50
                             ? `${newsrow.title.substring(0, 50)}...`
@@ -76,7 +118,7 @@ function News() {
                 ))}
               </div>
             </div>
-          </dir>
+          </div>
         </div>
       </div>
     </>

@@ -16,6 +16,8 @@ import { fetchOrders } from "../../api/secureService";
 import "../../pages/Dashboard/styles/primaryStyles.css";
 import "../../pages/Dashboard/styles/comonStyles.css";
 import styles from "../Dashboard/eventslider.module.css";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 //images
 import viewImg from "../../assets/images/event-dash-icon-view.svg";
@@ -165,9 +167,9 @@ const HostTicketOrders = () => {
 
   const { globalFilter, pageIndex, pageSize } = state;
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  // if (isLoading) {
+  //   return <div>Loading...</div>;
+  // }
   if (error) {
     console.log(error);
   }
@@ -184,7 +186,9 @@ const HostTicketOrders = () => {
           />
         </div>
         {isLoading ? (
-          <p>Loading...</p>
+          <div className="table-container">
+            <Skeleton count={5} height={50} />
+          </div>
         ) : error ? (
           <p>Error loading data</p>
         ) : (

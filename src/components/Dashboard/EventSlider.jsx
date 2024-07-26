@@ -287,7 +287,7 @@ const EventSlider = (props) => {
               <span className={styles.slideCounter}>
                 Ticket {currentSlide + 1} of {tickets.length}
               </span>
-              <button className={styles.slideButton} onClick={prevSlide}>
+              <button className={styles.slideButton} onClick={nextSlide}>
                 <img
                   src={popuprightArrow}
                   className={styles.popupArrowImg}
@@ -379,6 +379,8 @@ const EventSlider = (props) => {
           </div>
         </Modal>
       </div>
+
+      {/* Refund modal */}
 
       {show && (
         <div className={styles.modalRefund}>

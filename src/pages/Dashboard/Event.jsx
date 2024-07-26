@@ -6,9 +6,10 @@ import Sidebar from "../../components/Dashboard/Sidebar";
 import HostEvents from "../../components/Host/HostEvents";
 import HostIicketOrders from "../../components/Host/HostTicketOrders";
 import { fetchEarningsData } from "../../api/masabService";
-import LoadingBar from "react-top-loading-bar";
 import "./styles/primaryStyles.css";
 import "./styles/comonStyles.css";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 function EventDashboard() {
   const [loadingComplete, setLoadingComplete] = useState(false);
@@ -28,11 +29,57 @@ function EventDashboard() {
 
   if (isLoading) {
     return (
-      <LoadingBar
-        color="#7e79ff"
-        height={3}
-        progress={loadingComplete ? 100 : 0}
-      />
+      <div className="dashboard">
+        <Header />
+        <Sidebar />
+        <div className="dataTables">
+          <div className="tablesGrid">
+            <div className="tableOne events-main-table">
+              <Skeleton height={608} width="100%" />
+            </div>
+            <div className="secondActionsDiv">
+              <div className="actionDiv">
+                <Skeleton height={40} width={200} />
+                <Skeleton height={50} width={150} />
+              </div>
+              <div className="earningsDiv">
+                <h2>
+                  <Skeleton width={100} />
+                </h2>
+                <div className="earningMain">
+                  <div className="earnings">
+                    <p>
+                      <Skeleton width={80} />
+                    </p>
+                    <h3>
+                      <Skeleton width={100} />
+                    </h3>
+                  </div>
+                  <div className="earnings">
+                    <p>
+                      <Skeleton width={80} />
+                    </p>
+                    <h3>
+                      <Skeleton width={100} />
+                    </h3>
+                  </div>
+                  <div className="earnings">
+                    <p>
+                      <Skeleton width={80} />
+                    </p>
+                    <h3>
+                      <Skeleton width={100} />
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="secondTables oneColumnTable">
+            <Skeleton height={400} width="calc(60% - 38px)" borderRadius={32} />
+          </div>
+        </div>
+      </div>
     );
   }
 
