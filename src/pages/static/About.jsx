@@ -1,6 +1,4 @@
 import styles from "./about.module.css";
-import "react-date-range/dist/styles.css"; // Main css file
-import "react-date-range/dist/theme/default.css"; // Theme css file
 import Reveal from "../../components/utils/Reveal.jsx";
 
 // imaages

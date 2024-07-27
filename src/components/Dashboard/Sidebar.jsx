@@ -70,7 +70,7 @@ const Sidebar = () => {
         <ul className={styles.links}>
           <li>
             <NavLink
-              to="/Attend"
+              to="/attend"
               className={({ isActive }) => (isActive ? styles.activeLink : "")}
               onClick={closeSidebar}
             >

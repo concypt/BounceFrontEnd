@@ -9,6 +9,9 @@ import OrdersData from "../../components/Host/Marketing/OrdersData";
 import "./styles/primaryStyles.css";
 import "./styles/comonStyles.css";
 import { fetchSingleEventDetails } from "../../api/musecureService";
+import { fetchMarketingData } from "../../api/musecureService";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 function EventSingle() {
   const { eventId } = useParams();
@@ -25,16 +28,30 @@ function EventSingle() {
 
   if (isLoading && !eventSingleData)
     return (
-      <div
-        style={{
-          width: "100vw",
-          height: "90vh",
-          display: "flex",
-          alignContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <p style={{ textAlign: "center", width: "100%" }}>Loading...</p>
+      <div className="dashboard">
+        <div>
+          <Header />
+          <Sidebar />
+        </div>
+        <div className="dataTables">
+          <div className="tablesGrid">
+            <div className="ticketOrders">
+              <Skeleton height="50vh" />
+            </div>
+            <div className="ticketOrders">
+              <div className="upcomingDiv">
+                <h2>
+                  <Skeleton width={320} />
+                </h2>
+                <Skeleton width={250} height={40} borderRadius={20} />
+              </div>
+              <Skeleton height="50vh" />
+            </div>
+          </div>
+          <div className="ticketOrders mt-4">
+            <Skeleton width="100%" height="50vh" />
+          </div>
+        </div>
       </div>
     );
   if (error) {

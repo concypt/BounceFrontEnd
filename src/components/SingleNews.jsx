@@ -4,6 +4,8 @@ import styles from "../components/singleNews.module.css";
 import LoadingBar from "react-top-loading-bar";
 import { fetchNewsDetails } from "../api/publicService.js";
 import { useQuery } from "@tanstack/react-query";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 // import { Link } from "react-router-dom";
 // import Swal from "sweetalert2";
 
@@ -25,15 +27,15 @@ const SingleNews = ({ newsId }) => {
     queryFn: () => fetchNewsDetails(newsId),
   });
 
-  if (isLoading) {
-    return (
-      <LoadingBar
-        color="#7e79ff"
-        height={3}
-        progress={loadingComplete ? 100 : 0}
-      />
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <LoadingBar
+  //       color="#7e79ff"
+  //       height={3}
+  //       progress={loadingComplete ? 100 : 0}
+  //     />
+  //   );
+  // }
   if (error) {
     return <p>Errors: {error.message}</p>;
   }
@@ -74,25 +76,35 @@ const SingleNews = ({ newsId }) => {
         <div className={`${styles.event_detail} bounce_bg_circle`}>
           <div className={styles.event_detail_content}>
             <div className={styles.event_main_img}>
-              <img
-                className={styles.eventImg}
-                src={`${news.imagePath}${news.image}`}
-                alt="San Francisco"
-              />
+              {isLoading ? (
+                <Skeleton height="60vh" borderRadius="25px" />
+              ) : (
+                <img
+                  className={styles.eventImg}
+                  src={`${news.imagePath}${news.image}`}
+                  alt="San Francisco"
+                />
+              )}
               <div className={styles.category_main}>
-                <h5 className={styles.category_name}>{news.title}</h5>
+                <h5 className={styles.category_name}>
+                  {isLoading ? <Skeleton width="500px" /> : news.title}
+                </h5>
               </div>
               <div className={styles.heart_icon}>
                 <img src="/images/heart.svg" alt="" />
               </div>
             </div>
             <div className={styles.details}>
-              <h2>{news.title}</h2>
+              <h2>{isLoading ? <Skeleton /> : news.title}</h2>
               <div className={styles.description_heading}>
                 <div style={{ maxWidth: "100%" }}>
-                  <div
-                    dangerouslySetInnerHTML={{ __html: news.description }}
-                  ></div>
+                  {isLoading ? (
+                    <Skeleton height="50vh" />
+                  ) : (
+                    <div
+                      dangerouslySetInnerHTML={{ __html: news.description }}
+                    ></div>
+                  )}
                 </div>
               </div>
             </div>

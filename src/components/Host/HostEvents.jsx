@@ -11,6 +11,8 @@ import PropTypes from "prop-types";
 import Swal from "sweetalert2";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetchEvents, deleteEvent } from "../../api/secureService";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 import "../../pages/Dashboard/styles/primaryStyles.css";
 import "../../pages/Dashboard/styles/comonStyles.css";
@@ -186,9 +188,9 @@ const HostEvents = () => {
 
   const { globalFilter, pageIndex, pageSize } = state;
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  // if (isLoading) {
+  //   return <div>Loading...</div>;
+  // }
   if (error) {
     console.log(error);
   }
@@ -196,42 +198,50 @@ const HostEvents = () => {
   return (
     <div className="tableOne events-main-table">
       <div className="searchBar">
-        <h2>Your Events</h2>
+        <h2>{"Your Events" || <Skeleton />}</h2>
         <input
           value={globalFilter || ""}
           onChange={(e) => setGlobalFilter(e.target.value)}
           placeholder="Search your events"
         />
       </div>
-      <div className="table-container">
-        <table {...getTableProps()} className="table your-events-table">
-          <thead>
-            {headerGroups.map((headerGroup, index) => (
-              <tr {...headerGroup.getHeaderGroupProps()} key={index}>
-                {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps()} key={column.id}>
-                    {column.render("Header")}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {page.map((row) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()} key={row.id}>
-                  {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()} key={cell.column.id}>
-                      {cell.render("Cell")}
-                    </td>
+      {isLoading ? (
+        <div className="table-container">
+          <Skeleton count={5} height={70} />
+        </div>
+      ) : error ? (
+        <p>Error loading data</p>
+      ) : (
+        <div className="table-container">
+          <table {...getTableProps()} className="table your-events-table">
+            <thead>
+              {headerGroups.map((headerGroup, index) => (
+                <tr {...headerGroup.getHeaderGroupProps()} key={index}>
+                  {headerGroup.headers.map((column) => (
+                    <th {...column.getHeaderProps()} key={column.id}>
+                      {column.render("Header")}
+                    </th>
                   ))}
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+              ))}
+            </thead>
+            <tbody {...getTableBodyProps()}>
+              {page.map((row) => {
+                prepareRow(row);
+                return (
+                  <tr {...row.getRowProps()} key={row.id}>
+                    {row.cells.map((cell) => (
+                      <td {...cell.getCellProps()} key={cell.column.id}>
+                        {cell.render("Cell")}
+                      </td>
+                    ))}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
       <div className="pagination">
         <div className="pagination-btns">
           <button

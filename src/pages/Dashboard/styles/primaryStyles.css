@@ -387,10 +387,11 @@ input[type="radio"] {
   border-color: #afbaca;
   width: 100%;
   height: 128px;
+  outline: none;
 }
 
 .edit-host-profile-tab .inputTextarea textarea {
-  height: 215px;
+  height: 214px;
   margin-top: 0;
 }
 
@@ -1376,6 +1377,7 @@ button.delete.ml-auto {
   height: 49px;
   background-repeat: no-repeat;
   right: -14px;
+  background-position-y: bottom;
 }
 
 .upcomingEvents .swiper-button-prev {
@@ -1445,7 +1447,7 @@ button.delete.ml-auto {
 
 .likedEvents .upcomingEvents {
   width: 100%;
-  max-width: 50%;
+  max-width: calc(50% - 10px);
 }
 
 .bgGlobalBtn.borderGlobalBtn.qrBtn {
@@ -1876,6 +1878,15 @@ button.delete.ml-auto {
 }
 
 /* Masab Styles */
+
+.upcomingDiv.skeleton {
+  justify-content: space-between;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: red !important;
+}
 
 .your-events-table {
   font-family: var(--primary-font);

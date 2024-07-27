@@ -55,7 +55,7 @@
 .countrySelect {
   display: block;
   width: 100%;
-  max-width: 396px;
+  max-width: 328px;
   border: 1px solid #afbaca;
   box-shadow: none;
 }
@@ -87,9 +87,13 @@
   .fullInputField {
     width: 100%;
   }
+
+  .countrySelect {
+    max-width: 100%;
+  }
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 480px) {
   .twoInputFields {
     flex-wrap: wrap;
     gap: 0;
