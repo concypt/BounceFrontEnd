@@ -93,7 +93,12 @@ const SingleEvent = () => {
                     {/* <p className={styles.image_path}>
                       {event.organisation.imagePath}
                     </p> */}
-                    <img src={isLoading ? "" : event.organisation.imagePath} />
+                    {isLoading ? (
+                      <Skeleton />
+                    ) : (
+                      <img src={event.organisation.imagePath} />
+                    )}
+
                     <div className={styles.card_text}>
                       <Link
                         to={{
