@@ -332,6 +332,7 @@ const HostTicketOrders = ({ coupons, onDeleteCampaign, events }) => {
                     type="text"
                     placeholder="Name"
                     name="name"
+                    required
                     value={formData.name}
                     onChange={handleInputChange}
                     className="popupInput"
@@ -342,6 +343,7 @@ const HostTicketOrders = ({ coupons, onDeleteCampaign, events }) => {
                     type="text"
                     placeholder="Coupon Code"
                     name="coupon_code"
+                    required
                     value={formData.coupon_code}
                     onChange={handleInputChange}
                     className="popupInput"
@@ -352,6 +354,7 @@ const HostTicketOrders = ({ coupons, onDeleteCampaign, events }) => {
                     type="number"
                     placeholder="Discount"
                     name="discount"
+                    required
                     value={formData.discount}
                     onChange={handleInputChange}
                     className="popupInput"
@@ -381,6 +384,7 @@ const HostTicketOrders = ({ coupons, onDeleteCampaign, events }) => {
                         id={`event_${event.id}`}
                         name={`event_id`}
                         value={event.id}
+                        required
                         className="myCustomMultiSelectCheckboxes"
                         onChange={handleCheckboxChange}
                         style={{ marginRight: "13px" }} // Optional: Add spacing between checkbox and label

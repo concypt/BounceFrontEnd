@@ -6,7 +6,7 @@ import {
   useSortBy,
   usePagination,
 } from "react-table";
-import { Link ,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import Swal from "sweetalert2";
 import Modal from "react-modal";
@@ -208,14 +208,12 @@ const SubscribersList = ({ subscribe_list, onDeleteCampaign }) => {
         accessor: "actions",
         Cell: ({ row }) => (
           <div className="actionsColumn">
-           
-            <Link to={`/host-subscribe-list/${row.original.id}`} >
-            <button >
-              <img src={viewImg} alt="Delete" />
-            </button>
+            <Link to={`/host-subscribe-list/${row.original.id}`}>
+              <button>
+                <img src={viewImg} alt="Delete" />
+              </button>
             </Link>
-            </div>
-          
+          </div>
         ),
       },
     ],
@@ -342,6 +340,7 @@ const SubscribersList = ({ subscribe_list, onDeleteCampaign }) => {
                 type="text"
                 placeholder="Name"
                 name="name"
+                required
                 value={formData.name}
                 onChange={handleInputChange}
                 className="popupInput"
