@@ -41,7 +41,7 @@ const EventTickets = ({ toggleModal, eventId }) => {
     const totalPrice = cart.reduce((sum, order) => sum + order.total_price, 0);
     setOriginalTotalPrice(totalPrice);
   };
- 
+
   useEffect(() => {
     const updatedTicketCart = cart.reduce(
       (acc, item) => {
@@ -118,18 +118,18 @@ const EventTickets = ({ toggleModal, eventId }) => {
           quantity: newQuantity,
           total_price: ticket.price * newQuantity,
         };
-          
+
         // Apply the coupon discount to the new total price if a coupon is applied
         if (discountApplied) {
           setDiscountApplied(false);
-          setDiscountDigit(null)
+          setDiscountDigit(null);
           setUpdatedPrice(0);
-          setToken(''); 
-           const updatedTicketCart = {
+          setToken("");
+          const updatedTicketCart = {
             ...ticket_cart, // Maintain previous state properties
             coupon_id: 0,
             coupon_discount: 0,
-          }; 
+          };
           setTicket(updatedTicketCart);
         }
 
@@ -147,26 +147,26 @@ const EventTickets = ({ toggleModal, eventId }) => {
           type: ticket.type,
         },
       ];
-    });  
-  
+    });
   };
   const handleRemoveFromOrder = (ticket_id) => {
     setCart((prevCart) => {
-      const updatedCart = prevCart.filter((item) => item.ticket_id !== ticket_id);
+      const updatedCart = prevCart.filter(
+        (item) => item.ticket_id !== ticket_id
+      );
       if (discountApplied) {
-      setDiscountApplied(false);
-      setDiscountDigit(null)
-      setUpdatedPrice(0);
-      setToken(''); 
-       const updatedTicketCart = {
-        ...ticket_cart, // Maintain previous state properties
-        coupon_id: 0,
-        coupon_discount: 0,
-      }; 
-      setTicket(updatedTicketCart);
-    }
+        setDiscountApplied(false);
+        setDiscountDigit(null);
+        setUpdatedPrice(0);
+        setToken("");
+        const updatedTicketCart = {
+          ...ticket_cart, // Maintain previous state properties
+          coupon_id: 0,
+          coupon_discount: 0,
+        };
+        setTicket(updatedTicketCart);
+      }
       return updatedCart;
-      
     });
   };
   // Function to handle button click
@@ -209,21 +209,24 @@ const EventTickets = ({ toggleModal, eventId }) => {
       if (couponData) {
         const discount = couponData.discount / 100; // Convert percentage to decimal
         const updatedPrice = originalTotalPrice * (1 - discount); // Apply discount
-        const coupon_discount = originalTotalPrice *  discount;
-      setDiscountApplied(true);
-      setDiscountDigit({ id: couponData.id, discount: discount, coupon_discount:coupon_discount })
-      setUpdatedPrice(updatedPrice);
-      
-       // Update the cart with discounted prices if neede
-       const updatedTicketCart = {
-        ...ticket_cart, // Maintain previous state properties
-        total_price: updatedPrice,
-        coupon_id: couponData.id,
-        coupon_discount: coupon_discount,
-      };
-      
-      setTicket(updatedTicketCart);
-     
+        const coupon_discount = originalTotalPrice * discount;
+        setDiscountApplied(true);
+        setDiscountDigit({
+          id: couponData.id,
+          discount: discount,
+          coupon_discount: coupon_discount,
+        });
+        setUpdatedPrice(updatedPrice);
+
+        // Update the cart with discounted prices if neede
+        const updatedTicketCart = {
+          ...ticket_cart, // Maintain previous state properties
+          total_price: updatedPrice,
+          coupon_id: couponData.id,
+          coupon_discount: coupon_discount,
+        };
+
+        setTicket(updatedTicketCart);
       }
     },
     onError: (error) => {
@@ -247,14 +250,14 @@ const EventTickets = ({ toggleModal, eventId }) => {
         event_id: eventId,
         coupon_code: token,
       };
-       couponData(couponApplyData);
-       mutations.mutate(couponApplyData);
+      couponData(couponApplyData);
+      mutations.mutate(couponApplyData);
     } catch (errors) {
       setError("An error occurred. Please try again.");
       setSuccess("");
     }
   };
-  
+
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error occurred: {error.message}</p>;
 
@@ -329,31 +332,17 @@ const EventTickets = ({ toggleModal, eventId }) => {
         <div className={`${styles.column} ${styles.columnSmall}`}>
           <h2>Your order</h2>
           <form onSubmit={handleSubmit}>
-          <div>
-            {cart.length > 0 ? (
-              <>
-                <table className={styles.ticketTable}>
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Price</th>
-                      <th>Qt</th>
-                      <th>Total</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {cart.map((order, index) => (
-                      <tr key={index}>
-                        <td>{order.ticket_name}</td>
-                        <td>£{order.price_per_ticket}</td>
-                        <td>{order.quantity}</td>
-                        <td>£{order.total_price.toFixed(2)}</td>
-                        <td className="text-center">
-                          <button type="button"onClick={() => handleRemoveFromOrder(order.ticket_id)} className={styles.removeButton}>
-                            <FontAwesomeIcon icon={faMinusCircle} />
-                          </button>
-                        </td>
+            <div>
+              {cart.length > 0 ? (
+                <>
+                  <table className={styles.ticketTable}>
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Qt</th>
+                        <th>Total</th>
+                        <th></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -366,8 +355,10 @@ const EventTickets = ({ toggleModal, eventId }) => {
                           <td className="text-center">
                             <button
                               type="button"
+                              onClick={() =>
+                                handleRemoveFromOrder(order.ticket_id)
+                              }
                               className={styles.removeButton}
-                              onClick={() => handleRemoveOrder}
                             >
                               <FontAwesomeIcon icon={faMinusCircle} />
                             </button>
@@ -378,10 +369,10 @@ const EventTickets = ({ toggleModal, eventId }) => {
                   </table>
                   <div className={styles.grandTotal}>
                     <p>
-                      Total Tickets:{" "}
+                      Grand Total Quantity:{" "}
                       {cart.reduce((sum, order) => sum + order.quantity, 0)}
                     </p>
-                    <p>Total Price: £{originalTotalPrice.toFixed(2)}</p>
+                    <p>Grand Total Price: £{originalTotalPrice.toFixed(2)}</p>
 
                     {discountApplied && (
                       <div>

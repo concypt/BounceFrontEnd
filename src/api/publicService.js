@@ -78,7 +78,6 @@ export const couponApply = async (couponData) => {
     .get(`/attenders/couponCode?coupon_code=${couponCode}&event_id=${eventId}`)
     .then((res) => res.data);
   return data;
-  
 };
 
 // Check ticket availability
@@ -95,9 +94,11 @@ export const checkTicketAvailability = async (ticketId, quantity) => {
 
 // Add tickets to the cart
 
-
 export const createOrders = async (formData) => {
-  const response = await axiosPInstance.post("/attenders/createOrder", formData);
+  const response = await axiosPInstance.post(
+    "/attenders/createOrder",
+    formData
+  );
   return response.data;
 };
 
@@ -116,7 +117,6 @@ export const fetchHomeData = async () => {
     .then((res) => res.data);
   return data;
 };
-
 
 //SingleNews.jsx
 export const fetchNewsDetails = async (newsId) => {
