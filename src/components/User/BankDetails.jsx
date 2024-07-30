@@ -64,7 +64,7 @@ const BankDetailsForm = () => {
             type="text"
             id="bank_name"
             name="bank_name"
-            value={formData.bank_name}
+            value={formData.bank_name || ""}
             onChange={handleInputChange}
             className={styles.dashboardInput}
           />
@@ -75,7 +75,7 @@ const BankDetailsForm = () => {
             type="text"
             id="account_title"
             name="account_title"
-            value={formData.account_title}
+            value={formData.account_title || ""}
             onChange={handleInputChange}
             className={styles.dashboardInput}
           />
@@ -86,7 +86,7 @@ const BankDetailsForm = () => {
         <select
           id="country"
           name="country"
-          value={formData.country}
+          value={formData.country || ""}
           onChange={handleInputChange}
           className={styles.countrySelect}
         >
@@ -102,7 +102,7 @@ const BankDetailsForm = () => {
               type="text"
               id="account_number"
               name="account_number"
-              value={formData.account_number}
+              value={formData.account_number || ""}
               onChange={handleInputChange}
               className={styles.dashboardInput}
             />
@@ -113,7 +113,7 @@ const BankDetailsForm = () => {
               type="text"
               id="sort_code"
               name="sort_code"
-              value={formData.sort_code}
+              value={formData.sort_code || ""}
               onChange={handleInputChange}
               className={styles.dashboardInput}
             />
@@ -127,7 +127,7 @@ const BankDetailsForm = () => {
             type="text"
             id="iban"
             name="iban"
-            value={formData.iban}
+            value={formData.iban || ""}
             onChange={handleInputChange}
             className={styles.dashboardInput}
           />

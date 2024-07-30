@@ -52,10 +52,10 @@ const EventTicketCard = ({
           {ticket.absorbe_fees === 0 && ticket.type === "paid" ? (
             <>
               <div className={styles.priceEuro}>
-                £{(ticket.price - ticket.price * 0.9).toFixed(2)}
+                £{(ticket.price * 0.9).toFixed(2)}
               </div>
               <div className={styles.feeEuro}>
-                + £{(ticket.price * 0.9).toFixed(2)} Fee
+                + £{(ticket.price - ticket.price * 0.9).toFixed(2)} Fee
               </div>
             </>
           ) : (
