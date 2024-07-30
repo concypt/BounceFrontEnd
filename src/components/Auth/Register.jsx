@@ -164,7 +164,12 @@ const RegisterPage = () => {
                     <span>Create account</span>
                   </button>
                 </div>
-                {error && <div className={styles.error}>{error}</div>}
+                {error && (
+                  <div
+                    className={styles.error}
+                    dangerouslySetInnerHTML={{ __html: error }}
+                  />
+                )}
                 {/* {isSuccess && (
                   <p className={styles.success}>
                     Registration successful! Redirecting...
