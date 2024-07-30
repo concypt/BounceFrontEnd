@@ -146,7 +146,7 @@
 .eventInfoCheckout img {
   object-fit: cover;
   border-radius: 12px;
-  max-width: 150px;;
+  max-width: 150px;
 }
 
 .eventAbout h3,
@@ -190,6 +190,13 @@
 .ticketTotal span {
   font-size: 24px;
   font-weight: bold;
+}
+
+.cardElementWrapper {
+  border: 1px solid #c8c8c8;
+  padding: 18px 22px;
+  outline: none;
+  border-radius: 8px;
 }
 
 @media (max-width: 1200px) {
@@ -292,5 +299,16 @@
 
   .ticketAbout h5 {
     margin-top: 10px;
+  }
+
+  .cardElementWrapper {
+    padding: 18px 10px;
+  }
+}
+
+@media (max-width: 400px) {
+  .largeColumn {
+    padding-left: 10px;
+    padding-right: 10px;
   }
 }

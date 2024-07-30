@@ -109,3 +109,88 @@ const FollowUnfollowBtn = ({ organisationId }) => {
 };
 
 export default FollowUnfollowBtn;
+const handleRemoveFromOrder = (ticket_id) => {
+  setCart((prevCart) => {
+    const updatedCart = prevCart.filter((item) => item.ticket_id !== ticket_id);
+    // Recalculate the total price after item removal
+    const newTotalPrice = updatedCart.reduce((total, item) => total + item.total_price, 0);   
+  // Apply the coupon discount to the new total price if a coupon is applied
+  if (discountApplied) {
+    const discount = discountDigit.discount; // Existing discount percentage
+    const couponDiscountAmount = newTotalPrice * discount; // Calculate new coupon discount amount
+    const updatedPrice = newTotalPrice - couponDiscountAmount; // Apply discount to new total price
+    setUpdatedPrice(updatedPrice);
+     const updatedTicketCart = {
+      ...ticket_cart, // Maintain previous state properties
+      total_price: updatedPrice,
+      coupon_id: discountDigit.id,
+      coupon_discount: couponDiscountAmount,
+    };
+    setTicket(updatedTicketCart);
+    // console.log(updatedTicketCart);
+    console.log(ticket_cart);
+  }  
+  
+    return updatedCart;
+    
+  });
+};
+
+const handleAddToOrder = (ticket, quantity) => {
+  setCart((prevCart) => {
+    const existingTicketIndex = prevCart.findIndex(
+      (item) => item.ticket_id === ticket.id
+    );
+    if (existingTicketIndex !== -1) {
+      const updatedCart = [...prevCart];
+      const existingItem = updatedCart[existingTicketIndex];
+      const newQuantity = existingItem.quantity + quantity;
+      if (newQuantity > ticket.ticket_per_order) {
+        
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: `You cannot order more than ${ticket.ticket_per_order} tickets of this type.`,
+        });
+        return prevCart;
+      }
+      updatedCart[existingTicketIndex] = {
+        ...existingItem,
+        quantity: newQuantity,
+        total_price: ticket.price * newQuantity,
+      };
+      const newTotalPrice = updatedCart.reduce((total, item) => total + item.total_price, 0);   
+      // Apply the coupon discount to the new total price if a coupon is applied
+      if (discountApplied) {
+        const discount = discountDigit.discount; // Existing discount percentage
+        const couponDiscountAmount = newTotalPrice * discount; // Calculate new coupon discount amount
+        const updatedPrice = newTotalPrice - couponDiscountAmount; // Apply discount to new total price
+        console.log(updatedPrice);
+        setUpdatedPrice(updatedPrice);
+         const updatedTicketCart = {
+          ...ticket_cart, // Maintain previous state properties
+          total_price: updatedPrice,
+          coupon_id: discountDigit.id,
+          coupon_discount: couponDiscountAmount,
+        };
+        
+        setTicket(updatedTicketCart);
+      }
+
+      return updatedCart;
+    }
+  
+    return [
+      ...prevCart,
+      {
+        quantity,
+        ticket_id: ticket.id,
+        ticket_name: ticket.name,
+        price_per_ticket: ticket.price,
+        total_price: ticket.price * quantity,
+        type: ticket.type,
+      },
+    ];
+  });  
+
+};

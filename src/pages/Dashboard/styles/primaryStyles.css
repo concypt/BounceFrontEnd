@@ -2348,9 +2348,14 @@ input[type="checkbox"].myCustomMultiSelectCheckboxes:checked,
   cursor: pointer;
 }
 
-/* .oneColumnTable .tablesGrid {
-  max-width: 641px;
-} */
+.CardElement .InputContainer .InputElement {
+  border: 1px solid #c8c8c8;
+  color: #4f4b5c;
+  font-size: 24px;
+  padding: 18px 22px;
+  outline: none;
+  border-radius: 8px;
+}
 
 @media screen and (max-width: 1100px) {
   .actionsColumn button {
@@ -2454,5 +2459,11 @@ input[type="checkbox"].myCustomMultiSelectCheckboxes:checked,
 
   #msform .action-button:nth-child(2) {
     width: 100px;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .header_div.checkout {
+    padding: 0 10px;
   }
 }
