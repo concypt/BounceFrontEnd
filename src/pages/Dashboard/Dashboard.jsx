@@ -25,12 +25,13 @@ function Dashboard() {
     first_name: user?.first_name || "",
     last_name: user?.last_name || "",
     phone: user?.phone || "",
-    image: user.image,
+    image: user.imagePath,
   });
 
   const mutation = useMutation({
     mutationFn: updateUserProfile,
     onSuccess: (data) => {
+      //console.log(data);
       updateUser(data); // Update the user context with the new data
 
       queryClient.invalidateQueries(["user"]);
@@ -123,10 +124,10 @@ function Dashboard() {
       formData.first_name !== user?.first_name ||
       formData.last_name !== user?.last_name ||
       formData.phone !== user?.phone ||
-      formData.image !== user?.image;
+      formData.image !== user?.imagePath;
 
     if (!isProfileInfoUpdated) {
-      console.log("No changes to submit");
+      //console.log("No changes to submit");
       Swal.fire("", "Nothing to Update", "warning");
       return;
     }
@@ -189,7 +190,7 @@ function Dashboard() {
                           src={
                             formData.image instanceof File
                               ? URL.createObjectURL(formData.image)
-                              : user?.userImage || baseImage
+                              : user?.imagePath || baseImage
                           }
                           alt=""
                         />

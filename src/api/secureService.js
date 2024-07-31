@@ -1,6 +1,4 @@
-import { event } from "jquery";
 import { axiosInstance } from "./axiosInstance";
-import { array } from "prop-types";
 
 //Dashboard after login
 export const fetchBankDetails = async () => {
@@ -26,11 +24,20 @@ export const updateBankDetails = async (bankDetails) => {
 };
 
 export const updateUserProfile = async (formDataToSend) => {
+  // for (let pair of formDataToSend.entries()) {
+  //   console.log(pair[0] + ": " + pair[1]);
+  // }
+
   const response = await axiosInstance.post(
-    "/user/edit-profile",
-    formDataToSend
+    `/user/edit-profile`,
+    formDataToSend,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
   );
-  return response.data;
+  return response.data.data;
 };
 
 export const changePassword = async (
@@ -188,7 +195,7 @@ export const getEvent = async (eventId) => {
 
 export const createEvent = async (eventDataToSubmit) => {
   const formData = new FormData();
-  console.log(eventDataToSubmit);
+  // console.log(eventDataToSubmit);
   // Append other fields to the FormData object
   Object.keys(eventDataToSubmit).forEach((key) => {
     if (key !== "gallery" && key !== "tag") {
@@ -228,9 +235,9 @@ export const createEvent = async (eventDataToSubmit) => {
   }
 
   //this is how we can console formData
-  for (let pair of formData.entries()) {
-    console.log(pair[0] + ": " + pair[1]);
-  }
+  // for (let pair of formData.entries()) {
+  //   console.log(pair[0] + ": " + pair[1]);
+  // }
 
   const response = await axiosInstance.post("/user/event-create", formData, {
     headers: {
@@ -388,7 +395,7 @@ export const updateTicketOrder = async (ticketIds) => {
 
 //FollowUnfollowBtn.jsx
 export const followUnfollow = async (organisationId) => {
-  console.log(organisationId);
+  // console.log(organisationId);
   const response = await axiosInstance.get(
     `user/add-followList/${organisationId}`
   );

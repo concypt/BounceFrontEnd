@@ -13,6 +13,7 @@ import dashboardLogout from "../../assets/images/dashboard/dashboardLogout.svg";
 const Header = () => {
   const navigate = useNavigate();
   const { user, logout } = useContext(UserContext);
+  //console.log(user.imagePath);
 
   const handleLogout = () => {
     Swal.fire({
@@ -42,7 +43,7 @@ const Header = () => {
       >
         <h3>{user?.first_name + " " + user?.last_name}</h3>{" "}
         <span className={styles.caret}></span>
-        <img src={user?.imagepath ? user.imagepath : baseImage} alt="" />
+        <img src={user?.imagePath ? user.imagePath : baseImage} alt="" />
         <ul className={`${styles.dropdownMenu} ${styles.dropdownMenu1}`}>
           <li>
             <Link to={`/dashboard`}>
