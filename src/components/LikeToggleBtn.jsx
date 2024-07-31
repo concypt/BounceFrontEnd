@@ -16,7 +16,12 @@ const LikeToggleBtn = ({ eventId }) => {
 
   useEffect(() => {
     // Retrieve the favEvents from local storage
-    const userLikedEvents = JSON.parse(localStorage.getItem("favEvents")) || [];
+    let userLikedEvents = [];
+    const favEventsFromStorage = localStorage.getItem("favEvents");
+  if (favEventsFromStorage && favEventsFromStorage !== "undefined") {
+    userLikedEvents = JSON.parse(favEventsFromStorage);
+  }
+    
     if (userLikedEvents.length) {
       const isFollowing = userLikedEvents.includes(eventId);
       setIsEventLiked(isFollowing);

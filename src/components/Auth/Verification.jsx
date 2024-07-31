@@ -13,7 +13,7 @@ const OTPVerificationPage = () => {
 
   const [otp, setOTP] = useState("");
   const [token, setToken] = useState("");
-
+  const [formData, setFormData] = useState({ otp: ""});
   const [loading, setLoading] = useState(false);
   const [loading2, setLoading2] = useState(false);
   const [error, setError] = useState(null);
@@ -35,15 +35,19 @@ const OTPVerificationPage = () => {
     mutationKey: ["verifyOTP"],
     onSuccess: (data) => {
       console.log(data);
+      if(data.success===true){
       setVerificationStatus("success");
       setLoading(false);
       // Redirect after 2 seconds only if verification is successful
-      setTimeout(() => {
-        navigate("/login"); // Redirect to home page
-      }, 3000);
+      navigate("/attend");
+    }
+    else{
+      setVerificationStatus("failure");
+      setLoading(false);
+    }
     },
     onError: (error) => {
-      console.error("OTP failed:", error);
+      console.error("OTP failedd:", error);
     },
   });
 
@@ -51,7 +55,6 @@ const OTPVerificationPage = () => {
     mutationFn: resendOTP,
     mutationKey: ["resendOTP"],
     onSuccess: (data) => {
-      console.log(data);
       setResendCount((prevCount) => prevCount + 1);
       setVerificationStatus("success");
       setLoading(false);
@@ -66,7 +69,13 @@ const OTPVerificationPage = () => {
   });
 
   const handleChange = (e) => {
+    const { value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      otp: value,
+    }));
     setOTP(e.target.value);
+
   };
 
   const handleSubmit = async (e) => {
@@ -80,7 +89,7 @@ const OTPVerificationPage = () => {
 
     //call mutation here
 
-    mutation.mutate(otp, location.state.token);
+    mutation.mutate(formData);
   };
   const handleResendOTP = async () => {
     mutationResend.mutate(location.state.token);
@@ -145,11 +154,15 @@ const OTPVerificationPage = () => {
                   </button>
                 </div>
                 {error && <div className={styles.error}>{error}</div>}
-                {verificationStatus === "success" && (
+                {verificationStatus === "success" ? (
                   <p className={styles.success}>
                     OTP verification successful! Redirecting...
                   </p>
-                )}
+                ) : verificationStatus === "failure" ? (
+                  <p className={styles.error}>
+                    OTP did not match. Please try again.
+                  </p>
+                ) : null}
               </form>
             </div>
           </div>

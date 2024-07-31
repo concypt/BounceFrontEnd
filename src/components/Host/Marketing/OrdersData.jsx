@@ -276,13 +276,18 @@ const HostTicketOrders = ({
       },
       {
         Header: "Customer Name",
-        accessor: (row) =>
-          `${row.customer.first_name} ${row.customer.last_name}`,
+        accessor: (row) => {
+          // Ensure row.customer exists before accessing its properties
+          const firstName = row.customer?.first_name || '';
+          const lastName = row.customer?.last_name || '';
+          return `${firstName} ${lastName}`.trim();
+        },
         sortType: "basic",
         Cell: ({ value }) => (
           <div>{value.length > 20 ? value.slice(0, 20) + "..." : value}</div>
         ),
       },
+      
       {
         Header: "Events",
         Cell: () => <div>{event.name}</div>,
