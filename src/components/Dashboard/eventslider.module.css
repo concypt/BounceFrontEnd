@@ -33,6 +33,7 @@
   font-size: 32px;
   line-height: 36px;
   min-height: 200px;
+  max-height: 200px;
 }
 
 .eventCategoryButton {
