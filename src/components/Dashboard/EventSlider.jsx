@@ -37,7 +37,12 @@ const EventSlider = (props) => {
     orders_tickets: [
       {
         order_id: "Order Id",
-        payment: "Payment",
+        order: [
+          {
+            order_id: 1,
+            payment: "50",
+          },
+        ],
       },
     ],
   });
@@ -52,8 +57,8 @@ const EventSlider = (props) => {
     setModalIsOpen(true);
     setCurrentSlide(0);
     setEventInfo(event);
-    setSelectedTicket(event.orders_tickets[0].child_orders[0]);
-    setTickets(event.orders_tickets[0].child_orders);
+    setSelectedTicket(event.orders_tickets[0]);
+    setTickets(event.orders_tickets);
   };
 
   const closeModal = () => {
@@ -332,23 +337,29 @@ const EventSlider = (props) => {
                 <div className={styles.paymentSection}>
                   <h3 className={styles.paymentHeading}>Payment</h3>
                   <p className={styles.orderNumber}>
-                    Order number {eventInfo.orders_tickets[0].order_id}
+                    Order number{" "}
+                    {eventInfo.orders_tickets[currentSlide].order.order_id}
                   </p>
                   <span className={styles.paymentDone}>
                     <img src={popupPaymentDone} alt="" />
                     <p className={styles.paymentDoneText}>
-                      Paid £{eventInfo.orders_tickets[0].payment} for{" "}
+                      Paid £
+                      {eventInfo.orders_tickets[currentSlide].order.payment} for{" "}
                       {tickets.length} tickets on the{" "}
-                      {moment(eventInfo.orders_tickets[0].created_at).format(
-                        "dddd Do MMMM YYYY"
-                      )}{" "}
+                      {moment(
+                        eventInfo.orders_tickets[currentSlide].created_at
+                      ).format("dddd Do MMMM YYYY")}{" "}
                       by card.
                     </p>
                   </span>
                   <Link
                     to=""
                     className={styles.detailLink}
-                    onClick={() => handleShow(eventInfo.orders_tickets[0].id)}
+                    onClick={() =>
+                      handleShow(
+                        eventInfo.orders_tickets[currentSlide].order_id
+                      )
+                    }
                   >
                     Request Refund
                   </Link>
@@ -358,18 +369,22 @@ const EventSlider = (props) => {
             <div className={styles.qrCode}>
               <QRCode
                 id="qr-code"
-                value={`Ticket ID: ${tickets[currentSlide].id}`}
+                value={`Ticket ID: ${eventInfo.orders_tickets[currentSlide].id}`}
                 className={styles.qrCodeImgCanva}
               />
               <div className={styles.modalActions}>
                 <button
                   className="bgGlobalBtn borderGlobalBtn qrBtn"
-                  onClick={() => downloadQR(tickets[currentSlide].id)}
+                  onClick={() =>
+                    downloadQR(eventInfo.orders_tickets[currentSlide].id)
+                  }
                 >
                   <span>Download QR</span>
                 </button>
                 <button
-                  onClick={() => shareQR(tickets[currentSlide].id)}
+                  onClick={() =>
+                    shareQR(eventInfo.orders_tickets[currentSlide].id)
+                  }
                   className={styles.shareBtn}
                 >
                   <img src={popupShareBtn} alt="" />

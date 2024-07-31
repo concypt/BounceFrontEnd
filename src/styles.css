@@ -737,7 +737,7 @@ span.rdrYearPicker {
   }
 
   .slider_content p {
-    margin-top: 20px;
+    margin-top: 30px;
     font-size: 18px;
   }
 
@@ -1124,6 +1124,10 @@ button.global_button_one.follow_btn {
   .bgGlobalBtn span {
     padding: 0 15px;
   }
+
+  .promote_section {
+    padding-top: 20px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -1144,6 +1148,17 @@ button.global_button_one.follow_btn {
   .bgGlobalBtn span {
     padding: 0 10px;
     font-size: 12px;
+  }
+
+  .slider_section {
+    padding: 40px 5px;
+    padding-bottom: 0;
+  }
+
+  .slider_section .swiper_div,
+  .promote_section {
+    padding-left: 10px;
+    padding-right: 10px;
   }
 }
 
