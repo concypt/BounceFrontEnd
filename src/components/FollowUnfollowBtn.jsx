@@ -13,8 +13,12 @@ const FollowUnfollowBtn = ({ organisationId }) => {
 
   useEffect(() => {
     // Retrieve the followingArray from local storage
-    const userFollowingArray =
-      JSON.parse(localStorage.getItem("followingArray")) || [];
+    let userFollowingArray = [];
+    const followingArrayFromStorage = localStorage.getItem("followingArray");
+    // Check if followingArrayFromStorage is neither null nor the string "undefined"
+    if (followingArrayFromStorage && followingArrayFromStorage !== "undefined") {
+      userFollowingArray = JSON.parse(followingArrayFromStorage);
+    }
     if (userFollowingArray.length) {
       const isFollowing = userFollowingArray.includes(organisationId);
       setIsFollowingState(isFollowing);

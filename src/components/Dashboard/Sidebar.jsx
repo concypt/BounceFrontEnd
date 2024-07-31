@@ -11,8 +11,8 @@ const Sidebar = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [showSublinks, setShowSublinks] = useState(false);
 
-  const isHostNull = user.org_role === 0;
-
+  const isHostNull = user.org_role == 0;
+console.log(isHostNull);
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
   };

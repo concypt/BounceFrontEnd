@@ -1,4 +1,5 @@
 import { axiosPInstance } from "./axiosInstance";
+import { axiosInstance } from "./axiosInstance";
 
 //Register.jsx
 export const registerUser = async (formData) => {
@@ -25,16 +26,10 @@ export const requestPasswordReset = async (email) => {
 };
 
 //Verification.jsx
-export const verifyOTP = async ({ otp, token }) => {
-  const response = await axiosPInstance.post(
-    "/user/verify-email",
-    { otp },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+
+export const verifyOTP = async ( otp ) => {
+  console.log(otp);
+  const response = await axiosInstance.post("/user/verify-email", otp);
   return response.data;
 };
 
@@ -46,6 +41,7 @@ export const resendOTP = async (token) => {
   });
   return response.data;
 };
+
 
 //GlobalProvider CatContext
 export const fetchCategories = async () => {
