@@ -11,7 +11,7 @@ import PropTypes from "prop-types";
 import EventTickets from "./EventTickets";
 import styles from "./eventList.module.css";
 
-const URL = "https://bounce.extrasol.co.uk/api/attenders/events";
+const URL = "https://api.bounce.live/api/attenders/events";
 let config = {
   headers: {
     "Content-Type": "application/json",

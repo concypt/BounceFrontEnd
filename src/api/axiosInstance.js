@@ -126,7 +126,7 @@ import { refreshAccessToken } from "./authService";
 
 // Create an axios instance
 const axiosInstance = axios.create({
-  baseURL: "https://bounce.extrasol.co.uk/api",
+  baseURL: "https://api.bounce.live/api",
   withCredentials: true,
 });
 
@@ -235,7 +235,7 @@ axiosRetry(axiosInstance, {
 
 // Instance for public API calls
 const axiosPInstance = axios.create({
-  baseURL: "https://bounce.extrasol.co.uk/api",
+  baseURL: "https://api.bounce.live/api",
   headers: {
     "Content-Type": "application/json",
     "X-Api-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9",

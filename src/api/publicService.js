@@ -80,7 +80,7 @@ export const couponApply = async (couponData) => {
 export const checkTicketAvailability = async (ticketId, quantity) => {
   console.log("quantity: ", quantity);
   const { data } = await axiosPInstance.get(
-    `https://bounce.extrasol.co.uk/api/attenders/stock`,
+    `https://api.bounce.live/api/attenders/stock`,
     {
       params: { ticket_id: ticketId, quantity },
     }
@@ -101,7 +101,7 @@ export const createOrders = async (formData) => {
 // Add tickets to the cart
 export const addToCart = async (orderDetails) => {
   const { data } = await axiosPInstance.post(
-    `https://bounce.extrasol.co.uk/api/attenders/checkout`,
+    `https://api.bounce.live/api/attenders/checkout`,
     orderDetails
   );
   return data;
