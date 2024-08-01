@@ -1,4 +1,7 @@
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Header from "../../components/Dashboard/Header";
 import Sidebar from "../../components/Dashboard/Sidebar";
@@ -15,7 +18,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 function EventSingle() {
   const { eventId } = useParams();
-
+  const navigate = useNavigate();
   const {
     data: eventSingleData,
     isLoading,
@@ -26,6 +29,21 @@ function EventSingle() {
     enabled: !!eventId,
   });
 
+  useEffect(() => {
+    
+    // Check if data is undefined or doesn't have required properties
+    if (eventSingleData && eventSingleData.length == 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Unauthorized Access',
+        text: 'You do not have permission to access event details page.',
+        confirmButtonText: 'Okay'
+      }).then(() => {
+        navigate(`/dashboard-event`);
+      });
+    }
+  }, [eventSingleData, navigate]);
+console.log(eventSingleData)
   if (isLoading && !eventSingleData)
     return (
       <div className="dashboard">
@@ -58,7 +76,7 @@ function EventSingle() {
     return <p>Error: {error.message}</p>;
   }
 
-  if (eventSingleData) {
+  if (eventSingleData && eventSingleData.event) {
     const jsonData = JSON.stringify(eventSingleData);
     const parsedData = JSON.parse(jsonData);
     return (

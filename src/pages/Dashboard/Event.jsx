@@ -114,11 +114,11 @@ function EventDashboard() {
                 </div>
                 <div className="earnings">
                   <p>Gross Sales</p>
-                  <h3>£1{earnings.gross_sales}</h3>
+                  <h3>£{earnings.gross_sales}</h3>
                 </div>
                 <div className="earnings">
                   <p>Bounce fees</p>
-                  <h3>£1{earnings.bounce_fees}</h3>
+                  <h3>£{earnings.bounce_fees}</h3>
                 </div>
               </div>
             </div>

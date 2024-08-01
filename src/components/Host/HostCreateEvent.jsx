@@ -94,6 +94,15 @@ const HostCreateEvent = ({ setFormStep, setEventId, eventId }) => {
     queryFn: () => getEvent(eventId),
     enabled: !!eventId,
   });
+  if(fetchedEvent===null){
+    navigate(`/dashboard-event`);
+    Swal.fire({
+      icon: 'error',
+      title: 'Unauthorized Access',
+      text: 'You do not have permission to access this event.',
+      confirmButtonText: 'Okay'
+    });
+  }
 
   useEffect(() => {
     if (fetchedEvent) {

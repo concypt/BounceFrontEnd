@@ -106,6 +106,16 @@ const HostCreateTickets = ({ setFormStep, eventId }) => {
     queryFn: () => getTicketsByEventId(eventId),
     enabled: !!eventId,
   });
+ 
+  if(existingTickets.length==0){
+    navigate(`/dashboard-event`);
+    Swal.fire({
+      icon: 'error',
+      title: 'Unauthorized Access',
+      text: 'You do not have permission to access this ticket.',
+      confirmButtonText: 'Okay'
+    });
+  }
 
   const { mutate: createTicketsMutate } = useCreateTickets(eventId);
   const { mutate: updateTicketMutate } = useUpdateTicket();
