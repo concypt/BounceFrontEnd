@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { fetchEventDetails } from "../api/publicService";
-import LoadingBar from "react-top-loading-bar";
+
 import FollowUnfollowBtn from "./FollowUnfollowBtn";
 import PropTypes from "prop-types";
 import Skeleton from "react-loading-skeleton";
@@ -144,17 +144,21 @@ const SingleEvent = () => {
                       className={styles.description_img}
                       alt=""
                     />{" "}
-                    {moment(isLoading ? "" : event.start_time).format(
-                      "HH:mm:ss"
-                    )}
+                    {/* {event.start_time} */}
+                    {moment
+                      .utc(isLoading ? "" : event.start_time)
+                      .format("HH:mm")}
                   </p>
                   <p>
-                    {" "}
-                    <img
-                      src={locationImage}
-                      className={styles.description_img}
-                      alt=""
-                    />{" "}
+                    {!isLoading && event.address != null ? (
+                      <img
+                        src={locationImage}
+                        className={styles.description_img}
+                        alt=""
+                      />
+                    ) : (
+                      ""
+                    )}
                     {isLoading ? <Skeleton /> : event.address}
                   </p>
                 </div>
