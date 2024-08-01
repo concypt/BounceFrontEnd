@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { CatContext } from "../contexts/GlobalProvider";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import moment from "moment";
 
 import styles from "./eventCard.module.css";
 
@@ -11,7 +12,6 @@ import styles from "./eventCard.module.css";
 import clockIcon from "../assets/images/clock.svg";
 import locationIcon from "../assets/images/location.svg";
 import buyTicketIcon from "../assets/images/buy-ticket.svg";
-import { set } from "date-fns";
 
 function EventCard({
   event,
@@ -22,9 +22,18 @@ function EventCard({
   const { categories } = useContext(CatContext);
   //console.log(event);
   // Parse the start time string into a Date object
-  const startTime = new Date(event.start_time);
-  // Format the date portion only
-  const formattedDate = startTime.toLocaleDateString();
+  // Define the format of your input date string
+  const inputFormat = "DD/MM/YYYY HH:mm:ss";
+  // Parse the date
+  const startTime = moment(event.start_time, inputFormat);
+
+  let formattedDate;
+  // Check if the parsed date is valid
+  if (startTime.isValid()) {
+    // Format the date portion only
+    formattedDate = startTime.format("DD/MM/YYYY HH:mm"); // Desired format
+    //console.log("Formatted Date: " + formattedDate);
+  }
 
   const handleCatChange = (catName) => {
     const category = categories.find((category) => category.name === catName);

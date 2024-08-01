@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 
