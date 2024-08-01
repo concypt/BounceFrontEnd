@@ -8,9 +8,10 @@
   column-gap: 20px;
   row-gap: 60px;
   max-width: 1670px;
+  padding: 0 1rem;
   margin: 0 auto;
   justify-content: space-between;
-  padding-top: 250px;
+  padding-top: 100px;
 }
 
 .gvoEvents {
@@ -29,6 +30,10 @@
   margin: 0 auto;
 }
 
+.skeletonContainer .hostProfile {
+  padding-top: 40px;
+}
+
 .profilePath {
   display: flex;
   align-items: center;
@@ -40,6 +45,7 @@
   width: 205px;
   height: 205px;
   border-radius: 500px;
+  object-fit: cover;
 }
 
 .profilePath h1 {

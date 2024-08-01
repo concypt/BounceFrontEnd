@@ -39,3 +39,11 @@ export const contactUsForm = async (formData) => {
     );
   }
 };
+
+//HostProfile.jsx
+export const fetchHostDetails = async (organisationId) => {
+  const { data } = await axiosPInstance
+    .get(`/host/profile/${organisationId}`)
+    .then((res) => res.data);
+  return data;
+};

@@ -96,7 +96,15 @@ const SingleEvent = () => {
                     {isLoading ? (
                       <Skeleton />
                     ) : (
-                      <img src={event.organisation.imagePath} />
+                      <Link
+                        to={{
+                          pathname: isLoading
+                            ? ""
+                            : `/host-profile/${event.organisation.id}`,
+                        }}
+                      >
+                        <img src={event.organisation.imagePath} />
+                      </Link>
                     )}
 
                     <div className={styles.card_text}>

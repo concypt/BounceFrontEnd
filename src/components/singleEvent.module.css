@@ -70,6 +70,7 @@
   width: 104px;
   height: 104px;
   border-radius: 200px;
+  object-fit: cover;
 }
 
 .event_detail_card {

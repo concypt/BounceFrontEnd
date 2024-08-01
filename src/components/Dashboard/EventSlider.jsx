@@ -53,6 +53,7 @@ const EventSlider = (props) => {
     { id: 4, info: "Ticket 4 Info" },
   ]);
 
+  //for tickets modal
   const openModal = (event) => {
     setModalIsOpen(true);
     setCurrentSlide(0);
@@ -214,60 +215,71 @@ const EventSlider = (props) => {
         modules={[Navigation]}
         className={styles.mySwiper}
       >
-        {events.map((event) => (
-          <SwiperSlide key={event.id} className={styles.eventSlide}>
-            <div
-              className={`${styles.eventCard} ${
-                qS === 4 ? styles.upcomingEventCard : ""
-              }`}
-            >
-              <div className={styles.eventCardImage}>
-                <img
-                  className={styles.eventImg}
-                  src={event.image}
-                  alt="Event image"
-                />
-                <div className={styles.eventCategoryButton}>
-                  {event.category}
-                </div>
-              </div>
-              <div className={styles.eventCardDetails}>
-                <h2>{event.name}</h2>
-                <div className={styles.dateRemainingDaysDiv}>
-                  <span className={styles.time}>
-                    <img src={clockIcon} alt="" />{" "}
-                    {moment(event.start_time).format("YYYY/MM/DD")}
-                  </span>
-                  <div className={styles.remainingDaysBtn}>
-                    <>{event.daysCount}</>
+        {events.map((event) => {
+          const inputFormat = "DD/MM/YYYY HH:mm:ss";
+          const startTime = moment(event.start_time, inputFormat);
+
+          let formattedDate = "Invalid date";
+          if (startTime.isValid()) {
+            formattedDate = startTime.format("DD/MM/YYYY");
+          }
+          return (
+            <SwiperSlide key={event.id} className={styles.eventSlide}>
+              <div
+                className={`${styles.eventCard} ${
+                  qS === 4 ? styles.upcomingEventCard : ""
+                }`}
+              >
+                <div className={styles.eventCardImage}>
+                  <img
+                    className={styles.eventImg}
+                    src={event.image}
+                    alt="Event image"
+                  />
+                  <div className={styles.eventCategoryButton}>
+                    {event.category}
                   </div>
                 </div>
-                <div className={event.location ? styles.locationDiv : null}>
-                  {event.location && (
-                    <span className={styles.location}>
-                      <img src={locationIcon} alt="" /> {event.location}
+                <div className={styles.eventCardDetails}>
+                  <h2>{event.name}</h2>
+                  <div className={styles.dateRemainingDaysDiv}>
+                    <span className={styles.time}>
+                      <img src={clockIcon} alt="" /> {formattedDate}
                     </span>
-                  )}
-                </div>
+                    <div className={styles.remainingDaysBtn}>
+                      <>{event.daysCount}</>
+                    </div>
+                  </div>
+                  <div className={event.location ? styles.locationDiv : null}>
+                    {event.location && (
+                      <span className={styles.location}>
+                        <img src={locationIcon} alt="" /> {event.location}
+                      </span>
+                    )}
+                  </div>
 
-                <div className={styles.ticketsFindMore}>
-                  {qS === 4 ? (
-                    <div
-                      className="bgGlobalBtn borderGlobalBtn"
-                      onClick={() => openModal(event)}
-                    >
-                      <span>View ticket details</span>
-                    </div>
-                  ) : (
-                    <div className="bgGlobalBtn borderGlobalBtn">
-                      <span>Find out more</span>
-                    </div>
-                  )}
+                  <div className={styles.ticketsFindMore}>
+                    {qS === 4 ? (
+                      <div
+                        className="bgGlobalBtn borderGlobalBtn"
+                        onClick={() => openModal(event)}
+                      >
+                        <span>View ticket details</span>
+                      </div>
+                    ) : (
+                      <Link
+                        to={`/events/${event.id}`}
+                        className="bgGlobalBtn borderGlobalBtn"
+                      >
+                        <span>Find out more</span>
+                      </Link>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          </SwiperSlide>
-        ))}
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
 
       {/* tickets modal */}
@@ -312,7 +324,10 @@ const EventSlider = (props) => {
             <div className={styles.ticketInfo}>
               <div className={styles.titleWrapper}>
                 <h1 className={styles.ticketTitle}>{eventInfo.name}</h1>
-                <Link to="/home" className={styles.detailLink}>
+                <Link
+                  to={`/events/${eventInfo.id}`}
+                  className={styles.detailLink}
+                >
                   View event page
                 </Link>
               </div>
@@ -345,7 +360,11 @@ const EventSlider = (props) => {
                     <p className={styles.paymentDoneText}>
                       Paid £
                       {eventInfo.orders_tickets[currentSlide].order.payment} for{" "}
-                      {tickets.length} tickets on the{" "}
+                      {
+                        eventInfo.orders_tickets[currentSlide].order
+                          .quantity_count
+                      }{" "}
+                      tickets on the{" "}
                       {moment(
                         eventInfo.orders_tickets[currentSlide].created_at
                       ).format("dddd Do MMMM YYYY")}{" "}

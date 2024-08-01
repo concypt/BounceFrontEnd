@@ -1,124 +1,149 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
+import { useQuery } from "@tanstack/react-query";
+import { fetchHostDetails } from "../api/masabService";
+import { fetchHomeData } from "../api/publicService.js";
 import EventCard from "./EventCard";
 import FollowUnfollowBtn from "./FollowUnfollowBtn";
 import styles from "./hostProfile.module.css";
-import LoadingBar from "react-top-loading-bar";
-//images below
-import userOne from "../assets/images/userOne.svg";
-import userTwo from "../assets/images/userTwo.svg";
-import userThree from "../assets/images/userThree.svg";
-import userFour from "../assets/images/userFour.svg";
-import userFive from "../assets/images/userFive.svg";
-
-const URL = "https://bounce.extrasol.co.uk/api/host/profile";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const HostProfile = () => {
-  const [profile, setProfile] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [loadingComplete, setLoadingComplete] = useState(false);
   const { organisationId } = useParams();
 
-  window.onload = () => {
-    setLoadingComplete(true);
-  };
+  const {
+    data: profile,
+    error,
+    isLoading,
+  } = useQuery({
+    queryKey: ["hostDetails", organisationId],
+    queryFn: () => fetchHostDetails(organisationId),
+  });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`${URL}/${organisationId}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
-        const jsonData = await response.json();
-        setProfile(jsonData.data); // Set the parsed JSON data as the profile state
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setError("Failed to fetch data");
-        setLoading(false);
-      }
-    };
+  //for followers images
+  const { data: home } = useQuery({
+    queryKey: ["homeData"],
+    queryFn: fetchHomeData,
+  });
 
-    fetchData();
-
-    return () => {
-      // Cleanup if needed
-    };
-  }, []);
+  if (isLoading) {
+    return (
+      <div className={styles.skeletonContainer}>
+        <div className={styles.hostProfile}>
+          <div className={styles.profilePath}>
+            <Skeleton circle={true} height={200} width={200} />
+            <div className={styles.skeletonName}>
+              <Skeleton width={300} height={20} />
+            </div>
+          </div>
+          <div className={styles.hostCard}>
+            <div className="row">
+              <div className="col-lg-6">
+                <h2>About</h2>
+                <Skeleton height={40} count={3} />
+              </div>
+              <div className="col-lg-6">
+                <h2>Followers</h2>
+                <div className={`users ${styles.skeletonUsers}`}>
+                  <div className="user_imgs">
+                    <Skeleton circle={true} height={40} width={40} />
+                    <Skeleton circle={true} height={40} width={40} />
+                    <Skeleton circle={true} height={40} width={40} />
+                    <Skeleton circle={true} height={40} width={40} />
+                    <Skeleton circle={true} height={40} width={40} />
+                    <div className={styles.skeletonCount}>
+                      <Skeleton width={50} height={20} />
+                    </div>
+                  </div>
+                </div>
+                <Skeleton height={40} width={120} />
+                <Skeleton height={20} count={2} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div>
-      {loading ? (
-        <LoadingBar
-          color="#7e79ff"
-          height={3}
-          progress={loadingComplete ? 100 : 0}
-        />
-      ) : error ? (
-        <div className="error">{error}</div>
-      ) : !profile ? (
-        <div>No profile available</div>
-      ) : (
-        <div className="bounce_bg_circle">
-          <div className="container-fluid">
-            <Navbar />
-            <div className={styles.hostProfile}>
-              <div className={styles.profilePath}>
-                <img src={profile.imagePath} alt="" />
-                <h1>
-                  {profile.name
-                    ? profile.name
-                    : profile.first_name + " " + profile.last_name}
-                </h1>
-              </div>
-              <div className={styles.hostCard}>
-                <div className="row">
-                  <div className="col-lg-6">
-                    <h2>About</h2>
-                    <p className={styles.hostText}>
-                      {profile.bio ? profile.bio : "No bio found..."}
-                    </p>
-                  </div>
-                  <div className="col-lg-6">
-                    <h2>Followers</h2>
-                    <div className={`users ${styles.hostUser}`}>
-                      <div className="user_imgs">
-                        <img src={userOne} alt="Picture of Happy Attendee" />
-                        <img src={userTwo} alt="Picture of Happy Host" />
-                        <img src={userThree} alt="Picture of Happy Attendee" />
-                        <img src={userFour} alt="Picture of Happy Attendee" />
-                        <img src={userFive} alt="Picture of Happy Host" />
-                        <div className="user_count">
-                          <p>268+</p>
-                        </div>
+    <div className="bounce_bg_circle">
+      <div className="container-fluid">
+        {error ? (
+          <div className={styles.hostProfile}>
+            <h3 className="text-center">{error}</h3>
+          </div>
+        ) : !profile ? (
+          <div className={styles.hostProfile}>
+            <h2 className="text-center">No profile available</h2>
+          </div>
+        ) : (
+          <div className={styles.hostProfile}>
+            <div className={styles.profilePath}>
+              <img src={profile.imagePath} alt="" />
+              <h1>
+                {profile.name
+                  ? profile.name
+                  : profile.first_name + " " + profile.last_name}
+              </h1>
+            </div>
+            <div className={styles.hostCard}>
+              <div className="row">
+                <div className="col-lg-6">
+                  <h2>About</h2>
+                  <p className={styles.hostText}>
+                    {profile.bio ? profile.bio : "No bio found..."}
+                  </p>
+                </div>
+                <div className="col-lg-6">
+                  <h2>Followers</h2>
+                  <div className={`users ${styles.hostUser}`}>
+                    <div className="user_imgs">
+                      <img
+                        src={home.header.user1}
+                        alt={home.header.user1.alt}
+                      />
+                      <img
+                        src={home.header.user2}
+                        alt={home.header.user2.alt}
+                      />
+                      <img
+                        src={home.header.user3}
+                        alt={home.header.user3.alt}
+                      />
+                      <img
+                        src={home.header.user4}
+                        alt={home.header.user4.alt}
+                      />
+                      <img
+                        src={home.header.user5}
+                        alt={home.header.user5.alt}
+                      />
+                      <div className="user_count">
+                        <p>{home.header.user_number}+</p>
                       </div>
                     </div>
-                    <FollowUnfollowBtn organisationId={profile.id} />
-                    <p className={styles.hostText}>
-                      Follow to receive the latest updates and new event
-                      announcements by email!
-                    </p>
                   </div>
+                  <FollowUnfollowBtn organisationId={profile.id} />
+                  <p className={styles.hostText}>
+                    Follow to receive the latest updates and new event
+                    announcements by email!
+                  </p>
                 </div>
               </div>
             </div>
-            {/* Check if events exists before mapssping over them */}
           </div>
-          <div className={styles.gvoEvents}>
-            <div className={styles.eventsGrid}>
-              {profile.events &&
-                profile.events.map((event) => (
-                  <EventCard key={event.id} event={event} />
-                ))}
-            </div>
-          </div>
-          <Footer />
+        )}
+      </div>
+      <div className={styles.gvoEvents}>
+        <div className={styles.eventsGrid}>
+          {profile.events &&
+            profile.events.map((event) => (
+              <EventCard key={event.id} event={event} />
+            ))}
         </div>
-      )}
+      </div>
     </div>
   );
 };
