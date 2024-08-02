@@ -19,11 +19,9 @@ import styles from "../Dashboard/eventslider.module.css";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-//images
 import viewImg from "../../assets/images/event-dash-icon-view.svg";
 import paginatePrev from "../../assets/images/pagination-arrow-prev.svg";
 import paginateNext from "../../assets/images/pagination-arrow-next.svg";
-//images
 import closeIcon from "../../assets/images/closeicon.svg";
 import popupCalendar from "../../assets/images/popup-calendar.svg";
 import popupClock from "../../assets/images/popup-clock.svg";
@@ -48,8 +46,7 @@ const HostTicketOrders = () => {
   });
 
   useEffect(() => {
-    // Ensure apiResponse is not empty before setting tableData
-    if (apiResponse && apiResponse.length > 0) {
+    if (Array.isArray(apiResponse) && apiResponse.length > 0) {
       setTableData(apiResponse);
     }
   }, [apiResponse]);
@@ -57,7 +54,7 @@ const HostTicketOrders = () => {
   const handleView = (event) => {
     setEventInfo(event);
     setIsModalOpen(true);
-    console.log(`View button clicked for row with id: ${event.id}`);
+    //console.log(`View button clicked for row with id: ${event.id}`);
   };
 
   const closeModal = () => {
@@ -172,12 +169,10 @@ const HostTicketOrders = () => {
     const pages = [];
 
     if (pageCount <= totalVisiblePages) {
-      // If there are fewer pages than or equal to the total visible pages, display all pages
       for (let i = 0; i < pageCount; i++) {
         pages.push(i);
       }
     } else {
-      // Calculate start and end page to show based on the current page index
       let startPage = Math.max(
         0,
         pageIndex - Math.floor(totalVisiblePages / 2)
@@ -187,19 +182,16 @@ const HostTicketOrders = () => {
         pageIndex + Math.floor(totalVisiblePages / 2)
       );
 
-      // Adjust start and end pages if at the beginning or end of the page list
       if (pageIndex <= 2) {
         endPage = totalVisiblePages - 1;
       } else if (pageIndex >= pageCount - 3) {
         startPage = pageCount - totalVisiblePages;
       }
 
-      // Add pages within the visible range
       for (let i = startPage; i <= endPage; i++) {
         pages.push(i);
       }
 
-      // Add ellipsis if there are pages before the start page
       if (startPage > 0) {
         pages.unshift("...");
         if (startPage > 1) {
@@ -207,7 +199,6 @@ const HostTicketOrders = () => {
         }
       }
 
-      // Add ellipsis if there are pages after the end page
       if (endPage < pageCount - 1) {
         if (endPage < pageCount - 2) {
           pages.push("...");
@@ -283,7 +274,8 @@ const HostTicketOrders = () => {
             >
               <img src={paginatePrev} alt="Previous" />
             </button>
-            {pageNumbers.map((page, index) =>
+
+            {/* {pageNumbers.map((page, index) =>
               page === "..." ? (
                 <span key={index} className="ellipsis">
                   {page}
@@ -293,11 +285,28 @@ const HostTicketOrders = () => {
                   key={page}
                   onClick={() => gotoPage(page)}
                   className={pageIndex === page ? "active" : ""}
+                  aria-label={`Go to page ${page + 1}`}
+                >
+                  {page + 1}
+                </button>
+              )
+            )} */}
+            {pageNumbers.map((page, index) =>
+              page === "..." ? (
+                <span key={`ellipsis-${index}`} className="ellipsis">
+                  {page}
+                </span>
+              ) : (
+                <button
+                  key={`page-${page}-${index}`} // <- Combine page number with index to ensure uniqueness
+                  onClick={() => gotoPage(page)}
+                  className={pageIndex === page ? "active" : ""}
                 >
                   {page + 1}
                 </button>
               )
             )}
+
             <button
               className="control-btn"
               onClick={() => nextPage()}
@@ -312,6 +321,7 @@ const HostTicketOrders = () => {
             <select
               value={pageSize}
               onChange={(e) => setPageSize(Number(e.target.value))}
+              aria-label="Results per page"
             >
               {[5, 10, 20, 30, 50].map((size) => (
                 <option key={size} value={size}>
