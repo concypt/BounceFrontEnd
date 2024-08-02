@@ -75,6 +75,20 @@
   .upcomingEvents .upcomingDiv {
     padding: 0 30px;
   }
+
+  .dataTables .pagination-btns button {
+    width: 35px;
+    height: 35px;
+    font-size: 14px;
+  }
+
+  .dataTables .pagination .pagination-btns {
+    gap: 3px;
+  }
+
+  .tableOne {
+    padding: 20px;
+  }
 }
 
 @media (max-width: 380px) {

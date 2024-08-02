@@ -165,7 +165,7 @@ const HostTicketOrders = () => {
   const { globalFilter, pageIndex, pageSize } = state;
 
   const generatePageNumbers = () => {
-    const totalVisiblePages = 5;
+    const totalVisiblePages = 3;
     const pages = [];
 
     if (pageCount <= totalVisiblePages) {
@@ -275,22 +275,6 @@ const HostTicketOrders = () => {
               <img src={paginatePrev} alt="Previous" />
             </button>
 
-            {/* {pageNumbers.map((page, index) =>
-              page === "..." ? (
-                <span key={index} className="ellipsis">
-                  {page}
-                </span>
-              ) : (
-                <button
-                  key={page}
-                  onClick={() => gotoPage(page)}
-                  className={pageIndex === page ? "active" : ""}
-                  aria-label={`Go to page ${page + 1}`}
-                >
-                  {page + 1}
-                </button>
-              )
-            )} */}
             {pageNumbers.map((page, index) =>
               page === "..." ? (
                 <span key={`ellipsis-${index}`} className="ellipsis">

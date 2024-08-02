@@ -691,7 +691,7 @@ input[type="radio"] {
 .pagination button {
   background: #7357ff;
   color: #fff;
-  padding: 5px 15px;
+  padding: 5px 0;
   border-radius: 8px;
 }
 
