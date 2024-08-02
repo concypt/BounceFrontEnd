@@ -364,8 +364,7 @@ export const createTickets = async (ticketsDataToSubmit, eventId) => {
 
 export const getTicketsByEventId = async (eventId) => {
   const response = await axiosInstance.get(`/user/all-tickets/${eventId}`);
-
-  return response.data.data.ticket;
+  return response.data.data;
 };
 
 export const updateTicket = async (updatedTicket, ticketId) => {
