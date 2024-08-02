@@ -108,17 +108,17 @@ function EventDashboard() {
             <div className="earningsDiv">
               <h2>Earnings</h2>
               <div className="earningMain">
+              <div className="earnings">
+                  <p>Gross Sales</p>
+                  <h3>£{earnings.gross_sales}</h3>
+                </div>
                 <div className="earnings">
                   <p>Net Sales</p>
                   <h3>£{earnings.net_sales}</h3>
                 </div>
                 <div className="earnings">
-                  <p>Gross Sales</p>
-                  <h3>£{earnings.gross_sales}</h3>
-                </div>
-                <div className="earnings">
                   <p>Bounce fees</p>
-                  <h3>£{earnings.bounce_fees}</h3>
+                  <h3>£{(parseFloat(earnings.bounce_fees) || 0).toFixed(2)}</h3>
                 </div>
               </div>
             </div>

@@ -113,10 +113,13 @@ const HostCreateEvent = ({ setFormStep, setEventId, eventId }) => {
 
       const startDateTime = separateDateTime(fetchedEvent.start_time);
       const endDateTime = separateDateTime(fetchedEvent.end_time);
+      const tagsString = fetchedEvent.tags || ''; 
+      const tagsArray = tagsString.split(',').filter(tag => tag.trim() !== ''); 
+
 
       setValue("event_name", fetchedEvent.name);
       setValue("category_id", fetchedEvent.category_id);
-      setValue("tag", fetchedEvent.tags.split(",") || []);
+      setValue("tag", tagsArray || []);
       setValue("featured", fetchedEvent.featured);
       setValue("event_start_time", startDateTime);
       setValue("event_end_time", endDateTime);

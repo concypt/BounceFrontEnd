@@ -113,7 +113,7 @@ const HostEvents = () => {
           const { soldTickets, totalTickets } = row.original;
           const progress =
             totalTickets !== 0 ? (soldTickets / totalTickets) * 100 : 0;
-
+           console.log(totalTickets)
           return (
             <div
               className={`progress-bar-container-ticket ${
