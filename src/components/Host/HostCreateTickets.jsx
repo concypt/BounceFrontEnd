@@ -107,13 +107,19 @@ const HostCreateTickets = ({ setFormStep, eventId }) => {
     enabled: !!eventId,
   });
 
+<<<<<<< HEAD
   if (existingTickets && existingTickets.length == 0) {
     //navigate(`/dashboard-event`);
+=======
+ 
+  if(existingTickets && existingTickets?.event === null){
+    navigate(`/dashboard-event`);
+>>>>>>> dev-muhammad
     Swal.fire({
-      icon: "error",
-      title: "Unauthorized Access",
-      text: "You do not have permission to access this ticket.",
-      confirmButtonText: "Okay",
+      icon: 'error',
+      title: 'Unauthorized Access',
+      text: 'You do not have permission to access this ticket.',
+      confirmButtonText: 'Okay'
     });
   }
 
@@ -132,7 +138,7 @@ const HostCreateTickets = ({ setFormStep, eventId }) => {
 
   useEffect(() => {
     if (existingTickets) {
-      const updatedTickets = existingTickets.map((ticket, index) => ({
+      const updatedTickets = existingTickets.ticket.map((ticket, index) => ({
         ...ticket,
         absorbe_fees: String(ticket.absorbe_fees), // Convert absorbe_fees to string
         order: index,
