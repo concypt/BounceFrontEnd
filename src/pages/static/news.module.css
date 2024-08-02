@@ -11,7 +11,7 @@
 
 .mainBlog {
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: 32% 32% 32%;
   gap: 50px;
   margin-top: 40px;
   text-align: left;

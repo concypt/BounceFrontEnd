@@ -167,9 +167,60 @@ const HostTicketOrders = () => {
 
   const { globalFilter, pageIndex, pageSize } = state;
 
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
+  const generatePageNumbers = () => {
+    const totalVisiblePages = 5;
+    const pages = [];
+
+    if (pageCount <= totalVisiblePages) {
+      // If there are fewer pages than or equal to the total visible pages, display all pages
+      for (let i = 0; i < pageCount; i++) {
+        pages.push(i);
+      }
+    } else {
+      // Calculate start and end page to show based on the current page index
+      let startPage = Math.max(
+        0,
+        pageIndex - Math.floor(totalVisiblePages / 2)
+      );
+      let endPage = Math.min(
+        pageCount - 1,
+        pageIndex + Math.floor(totalVisiblePages / 2)
+      );
+
+      // Adjust start and end pages if at the beginning or end of the page list
+      if (pageIndex <= 2) {
+        endPage = totalVisiblePages - 1;
+      } else if (pageIndex >= pageCount - 3) {
+        startPage = pageCount - totalVisiblePages;
+      }
+
+      // Add pages within the visible range
+      for (let i = startPage; i <= endPage; i++) {
+        pages.push(i);
+      }
+
+      // Add ellipsis if there are pages before the start page
+      if (startPage > 0) {
+        pages.unshift("...");
+        if (startPage > 1) {
+          pages.unshift(0);
+        }
+      }
+
+      // Add ellipsis if there are pages after the end page
+      if (endPage < pageCount - 1) {
+        if (endPage < pageCount - 2) {
+          pages.push("...");
+        }
+        pages.push(pageCount - 1);
+      }
+    }
+
+    return pages;
+  };
+
+  const pageNumbers = generatePageNumbers();
+
   if (error) {
     console.log(error);
   }
@@ -232,15 +283,21 @@ const HostTicketOrders = () => {
             >
               <img src={paginatePrev} alt="Previous" />
             </button>
-            {[...Array(pageCount)].map((_, index) => (
-              <button
-                key={index}
-                onClick={() => gotoPage(index)}
-                className={pageIndex === index ? "active" : ""}
-              >
-                {index + 1}
-              </button>
-            ))}
+            {pageNumbers.map((page, index) =>
+              page === "..." ? (
+                <span key={index} className="ellipsis">
+                  {page}
+                </span>
+              ) : (
+                <button
+                  key={page}
+                  onClick={() => gotoPage(page)}
+                  className={pageIndex === page ? "active" : ""}
+                >
+                  {page + 1}
+                </button>
+              )
+            )}
             <button
               className="control-btn"
               onClick={() => nextPage()}
