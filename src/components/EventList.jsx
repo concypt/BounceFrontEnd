@@ -10,6 +10,7 @@ import PropTypes from "prop-types";
 
 import EventTickets from "./EventTickets";
 import styles from "./eventList.module.css";
+import Skeleton from "react-loading-skeleton";
 
 const URL = "https://api.bounce.live/api/attenders/events";
 let config = {
@@ -172,7 +173,9 @@ const EventList = ({
                 )
               )}
         </div>
-        {limit ? (
+        {isLoading ? (
+          <Skeleton />
+        ) : limit || data.events.length < 11 ? (
           ""
         ) : (
           <Pagination

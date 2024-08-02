@@ -158,10 +158,11 @@ a.global-link-arrow::after {
 }
 
 .home_events {
-  background-image: url(./assets/images/tranparentimg.png);
+  background-image: url(./assets/images/bgevents.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-position-y: 75%;
+  background-position-x: 0%;
 }
 
 .event_heading {
