@@ -112,9 +112,9 @@ function Attend() {
                 Browse events that are currently live on Bounce to find your
                 next motive.
               </p>
-              <button className="loginButton" type="button">
+              <Link to={"/events?page=1"} className="loginButton" type="button">
                 <span>Let’s go!</span>
-              </button>
+              </Link>
             </div>
           </div>
         )}
