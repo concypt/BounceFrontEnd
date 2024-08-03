@@ -19,7 +19,7 @@ const FollowUnfollowBtn = ({ organisationId }) => {
     if (followingArrayFromStorage && followingArrayFromStorage !== "undefined") {
       userFollowingArray = JSON.parse(followingArrayFromStorage);
     }
-    if (userFollowingArray.length) {
+    if (userFollowingArray.length>=0) {
       const isFollowing = userFollowingArray.includes(organisationId);
       setIsFollowingState(isFollowing);
       setIsLoggedIn(true);
@@ -33,6 +33,7 @@ const FollowUnfollowBtn = ({ organisationId }) => {
     onMutate: () => {
       const userFollowingArray =
         JSON.parse(localStorage.getItem("followingArray")) || [];
+
       console.log(userFollowingArray);
       const updatedFollowingArray = isFollowingState
         ? userFollowingArray.filter((id) => id !== organisationId)
@@ -74,9 +75,11 @@ const FollowUnfollowBtn = ({ organisationId }) => {
       // Any additional logic after mutation is completed (either success or error)
     },
   });
-
+  
   const handleFollow = () => {
+    
     if (isLoggedIn) {
+
       mutation.mutate(organisationId);
     } else {
       localStorage.setItem("redirectPath", window.location.pathname);

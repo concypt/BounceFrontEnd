@@ -484,31 +484,35 @@ const HostTicketOrders = ({
                       style={{ display: "flex", flexDirection: "column" }}
                     >
                       {/* Dynamically render checkboxes */}
-                      {tickets.map((ticket) => (
-                        <div
-                          key={ticket.id}
-                          style={{
-                            marginBottom: "15px",
-                            display: "flex",
-                            alignItems: "center",
-                          }}
-                        >
-                          <input
-                            type="checkbox"
-                            id={`event_${ticket.id}`}
-                            name={`tickets_id`}
-                            value={ticket.id}
-                            className="myCustomMultiSelectCheckboxes"
-                            onChange={handleCheckboxChange}
-                            style={{ marginRight: "13px" }} // Optional: Add spacing between checkbox and label
-                          />
-                          <label htmlFor={`event_${ticket.id}`}>
-                            {ticket.name.length > 40
-                              ? ticket.name.slice(0, 40) + "..."
-                              : ticket.name}
-                          </label>
-                        </div>
-                      ))}
+                      {Array.isArray(tickets) && tickets.length > 0 ? (
+  tickets.map((ticket) => (
+    <div
+      key={ticket.id}
+      style={{
+        marginBottom: "15px",
+        display: "flex",
+        alignItems: "center",
+      }}
+    >
+      <input
+        type="checkbox"
+        id={`event_${ticket.id}`}
+        name={`tickets_id`}
+        value={ticket.id}
+        className="myCustomMultiSelectCheckboxes"
+        onChange={handleCheckboxChange}
+        style={{ marginRight: "13px" }} // Optional: Add spacing between checkbox and label
+      />
+      <label htmlFor={`event_${ticket.id}`}>
+        {ticket.name.length > 40
+          ? ticket.name.slice(0, 40) + "..."
+          : ticket.name}
+      </label>
+    </div>
+  ))
+) : (
+  <p>No tickets available</p>
+)}
                     </div>
                   </div>
                 </div>
