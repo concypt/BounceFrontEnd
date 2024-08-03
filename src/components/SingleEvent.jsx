@@ -202,11 +202,14 @@ const SingleEvent = () => {
                     event.ticket.length &&
                     (event.ticket[0].absorbe_fees === 0 ? (
                       <>
-                        £ {netPrice.toFixed(2)}
-                        <p className="fee_text">+ £{adminFee.toFixed(2)} Fee</p>
+                        <p className="fee_text">
+                          £{netPrice.toFixed(2)} + £{adminFee.toFixed(2)} Fee
+                        </p>
                       </>
                     ) : (
-                      <>£ {event.ticket[0].price}</>
+                      <>
+                        <p className="fee_text"> £ {event.ticket[0].price}</p>
+                      </>
                     ))
                   )}
 

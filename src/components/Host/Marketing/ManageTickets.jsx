@@ -9,7 +9,7 @@ import {
 import PropTypes from "prop-types";
 import Swal from "sweetalert2";
 import Modal from "react-modal";
-import { useMutation , useQueryClient,useQuery } from "@tanstack/react-query";
+import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import "../../../pages/Dashboard/styles/primaryStyles.css";
 import "../../../pages/Dashboard/styles/comonStyles.css";
 
@@ -18,11 +18,7 @@ import paginatePrev from "../../../assets/images/pagination-arrow-prev.svg";
 import paginateNext from "../../../assets/images/pagination-arrow-next.svg";
 import editImg from "../../../assets/images/event-dash-icon-edit.svg";
 
-
-const HostTicketOrders = ({ ticketsData}) => {
-  
-    
- 
+const HostTicketOrders = ({ ticketsData }) => {
   const columns = useMemo(
     () => [
       {
@@ -46,22 +42,22 @@ const HostTicketOrders = ({ ticketsData}) => {
           <div>{value.length > 20 ? value.slice(0, 20) + "..." : value}</div>
         ),
       },
-      
+
       {
         Header: "Price",
         accessor: "price",
         sortType: "basic",
         Cell: ({ value }) => (
-          <div>{value.length > 20 ? "£" + value.slice(0, 20) + "..." : "£" + value}</div>
+          <div>
+            {value.length > 20 ? "£" + value.slice(0, 20) + "..." : "£" + value}
+          </div>
         ),
       },
       {
         Header: "Status",
         accessor: "status",
         sortType: "basic",
-        Cell: ({ value }) => (
-          <div>{value === 1 ? "Active" : "Inactive"}</div>
-        ),
+        Cell: ({ value }) => <div>{value === 1 ? "Active" : "Inactive"}</div>,
       },
       {
         Header: "Actions",
@@ -98,7 +94,7 @@ const HostTicketOrders = ({ ticketsData}) => {
   } = useTable(
     {
       columns,
-      data: ticketsData ,
+      data: ticketsData,
       initialState: { pageIndex: 0, pageSize: 5 },
     },
     useFilters,
@@ -108,12 +104,11 @@ const HostTicketOrders = ({ ticketsData}) => {
   );
 
   const { pageIndex, pageSize } = state;
-  
+
   return (
     <div className="ticketOrders">
       <div className="searchBar">
         <h2>Tickets</h2>
-       
       </div>
       <div className="table-container">
         <table {...getTableProps()} className="table your-events-table">
@@ -189,7 +184,6 @@ const HostTicketOrders = ({ ticketsData}) => {
     </div>
   );
 };
-
 
 HostTicketOrders.propTypes = {
   value: PropTypes.number,

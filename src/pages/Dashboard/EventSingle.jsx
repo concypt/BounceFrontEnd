@@ -30,20 +30,19 @@ function EventSingle() {
   });
 
   useEffect(() => {
-    
     // Check if data is undefined or doesn't have required properties
     if (eventSingleData && eventSingleData.length == 0) {
       Swal.fire({
-        icon: 'error',
-        title: 'Unauthorized Access',
-        text: 'You do not have permission to access event details page.',
-        confirmButtonText: 'Okay'
+        icon: "error",
+        title: "Unauthorized Access",
+        text: "You do not have permission to access event details page.",
+        confirmButtonText: "Okay",
       }).then(() => {
         navigate(`/dashboard-event`);
       });
     }
   }, [eventSingleData, navigate]);
-console.log(eventSingleData)
+
   if (isLoading && !eventSingleData)
     return (
       <div className="dashboard">

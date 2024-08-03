@@ -158,33 +158,33 @@ const SubscribersList = ({ subscribe_list, onDeleteCampaign }) => {
     setModalIsOpen(false);
   };
 
-  const deleteSubscriberMutation = useMutation({
-    mutationFn: deleteSubscriber,
-    mutationKey: ["deleteSubscriber"],
-    onSuccess: () => {
-      queryClient.invalidateQueries("subscribe_list");
-      Swal.fire("Deleted!", "Your subscribe list has been deleted.", "success");
-    },
-    onError: (error) => {
-      Swal.fire("Error!", "Failed to delete subscribe list.", "error");
-    },
-  });
+  // const deleteSubscriberMutation = useMutation({
+  //   mutationFn: deleteSubscriber,
+  //   mutationKey: ["deleteSubscriber"],
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries("subscribe_list");
+  //     Swal.fire("Deleted!", "Your subscribe list has been deleted.", "success");
+  //   },
+  //   onError: (error) => {
+  //     Swal.fire("Error!", "Failed to delete subscribe list.", "error");
+  //   },
+  // });
 
-  const handleDelete = (id) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#7357FF",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        deleteSubscriberMutation.mutate(id);
-        onDeleteCampaign(id); // Inform parent component about delete action
-      }
-    });
-  };
+  // const handleDelete = (id) => {
+  //   Swal.fire({
+  //     title: "Are you sure?",
+  //     text: "You won't be able to revert this!",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#7357FF",
+  //     confirmButtonText: "Yes, delete it!",
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       deleteSubscriberMutation.mutate(id);
+  //       onDeleteCampaign(id); // Inform parent component about delete action
+  //     }
+  //   });
+  // };
 
   const columns = useMemo(
     () => [
@@ -248,6 +248,54 @@ const SubscribersList = ({ subscribe_list, onDeleteCampaign }) => {
 
   const { pageIndex, pageSize } = state;
 
+  const generatePageNumbers = () => {
+    const totalVisiblePages = 3;
+    const pages = [];
+
+    if (pageCount <= totalVisiblePages) {
+      for (let i = 0; i < pageCount; i++) {
+        pages.push(i);
+      }
+    } else {
+      let startPage = Math.max(
+        0,
+        pageIndex - Math.floor(totalVisiblePages / 2)
+      );
+      let endPage = Math.min(
+        pageCount - 1,
+        pageIndex + Math.floor(totalVisiblePages / 2)
+      );
+
+      if (pageIndex <= 2) {
+        endPage = totalVisiblePages - 1;
+      } else if (pageIndex >= pageCount - 3) {
+        startPage = pageCount - totalVisiblePages;
+      }
+
+      for (let i = startPage; i <= endPage; i++) {
+        pages.push(i);
+      }
+
+      if (startPage > 0) {
+        pages.unshift("...");
+        if (startPage > 1) {
+          pages.unshift(0);
+        }
+      }
+
+      if (endPage < pageCount - 1) {
+        if (endPage < pageCount - 2) {
+          pages.push("...");
+        }
+        pages.push(pageCount - 1);
+      }
+    }
+
+    return pages;
+  };
+
+  const pageNumbers = generatePageNumbers();
+
   return (
     <div className="ticketOrders promotertable">
       <div className="searchBar">
@@ -294,15 +342,23 @@ const SubscribersList = ({ subscribe_list, onDeleteCampaign }) => {
             >
               <img src={paginatePrev} alt="Previous" />
             </button>
-            {[...Array(pageCount)].map((_, index) => (
-              <button
-                key={index}
-                onClick={() => gotoPage(index)}
-                className={pageIndex === index ? "active" : ""}
-              >
-                {index + 1}
-              </button>
-            ))}
+
+            {pageNumbers.map((page, index) =>
+              page === "..." ? (
+                <span key={`ellipsis-${index}`} className="ellipsis">
+                  {page}
+                </span>
+              ) : (
+                <button
+                  key={`page-${page}-${index}`} // <- Combine page number with index to ensure uniqueness
+                  onClick={() => gotoPage(page)}
+                  className={pageIndex === page ? "active" : ""}
+                >
+                  {page + 1}
+                </button>
+              )
+            )}
+
             <button
               className="control-btn"
               onClick={() => nextPage()}
@@ -317,6 +373,7 @@ const SubscribersList = ({ subscribe_list, onDeleteCampaign }) => {
             <select
               value={pageSize}
               onChange={(e) => setPageSize(Number(e.target.value))}
+              aria-label="Results per page"
             >
               {[5, 10, 20, 30, 50].map((size) => (
                 <option key={size} value={size}>

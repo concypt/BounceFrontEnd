@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 import Modal from "react-modal";
 import QRCode from "qrcode.react";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import "../../../pages/Dashboard/styles/primaryStyles.css";
@@ -174,6 +175,7 @@ const HostTicketOrders = ({
     });
   };
   // Modal End
+  const navigate = useNavigate();
 
   const mutation = useMutation({
     mutationFn: requestRefundAction,
@@ -278,8 +280,8 @@ const HostTicketOrders = ({
         Header: "Customer Name",
         accessor: (row) => {
           // Ensure row.customer exists before accessing its properties
-          const firstName = row.customer?.first_name || '';
-          const lastName = row.customer?.last_name || '';
+          const firstName = row.customer?.first_name || "";
+          const lastName = row.customer?.last_name || "";
           return `${firstName} ${lastName}`.trim();
         },
         sortType: "basic",
@@ -287,7 +289,7 @@ const HostTicketOrders = ({
           <div>{value.length > 20 ? value.slice(0, 20) + "..." : value}</div>
         ),
       },
-      
+
       {
         Header: "Events",
         Cell: () => <div>{event.name}</div>,
@@ -346,6 +348,54 @@ const HostTicketOrders = ({
 
   const { pageIndex, pageSize } = state;
 
+  const generatePageNumbers = () => {
+    const totalVisiblePages = 3;
+    const pages = [];
+
+    if (pageCount <= totalVisiblePages) {
+      for (let i = 0; i < pageCount; i++) {
+        pages.push(i);
+      }
+    } else {
+      let startPage = Math.max(
+        0,
+        pageIndex - Math.floor(totalVisiblePages / 2)
+      );
+      let endPage = Math.min(
+        pageCount - 1,
+        pageIndex + Math.floor(totalVisiblePages / 2)
+      );
+
+      if (pageIndex <= 2) {
+        endPage = totalVisiblePages - 1;
+      } else if (pageIndex >= pageCount - 3) {
+        startPage = pageCount - totalVisiblePages;
+      }
+
+      for (let i = startPage; i <= endPage; i++) {
+        pages.push(i);
+      }
+
+      if (startPage > 0) {
+        pages.unshift("...");
+        if (startPage > 1) {
+          pages.unshift(0);
+        }
+      }
+
+      if (endPage < pageCount - 1) {
+        if (endPage < pageCount - 2) {
+          pages.push("...");
+        }
+        pages.push(pageCount - 1);
+      }
+    }
+
+    return pages;
+  };
+
+  const pageNumbers = generatePageNumbers();
+
   return (
     <div className="ticketOrders">
       <div className="searchBar">
@@ -397,15 +447,23 @@ const HostTicketOrders = ({
             >
               <img src={paginatePrev} alt="Previous" />
             </button>
-            {[...Array(pageCount)].map((_, index) => (
-              <button
-                key={index}
-                onClick={() => gotoPage(index)}
-                className={pageIndex === index ? "active" : ""}
-              >
-                {index + 1}
-              </button>
-            ))}
+
+            {pageNumbers.map((page, index) =>
+              page === "..." ? (
+                <span key={`ellipsis-${index}`} className="ellipsis">
+                  {page}
+                </span>
+              ) : (
+                <button
+                  key={`page-${page}-${index}`} // <- Combine page number with index to ensure uniqueness
+                  onClick={() => gotoPage(page)}
+                  className={pageIndex === page ? "active" : ""}
+                >
+                  {page + 1}
+                </button>
+              )
+            )}
+
             <button
               className="control-btn"
               onClick={() => nextPage()}
@@ -420,6 +478,7 @@ const HostTicketOrders = ({
             <select
               value={pageSize}
               onChange={(e) => setPageSize(Number(e.target.value))}
+              aria-label="Results per page"
             >
               {[5, 10, 20, 30, 50].map((size) => (
                 <option key={size} value={size}>
@@ -445,6 +504,7 @@ const HostTicketOrders = ({
                       type="text"
                       placeholder="First Name"
                       name="first_name"
+                      required
                       value={formData.first_name}
                       onChange={handleInputChange}
                       className="popupInput"
@@ -455,6 +515,7 @@ const HostTicketOrders = ({
                       type="text"
                       placeholder="Last Name"
                       name="last_name"
+                      required
                       value={formData.last_name}
                       onChange={handleInputChange}
                       className="popupInput"
@@ -465,6 +526,7 @@ const HostTicketOrders = ({
                       type="email"
                       placeholder="Email"
                       name="email"
+                      required
                       value={formData.email}
                       onChange={handleInputChange}
                       className="popupInput"
@@ -485,34 +547,35 @@ const HostTicketOrders = ({
                     >
                       {/* Dynamically render checkboxes */}
                       {Array.isArray(tickets) && tickets.length > 0 ? (
-  tickets.map((ticket) => (
-    <div
-      key={ticket.id}
-      style={{
-        marginBottom: "15px",
-        display: "flex",
-        alignItems: "center",
-      }}
-    >
-      <input
-        type="checkbox"
-        id={`event_${ticket.id}`}
-        name={`tickets_id`}
-        value={ticket.id}
-        className="myCustomMultiSelectCheckboxes"
-        onChange={handleCheckboxChange}
-        style={{ marginRight: "13px" }} // Optional: Add spacing between checkbox and label
-      />
-      <label htmlFor={`event_${ticket.id}`}>
-        {ticket.name.length > 40
-          ? ticket.name.slice(0, 40) + "..."
-          : ticket.name}
-      </label>
-    </div>
-  ))
-) : (
-  <p>No tickets available</p>
-)}
+                        tickets.map((ticket) => (
+                          <div
+                            key={ticket.id}
+                            style={{
+                              marginBottom: "15px",
+                              display: "flex",
+                              alignItems: "center",
+                            }}
+                          >
+                            <input
+                              type="checkbox"
+                              id={`event_${ticket.id}`}
+                              name={`tickets_id`}
+                              required
+                              value={ticket.id}
+                              className="myCustomMultiSelectCheckboxes"
+                              onChange={handleCheckboxChange}
+                              style={{ marginRight: "13px" }} // Optional: Add spacing between checkbox and label
+                            />
+                            <label htmlFor={`event_${ticket.id}`}>
+                              {ticket.name.length > 40
+                                ? ticket.name.slice(0, 40) + "..."
+                                : ticket.name}
+                            </label>
+                          </div>
+                        ))
+                      ) : (
+                        <p>No tickets available</p>
+                      )}
                     </div>
                   </div>
                 </div>

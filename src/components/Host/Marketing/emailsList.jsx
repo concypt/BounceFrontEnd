@@ -182,6 +182,54 @@ const EmailList = ({ campaigns }) => {
 
   const { pageIndex, pageSize } = state;
 
+  const generatePageNumbers = () => {
+    const totalVisiblePages = 3;
+    const pages = [];
+
+    if (pageCount <= totalVisiblePages) {
+      for (let i = 0; i < pageCount; i++) {
+        pages.push(i);
+      }
+    } else {
+      let startPage = Math.max(
+        0,
+        pageIndex - Math.floor(totalVisiblePages / 2)
+      );
+      let endPage = Math.min(
+        pageCount - 1,
+        pageIndex + Math.floor(totalVisiblePages / 2)
+      );
+
+      if (pageIndex <= 2) {
+        endPage = totalVisiblePages - 1;
+      } else if (pageIndex >= pageCount - 3) {
+        startPage = pageCount - totalVisiblePages;
+      }
+
+      for (let i = startPage; i <= endPage; i++) {
+        pages.push(i);
+      }
+
+      if (startPage > 0) {
+        pages.unshift("...");
+        if (startPage > 1) {
+          pages.unshift(0);
+        }
+      }
+
+      if (endPage < pageCount - 1) {
+        if (endPage < pageCount - 2) {
+          pages.push("...");
+        }
+        pages.push(pageCount - 1);
+      }
+    }
+
+    return pages;
+  };
+
+  const pageNumbers = generatePageNumbers();
+
   // if (isLoading) {
   //   return <p>Loading...</p>;
   // }
@@ -238,15 +286,23 @@ const EmailList = ({ campaigns }) => {
             >
               <img src={paginatePrev} alt="Previous" />
             </button>
-            {[...Array(pageCount)].map((_, index) => (
-              <button
-                key={index}
-                onClick={() => gotoPage(index)}
-                className={pageIndex === index ? "active" : ""}
-              >
-                {index + 1}
-              </button>
-            ))}
+
+            {pageNumbers.map((page, index) =>
+              page === "..." ? (
+                <span key={`ellipsis-${index}`} className="ellipsis">
+                  {page}
+                </span>
+              ) : (
+                <button
+                  key={`page-${page}-${index}`} // <- Combine page number with index to ensure uniqueness
+                  onClick={() => gotoPage(page)}
+                  className={pageIndex === page ? "active" : ""}
+                >
+                  {page + 1}
+                </button>
+              )
+            )}
+
             <button
               className="control-btn"
               onClick={() => nextPage()}
@@ -261,6 +317,7 @@ const EmailList = ({ campaigns }) => {
             <select
               value={pageSize}
               onChange={(e) => setPageSize(Number(e.target.value))}
+              aria-label="Results per page"
             >
               {[5, 10, 20, 30, 50].map((size) => (
                 <option key={size} value={size}>
