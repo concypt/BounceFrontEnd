@@ -279,9 +279,9 @@ const HostTicketOrders = ({
       {
         Header: "Customer Name",
         accessor: (row) => {
-          // Ensure row.customer exists before accessing its properties
-          const firstName = row.customer?.first_name || "";
-          const lastName = row.customer?.last_name || "";
+          // Extract first name and last name from selectedUser, with fallbacks
+          const firstName = row.selectedUser?.first_name || row.selectedUser?.name || '';
+          const lastName = row.selectedUser?.last_name || '';
           return `${firstName} ${lastName}`.trim();
         },
         sortType: "basic",
