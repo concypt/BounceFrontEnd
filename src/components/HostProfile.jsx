@@ -2,7 +2,6 @@
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { fetchHostDetails } from "../api/masabService";
-import { fetchHomeData } from "../api/publicService.js";
 import EventCard from "./EventCard";
 import FollowUnfollowBtn from "./FollowUnfollowBtn";
 import styles from "./hostProfile.module.css";
@@ -19,12 +18,6 @@ const HostProfile = () => {
   } = useQuery({
     queryKey: ["hostDetails", organisationId],
     queryFn: () => fetchHostDetails(organisationId),
-  });
-
-  //for followers images
-  const { data: home } = useQuery({
-    queryKey: ["homeData"],
-    queryFn: fetchHomeData,
   });
 
   if (isLoading) {
@@ -100,29 +93,21 @@ const HostProfile = () => {
                   <h2>Followers</h2>
                   <div className={`users ${styles.hostUser}`}>
                     <div className="user_imgs">
-                      <img
-                        src={home.header.user1}
-                        alt={home.header.user1.alt}
-                      />
-                      <img
-                        src={home.header.user2}
-                        alt={home.header.user2.alt}
-                      />
-                      <img
-                        src={home.header.user3}
-                        alt={home.header.user3.alt}
-                      />
-                      <img
-                        src={home.header.user4}
-                        alt={home.header.user4.alt}
-                      />
-                      <img
-                        src={home.header.user5}
-                        alt={home.header.user5.alt}
-                      />
-                      <div className="user_count">
-                        <p>{home.header.user_number}+</p>
-                      </div>
+                      {profile.followers_user
+                        .slice(0, 4)
+                        .map((follower, index) => (
+                          <img
+                            key={index}
+                            src={follower.imagePath}
+                            alt={`Follower ${follower.first_name}`}
+                          />
+                        ))}
+                      {profile.followers_user.length > 4 && (
+                        <div className="user_count">
+                          <p>{profile.followers_user.length - 4}+</p>
+                        </div>
+                      )}
+                      {/* Other components or elements */}
                     </div>
                   </div>
                   <FollowUnfollowBtn organisationId={profile.id} />

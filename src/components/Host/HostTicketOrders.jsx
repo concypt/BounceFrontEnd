@@ -248,18 +248,29 @@ const HostTicketOrders = () => {
                 ))}
               </thead>
               <tbody {...getTableBodyProps()}>
-                {page.map((row) => {
-                  prepareRow(row);
-                  return (
-                    <tr {...row.getRowProps()} key={row.id}>
-                      {row.cells.map((cell) => (
-                        <td {...cell.getCellProps()} key={cell.column.id}>
-                          {cell.render("Cell")}
-                        </td>
-                      ))}
-                    </tr>
-                  );
-                })}
+                {tableData.length === 0 ? (
+                  <tr>
+                    <td
+                      colSpan={columns.length}
+                      style={{ textAlign: "center" }}
+                    >
+                      No orders found
+                    </td>
+                  </tr>
+                ) : (
+                  page.map((row) => {
+                    prepareRow(row);
+                    return (
+                      <tr {...row.getRowProps()} key={row.id}>
+                        {row.cells.map((cell) => (
+                          <td {...cell.getCellProps()} key={cell.column.id}>
+                            {cell.render("Cell")}
+                          </td>
+                        ))}
+                      </tr>
+                    );
+                  })
+                )}
               </tbody>
             </table>
           </div>

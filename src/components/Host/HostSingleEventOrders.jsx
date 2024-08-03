@@ -145,6 +145,8 @@ const HostTicketOrders = () => {
 
   const pageNumbers = generatePageNumbers();
 
+  console.log("page numbers:", pageNumbers);
+
   if (loading) {
     return <LoadingBar color="#7e79ff" height={3} progress={10} />;
   }
@@ -168,7 +170,7 @@ const HostTicketOrders = () => {
             {tableData.length === 0 ? (
               <tr>
                 <td colSpan={columns.length} style={{ textAlign: "center" }}>
-                  No tickets found
+                  No orders found
                 </td>
               </tr>
             ) : (
