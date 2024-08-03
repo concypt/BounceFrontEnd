@@ -106,12 +106,8 @@ const HostCreateTickets = ({ setFormStep, eventId }) => {
     queryFn: () => getTicketsByEventId(eventId),
     enabled: !!eventId,
   });
-
-<<<<<<< HEAD
-  if (existingTickets && existingTickets?.event === null) {
-=======
+  
   if(existingTickets && existingTickets?.event === null){
->>>>>>> dev-muhammad
     navigate(`/dashboard-event`);
     Swal.fire({
       icon: "error",

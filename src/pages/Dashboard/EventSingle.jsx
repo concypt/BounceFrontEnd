@@ -43,7 +43,7 @@ function EventSingle() {
       });
     }
   }, [eventSingleData, navigate]);
-console.log(eventSingleData)
+
   if (isLoading && !eventSingleData)
     return (
       <div className="dashboard">

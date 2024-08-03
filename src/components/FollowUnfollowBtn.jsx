@@ -19,7 +19,7 @@ const FollowUnfollowBtn = ({ organisationId }) => {
     if (followingArrayFromStorage && followingArrayFromStorage !== "undefined") {
       userFollowingArray = JSON.parse(followingArrayFromStorage);
     }
-    if (userFollowingArray.length>=0) {
+    if (userFollowingArray.length) {
       const isFollowing = userFollowingArray.includes(organisationId);
       setIsFollowingState(isFollowing);
       setIsLoggedIn(true);

@@ -74,9 +74,15 @@ const EventTicketCard = ({
               placeholder="1"
               className={errors.quantity ? styles.inputError : ""}
             />
+                {ticket.available_qty > 0 ? (
             <button type="submit" className="bgGlobalBtn borderGlobalBtn">
               <span>Add to order</span>
             </button>
+          ) : (
+            <button type="button" className="bgGlobalBtn borderGlobalBtn" disabled>
+              <span>Sold Out</span>
+            </button>
+          )}
             {errors.quantity && (
               <p className={styles.errorText}>{errors.quantity.message}</p>
             )}
