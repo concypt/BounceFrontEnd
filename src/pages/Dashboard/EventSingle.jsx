@@ -6,13 +6,13 @@ import { useQuery } from "@tanstack/react-query";
 import Header from "../../components/Dashboard/Header";
 import Sidebar from "../../components/Dashboard/Sidebar";
 import HostSingleEventInfo from "../../components/Host/HostSingleEventInfo";
-import HostSingleEventOrders from "../../components/Host/HostSingleEventOrders";
+//import HostSingleEventOrders from "../../components/Host/HostSingleEventOrders";
 import Refund from "../../components/Host/Marketing/RefundData";
 import OrdersData from "../../components/Host/Marketing/OrdersData";
 import "./styles/primaryStyles.css";
 import "./styles/comonStyles.css";
 import { fetchSingleEventDetails } from "../../api/musecureService";
-import { fetchMarketingData } from "../../api/musecureService";
+//import { fetchMarketingData } from "../../api/musecureService";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
@@ -30,20 +30,19 @@ function EventSingle() {
   });
 
   useEffect(() => {
-    
     // Check if data is undefined or doesn't have required properties
     if (eventSingleData && eventSingleData.length == 0) {
       Swal.fire({
-        icon: 'error',
-        title: 'Unauthorized Access',
-        text: 'You do not have permission to access event details page.',
-        confirmButtonText: 'Okay'
+        icon: "error",
+        title: "Unauthorized Access",
+        text: "You do not have permission to access event details page.",
+        confirmButtonText: "Okay",
       }).then(() => {
         navigate(`/dashboard-event`);
       });
     }
   }, [eventSingleData, navigate]);
-console.log(eventSingleData)
+  console.log(eventSingleData);
   if (isLoading && !eventSingleData)
     return (
       <div className="dashboard">

@@ -19,6 +19,7 @@ import { fetchTicketOrders } from "../../api/secureService";
 import LoadingBar from "react-top-loading-bar";
 
 const HostTicketOrders = () => {
+  console.log("hostticketorders");
   const { eventId } = useParams();
   const [tableData, setTableData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -98,6 +99,7 @@ const HostTicketOrders = () => {
   const { pageIndex, pageSize } = state;
 
   const generatePageNumbers = () => {
+    console.log("generating numbers");
     const totalVisiblePages = 3;
     const pages = [];
 
@@ -147,9 +149,9 @@ const HostTicketOrders = () => {
 
   console.log("page numbers:", pageNumbers);
 
-  if (loading) {
-    return <LoadingBar color="#7e79ff" height={3} progress={10} />;
-  }
+  // if (loading) {
+  //   return <LoadingBar color="#7e79ff" height={3} progress={10} />;
+  // }
 
   return (
     <div>
