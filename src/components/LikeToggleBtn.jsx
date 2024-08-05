@@ -36,7 +36,7 @@ const LikeToggleBtn = ({ eventId }) => {
     onMutate: () => {
       const userLikedEvents =
         JSON.parse(localStorage.getItem("favEvents")) || [];
-      console.log(userLikedEvents);
+      // console.log(userLikedEvents);
       const updatedfavEvents = isEventLiked
         ? userLikedEvents.filter((id) => id !== eventId)
         : [...userLikedEvents, eventId];

@@ -88,7 +88,7 @@ const SubscribersList = ({ subscribe_list, onDeleteCampaign }) => {
     if (error) {
       return <p>Error: {error.message}</p>;
     }
-    console.log(itemToEdit);
+    // console.log(itemToEdit);
     setFormData({
       name: itemToEdit.name,
       // Add other fields as needed

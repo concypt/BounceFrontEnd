@@ -34,7 +34,7 @@ const FollowUnfollowBtn = ({ organisationId }) => {
       const userFollowingArray =
         JSON.parse(localStorage.getItem("followingArray")) || [];
 
-      console.log(userFollowingArray);
+      // console.log(userFollowingArray);
       const updatedFollowingArray = isFollowingState
         ? userFollowingArray.filter((id) => id !== organisationId)
         : [...userFollowingArray, organisationId];

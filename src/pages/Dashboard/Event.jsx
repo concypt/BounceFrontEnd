@@ -12,12 +12,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 function EventDashboard() {
-  const [loadingComplete, setLoadingComplete] = useState(false);
   // Set loading complete to true when the page has finished loading
-  window.onload = () => {
-    setLoadingComplete(true);
-  };
-
   const {
     data: earnings,
     error,

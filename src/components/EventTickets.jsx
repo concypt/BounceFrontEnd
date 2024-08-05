@@ -13,6 +13,8 @@ import {
   addToCart,
   couponApply,
 } from "../api/publicService";
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const EventTickets = ({ toggleModal, eventId }) => {
   const navigate = useNavigate();
@@ -258,7 +260,10 @@ const EventTickets = ({ toggleModal, eventId }) => {
     }
   };
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) {
+    return <Skeleton width={200} height={20} />;
+  }
+
   if (error) return <p>Error occurred: {error.message}</p>;
 
   return (

@@ -260,7 +260,7 @@ input[type="radio"] {
   transition: background 0.5s ease;
   width: 100%;
   font-size: 18px;
-  font-weight: bold;
+  font-weight: 600;
   text-transform: math-auto;
 }
 
@@ -1879,6 +1879,11 @@ button.delete.ml-auto {
 
 /* Masab Styles */
 
+.eventLables p {
+  margin: 0;
+  font-weight: 600;
+  font-size: 14px;
+}
 .upcomingDiv.skeleton {
   justify-content: space-between;
 }
@@ -2460,10 +2465,29 @@ input[type="checkbox"].myCustomMultiSelectCheckboxes:checked,
   #msform .action-button:nth-child(2) {
     width: 100px;
   }
+
+  .multistep-button-wrap.new-btn {
+    margin-top: -70px;
+    gap: 5px
+  }
+
+  .multistep-button-wrap.new-btn .loginButton {
+    width: 130px;
+  }
+
+  .multistep-button-wrap.new-btn .loginButton span {
+    font-size: 14px;
+  }
+
 }
 
 @media screen and (max-width: 350px) {
   .header_div.checkout {
     padding: 0 10px;
+  }
+
+  .multistep-button-wrap.new-btn .loginButton {
+    width: 115px;
+    height: 44px;
   }
 }

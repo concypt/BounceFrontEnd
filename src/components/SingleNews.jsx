@@ -1,7 +1,6 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 import styles from "../components/singleNews.module.css";
-import LoadingBar from "react-top-loading-bar";
 import { fetchNewsDetails } from "../api/publicService.js";
 import { useQuery } from "@tanstack/react-query";
 import Skeleton from "react-loading-skeleton";
@@ -11,12 +10,6 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 const SingleNews = ({ newsId }) => {
   //const [news, setNews] = useState(null);
-
-  window.onload = () => {
-    setLoadingComplete(true);
-  };
-
-  const [loadingComplete, setLoadingComplete] = useState(false);
 
   const {
     data: news,

@@ -3,7 +3,6 @@ import { useQuery } from "@tanstack/react-query";
 import Header from "../../components/Dashboard/Header";
 import Sidebar from "../../components/Dashboard/Sidebar";
 import HostSingleEventInfo from "../../components/Host/HostSingleEventInfo";
-import HostSingleEventOrders from "../../components/Host/HostSingleEventOrders";
 import ManageTickets from "../../components/Host/Marketing/ManageTickets";
 import OrdersData from "../../components/Host/Marketing/OrdersData";
 import "./styles/primaryStyles.css";

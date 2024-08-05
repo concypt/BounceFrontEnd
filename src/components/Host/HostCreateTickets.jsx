@@ -151,7 +151,7 @@ const HostCreateTickets = ({ setFormStep, eventId }) => {
   );
 
   const handleAddOrUpdateTicket = (data) => {
-    console.log("handleAddOrUpdateTicket::: data:::", data);
+    // console.log("handleAddOrUpdateTicket::: data:::", data);
     if (currentTicketIndex !== null) {
       Swal.fire({
         title: "Are you sure?",
@@ -278,6 +278,19 @@ const HostCreateTickets = ({ setFormStep, eventId }) => {
       );
     }
   }, [type, absorbeFees, setValue, getValues]);
+
+  //Finish Setup popup
+  const finishSetup = () => {
+    Swal.fire({
+      title: "Event and tickets saved successfully",
+      text: "We're redirecting you to dashboard.",
+      icon: "success",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate("/dashboard-event");
+      }
+    });
+  };
 
   return (
     <form onSubmit={handleSubmit(handleAddOrUpdateTicket)}>
@@ -529,7 +542,14 @@ const HostCreateTickets = ({ setFormStep, eventId }) => {
           </div>
         </div>
       </div>
-      <div className="multistep-button-wrap">
+      <div className="multistep-button-wrap new-btn">
+      <button
+          onClick={finishSetup}
+          className="loginButton"
+          type="button"
+        >
+          <span>Finish setup</span>
+        </button>
         <button
           onClick={handleEventEdit}
           className="loginButton previous-create-event"

@@ -91,13 +91,13 @@ const EmailList = ({ campaigns }) => {
 
   const handleImport = () => {
     // Here you can perform any action with the imported data
-    console.log("Importing data...");
+    // console.log("Importing data...");
     // For demonstration purposes, let's just close the modal
     closeModal();
   };
 
   const handleSendCampaign = (campaign_id) => {
-    console.log(campaign_id);
+    // console.log(campaign_id);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",

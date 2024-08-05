@@ -131,7 +131,7 @@ const EventFilter = ({
   const isMobile = window.matchMedia("(max-width: 700px)").matches;
 
   const handleSearch = () => {
-    console.log("Search button clicked");
+    // console.log("Search button clicked");
   };
 
   const toggleDatePicker = (event) => {

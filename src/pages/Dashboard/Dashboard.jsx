@@ -7,6 +7,8 @@ import BankDetails from "../../components/User/BankDetails";
 import UpdateHostProfile from "../../components/Host/UpdateHostProfile";
 import { UserContext } from "../../contexts/UserProvider";
 import { updateUserProfile } from "../../api/secureService";
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 import "./styles/primaryStyles.css";
 import "./styles/comonStyles.css";
 import Swal from "sweetalert2";
@@ -20,6 +22,15 @@ function Dashboard() {
   const { user, updateUser } = useContext(UserContext);
   const queryClient = useQueryClient();
   const fileInputRef = useRef(null);
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate an async data fetch
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000); // 2 seconds loading simulation
+  }, []);
 
   const [formData, setFormData] = useState({
     first_name: user?.first_name || "",
@@ -109,7 +120,7 @@ function Dashboard() {
       ) {
         mutation.mutate(formDataToSend);
       } else {
-        console.log("No data to update");
+        // console.log("No data to update");
       }
     } catch (error) {
       console.error("Error updating profile information:", error.message);

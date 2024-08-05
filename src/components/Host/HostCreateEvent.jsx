@@ -165,10 +165,10 @@ const HostCreateEvent = ({ setFormStep, setEventId, eventId }) => {
       //check if we have a image file in gallery
       const isFile = (element) => element.file != null;
       if (images.some(isFile)) {
-        console.log("file check true");
+        // console.log("file check true");
         addPicturesMutation.mutate({ images, eventId });
       } else if (imagesToRemove !== undefined && imagesToRemove.length > 0) {
-        console.log("images to remove: ", imagesToRemove);
+        // console.log("images to remove: ", imagesToRemove);
         deletePicturesMutation.mutate({ imagesToRemove, eventId });
       } else {
         Swal.fire("Success!", "Event updated successfully!", "success").then(
@@ -252,9 +252,9 @@ const HostCreateEvent = ({ setFormStep, setEventId, eventId }) => {
   };
 
   const onSubmit = (data) => {
-    console.log("sumbit called!", console.log(data));
+    // console.log("sumbit called!", console.log(data));
     if (eventId) {
-      console.log("event id is present!");
+      // console.log("event id is present!");
       mutationUpdate.mutate(data);
     } else {
       mutation.mutate(data);
@@ -399,7 +399,7 @@ const HostCreateEvent = ({ setFormStep, setEventId, eventId }) => {
           <button
             type="submit"
             name="next"
-            className="next-create-event action-button"
+            className="next-create-event global_button_one"
             disabled={mutation.isLoading || mutationUpdate.isLoading}
           >
             <span>
@@ -414,7 +414,7 @@ const HostCreateEvent = ({ setFormStep, setEventId, eventId }) => {
             <button
               type="button"
               name="next"
-              className="next-create-event action-button"
+              className="next-create-event loginButton"
               onClick={handleNextButton}
             >
               <span>Next</span>

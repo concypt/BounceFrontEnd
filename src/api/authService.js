@@ -24,7 +24,7 @@ export const logout = async () => {
 export const refreshAccessToken = async () => {
   try {
     const response = await axiosInstance.get("/refresh-access");
-    console.log("re re re", response.data.access_token);
+    // console.log("re re re", response.data.access_token);
     return response.data.access_token;
   } catch (error) {
     console.error("Error refreshing token", error);

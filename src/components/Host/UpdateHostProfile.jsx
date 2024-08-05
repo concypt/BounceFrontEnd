@@ -60,7 +60,7 @@ function EditHost() {
     ) {
       mutation.mutate(formDataToSend);
     } else {
-      console.log("No data to update");
+      // console.log("No data to update");
       Swal.fire("", "Nothing to Update", "warning");
     }
   };

@@ -139,7 +139,7 @@ const HostTicketOrders = ({
       <div key={ticketId} className="label-with-button">
         <input
           type="number"
-          placeholder={`Qty of ${ticketId}`}
+          placeholder={`T#${ticketId} QTY`}
           name="quantities"
           value={formData.quantities[ticketId] || ""}
           onChange={(e) => handleQuantityChange(ticketId, e.target.value)}
@@ -202,10 +202,10 @@ const HostTicketOrders = ({
 
   //Ticket order modal start
   const handleView = (event) => {
-    console.log("event", event);
+    // console.log("event", event);
     setorderInfo(event);
     setIsModalOpen(true);
-    console.log(`View button clicked for row with id: ${event.id}`);
+    // console.log(`View button clicked for row with id: ${event.id}`);
   };
 
   const closeTicketModal = () => {

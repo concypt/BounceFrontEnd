@@ -117,7 +117,7 @@ const ManageSubscribeList = ({
     mutationFn: subscriberListPostData,
     mutationKey: ["subscriberListPostData"],
     onSuccess: (data, variables, context) => {
-      console.log("Success response data:", data);
+      // console.log("Success response data:", data);
       Swal.fire({
         icon: "success",
         title: "Success",
@@ -156,7 +156,7 @@ const ManageSubscribeList = ({
         cancelButtonText: "No, cancel!",
       }).then((result) => {
         if (result.isConfirmed) {
-          console.log(formData);
+          // console.log(formData);
           mutations.mutate(formData);
           setFormData({ subscribe_list: "" }); // Reset form data state
           setFileData(null); // Reset fileData state
