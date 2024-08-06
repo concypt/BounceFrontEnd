@@ -147,50 +147,51 @@ const EventList = ({
   return (
     <>
       <div className="custom-wrapper">
-      <div className={styles.eventsGrid}>
-  {isLoading ? (
-    Array(limit || eventsPerPage).fill({}).map((_, index) => (
-      <EventCard
-        key={index}
-        event={{}} // Pass an empty object for loading state
-        setModalEventId={setModalEventId}
-        toggleModal={toggleModal}
-        setSelectedCategories={setSelectedCategories}
-      />
-    ))
-  ) : data.events && data.events.length > 0 ? (
-    (limit ? data.events.slice(0, limit) : data.events).map((event, index) => (
-      <EventCard
-        key={event.id}
-        event={event}
-        setModalEventId={setModalEventId}
-        toggleModal={toggleModal}
-        setSelectedCategories={setSelectedCategories}
-      />
-    ))
-  ) : (
-    <div className={styles.noEventsstyle}>
-        <div className="emptyContent">
-              <img src={emptyState} alt="No upcoming events" />
-              <h2>No upcoming events :(</h2>
-            </div>
-    </div>
-  )}
-</div>
-
+        <div className={styles.eventsGrid}>
         {isLoading ? (
-          <Skeleton />
-        ) : limit || data.events.length < 11 ? (
-          ""
-        ) : (
-          <Pagination
-            totalPosts={data?.total_result || 0}
-            postsPerPage={eventsPerPage}
-            setEventsPerPage={setEventsPerPage}
-            setPage={setPage}
-            page={page}
-          />
-        )}
+          Array(limit || eventsPerPage).fill({}).map((_, index) => (
+            <EventCard
+              key={index}
+              event={{}} // Pass an empty object for loading state
+              setModalEventId={setModalEventId}
+              toggleModal={toggleModal}
+              setSelectedCategories={setSelectedCategories}
+            />
+          ))
+        ) : data.events && data.events.length > 0 ? (
+          (limit ? data.events.slice(0, limit) : data.events).map((event, index) => (
+            <EventCard
+              key={event.id}
+              event={event}
+              setModalEventId={setModalEventId}
+              toggleModal={toggleModal}
+              setSelectedCategories={setSelectedCategories}
+            />
+          ))
+        ) : null}
+      </div>
+      {!isLoading && (!data.events || data.events.length === 0) && (
+        <div className={styles.noEventsstyle}>
+          <div className="emptyContent">
+            <img src={emptyState} alt="No upcoming events" />
+            <h2>No events found :(</h2>
+          </div>
+        </div>
+      )}
+
+      {isLoading ? (
+        <Skeleton />
+      ) : limit || data.events.length < 11 ? (
+        ""
+      ) : (
+        <Pagination
+          totalPosts={data?.total_result || 0}
+          postsPerPage={eventsPerPage}
+          setEventsPerPage={setEventsPerPage}
+          setPage={setPage}
+          page={page}
+        />
+      )}
       </div>
       {isModalOpen && (
         <EventTickets eventId={modalEventId} toggleModal={toggleModal} />
