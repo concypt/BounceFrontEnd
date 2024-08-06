@@ -38,6 +38,10 @@
   background: var(--linear-gradient-border);
   border-radius: 5px;
 }
+.no-data {
+  text-align: center;
+  color: gray;
+}
 
 @media (max-width: 1600px) {
   .dashboard {

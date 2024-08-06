@@ -254,19 +254,25 @@ const HostTicketOrders = ({ refundData, eventname }) => {
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {page.map((row) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()} key={row.id}>
-                  {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()} key={cell.column.id}>
-                      {cell.render("Cell")}
-                    </td>
-                  ))}
-                </tr>
-              );
-            })}
-          </tbody>
+      {page.length > 0 ? (
+        page.map((row) => {
+          prepareRow(row);
+          return (
+            <tr {...row.getRowProps()} key={row.id}>
+              {row.cells.map((cell) => (
+                <td {...cell.getCellProps()} key={cell.column.id}>
+                  {cell.render("Cell")}
+                </td>
+              ))}
+            </tr>
+          );
+        })
+      ) : (
+        <tr>
+          <td colSpan="100%"  className="no-data">Data not Available</td>
+        </tr>
+      )}
+    </tbody>
         </table>
         <div className="pagination">
           <div className="pagination-btns">
