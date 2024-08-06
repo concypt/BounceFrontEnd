@@ -11,46 +11,58 @@ import likeInActive from "../assets/images/likeInactive.svg";
 const LikeToggleBtn = ({ eventId }) => {
   const navigate = useNavigate();
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    localStorage.getItem("isUserNav") === "true"
+  );
   const [isEventLiked, setIsEventLiked] = useState(null);
 
   useEffect(() => {
     // Retrieve the favEvents from local storage
     let userLikedEvents = [];
     const favEventsFromStorage = localStorage.getItem("favEvents");
-  if (favEventsFromStorage && favEventsFromStorage !== "undefined") {
-    userLikedEvents = JSON.parse(favEventsFromStorage);
-  }
-    
-    if (userLikedEvents.length) {
+    if (favEventsFromStorage && favEventsFromStorage !== "undefined") {
+      userLikedEvents = JSON.parse(favEventsFromStorage);
+    }
+
+    if (isLoggedIn) {
       const isFollowing = userLikedEvents.includes(eventId);
       setIsEventLiked(isFollowing);
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
     }
-  }, [eventId]);
+  }, [eventId, isLoggedIn]);
 
   const mutation = useMutation({
     mutationFn: likeToggle,
     onMutate: () => {
-      const userLikedEvents =
-        JSON.parse(localStorage.getItem("favEvents")) || [];
-      console.log(userLikedEvents);
+      let userLikedEvents = [];
+
+      if (localStorage.getItem("favEvents").length > 0) {
+        userLikedEvents = JSON.parse(localStorage.getItem("favEvents"));
+      }
+
       const updatedfavEvents = isEventLiked
         ? userLikedEvents.filter((id) => id !== eventId)
         : [...userLikedEvents, eventId];
-      localStorage.setItem("favEvents", JSON.stringify(updatedfavEvents));
+      // if array is not empty
+
+      if (updatedfavEvents.length > 0) {
+        localStorage.setItem("favEvents", JSON.stringify(updatedfavEvents));
+      } else {
+        localStorage.setItem("favEvents", "");
+      }
 
       // Optionally return a context with the previous following state
       return { previousfavEvents: userLikedEvents };
     },
     onError: (error, variables, context) => {
       // Revert to the previous following state
-      localStorage.setItem(
-        "favEvents",
-        JSON.stringify(context.previousfavEvents)
-      );
+      if (context.previousfavEvents.length > 0) {
+        localStorage.setItem(
+          "favEvents",
+          JSON.stringify(context.previousfavEvents)
+        );
+      } else {
+        localStorage.setItem("favEvents", "");
+      }
 
       Swal.fire({
         icon: "error",

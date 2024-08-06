@@ -184,7 +184,7 @@ axiosInstance.interceptors.response.use(
       return new Promise(function (resolve, reject) {
         refreshAccessToken()
           .then(({ token }) => {
-            console.log("token:::", token);
+            //console.log("token:::", token);
             axiosInstance.defaults.headers.common["Authorization"] =
               "Bearer " + token;
             originalRequest.headers["Authorization"] = "Bearer " + token;
@@ -215,7 +215,7 @@ axiosInstance.interceptors.response.use(
 axiosRetry(axiosInstance, {
   retries: 6,
   retryCondition: (error) => {
-    console.log(error.config.url);
+    //console.log(error.config.url);
     // Retry on network error or 5xx server errors
     // Do not retry if error response is 401 and it is from refresh token request
     if (

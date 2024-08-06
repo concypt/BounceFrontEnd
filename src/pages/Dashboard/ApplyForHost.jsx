@@ -34,7 +34,7 @@ function HostDashboard() {
         text: "Congrats! You are now a host.",
         timer: 2000,
       }).then(() => {
-        navigate("/dashboard");
+        navigate("/profile");
       });
     },
     onError: (error) => {

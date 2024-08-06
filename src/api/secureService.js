@@ -394,11 +394,9 @@ export const updateTicketOrder = async (ticketIds) => {
 
 //FollowUnfollowBtn.jsx
 export const followUnfollow = async (organisationId) => {
-  console.log('k'+organisationId);
   const response = await axiosInstance.get(
     `user/add-followList/${organisationId}`
   );
-  //console.log(response);
   return response.data;
 };
 

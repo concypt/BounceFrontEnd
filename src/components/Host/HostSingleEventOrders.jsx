@@ -16,7 +16,6 @@ import viewImg from "../../assets/images/event-dash-icon-view.svg";
 import paginatePrev from "../../assets/images/pagination-arrow-prev.svg";
 import paginateNext from "../../assets/images/pagination-arrow-next.svg";
 import { fetchTicketOrders } from "../../api/secureService";
-import LoadingBar from "react-top-loading-bar";
 
 const HostTicketOrders = () => {
   console.log("hostticketorders");

@@ -35,7 +35,7 @@ const HostTicketOrders = ({ refundData, eventname }) => {
         text: "Congrats! You are now a submit.",
         timer: 2000,
       }).then(() => {
-        navigate("/dashboard");
+        navigate("/profile");
       });
     },
     onError: (error) => {

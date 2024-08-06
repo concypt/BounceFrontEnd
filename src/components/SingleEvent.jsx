@@ -43,15 +43,6 @@ const SingleEvent = () => {
     queryFn: () => fetchEventDetails(eventId),
   });
 
-  // if (isLoading) {
-  //   return (
-  //     <LoadingBar
-  //       color="#7e79ff"
-  //       height={3}
-  //       progress={loadingComplete ? 100 : 0}
-  //     />
-  //   );
-  // }
   if (error) {
     return <p>Errors: {error.message}</p>;
   }
@@ -117,6 +108,8 @@ const SingleEvent = () => {
                       >
                         {isLoading ? (
                           <Skeleton />
+                        ) : event.organisation.name ? (
+                          event.organisation.name
                         ) : (
                           event.organisation.first_name +
                           " " +

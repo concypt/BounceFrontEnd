@@ -187,7 +187,7 @@ const HostTicketOrders = ({
         text: "Congrats! You are now a submit.",
         timer: 2000,
       }).then(() => {
-        navigate("/dashboard");
+        navigate("/profile");
       });
     },
     onError: (error) => {
@@ -280,8 +280,9 @@ const HostTicketOrders = ({
         Header: "Customer Name",
         accessor: (row) => {
           // Extract first name and last name from selectedUser, with fallbacks
-          const firstName = row.selectedUser?.first_name || row.selectedUser?.name || '';
-          const lastName = row.selectedUser?.last_name || '';
+          const firstName =
+            row.selectedUser?.first_name || row.selectedUser?.name || "";
+          const lastName = row.selectedUser?.last_name || "";
           return `${firstName} ${lastName}`.trim();
         },
         sortType: "basic",

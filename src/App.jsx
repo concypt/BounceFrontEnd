@@ -64,7 +64,7 @@ const router = createBrowserRouter(
       </Route>
       {/* Should be in dashboard layout  */}
       <Route element={<ProtectedRoute />}>
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/profile" element={<Dashboard />} />
         <Route path="/dashboard-host" element={<ApplyHost />} />
         <Route path="/dashboard-event" element={<Event />} />
         <Route

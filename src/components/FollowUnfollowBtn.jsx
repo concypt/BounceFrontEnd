@@ -8,7 +8,9 @@ import Swal from "sweetalert2";
 const FollowUnfollowBtn = ({ organisationId }) => {
   const navigate = useNavigate();
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    localStorage.getItem("isUserNav") === "true"
+  );
   const [isFollowingState, setIsFollowingState] = useState(null);
 
   useEffect(() => {
@@ -16,42 +18,53 @@ const FollowUnfollowBtn = ({ organisationId }) => {
     let userFollowingArray = [];
     const followingArrayFromStorage = localStorage.getItem("followingArray");
     // Check if followingArrayFromStorage is neither null nor the string "undefined"
-    if (followingArrayFromStorage && followingArrayFromStorage !== "undefined") {
+    if (
+      followingArrayFromStorage &&
+      followingArrayFromStorage !== "undefined"
+    ) {
       userFollowingArray = JSON.parse(followingArrayFromStorage);
     }
-    if (userFollowingArray.length) {
+
+    if (isLoggedIn) {
       const isFollowing = userFollowingArray.includes(organisationId);
       setIsFollowingState(isFollowing);
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
     }
-  }, [organisationId]);
+  }, [organisationId, isLoggedIn]);
 
   const mutation = useMutation({
     mutationFn: followUnfollow,
     onMutate: () => {
-      const userFollowingArray =
-        JSON.parse(localStorage.getItem("followingArray")) || [];
+      let userFollowingArray = [];
+      if (localStorage.getItem("followingArray").length > 0) {
+        userFollowingArray = JSON.parse(localStorage.getItem("followingArray"));
+      }
 
-      console.log(userFollowingArray);
       const updatedFollowingArray = isFollowingState
         ? userFollowingArray.filter((id) => id !== organisationId)
         : [...userFollowingArray, organisationId];
-      localStorage.setItem(
-        "followingArray",
-        JSON.stringify(updatedFollowingArray)
-      );
+      // if array is not empty
+      if (updatedFollowingArray.length > 0) {
+        localStorage.setItem(
+          "followingArray",
+          JSON.stringify(updatedFollowingArray)
+        );
+      } else {
+        localStorage.setItem("followingArray", "");
+      }
 
       // Optionally return a context with the previous following state
       return { previousFollowingArray: userFollowingArray };
     },
     onError: (error, variables, context) => {
       // Revert to the previous following state
-      localStorage.setItem(
-        "followingArray",
-        JSON.stringify(context.previousFollowingArray)
-      );
+      if (context.previousFollowingArray.length > 0) {
+        localStorage.setItem(
+          "followingArray",
+          JSON.stringify(context.previousFollowingArray)
+        );
+      } else {
+        localStorage.setItem("followingArray", "");
+      }
 
       Swal.fire({
         icon: "error",
@@ -75,11 +88,9 @@ const FollowUnfollowBtn = ({ organisationId }) => {
       // Any additional logic after mutation is completed (either success or error)
     },
   });
-  
-  const handleFollow = () => {
-    
-    if (isLoggedIn) {
 
+  const handleFollow = () => {
+    if (isLoggedIn) {
       mutation.mutate(organisationId);
     } else {
       localStorage.setItem("redirectPath", window.location.pathname);

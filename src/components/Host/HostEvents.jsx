@@ -62,7 +62,7 @@ const HostEvents = () => {
   };
 
   const handleDelete = (id) => {
-    console.log("handleDelete called with id:", id);
+    //console.log("handleDelete called with id:", id);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -113,7 +113,7 @@ const HostEvents = () => {
           const { soldTickets, totalTickets } = row.original;
           const progress =
             totalTickets !== 0 ? (soldTickets / totalTickets) * 100 : 0;
-          console.log(totalTickets);
+          //console.log(totalTickets);
           return (
             <div
               className={`progress-bar-container-ticket ${
