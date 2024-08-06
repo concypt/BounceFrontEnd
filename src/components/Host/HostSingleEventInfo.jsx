@@ -6,17 +6,26 @@ import { fetchEventDetails } from "../../api/secureService";
 import calendarIcon from "../../assets/images/calender.svg";
 import clockIcon from "../../assets/images/clock_grey.svg";
 import locationIcon from "../../assets/images/location_grey.svg";
-import { format, parseISO } from "date-fns";
+
 
 const EventInfoComponent = ({ eventData }) => {
   let date = '';
   let time = '';
-
+  
   // Check if start_time exists
   if (eventData && eventData.start_time) {
-    const eventDateTime = new Date(eventData.start_time);
-    date = eventDateTime.toLocaleDateString();
-    time = eventDateTime.toLocaleTimeString();
+    const [datePart, timePart] = eventData.start_time.split(' ');
+    const [day, month, year] = datePart.split('/');
+    const [hours, minutes, seconds] = timePart.split(':');
+  
+    const eventDateTime = new Date(year, month - 1, day, hours, minutes, seconds);
+  
+    if (!isNaN(eventDateTime)) { // Check if the date is valid
+      date = eventDateTime.toLocaleDateString('en-GB'); // 'en-GB' for DD/MM/YYYY format
+      time = eventDateTime.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+    } else {
+      console.error("Invalid Date");
+    }
   }
   return (
     <div className="singleEvent">

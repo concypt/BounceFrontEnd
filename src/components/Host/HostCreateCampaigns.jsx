@@ -98,9 +98,9 @@ const HostCreateCampaigns = ({ list }) => {
     let updatedAudience = [...campData.audience];
 
     if (checked) {
-      updatedAudience.push(value);
+      updatedAudience.push(Number(value));
     } else {
-      updatedAudience = updatedAudience.filter((id) => id !== value);
+      updatedAudience = updatedAudience.filter((id) => id !== Number(value));
     }
 
     setCampData({
@@ -221,6 +221,7 @@ const HostCreateCampaigns = ({ list }) => {
                       id={`subscriber_${row.id}`}
                       name={`audience`}
                       value={row.id}
+                      checked={campData.audience.includes(row.id)}
                       className="myCustomMultiSelectCheckboxes"
                       onChange={handleCheckboxChangeSubscriber}
                       style={{ marginRight: "13px" }}
