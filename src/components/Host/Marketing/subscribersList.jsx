@@ -71,20 +71,22 @@ const SubscribersList = ({ subscribe_list, onDeleteCampaign }) => {
       queryKey: ["fetchEditData"],
       queryFn: fetchEditData,
     });
-    if (isLoading && !marketing)
-      return (
-        <div
-          style={{
-            width: "100vw",
-            height: "90vh",
-            display: "flex",
-            alignContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <p style={{ textAlign: "center", width: "100%" }}>Loading...</p>
-        </div>
-      );
+
+    // if (isLoading && !marketing)
+    //   return (
+    //     <div
+    //       style={{
+    //         width: "100vw",
+    //         height: "90vh",
+    //         display: "flex",
+    //         alignContent: "center",
+    //         alignItems: "center",
+    //       }}
+    //     >
+    //       <p style={{ textAlign: "center", width: "100%" }}>Loading...</p>
+    //     </div>
+    //   );
+
     if (error) {
       return <p>Error: {error.message}</p>;
     }
@@ -157,34 +159,6 @@ const SubscribersList = ({ subscribe_list, onDeleteCampaign }) => {
 
     setModalIsOpen(false);
   };
-
-  // const deleteSubscriberMutation = useMutation({
-  //   mutationFn: deleteSubscriber,
-  //   mutationKey: ["deleteSubscriber"],
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries("subscribe_list");
-  //     Swal.fire("Deleted!", "Your subscribe list has been deleted.", "success");
-  //   },
-  //   onError: (error) => {
-  //     Swal.fire("Error!", "Failed to delete subscribe list.", "error");
-  //   },
-  // });
-
-  // const handleDelete = (id) => {
-  //   Swal.fire({
-  //     title: "Are you sure?",
-  //     text: "You won't be able to revert this!",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#7357FF",
-  //     confirmButtonText: "Yes, delete it!",
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       deleteSubscriberMutation.mutate(id);
-  //       onDeleteCampaign(id); // Inform parent component about delete action
-  //     }
-  //   });
-  // };
 
   const columns = useMemo(
     () => [
