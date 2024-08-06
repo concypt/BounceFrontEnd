@@ -94,13 +94,13 @@ const HostCreateEvent = ({ setFormStep, setEventId, eventId }) => {
     queryFn: () => getEvent(eventId),
     enabled: !!eventId,
   });
-  if(fetchedEvent===null){
+  if (fetchedEvent === null) {
     navigate(`/dashboard-event`);
     Swal.fire({
-      icon: 'error',
-      title: 'Unauthorized Access',
-      text: 'You do not have permission to access this event.',
-      confirmButtonText: 'Okay'
+      icon: "error",
+      title: "Unauthorized Access",
+      text: "You do not have permission to access this event.",
+      confirmButtonText: "Okay",
     });
   }
 
@@ -113,9 +113,10 @@ const HostCreateEvent = ({ setFormStep, setEventId, eventId }) => {
 
       const startDateTime = separateDateTime(fetchedEvent.start_time);
       const endDateTime = separateDateTime(fetchedEvent.end_time);
-      const tagsString = fetchedEvent.tags || ''; 
-      const tagsArray = tagsString.split(',').filter(tag => tag.trim() !== ''); 
-
+      const tagsString = fetchedEvent.tags || "";
+      const tagsArray = tagsString
+        .split(",")
+        .filter((tag) => tag.trim() !== "");
 
       setValue("event_name", fetchedEvent.name);
       setValue("category_id", fetchedEvent.category_id);
@@ -274,7 +275,7 @@ const HostCreateEvent = ({ setFormStep, setEventId, eventId }) => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        {errors && console.log(errors)}
+        {/* {errors && console.log(errors)} */}
         <div className="form-card">
           <div className="row">
             <div className="create-event-form-header">
