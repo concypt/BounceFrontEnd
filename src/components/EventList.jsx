@@ -7,7 +7,7 @@ import EventCard from "./EventCard";
 import Pagination from "./Pagination";
 
 import PropTypes from "prop-types";
-
+import emptyState from "../assets/images/emptystate.svg";
 import EventTickets from "./EventTickets";
 import styles from "./eventList.module.css";
 import Skeleton from "react-loading-skeleton";
@@ -147,32 +147,37 @@ const EventList = ({
   return (
     <>
       <div className="custom-wrapper">
-        <div className={styles.eventsGrid}>
-          {limit
-            ? (isLoading
-                ? Array(limit).fill({})
-                : data.events.slice(0, limit)
-              ).map((event, index) => (
-                <EventCard
-                  key={isLoading ? index : event.id}
-                  event={event}
-                  setModalEventId={setModalEventId}
-                  toggleModal={toggleModal}
-                  setSelectedCategories={setSelectedCategories}
-                />
-              ))
-            : (isLoading ? Array(eventsPerPage).fill({}) : data.events).map(
-                (event, index) => (
-                  <EventCard
-                    key={isLoading ? index : event.id}
-                    event={event}
-                    setModalEventId={setModalEventId}
-                    toggleModal={toggleModal}
-                    setSelectedCategories={setSelectedCategories}
-                  />
-                )
-              )}
-        </div>
+      <div className={styles.eventsGrid}>
+  {isLoading ? (
+    Array(limit || eventsPerPage).fill({}).map((_, index) => (
+      <EventCard
+        key={index}
+        event={{}} // Pass an empty object for loading state
+        setModalEventId={setModalEventId}
+        toggleModal={toggleModal}
+        setSelectedCategories={setSelectedCategories}
+      />
+    ))
+  ) : data.events && data.events.length > 0 ? (
+    (limit ? data.events.slice(0, limit) : data.events).map((event, index) => (
+      <EventCard
+        key={event.id}
+        event={event}
+        setModalEventId={setModalEventId}
+        toggleModal={toggleModal}
+        setSelectedCategories={setSelectedCategories}
+      />
+    ))
+  ) : (
+    <div className={styles.noEventsstyle}>
+        <div className="emptyContent">
+              <img src={emptyState} alt="No upcoming events" />
+              <h2>No upcoming events :(</h2>
+            </div>
+    </div>
+  )}
+</div>
+
         {isLoading ? (
           <Skeleton />
         ) : limit || data.events.length < 11 ? (
