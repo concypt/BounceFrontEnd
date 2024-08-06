@@ -1885,8 +1885,17 @@ button.delete.ml-auto {
   font-weight: 600;
   font-size: 14px;
 }
+
 .upcomingDiv.skeleton {
   justify-content: space-between;
+}
+
+.eventLables .quill {
+  margin: 25px 0;
+}
+
+.eventLables .quill .ql-editor {
+  min-height: 120px;
 }
 
 .swiper-button-next,

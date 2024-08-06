@@ -274,7 +274,7 @@ const HostEvents = () => {
               {tableData.length === 0 ? (
                 <tr>
                   <td colSpan={columns.length} style={{ textAlign: "center" }}>
-                    No orders found
+                    No events found
                   </td>
                 </tr>
               ) : (
