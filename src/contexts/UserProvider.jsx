@@ -69,8 +69,8 @@ const UserProvider = ({ children }) => {
     try {
       const newToken = await refreshAccessToken();
 
-      setToken(newToken);
-      const userData = await fetchUserProfile(newToken);
+      setToken(newToken.token);
+      const userData = await fetchUserProfile(newToken.token);
       setUser(userData);
       setIsAuthenticated(true);
       localStorage.setItem("isUserNav", true);
