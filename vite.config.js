@@ -5,12 +5,12 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   base: "./",
   plugins: [react()],
-  server: {
-    proxy: {
-      "/api": {
-        target: "https://bounce.extrasol.co.uk",
-        changeOrigin: true,
-      },
-    },
-  },
+  // server: {
+  //   proxy: {
+  //     "/api": {
+  //       target: "https://bounce.extrasol.co.uk",
+  //       changeOrigin: true,
+  //     },
+  //   },
+  // },
 });

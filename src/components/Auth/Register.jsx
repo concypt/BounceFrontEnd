@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { registerUser } from "../../api/publicService";
 import styles from "./auth.module.css";
@@ -62,9 +62,9 @@ const RegisterPage = () => {
         <div className={`col-md-6 col-lg-6 ${styles.firstCol}`}>
           <div className={styles.loginLeft}>
             <div className={styles.logiLogo}>
-              <a href="/">
+              <Link to="/">
                 <img src={whiteLogo} alt="" />
-              </a>
+              </Link>
             </div>
             <div className={styles.loginContent}>
               <h2>Got an account?</h2>
@@ -72,7 +72,7 @@ const RegisterPage = () => {
                 Attend, promote and host events all from one place on Bounce,
                 the all in one ticketing platform.
               </p>
-              <a href="/login">Login</a>
+              <Link to="/login">Login</Link>
             </div>
           </div>
         </div>
@@ -80,9 +80,9 @@ const RegisterPage = () => {
         <div className="col-md-6 col-lg-6">
           <div className={styles.loginForm}>
             <div className={styles.secondLogo}>
-              <a href="#">
+              <Link to="/">
                 <img src={whiteLogo} alt="" />
-              </a>
+              </Link>
             </div>
             <div className={`${styles.formsSection} ${styles.registerSection}`}>
               <h2>Sign Up</h2>

@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { UserContext } from "../../contexts/UserProvider";
 import styles from "./auth.module.css";
@@ -88,9 +88,9 @@ const LoginPage = () => {
         <div className={`col-md-6 col-lg-6 ${styles.firstCol}`}>
           <div className={styles.loginLeft}>
             <div className={styles.logiLogo}>
-              <a href="/">
+              <Link to="/">
                 <img src={whiteLogo} alt="" />
-              </a>
+              </Link>
             </div>
             <div className={styles.loginContent}>
               <h2>Looking to sign up?</h2>
@@ -98,7 +98,7 @@ const LoginPage = () => {
                 Start attending incredible club nights, festivals and live music
                 events near you by signing up for a free account today.
               </p>
-              <a href="register">Sign up</a>
+              <Link to="/register">Sign up</Link>
             </div>
           </div>
         </div>
@@ -106,17 +106,17 @@ const LoginPage = () => {
           <div className={styles.loginForm}>
             <div className={styles.conditionsText}>
               <p className={styles.terms}>
-                <a href="/PrivacyPolicy">Terms </a> |{" "}
-                <a href="/TermsConditions">Privacy</a>
+                <Link to="/TermsConditions">Terms </Link> |{" "}
+                <Link to="/PrivacyPolicy">Privacy</Link>
               </p>
-              <a href="#" className={styles.createAccount}>
+              <Link to="/register" className={styles.createAccount}>
                 Create an account
-              </a>
+              </Link>
             </div>
             <div className={styles.secondLogo}>
-              <a href="#">
+              <Link to="/">
                 <img src={whiteLogo} alt="" />
-              </a>
+              </Link>
             </div>
             <div className={styles.formsSection}>
               <h2>Login</h2>
@@ -162,7 +162,7 @@ const LoginPage = () => {
                     </span>
                   </div>
                   <div className={styles.forgetDiv}>
-                    <a href="/forgot-password-request">Forgot password?</a>
+                    <Link to="/forgot-password-request">Forgot password?</Link>
                   </div>
                 </div>
                 <div className={styles.header_btn}>

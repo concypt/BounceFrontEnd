@@ -18,6 +18,7 @@ import secureIcon from "../assets/images/secureicon.svg";
 import { Link } from "react-router-dom";
 
 function Home() {
+  const [isEvent, setIsEvent] = useState(true);
   const {
     data: home,
     error,
@@ -87,18 +88,23 @@ function Home() {
           imagePath6={home.header.img6}
         />
       </div>
-      <div className="event_div">
-        <Reveal width="100%" delay=".2" amount="1">
-          <div className="event_heading">
-            <h2>{home.header.event_title}</h2>
-          </div>
-        </Reveal>
-        <Reveal width="100%" delay="0.2">
-          <div className="home_events">
-            <EventList limit={3} />
-          </div>
-        </Reveal>
-      </div>
+      {isEvent ? (
+        <div className="event_div">
+          <Reveal width="100%" delay=".2" amount="1">
+            <div className="event_heading">
+              <h2>{home.header.event_title}</h2>
+            </div>
+          </Reveal>
+          <Reveal width="100%" delay="0.2">
+            <div className="home_events">
+              <EventList setIsEvent={setIsEvent} limit={3} />
+            </div>
+          </Reveal>
+        </div>
+      ) : (
+        ""
+      )}
+
       <Reveal width="100%" delay="0.2" amount="0.75">
         <div className="slider_section">
           <div className="swiper_div">
