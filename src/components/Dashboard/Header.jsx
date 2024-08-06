@@ -46,7 +46,7 @@ const Header = () => {
         <img src={user?.imagePath ? user.imagePath : baseImage} alt="" />
         <ul className={`${styles.dropdownMenu} ${styles.dropdownMenu1}`}>
           <li>
-            <Link to={`/dashboard`}>
+            <Link to={`/profile`}>
               <img
                 src={dashboardProfile}
                 className={styles.dashboardProfileIcon}

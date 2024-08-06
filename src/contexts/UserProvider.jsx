@@ -56,6 +56,9 @@ const UserProvider = ({ children }) => {
       setIsAuthenticated(false);
       localStorage.setItem("isUserNav", false);
       localStorage.removeItem("followingArray");
+      localStorage.removeItem("favEvents");
+      localStorage.removeItem("favBlogs");
+      localStorage.removeItem("redirectPath");
     } catch (error) {
       console.error("Logout failed:", error);
       throw error;

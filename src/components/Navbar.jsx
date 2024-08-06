@@ -61,7 +61,7 @@ function Navbar() {
               Host an event
             </NavLink>
             {isUserNav === "true" ? (
-              <NavLink to="/dashboard" className={styles.loginBtn}>
+              <NavLink to="/attend" className={styles.loginBtn}>
                 Dashboard
               </NavLink>
             ) : (

@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { UserContext } from "../../contexts/UserProvider";
 import styles from "./auth.module.css";
@@ -13,7 +13,7 @@ import lockIcon from "../../assets/images/lock.svg";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const location = useLocation();
+  //const location = useLocation();
   const { login } = useContext(UserContext);
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState(null);
@@ -39,17 +39,29 @@ const LoginPage = () => {
       const favBlogs = data.favorite_blog?.split(",").map((x) => {
         return parseInt(x);
       });
-      localStorage.setItem("followingArray", JSON.stringify(followingArray));
-      localStorage.setItem("favEvents", JSON.stringify(favEvents));
-      localStorage.setItem("favBlogs", JSON.stringify(favBlogs));
+
+      followingArray === undefined || isNaN(followingArray[0])
+        ? localStorage.setItem("followingArray", [])
+        : localStorage.setItem(
+            "followingArray",
+            JSON.stringify(followingArray)
+          );
+
+      //console.log(isNaN(favEvents[0]));
+      favEvents === undefined || isNaN(favEvents[0])
+        ? localStorage.setItem("favEvents", [])
+        : localStorage.setItem("favEvents", JSON.stringify(favEvents));
+
+      favBlogs === undefined || isNaN(favBlogs[0])
+        ? localStorage.setItem("favBlogs", [])
+        : localStorage.setItem("favBlogs", JSON.stringify(favBlogs));
 
       if (data && data.status !== 1) {
         navigate("/verification", {
           state: { token: data.access_token },
         });
       } else {
-        const redirectPath =
-          localStorage.getItem("redirectPath") || "/dashboard";
+        const redirectPath = localStorage.getItem("redirectPath") || "/attend";
         localStorage.removeItem("redirectPath");
         navigate(redirectPath);
       }

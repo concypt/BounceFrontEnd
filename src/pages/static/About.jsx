@@ -38,7 +38,7 @@ function About() {
                     <div className="promote_checks">
                       <img src={tick} alt="" />
                       <p>
-                        With a generous industry beating 7.5% fee, you can rely
+                        With a generous industry beating 10% fee, you can rely
                         on Bounce to bring you simple, intuitive ticketing
                         solutions for your event brand.
                       </p>
