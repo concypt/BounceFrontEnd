@@ -9,6 +9,15 @@ import locationIcon from "../../assets/images/location_grey.svg";
 import { format, parseISO } from "date-fns";
 
 const EventInfoComponent = ({ eventData }) => {
+  let date = '';
+  let time = '';
+
+  // Check if start_time exists
+  if (eventData && eventData.start_time) {
+    const eventDateTime = new Date(eventData.start_time);
+    date = eventDateTime.toLocaleDateString();
+    time = eventDateTime.toLocaleTimeString();
+  }
   return (
     <div className="singleEvent">
       <div className="singleEventHeader">
@@ -20,14 +29,14 @@ const EventInfoComponent = ({ eventData }) => {
       <div className="cardDescription">
         <p className="event_date">
           <img src={calendarIcon} className="descriptionImg" alt="" />{" "}
-          {eventData.start_time}
+          {date}
         </p>
         <p>
-          <img src={clockIcon} className="descriptionImg" alt="" /> 5PM
+          <img src={clockIcon} className="descriptionImg" alt="" /> {time}
         </p>
         <p>
           <img src={locationIcon} className="descriptionImg" alt="" />{" "}
-          {eventData.location ? eventData.location : "No location Entered"}
+          {eventData.type === "online" ? "Online Event" : (eventData.location ? eventData.location : " ")}
         </p>
       </div>
       <div className="singleEventBtn">
