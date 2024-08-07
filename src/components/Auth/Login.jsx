@@ -109,12 +109,21 @@ const LoginPage = () => {
                 <Link to="/TermsConditions">Terms </Link> |{" "}
                 <Link to="/PrivacyPolicy">Privacy</Link>
               </p>
+<<<<<<< HEAD
               <Link to="/register" className={styles.createAccount}>
                 Create an account
               </Link>
             </div>
             <div className={styles.secondLogo}>
               <Link to="/">
+=======
+              <a href="/register" className={styles.createAccount}>
+              Sign up
+              </a>
+            </div>
+            <div className={styles.secondLogo}>
+              <a href="/">
+>>>>>>> dev-masab
                 <img src={whiteLogo} alt="" />
               </Link>
             </div>
