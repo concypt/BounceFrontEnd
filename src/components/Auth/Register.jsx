@@ -80,18 +80,14 @@ const RegisterPage = () => {
         <div className="col-md-6 col-lg-6">
           <div className={styles.loginForm}>
             <div className={styles.secondLogo}>
-<<<<<<< HEAD
               <Link to="/">
-=======
-              <a href="/">
->>>>>>> dev-masab
                 <img src={whiteLogo} alt="" />
               </Link>
             </div>
             <div className={styles.conditionsText}>
-              <a href="/login" className={styles.createAccount}>
+              <Link to="/login" className={styles.createAccount}>
                 Login
-              </a>
+              </Link>
             </div>
             <div className={`${styles.formsSection} ${styles.registerSection}`}>
               <h2>Sign Up</h2>

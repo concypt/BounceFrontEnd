@@ -109,14 +109,14 @@ const LoginPage = () => {
                 <Link to="/TermsConditions">Terms </Link> |{" "}
                 <Link to="/PrivacyPolicy">Privacy</Link>
               </p>
-              <a href="/register" className={styles.createAccount}>
+              <Link to="/register" className={styles.createAccount}>
               Sign up
-              </a>
+              </Link>
             </div>
             <div className={styles.secondLogo}>
-              <a href="/">
+              <Link to="/">
                 <img src={whiteLogo} alt="" />
-              </a>
+              </Link>
             </div>
             <div className={styles.formsSection}>
               <h2>Login</h2>
