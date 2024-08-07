@@ -31,6 +31,7 @@ const EventList = ({
   setSelectedCategories,
   setLocation,
   setDateParameter,
+  setIsEvent,
 }) => {
   const navigate = useNavigate();
   const locationObj = useLocation();
@@ -143,7 +144,13 @@ const EventList = ({
   if (error) {
     return <p>Errors: {error.message}</p>;
   }
-
+  if (data) {
+    if (typeof setIsEvent === "function") {
+      data.total_result > 0 ? setIsEvent(true) : setIsEvent(false);
+    } else {
+      console.warn("setIsEvent is not provided or not a function");
+    }
+  }
   return (
     <>
       <div className="custom-wrapper">
@@ -205,5 +212,7 @@ EventList.propTypes = {
   setSelectedCategories: PropTypes.func,
   setLocation: PropTypes.func,
   setDateParameter: PropTypes.func,
+  setIsEvent: PropTypes.func,
 };
+
 export default EventList;
