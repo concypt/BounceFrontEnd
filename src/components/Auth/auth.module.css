@@ -4,7 +4,7 @@
 }
 
 .success {
-  color: rgb(15, 143, 15);
+  color: #fff;
   margin-top: 30px;
 }
 
@@ -322,7 +322,7 @@
   .secondLogo {
     display: block;
     position: absolute;
-    top: 140px;
+    top: 80px;
   }
   .secondLogo img {
     width: 100%;
@@ -348,6 +348,6 @@
 
 @media screen and (max-width: 487px) {
   .secondLogo {
-    top: 80px;
+    top: 40px;
   }
 }

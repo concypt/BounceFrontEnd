@@ -80,8 +80,13 @@ const RegisterPage = () => {
         <div className="col-md-6 col-lg-6">
           <div className={styles.loginForm}>
             <div className={styles.secondLogo}>
-              <a href="#">
+              <a href="/">
                 <img src={whiteLogo} alt="" />
+              </a>
+            </div>
+            <div className={styles.conditionsText}>
+              <a href="/login" className={styles.createAccount}>
+                Login
               </a>
             </div>
             <div className={`${styles.formsSection} ${styles.registerSection}`}>
@@ -175,6 +180,7 @@ const RegisterPage = () => {
                     Registration successful! Redirecting...
                   </p>
                 )} */}
+               
               </form>
             </div>
           </div>

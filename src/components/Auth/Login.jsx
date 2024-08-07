@@ -109,12 +109,12 @@ const LoginPage = () => {
                 <a href="/PrivacyPolicy">Terms </a> |{" "}
                 <a href="/TermsConditions">Privacy</a>
               </p>
-              <a href="#" className={styles.createAccount}>
-                Create an account
+              <a href="/register" className={styles.createAccount}>
+              Sign up
               </a>
             </div>
             <div className={styles.secondLogo}>
-              <a href="#">
+              <a href="/">
                 <img src={whiteLogo} alt="" />
               </a>
             </div>

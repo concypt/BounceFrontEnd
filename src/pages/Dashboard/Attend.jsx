@@ -130,7 +130,7 @@ function Attend() {
             <div className="upcomingEvents">
               <div className="emptyContent">
                 <img src={emptyState} alt="No liked events" />
-                <h2>No Liked events :(</h2>
+                <h2>No liked events :(</h2>
               </div>
             </div>
           )}
