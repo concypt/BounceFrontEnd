@@ -61,7 +61,7 @@ const HostTicketOrders = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [orderInfo, setorderInfo] = useState(null);
   const [selectedTicket, setSelectedTicket] = useState(null);
-
+console.log(event)
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -638,12 +638,12 @@ const HostTicketOrders = ({
                         alt=""
                       />
                       <p className={styles.listParagraph}>
-                        {moment(event.date).format("dddd Do MMMM YYYY")}
+                      {moment(event.date).format("dddd Do MMMM YYYY")}
                       </p>
                     </div>
                     <div className={styles.eventDetailsList}>
                       <img src={popupClock} className={styles.iconImg} alt="" />
-                      <p className={styles.listParagraph}>5.00 PM</p>
+                      <p className={styles.listParagraph}>{moment(event.date).format("hh:mm A")}</p>
                     </div>
                     <div className={styles.eventDetailsList}>
                       <img
@@ -664,7 +664,7 @@ const HostTicketOrders = ({
                       <span className={styles.paymentDone}>
                         <img src={popupPaymentDone} alt="" />
                         <p className={styles.paymentDoneText}>
-                          Paid £{orderInfo.payment} for 1 ticket on the{" "}
+                          Paid £{orderInfo.payment} for {orderInfo.quantity} ticket on the{" "}
                           {moment(orderInfo.created_at).format(
                             "dddd Do MMMM YYYY"
                           )}{" "}
