@@ -46,9 +46,9 @@ export default function TestimonialsSlider(props) {
                       <h6>{review.name}</h6>
                       <p>{review.position}</p>
                     </div>
-                    <div className="webflow_img">
+                    {/* <div className="webflow_img">
                       {review.logo ? <img src={review.logo} alt="" /> : ""}
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>

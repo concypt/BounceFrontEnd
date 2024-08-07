@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { requestPasswordReset } from "../../api/publicService";
 import styles from "./auth.module.css";
@@ -46,9 +46,9 @@ const ForgotPasswordRequest = () => {
         <div className={`col-md-6 col-lg-6 ${styles.firstCol}`}>
           <div className={styles.loginLeft}>
             <div className={styles.logiLogo}>
-              <a href="/">
+              <Link to="/">
                 <img src={whiteLogo} alt="" />
-              </a>
+              </Link>
             </div>
             <div className={styles.loginContent}>
               <h2>Looking to sign up?</h2>
@@ -56,7 +56,7 @@ const ForgotPasswordRequest = () => {
                 Start attending incredible club nights, festivals and live music
                 events near you by signing up for a free account today.
               </p>
-              <a href="/login">Back to login</a>
+              <Link to="/login">Back to login</Link>
             </div>
           </div>
         </div>
@@ -64,16 +64,17 @@ const ForgotPasswordRequest = () => {
           <div className={styles.loginForm}>
             <div className={styles.conditionsText}>
               <p className={styles.terms}>
-                <a href="#">Terms </a> | <a href="#">Privacy</a>
+                <Link to="/TermsConditions">Terms </Link> |{" "}
+                <Link to="/PrivacyPolicy">Privacy</Link>
               </p>
-              <a href="/login" className={styles.createAccount}>
+              <Link to="/login" className={styles.createAccount}>
                 Back to login
-              </a>
+              </Link>
             </div>
             <div className={styles.secondLogo}>
-              <a href="/">
+              <Link to="/">
                 <img src={whiteLogo} alt="" />
-              </a>
+              </Link>
             </div>
             <div className={styles.formsSection}>
               <h2>Need to reset?</h2>
