@@ -77,6 +77,20 @@ const HostTicketOrders = () => {
         ),
       },
       {
+        Header: "Customer Name",
+        accessor: (row) => {
+          // Extract first name and last name from selectedUser, with fallbacks
+          const firstName =
+            row.selectedUser?.first_name || row.selectedUser?.name || "";
+          const lastName = row.selectedUser?.last_name || "";
+          return `${firstName} ${lastName}`.trim();
+        },
+        sortType: "basic",
+        Cell: ({ value }) => (
+          <div>{value.length > 20 ? value.slice(0, 20) + "..." : value}</div>
+        ),
+      },
+      {
         Header: "Actions",
         accessor: "actions",
         Cell: ({ row }) => (
@@ -363,7 +377,7 @@ const HostTicketOrders = () => {
                   </div>
                   <div className={styles.eventDetailsList}>
                     <img src={popupClock} className={styles.iconImg} alt="" />
-                    <p className={styles.listParagraph}>5.00 PM</p>
+                    <p className={styles.listParagraph}>{moment(eventInfo.date).format("hh:mm A")}</p>
                   </div>
                   <div className={styles.eventDetailsList}>
                     <img
@@ -386,7 +400,7 @@ const HostTicketOrders = () => {
                     <span className={styles.paymentDone}>
                       <img src={popupPaymentDone} alt="" />
                       <p className={styles.paymentDoneText}>
-                        Paid £{eventInfo.payment} for 1 ticket on the{" "}
+                        Paid £{eventInfo.payment} for {eventInfo.quantity}  ticket on the{" "}
                         {moment(eventInfo.created_at).format(
                           "dddd Do MMMM YYYY"
                         )}{" "}
