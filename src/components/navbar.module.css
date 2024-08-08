@@ -82,7 +82,7 @@ header.App_header {
   height: 12px;
   position: absolute;
   background-image: url(../assets/images/right-arrow.svg);
-  top: 9px;
+  top: 8px;
   right: -20px;
 }
 
@@ -229,7 +229,7 @@ header.App_header {
   .loginBtn::after {
     width: 9px;
     height: 12px;
-    top: 8px;
+    top: 5.5px;
     right: -15px;
   }
 }
@@ -358,6 +358,11 @@ header.App_header {
   .host_and_signin .global_button_one {
     display: none;
   }
+
+  .global_button_one {
+    min-width: 140px;
+    margin: 0;
+  }
 }
 
 @media screen and (max-width: 576px) {
@@ -428,7 +433,7 @@ header.App_header {
   }
 
   .loginBtn::after {
-    top: 5px;
+    top: 3px;
     right: -11px;
   }
 }

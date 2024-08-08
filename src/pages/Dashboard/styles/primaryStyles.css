@@ -233,7 +233,7 @@ input[type="radio"] {
   padding: 4px;
   position: relative;
   text-decoration: none;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   width: 216px;
   z-index: 2;
   border: none;
@@ -261,7 +261,7 @@ input[type="radio"] {
   width: 100%;
   font-size: 18px;
   font-weight: 600;
-  text-transform: math-auto;
+  /* text-transform: math-auto; */
 }
 
 .loginButton.remove-margin {

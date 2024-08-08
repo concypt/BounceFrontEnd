@@ -78,11 +78,13 @@ const SingleNews = ({ newsId }) => {
                   alt="San Francisco"
                 />
               )}
-              <div className={styles.category_main}>
-                <h5 className={styles.category_name}>
-                  {isLoading ? <Skeleton width="500px" /> : news.title}
-                </h5>
-              </div>
+              {news?.category.name && (
+                <div className={styles.category_main}>
+                  <h5 className={styles.category_name}>
+                    {isLoading ? <Skeleton width="500px" /> : news.category.name}
+                  </h5>
+                </div>
+              )}
               <div className={styles.heart_icon}>
                 <img src="/images/heart.svg" alt="" />
               </div>

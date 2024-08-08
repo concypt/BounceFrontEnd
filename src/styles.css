@@ -246,7 +246,7 @@ a.global-link-arrow::after {
   padding: 4px;
   position: relative;
   text-decoration: none;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   width: 220px;
   z-index: 2;
   border: none;
@@ -273,7 +273,7 @@ a.global-link-arrow::after {
   width: 100%;
   font-size: 18px;
   font-weight: 700;
-  text-transform: math-auto;
+  /* text-transform: math-auto; */
 }
 
 .header_btn {

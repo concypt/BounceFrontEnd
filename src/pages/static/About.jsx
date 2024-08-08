@@ -22,7 +22,7 @@ function About() {
                     <div className="promote_checks">
                       <img src={tick} alt="" />
                       <p>
-                        The all in one ticketing platform that keeps i t simple.
+                        The all in one ticketing platform that keeps it simple.
                       </p>
                     </div>
 
