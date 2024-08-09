@@ -34,11 +34,17 @@ function News() {
                 <div className={styles.mainBlog}>
                   {[...Array(6)].map((_, index) => (
                     <div key={index} className={styles.blogCards}>
+                      <div className={styles.cardHeader}>
                       <Skeleton
                         height={270}
                         borderTopRadius={18}
                         marginbottom={10}
                       />
+                        <div className={styles.categoryNews}>
+                          <Skeleton width={50} height={20} />
+                        </div>
+                      </div>
+                      
                       <div className={styles.cardBody}>
                         <h2>
                           <Skeleton />
