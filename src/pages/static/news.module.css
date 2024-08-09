@@ -71,6 +71,24 @@
   padding-bottom: 40px;
 }
 
+.cardHeader {
+  position: relative;
+}
+
+.categoryNews {
+  background: #AEABFF;
+  color: #fff;
+  display: inline-block;
+  padding: 3px 20px;
+  padding-bottom: 5px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 45px;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}
+
 @media (max-width: 1366px) {
   .blogCards img {
     height: 200px;

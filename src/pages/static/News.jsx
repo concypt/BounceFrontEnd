@@ -1,5 +1,3 @@
-import { useState, useEffect } from "react";
-import LoadingBar from "react-top-loading-bar";
 import { useQuery } from "@tanstack/react-query";
 import moment from "moment";
 import Skeleton from "react-loading-skeleton";
@@ -22,26 +20,10 @@ function News() {
     queryFn: fetchNews,
   });
 
-  const [loadingComplete, setLoadingComplete] = useState(false);
-
-  useEffect(() => {
-    const handleLoad = () => {
-      setLoadingComplete(true);
-    };
-    window.addEventListener("load", handleLoad);
-    return () => {
-      window.removeEventListener("load", handleLoad);
-    };
-  }, []);
 
   if (isLoading) {
     return (
       <>
-        <LoadingBar
-          color="#7e79ff"
-          height={3}
-          progress={loadingComplete ? 100 : 0}
-        />
         <div className="bounce_bg_circle">
           <div className={styles.aboutMain}>
             <div className={`header_div ${styles.headerBlog}`}>
@@ -92,10 +74,15 @@ function News() {
                 {news.map((newsrow) => (
                   <div key={newsrow.id} className={styles.blogCards}>
                     <Link to={`/news/${newsrow.id}`}>
-                      <img
-                        src={`${newsrow.imagePath}${newsrow.image}`}
-                        alt=""
-                      />
+                      <div className={styles.cardHeader}>
+                        <img
+                          src={`${newsrow.imagePath}${newsrow.image}`}
+                          alt=""
+                        />
+                        <div className={styles.categoryNews}>
+                          {newsrow.category.name}
+                        </div>
+                      </div>
                       <div className={styles.cardBody}>
                         <h2>
                           {newsrow.title.length > 50
