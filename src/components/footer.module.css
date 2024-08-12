@@ -123,4 +123,14 @@
   .list_items ul {
     padding-left: 0;
   }
+
+  .footer_row {
+    padding: 40px 0;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .footer_row {
+    padding-bottom: 20px;
+  }
 }

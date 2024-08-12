@@ -31,7 +31,7 @@ function Navbar() {
             </li>
             <li onClick={() => setIsActive(false)}>
               <NavLink to="/events?page=1" className={linkClass}>
-                Browse
+                Events
               </NavLink>
             </li>
             <li onClick={() => setIsActive(false)}>

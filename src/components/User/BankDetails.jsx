@@ -70,7 +70,7 @@ const BankDetailsForm = () => {
           />
         </div>
         <div className={styles.halfInputField}>
-          <label htmlFor="account_title">Account Title:</label>
+          <label htmlFor="account_title">Account Name:</label>
           <input
             type="text"
             id="account_title"

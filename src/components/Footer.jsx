@@ -71,6 +71,9 @@ const Footer = () => {
                   <li>
                     <Link to="/Contact">Contact</Link>
                   </li>
+                  <li>
+                    <Link to="/About">About Us</Link>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -85,10 +88,7 @@ const Footer = () => {
                   </li>
                   <li>
                     <Link to="/CookiePolicy">Cookie Policy</Link>
-                  </li>
-                  <li>
-                    <Link to="/About">About Us</Link>
-                  </li>
+                  </li>                  
                 </ul>
               </div>
             </div>
@@ -98,7 +98,7 @@ const Footer = () => {
               <p>© 2023 Bounce. All rights reserved.</p>
               <div className={styles.footer_links}>
                 <Link to="/PrivacyPolicy">Privacy Policy</Link>
-                <Link to="/TermsConditions">Terms of Service</Link>
+                <Link to="/TermsConditions">Terms and Conditions</Link>
               </div>
             </div>
           </div>

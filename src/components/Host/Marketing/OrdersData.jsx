@@ -626,7 +626,7 @@ console.log(event)
                 <div className={styles.ticketInfo}>
                   <div className={styles.titleWrapper}>
                     <h1 className={styles.ticketTitle}>{event.name}</h1>
-                    <Link to="/home" className={styles.detailLink}>
+                    <Link to={`/events/${event.id}`} className={styles.detailLink}>
                       View event page
                     </Link>
                   </div>
@@ -638,12 +638,14 @@ console.log(event)
                         alt=""
                       />
                       <p className={styles.listParagraph}>
-                      {moment(event.date).format("dddd Do MMMM YYYY")}
+                      {moment(event.start_time, "DD/MM/YYYY HH:mm:ss").format("dddd Do MMMM YYYY")}
                       </p>
                     </div>
                     <div className={styles.eventDetailsList}>
                       <img src={popupClock} className={styles.iconImg} alt="" />
-                      <p className={styles.listParagraph}>{moment(event.date).format("hh:mm A")}</p>
+                      <p className={styles.listParagraph}>
+                      {moment(event.start_time, "DD/MM/YYYY HH:mm:ss").format("hh:mm A")}
+                      </p>
                     </div>
                     <div className={styles.eventDetailsList}>
                       <img
@@ -653,7 +655,7 @@ console.log(event)
                       />
                       <p className={styles.listParagraph}>{event.address}</p>
                       <Link to="/home" className={styles.detailLink}>
-                        Get directions
+                        Get directionss
                       </Link>
                     </div>
                     <div className={styles.paymentSection}>
@@ -664,7 +666,7 @@ console.log(event)
                       <span className={styles.paymentDone}>
                         <img src={popupPaymentDone} alt="" />
                         <p className={styles.paymentDoneText}>
-                          Paid £{orderInfo.payment} for {orderInfo.quantity} ticket on the{" "}
+                          Paid £{orderInfo.payment} for this ticket on{" "}
                           {moment(orderInfo.created_at).format(
                             "dddd Do MMMM YYYY"
                           )}{" "}

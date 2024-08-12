@@ -360,7 +360,7 @@ const HostTicketOrders = () => {
               <div className={styles.ticketInfo}>
                 <div className={styles.titleWrapper}>
                   <h1 className={styles.ticketTitle}>{eventInfo.event.name}</h1>
-                  <Link to="/home" className={styles.detailLink}>
+                  <Link to={`/events/${eventInfo.id}`} className={styles.detailLink}>
                     View event page
                   </Link>
                 </div>
@@ -372,12 +372,14 @@ const HostTicketOrders = () => {
                       alt=""
                     />
                     <p className={styles.listParagraph}>
-                      {moment(eventInfo.date).format("dddd Do MMMM YYYY")}
+                      {moment(eventInfo.event.start_time).format("dddd Do MMMM YYYY")}
                     </p>
                   </div>
                   <div className={styles.eventDetailsList}>
                     <img src={popupClock} className={styles.iconImg} alt="" />
-                    <p className={styles.listParagraph}>{moment(eventInfo.date).format("hh:mm A")}</p>
+                    <p className={styles.listParagraph}>
+                    {moment.utc(eventInfo.event.start_time).format("hh:mm A")}
+                    </p>
                   </div>
                   <div className={styles.eventDetailsList}>
                     <img
@@ -400,7 +402,7 @@ const HostTicketOrders = () => {
                     <span className={styles.paymentDone}>
                       <img src={popupPaymentDone} alt="" />
                       <p className={styles.paymentDoneText}>
-                        Paid £{eventInfo.payment} for {eventInfo.quantity}  ticket on the{" "}
+                        Paid £{eventInfo.payment} for this ticket on{" "}
                         {moment(eventInfo.created_at).format(
                           "dddd Do MMMM YYYY"
                         )}{" "}

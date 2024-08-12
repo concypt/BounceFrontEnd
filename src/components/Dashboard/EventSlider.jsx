@@ -138,7 +138,7 @@ const EventSlider = (props) => {
     onSuccess: () => {
       Swal.fire({
         title: "Success!",
-        text: "Your Refund Request Send Successfully.",
+        text: "Your refund request has been sent.",
         icon: "success",
         confirmButtonText: "OK",
       }).then(() => {
@@ -335,12 +335,14 @@ const EventSlider = (props) => {
                 <div className={styles.eventDetailsList}>
                   <img src={popupCalendar} className={styles.iconImg} alt="" />
                   <p className={styles.listParagraph}>
-                    {moment(eventInfo.date).format("dddd Do MMMM YYYY")}
+                  {moment(eventInfo.start_time, "DD/MM/YYYY HH:mm:ss").format("dddd Do MMMM YYYY")}
                   </p>
                 </div>
                 <div className={styles.eventDetailsList}>
                   <img src={popupClock} className={styles.iconImg} alt="" />
-                  <p className={styles.listParagraph}>5.00 PM</p>
+                  <p className={styles.listParagraph}>
+                    {moment(eventInfo.start_time, "DD/MM/YYYY HH:mm:ss").format("hh:mm A")}
+                  </p>
                 </div>
                 <div className={styles.eventDetailsList}>
                   <img src={popupLocation} className={styles.iconImg} alt="" />
@@ -364,7 +366,7 @@ const EventSlider = (props) => {
                         eventInfo.orders_tickets[currentSlide].order
                           .quantity_count
                       }{" "}
-                      tickets on the{" "}
+                      tickets on{" "}
                       {moment(
                         eventInfo.orders_tickets[currentSlide].created_at
                       ).format("dddd Do MMMM YYYY")}{" "}

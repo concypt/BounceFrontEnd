@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import Header from "../../components/Dashboard/Header";
 import Sidebar from "../../components/Dashboard/Sidebar";
 import EventSlider from "../../components/Dashboard/EventSlider";
-import LoadingBar from "react-top-loading-bar";
 import "./styles/primaryStyles.css";
 import "./styles/comonStyles.css";
 import { fetchEventData } from "../../api/secureService";
