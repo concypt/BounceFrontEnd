@@ -258,7 +258,7 @@ import { refreshAccessToken } from "./authService";
 
 // Create an axios instance
 const axiosInstance = axios.create({
-  baseURL: "https://bounce.extrasol.co.uk/api",
+  baseURL: "https://api.bounce.live/api",
   withCredentials: true,
 });
 
