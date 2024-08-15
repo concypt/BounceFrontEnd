@@ -95,7 +95,7 @@ function EventDashboard() {
             <div className="actionDiv">
               <h2>Ready to bounce into action?</h2>
               <Link to={`/host-event/new`}>
-                <button className="loginButton" type="submit">
+                <button title="Create Event" className="loginButton" type="submit">
                   <span>Create new event</span>
                 </button>
               </Link>

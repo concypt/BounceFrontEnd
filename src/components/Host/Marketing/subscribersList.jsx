@@ -183,7 +183,7 @@ const SubscribersList = ({ subscribe_list, onDeleteCampaign }) => {
         Cell: ({ row }) => (
           <div className="actionsColumn">
             <Link to={`/host-subscribe-list/${row.original.id}`}>
-              <button>
+              <button title="Subscribr Details List">
                 <img src={viewImg} alt="Delete" />
               </button>
             </Link>

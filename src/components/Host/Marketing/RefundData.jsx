@@ -138,6 +138,7 @@ const HostTicketOrders = ({ refundData, eventname }) => {
         Cell: ({ row }) => (
           <div className="actionsColumn">
             <button
+            title="Accept"
               onClick={() =>
                 handleRefund(row.original.refund_details.id, row.original.id, 1)
               }
@@ -145,6 +146,7 @@ const HostTicketOrders = ({ refundData, eventname }) => {
               <img src={approve} alt="View" />
             </button>
             <button
+            title="Decline"
               onClick={() =>
                 handleRefund(row.original.refund_details.id, row.original.id, 2)
               }

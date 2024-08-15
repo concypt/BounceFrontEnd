@@ -145,10 +145,10 @@ const EmailList = ({ campaigns }) => {
         accessor: "actions",
         Cell: ({ row }) => (
           <div className="actionsColumn">
-            <button onClick={() => handleEditCampaign(row.original.id)}>
+            <button title="Edit Campaign" onClick={() => handleEditCampaign(row.original.id)}>
               <img src={editImg} alt="Delete" />
             </button>
-            <button onClick={() => handleSendCampaign(row.original.id)}>
+            <button title="Send Campaign"  onClick={() => handleSendCampaign(row.original.id)}>
               <img src={sendImg} alt="Campaign" />
             </button>
           </div>
