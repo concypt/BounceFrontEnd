@@ -26,7 +26,8 @@ const Header = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         logout();
-        navigate("/login");
+        // navigate("/login");
+         window.location.href = "/login";
       }
     });
   };

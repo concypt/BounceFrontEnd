@@ -201,7 +201,7 @@ const HostTicketOrders = ({ coupons, onDeleteCampaign, events }) => {
         accessor: "actions",
         Cell: ({ row }) => (
           <div className="actionsColumn">
-            <button onClick={() => handleDelete(row.original.id)}>
+            <button title="Delete Discount Code" onClick={() => handleDelete(row.original.id)}>
               <img src={deleteImg} alt="View" />
             </button>
           </div>
@@ -290,7 +290,7 @@ const HostTicketOrders = ({ coupons, onDeleteCampaign, events }) => {
   return (
     <div className="ticketOrders">
       <div className="searchBar">
-        <h2>Discount codes</h2>
+        <h2>Discount Codes</h2>
         <button className="loginButton" onClick={openModal} type="submit">
           <span>Create new code</span>
         </button>

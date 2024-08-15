@@ -102,7 +102,12 @@ const HostEvents = () => {
         accessor: "start_time",
         Cell: ({ value }) => {
           const date = new Date(value);
-          const formattedDate = date.toISOString().split("T")[0];
+          const day = date.getDate().toString().padStart(2, '0'); // Get the day and pad with 0 if necessary
+          const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Get the month (0-indexed) and pad with 0
+          const year = date.getFullYear(); // Get the full year
+      
+          const formattedDate = `${day}-${month}-${year}`; // Format the date as DD-MM-YYYY
+      
           return <span>{formattedDate}</span>;
         },
       },
@@ -136,11 +141,12 @@ const HostEvents = () => {
         accessor: "actions",
         Cell: ({ row }) => (
           <div className="actionsColumn">
-            <button onClick={() => handleView(row.original.id)}>
+            <button title="Event Details" onClick={() => handleView(row.original.id)}>
               <img src={viewImg} alt="View" />
             </button>
             <button
               className="mx-1"
+              title="Event Ticket"
               onClick={() =>
                 navigate(`/host-event/${row.original.id}/tickets/`)
               }
@@ -148,12 +154,13 @@ const HostEvents = () => {
               <img src={ticketImg} alt="Ticket" />
             </button>
             <button
+            title="Edit Event"
               className="me-1"
               onClick={() => navigate(`/host-event/edit/${row.original.id}/`)}
             >
               <img src={editImg} alt="Edit" />
             </button>
-            <button onClick={() => handleDelete(row.original.id)}>
+            <button title="Delete Event" onClick={() => handleDelete(row.original.id)}>
               <img src={deleteImg} alt="Delete" />
             </button>
           </div>

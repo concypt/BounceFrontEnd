@@ -95,7 +95,7 @@ const HostTicketOrders = () => {
         accessor: "actions",
         Cell: ({ row }) => (
           <div className="actionsColumn">
-            <button onClick={() => handleView(row.original)}>
+            <button title="Order Details" onClick={() => handleView(row.original)}>
               <img src={viewImg} alt="View" />
             </button>
           </div>
