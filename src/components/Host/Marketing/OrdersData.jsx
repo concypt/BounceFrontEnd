@@ -500,6 +500,7 @@ console.log(event)
               <div className="discount-grid-popup">
                 <div className="discount-grid-column">
                   <h2>Send Tickets</h2>
+                  
                   <div className="label-with-button">
                     <input
                       type="text"

@@ -55,6 +55,7 @@ const EventSlider = (props) => {
 
   //for tickets modal
   const openModal = (event) => {
+    console.log(event);
     setModalIsOpen(true);
     setCurrentSlide(0);
     setEventInfo(event);
@@ -390,14 +391,15 @@ const EventSlider = (props) => {
             <div className={styles.qrCode}>
               <QRCode
                 id="qr-code"
-                value={`Ticket ID: ${eventInfo.orders_tickets[currentSlide].id}`}
+                value={`Ticket ID: ${eventInfo.orders_tickets[currentSlide].ticket_number}`}
                 className={styles.qrCodeImgCanva}
               />
               <div className={styles.modalActions}>
                 <button
                   className="bgGlobalBtn borderGlobalBtn qrBtn"
                   onClick={() =>
-                    downloadQR(eventInfo.orders_tickets[currentSlide].id)
+                    downloadQR(eventInfo.orders_tickets[currentSlide].ticket_number)
+                    
                   }
                 >
                   <span>Download QR</span>

@@ -201,7 +201,7 @@ const SingleEvent = () => {
                       </>
                     ) : (
                       <>
-                        <p className="fee_text"> £ {event.ticket[0].price}</p>
+                        <p className="fee_text">   £{netPrice.toFixed(2)} + £{adminFee.toFixed(2)}</p>
                       </>
                     ))
                   )}

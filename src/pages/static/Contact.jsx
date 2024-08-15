@@ -22,13 +22,22 @@ function ContactUs() {
   const mutation = useMutation({
     mutationFn: contactUsForm,
     mutationKey: [contactUsForm],
-    onSuccess: () => {
-      Swal.fire({
-        icon: "success",
-        title: "Success",
-        text: "Message sent successfully!",
-        timer: 2000,
-      });
+    onSuccess: (data) => {
+      if(data.success==true){
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Message sent successfully!",
+          timer: 2000,
+        });   
+      }
+      else{
+        Swal.fire({
+          icon: "info",
+          title: "Information",
+          text: data.msg,
+        });
+      }
       setFormData({
         name: "",
         email: "",

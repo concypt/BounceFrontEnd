@@ -68,6 +68,14 @@ export const logout = async () => {
     throw new Error("Logout failed");
   }
 };
+export const deactivateAccount = async () => {
+  try {
+    const response = await axiosInstance.get("/scanner/account-logout");
+    return response.data;
+  } catch (error) {
+    throw new Error("Logout failed");
+  }
+};
 
 export const refreshAccessToken = async () => {
   try {

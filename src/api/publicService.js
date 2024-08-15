@@ -129,3 +129,9 @@ export const fetchNews = async () => {
     .then((res) => res.data);
   return data;
 };
+export const fetchSetting = async () => {
+  const { data } = await axiosPInstance
+    .get(`/setting`)
+    .then((res) => res.data);
+  return data.setting;
+};

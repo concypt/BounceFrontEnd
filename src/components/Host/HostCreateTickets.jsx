@@ -9,6 +9,7 @@ import * as z from "zod";
 import { useNavigate } from "react-router-dom";
 import DateTimePicker from "./DateTimePicker";
 import { getTicketsByEventId } from "../../api/secureService";
+import { fetchSetting } from "../../api/publicService";
 import {
   useCreateTickets,
   useUpdateTicket,
@@ -32,6 +33,7 @@ function separateDateTime(datetimeString) {
 
   return dateTime;
 }
+
 
 const getDefaultStartDateTime = () => {
   const now = new Date();
@@ -64,6 +66,14 @@ const ticketSchema = z.object({
 });
 
 const HostCreateTickets = ({ setFormStep, eventId }) => {
+  const {
+    data: settings
+  } = useQuery({
+    queryKey: ["fetchSetting "],
+    queryFn: fetchSetting 
+  });
+ const orgCommisition = settings?.price || 90;
+ const resultOrgCommisition = (1 + (100 - orgCommisition) / 100)
   const {
     control,
     handleSubmit,
@@ -273,7 +283,7 @@ const HostCreateTickets = ({ setFormStep, eventId }) => {
       setValue(
         "price",
         absorbeFees === 0 || absorbeFees === "0"
-          ? (dummyprice * 1.1).toFixed(2)
+          ? (dummyprice * resultOrgCommisition).toFixed(2)
           : dummyprice.toFixed(2)
       );
     }
@@ -303,6 +313,7 @@ const HostCreateTickets = ({ setFormStep, eventId }) => {
                 <HostTicketCard
                   key={index}
                   ticket={ticket}
+                  orgCommition={resultOrgCommisition}
                   onDelete={() => handleDeleteTicket(index)}
                   onEdit={() => handleEditTicket(index)}
                   onMoveUp={() => handleMoveUp(index)}
