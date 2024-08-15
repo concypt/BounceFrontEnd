@@ -106,9 +106,8 @@ const HostCreateTickets = ({ setFormStep, eventId }) => {
     queryFn: () => getTicketsByEventId(eventId),
     enabled: !!eventId,
   });
- 
-  if(existingTickets && existingTickets?.event === null){
 
+  if (existingTickets && existingTickets?.event === null) {
     navigate(`/dashboard-event`);
     Swal.fire({
       icon: "error",
@@ -178,9 +177,9 @@ const HostCreateTickets = ({ setFormStep, eventId }) => {
     }
   };
 
-  const handleSaveAllTickets = () => {
-    createTicketsMutate(tickets);
-  };
+  // const handleSaveAllTickets = () => {
+  //   createTicketsMutate(tickets);
+  // };
 
   const handleEditTicket = (index) => {
     const ticket = tickets[index];
@@ -420,13 +419,13 @@ const HostCreateTickets = ({ setFormStep, eventId }) => {
                       control={control}
                       render={({ field }) => (
                         <input
-                          type="number"
+                          type="text"
                           placeholder="Enter price"
                           {...field}
                           disabled={getValues("type") === "free"}
                           onChange={(e) => {
                             const newDummyPrice =
-                              parseFloat(e.target.value) || 0;
+                              parseFloat(e.target.value) || "";
 
                             const absorbeFees =
                               getValues("absorbe_fees").trim();
@@ -543,11 +542,7 @@ const HostCreateTickets = ({ setFormStep, eventId }) => {
         </div>
       </div>
       <div className="multistep-button-wrap new-btn">
-      <button
-          onClick={finishSetup}
-          className="loginButton"
-          type="button"
-        >
+        <button onClick={finishSetup} className="loginButton" type="button">
           <span>Finish setup</span>
         </button>
         <button

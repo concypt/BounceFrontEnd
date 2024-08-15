@@ -1,13 +1,15 @@
-import { useEffect, useState, useCallback, useContext } from "react";
+import { useEffect, useState, useCallback, useContext, useRef } from "react";
+import { useJsApiLoader, StandaloneSearchBox } from "@react-google-maps/api";
 import PropTypes from "prop-types";
 import { CatContext } from "../contexts/GlobalProvider";
 import EventFilterCheckbox from "./EventFilterCheckbox";
+
 import styles from "./eventFilter.module.css";
 import { DateRangePicker } from "react-date-range";
-import LocationInput from "./EventFilterLocationInput";
 import { CustomDateRangePicker } from "./DateRangePickerStyles";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
+import locationImage from "../assets/images/location_grey.svg";
 import caretUp from "../assets/images/CaretUp.svg";
 import caretDown from "../assets/images/CaretDown.svg";
 
@@ -38,6 +40,16 @@ const EventFilter = ({
   ]);
 
   const [showDatePicker, setShowDatePicker] = useState(false);
+
+  const [libraries] = useState(["places"]);
+  const searchBoxRef = useRef(null);
+
+  const { isLoaded, loadError } = useJsApiLoader({
+    googleMapsApiKey: "AIzaSyD277hXRfelcfvYnHrqhfV91ikyZpu_TYk",
+    libraries,
+  });
+  if (loadError) return <div>Error loading location</div>;
+  if (!isLoaded) return <div>Loading location</div>;
 
   const handleCatCheck = (e) => {
     const { value, checked } = e.target;
@@ -159,6 +171,16 @@ const EventFilter = ({
     }
   };
 
+  const onPlacesChanged = () => {
+    const places = searchBoxRef.current.getPlaces();
+    if (places.length > 0) {
+      const place = places[0];
+      // setValue("address", place.formatted_address);
+      // setValue("lat", place.geometry.location.lat());
+      // setValue("lang", place.geometry.location.lng());
+    }
+  };
+
   useEffect(() => {
     setSelectedCount(selectedCategories.length);
     setIsCategory(selectedCategories.length > 0);
@@ -259,19 +281,29 @@ const EventFilter = ({
                   />
                 </h2>
                 <div className={styles.locationInputs}>
-                  {/* <div className={styles.locationSearch}>
+                  <div className={styles.locationSearch}>
                     <img src={locationImage} alt="" />
-                    <input
+
+                    <StandaloneSearchBox
+                      onLoad={(ref) => (searchBoxRef.current = ref)}
+                      onPlacesChanged={onPlacesChanged}
+                    >
+                      <input
+                        type="text"
+                        placeholder="Search for location"
+                        name="location"
+                        value={location}
+                        onChange={handleLocationChange}
+                        //onChange={(e) => setValue("address", e.target.value)}
+                      />
+                    </StandaloneSearchBox>
+                    {/* <input
                       type="text"
                       name="location"
                       value={location}
                       onChange={handleLocationChange}
-                    />
-                  </div> */}
-                  <LocationInput
-                    location={location}
-                    setLocation={setLocation}
-                  />
+                    /> */}
+                  </div>
                   <select
                     name="miles"
                     id="miles"
