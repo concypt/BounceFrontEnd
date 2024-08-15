@@ -73,7 +73,7 @@ const EventList = ({
         params.append("categories[]", category)
       );
     }
-    navigate({ search: params.toString() }, { replace: true });
+    navigate({ search: params.toString() });
   }, [
     limit,
     page,
@@ -141,20 +141,16 @@ const EventList = ({
     keepPreviousData: true,
   });
 
-  useEffect(() => {
-    if (data) {
-      if (typeof setIsEvent === "function") {
-        setIsEvent(data.total_result > 0);
-      } else {
-        //console.warn("setIsEvent is not provided or not a function");
-      }
-    }
-  }, [data, setIsEvent]);
-
   if (error) {
     return <p>Errors: {error.message}</p>;
   }
-
+  if (data) {
+    if (typeof setIsEvent === "function") {
+      data.total_result > 0 ? setIsEvent(true) : setIsEvent(false);
+    } else {
+      console.warn("setIsEvent is not provided or not a function");
+    }
+  }
   return (
     <>
       <div className="custom-wrapper">

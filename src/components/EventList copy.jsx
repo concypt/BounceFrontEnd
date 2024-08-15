@@ -73,7 +73,7 @@ const EventList = ({
         params.append("categories[]", category)
       );
     }
-    navigate({ search: params.toString() }, { replace: true });
+    navigate({ search: params.toString() });
   }, [
     limit,
     page,

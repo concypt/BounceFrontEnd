@@ -41,7 +41,7 @@ function EventCard({
     setSelectedCategories([catId]);
   };
   const handleBuyTickets = () => {
-    setModalEventId(event.id);
+    setModalEventId(event.id.toString());
     toggleModal();
   };
   return (
