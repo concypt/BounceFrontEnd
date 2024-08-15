@@ -12,7 +12,7 @@ import dashboardLogout from "../../assets/images/dashboard/dashboardLogout.svg";
 
 const Header = () => {
   const navigate = useNavigate();
-  const { user, logout } = useContext(UserContext);
+  const { user, logout, deactivateAccount } = useContext(UserContext);
   //console.log(user.imagePath);
 
   const handleLogout = () => {
@@ -30,6 +30,21 @@ const Header = () => {
       }
     });
   };
+  const handleAccountDeactivate = () => {
+    Swal.fire({
+      title: "Are you sure you want to deactivate your account?",
+      text: "Your account will be deactivated and you will be logged out.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, deactivate",
+      cancelButtonText: "No, keep my account",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deactivateAccount(); // Rename this method to match the action
+        navigate("/login");
+      }
+    });
+};
 
   return (
     <header className={styles.header}>
@@ -55,9 +70,18 @@ const Header = () => {
               Profile
             </Link>
           </li>
+        
           <li>
             <img src={dashboardSetting} alt="Settings" />
             <Link to={`/contact`}>Help</Link>
+          </li>
+          <li onClick={handleAccountDeactivate} >
+          <img
+                src={dashboardProfile}
+                className={styles.dashboardProfileIcon}
+                alt="Profile"
+              />
+           <a className={styles.logoutLink} onClick={handleAccountDeactivate}>Deactivate</a>
           </li>
           <li onClick={handleLogout} className={styles.lastLi}>
             <img src={dashboardLogout} alt="Logout" />

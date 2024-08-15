@@ -42,7 +42,7 @@ const Checkout = ({ cartData }) => {
   const elements = useElements();
   const navigate = useNavigate();
   const imageSrc = cartData.event?.image || dummyImg;
-  const commission = cartData.orgCommissionSetting.org_commission / 100;
+  const commission = 1 + (100 - cartData.orgCommissionSetting.org_commission) / 100;
   const clientSecret = cartData.intent;
   const [formData, setFormData] = useState({
     first_name: "",
@@ -57,7 +57,7 @@ const Checkout = ({ cartData }) => {
     payment_type: cartData.payment_type || [], // Example values for payment_type
     payment_token: cartData.payment_token,
     instagram: "",
-    org_commission: cartData.total_price * commission,
+    org_commission: cartData.total_price / commission,
   });
   useEffect(() => {
     if (clientSecret) {
@@ -253,12 +253,12 @@ const Checkout = ({ cartData }) => {
         {cartData.tickets.map((ticket, index) => (
           <div key={index} className={styles.ticketAbout}>
             <h3>{ticket.name}</h3>
-            {ticket.absorbe_fees === 0 && ticket.type === "paid" ? (
+            {ticket.type === "paid" ? (
               <h5>
                 {cartData.quantity[index]} * £
-                {(ticket.price * commission).toFixed(2)}
+                {(ticket.price / commission).toFixed(2)}
                 <span className={styles.feeDetails}>
-                  + £{(ticket.price - ticket.price * commission).toFixed(2)} Fee
+                  + £{(ticket.price - (ticket.price / commission)).toFixed(2)} Fee
                 </span>
               </h5>
             ) : (

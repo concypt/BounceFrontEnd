@@ -2,6 +2,9 @@ import PropTypes from "prop-types";
 import styles from "./eventTicketCard.module.css";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQuery } from "@tanstack/react-query";
+import { fetchSetting } from "../api/publicService";
+
 import * as z from "zod";
 import { useEffect } from "react";
 
@@ -29,7 +32,14 @@ const EventTicketCard = ({
       quantity: 1,
     },
   });
-
+  const {
+    data: settings
+  } = useQuery({
+    queryKey: ["fetchSetting "],
+    queryFn: fetchSetting 
+  });
+ const orgCommisition = settings?.price || 90;
+ const resultOrgCommisition = (1 + (100 - orgCommisition) / 100);
   const quantity = watch("quantity");
 
   useEffect(() => {
@@ -44,18 +54,18 @@ const EventTicketCard = ({
   const onSubmit = (data) => {
     handleAddToOrder(ticket, data.quantity);
   };
-
+const netPrice = ticket.price / resultOrgCommisition
   return (
     <div className={styles.cardTicket}>
       <div className={styles.cardHeaderTicket}>
         <div className={styles.cardHeaderTicketContent}>
-          {ticket.absorbe_fees === 0 && ticket.type === "paid" ? (
+          {ticket.type === "paid" ? (
             <>
               <div className={styles.priceEuro}>
-                £{(ticket.price * 0.9).toFixed(2)}
+                £{(netPrice).toFixed(2)}
               </div>
               <div className={styles.feeEuro}>
-                + £{(ticket.price - ticket.price * 0.9).toFixed(2)} Fee
+                + £{(ticket.price - netPrice).toFixed(2)} Fee
               </div>
             </>
           ) : (

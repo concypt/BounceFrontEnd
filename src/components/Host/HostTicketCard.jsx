@@ -6,12 +6,14 @@ import pencil from "../../assets/images/pencil.svg";
 
 const HostTicketCard = ({
   ticket,
+  orgCommition,
   isCurrent,
   onDelete,
   onEdit,
   onMoveUp,
   onMoveDown,
 }) => {
+
   return (
     <div className={`tickets ${isCurrent}`}>
       <div className="ticketLeft">

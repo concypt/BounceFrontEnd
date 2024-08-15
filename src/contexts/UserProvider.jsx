@@ -12,6 +12,7 @@ import {
   refreshAccessToken,
   login as loginService,
   logout as logoutService,
+  deactivateAccount as deactivateAccountService,
   fetchUserProfile,
 } from "../api/authService";
 
@@ -61,6 +62,22 @@ const UserProvider = ({ children }) => {
       localStorage.removeItem("redirectPath");
     } catch (error) {
       console.error("Logout failed:", error);
+      throw error;
+    }
+  };
+  const deactivateAccount = async () => {
+    try {
+      await deactivateAccountService();
+      setToken(null);
+      setUser(null);
+      setIsAuthenticated(false);
+      localStorage.setItem("isUserNav", false);
+      localStorage.removeItem("followingArray");
+      localStorage.removeItem("favEvents");
+      localStorage.removeItem("favBlogs");
+      localStorage.removeItem("redirectPath");
+    } catch (error) {
+      console.error("Something Wrong:", error);
       throw error;
     }
   };
@@ -120,6 +137,7 @@ const UserProvider = ({ children }) => {
         isAuthenticated,
         login,
         logout,
+        deactivateAccount,
         token,
         updateUser,
         reToken,
