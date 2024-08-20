@@ -9,7 +9,7 @@ import { Elements } from '@stripe/react-stripe-js'; // Import Elements provider
 import { loadStripe } from '@stripe/stripe-js'; // Import loadStripe function
 
 // Load your Stripe public key
-const stripePromise = loadStripe('pk_test_51IZ8jfD7gIuku9edlByPjJwtRcWSL1qCI8ehxGa5xSz8SPZl6khh3Kll9fJVzyP2a6k9nK7xLtvOtI8ujl9B5MQC00eyBZQwgu');
+const stripePromise = loadStripe('pk_live_51OFSLnEV8KWKgxSr14DYwJxqZ1qZekKmzb2XSQoJhqHRDGRE3R4nZmOi3S4f8TJMNS5F12M7P4TR1dooL56k5c6Q00bQIpCPGY');
 
 
 ReactDOM.createRoot(document.getElementById("root")).render(
