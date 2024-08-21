@@ -235,7 +235,7 @@ const EventTickets = ({ toggleModal, eventId }) => {
       Swal.fire({
         icon: "error",
         title: "Error",
-        text: `Error submitting form: ${error.message}`,
+        text: `Invalid or expired discount code. Please try again.`,
       });
     },
   });

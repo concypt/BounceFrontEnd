@@ -72,7 +72,7 @@ const HostCreateTickets = ({ setFormStep, eventId }) => {
     queryKey: ["fetchSetting "],
     queryFn: fetchSetting 
   });
- const orgCommisition = settings?.price || 90;
+ const orgCommisition = settings?.org_commission || 91;
  const resultOrgCommisition = (1 + (100 - orgCommisition) / 100)
   const {
     control,
@@ -201,7 +201,7 @@ const HostCreateTickets = ({ setFormStep, eventId }) => {
       "dummyprice",
       ticket.absorbe_fees === "1" || ticket.absorbe_fees === 1
         ? tPrice.toFixed(2)
-        : (tPrice / 1.1).toFixed(2)
+        : (tPrice / resultOrgCommisition).toFixed(2)
     );
 
     setCurrentTicketIndex(index);
@@ -444,7 +444,7 @@ const HostCreateTickets = ({ setFormStep, eventId }) => {
 
                             // If absorbe_fees is "0", add 10% to the dummy price
                             if (absorbeFees === "0" || absorbeFees === 0) {
-                              newPrice = (newDummyPrice * 1.1).toFixed(2);
+                              newPrice = (newDummyPrice * resultOrgCommisition).toFixed(2);
                             }
 
                             // Update both dummyprice and price fields
