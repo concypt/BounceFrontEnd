@@ -26,18 +26,17 @@ const Header = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         logout();
-        // navigate("/login");
-         window.location.href = "/login";
+        navigate("/login");
       }
     });
   };
   const handleAccountDeactivate = () => {
     Swal.fire({
-      title: "Are you sure you want to deactivate your account?",
-      text: "Your account will be deactivated and you will be logged out.",
+      title: "Are you sure you want to delete your account?",
+      text: "Your account and data will be deleted and you will be logged out from the system.",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonText: "Yes, deactivate",
+      confirmButtonText: "Yes, delete my acount",
       cancelButtonText: "No, keep my account",
     }).then((result) => {
       if (result.isConfirmed) {
@@ -45,7 +44,7 @@ const Header = () => {
         navigate("/login");
       }
     });
-};
+  };
 
   return (
     <header className={styles.header}>
@@ -71,18 +70,20 @@ const Header = () => {
               Profile
             </Link>
           </li>
-        
+
           <li>
             <img src={dashboardSetting} alt="Settings" />
             <Link to={`/contact`}>Help</Link>
           </li>
-          <li onClick={handleAccountDeactivate} >
-          <img
-                src={dashboardProfile}
-                className={styles.dashboardProfileIcon}
-                alt="Profile"
-              />
-           <a className={styles.logoutLink} onClick={handleAccountDeactivate}>Delete Account</a>
+          <li onClick={handleAccountDeactivate}>
+            <img
+              src={dashboardProfile}
+              className={styles.dashboardProfileIcon}
+              alt="Profile"
+            />
+            <a className={styles.logoutLink} onClick={handleAccountDeactivate}>
+              Delete Account
+            </a>
           </li>
           <li onClick={handleLogout} className={styles.lastLi}>
             <img src={dashboardLogout} alt="Logout" />
