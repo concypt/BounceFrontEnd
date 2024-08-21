@@ -6,9 +6,10 @@ import Swal from "sweetalert2";
 
 //images
 import baseImage from "../../assets/images/base.svg";
-import dashboardProfile from "../../assets/images/dashboard/dashboardProfile.svg";
+import dashboardProfile from "../../assets/images/dashboard/user.svg";
 import dashboardSetting from "../../assets/images/dashboard/dashboardSetting.svg";
 import dashboardLogout from "../../assets/images/dashboard/dashboardLogout.svg";
+import userDelete from "../../assets/images/dashboard/delete-user.svg";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -75,10 +76,9 @@ const Header = () => {
             <img src={dashboardSetting} alt="Settings" />
             <Link to={`/contact`}>Help</Link>
           </li>
-          <li onClick={handleAccountDeactivate}>
+          <li onClick={handleAccountDeactivate} className={styles.deleteUser}>
             <img
-              src={dashboardProfile}
-              className={styles.dashboardProfileIcon}
+              src={userDelete}              
               alt="Profile"
             />
             <a className={styles.logoutLink} onClick={handleAccountDeactivate}>
