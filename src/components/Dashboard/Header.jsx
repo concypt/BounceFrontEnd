@@ -33,7 +33,7 @@ const Header = () => {
   const handleAccountDeactivate = () => {
     Swal.fire({
       title: "Are you sure you want to delete your account?",
-      text: "Your account and data will be deleted and you will be logged out from the system.",
+      html: "We're sorry to see you go! <br> Deleting your account will permanently erase all your data, and this action cannot be undone.",
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Yes, delete my acount",
