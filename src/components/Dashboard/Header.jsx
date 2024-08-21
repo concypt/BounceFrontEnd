@@ -26,8 +26,7 @@ const Header = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         logout();
-        // navigate("/login");
-         window.location.href = "/login";
+        navigate("/login");
       }
     });
   };
@@ -45,7 +44,7 @@ const Header = () => {
         navigate("/login");
       }
     });
-};
+  };
 
   return (
     <header className={styles.header}>
@@ -71,18 +70,20 @@ const Header = () => {
               Profile
             </Link>
           </li>
-        
+
           <li>
             <img src={dashboardSetting} alt="Settings" />
             <Link to={`/contact`}>Help</Link>
           </li>
-          <li onClick={handleAccountDeactivate} >
-          <img
-                src={dashboardProfile}
-                className={styles.dashboardProfileIcon}
-                alt="Profile"
-              />
-           <a className={styles.logoutLink} onClick={handleAccountDeactivate}>Deactivate</a>
+          <li onClick={handleAccountDeactivate}>
+            <img
+              src={dashboardProfile}
+              className={styles.dashboardProfileIcon}
+              alt="Profile"
+            />
+            <a className={styles.logoutLink} onClick={handleAccountDeactivate}>
+              Deactivate
+            </a>
           </li>
           <li onClick={handleLogout} className={styles.lastLi}>
             <img src={dashboardLogout} alt="Logout" />
