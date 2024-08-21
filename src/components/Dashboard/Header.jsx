@@ -82,7 +82,7 @@ const Header = () => {
                 className={styles.dashboardProfileIcon}
                 alt="Profile"
               />
-           <a className={styles.logoutLink} onClick={handleAccountDeactivate}>Deactivate</a>
+           <a className={styles.logoutLink} onClick={handleAccountDeactivate}>Delete Account</a>
           </li>
           <li onClick={handleLogout} className={styles.lastLi}>
             <img src={dashboardLogout} alt="Logout" />

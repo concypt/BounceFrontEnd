@@ -109,8 +109,7 @@ const ForgotPasswordRequest = () => {
                 {error && <div className={styles.error}>{error}</div>}
                 {success && !error && (
                   <div className={styles.success}>
-                    New Password Send Successfully, Please check your email and
-                    login via new password.
+                    New password has been sent successfully. Please check your email and login with new password.
                   </div>
                 )}
               </form>

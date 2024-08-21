@@ -38,7 +38,7 @@ const EventTicketCard = ({
     queryKey: ["fetchSetting "],
     queryFn: fetchSetting 
   });
- const orgCommisition = settings?.price || 90;
+ const orgCommisition = settings?.org_commission || 91;
  const resultOrgCommisition = (1 + (100 - orgCommisition) / 100);
   const quantity = watch("quantity");
 

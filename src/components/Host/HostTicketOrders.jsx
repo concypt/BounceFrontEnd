@@ -402,7 +402,7 @@ const HostTicketOrders = () => {
                     <span className={styles.paymentDone}>
                       <img src={popupPaymentDone} alt="" />
                       <p className={styles.paymentDoneText}>
-                        Paid £{eventInfo.payment} for this ticket on{" "}
+                        Paid £{eventInfo.payment} for this ticket(s) on{" "}
                         {moment(eventInfo.created_at).format(
                           "dddd Do MMMM YYYY"
                         )}{" "}

@@ -367,7 +367,7 @@ const EventSlider = (props) => {
                         eventInfo.orders_tickets[currentSlide].order
                           .quantity_count
                       }{" "}
-                      tickets on{" "}
+                      ticket(s) on{" "}
                       {moment(
                         eventInfo.orders_tickets[currentSlide].created_at
                       ).format("dddd Do MMMM YYYY")}{" "}

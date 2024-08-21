@@ -667,7 +667,7 @@ console.log(event)
                       <span className={styles.paymentDone}>
                         <img src={popupPaymentDone} alt="" />
                         <p className={styles.paymentDoneText}>
-                          Paid £{orderInfo.payment} for this ticket on{" "}
+                          Paid £{orderInfo.payment} for this ticket(s) on{" "}
                           {moment(orderInfo.created_at).format(
                             "dddd Do MMMM YYYY"
                           )}{" "}
