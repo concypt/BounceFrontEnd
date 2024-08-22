@@ -100,6 +100,20 @@ const EventTickets = ({ toggleModal, eventId }) => {
 
   const handleAddToOrder = (ticket, quantity) => {
     setCart((prevCart) => {
+      if (discountApplied) {
+        setDiscountApplied(false);
+        setDiscountDigit(null);
+        setUpdatedPrice(0);
+        setToken("");
+        
+        // Reset the ticket cart with the coupon details cleared
+        const updatedTicketCart = {
+          ...ticket_cart,
+          coupon_id: 0,
+          coupon_discount: 0,
+        };
+        setTicket(updatedTicketCart);
+      }
       const existingTicketIndex = prevCart.findIndex(
         (item) => item.ticket_id === ticket.id
       );
@@ -120,20 +134,10 @@ const EventTickets = ({ toggleModal, eventId }) => {
           quantity: newQuantity,
           total_price: ticket.price * newQuantity,
         };
+        
 
         // Apply the coupon discount to the new total price if a coupon is applied
-        if (discountApplied) {
-          setDiscountApplied(false);
-          setDiscountDigit(null);
-          setUpdatedPrice(0);
-          setToken("");
-          const updatedTicketCart = {
-            ...ticket_cart, // Maintain previous state properties
-            coupon_id: 0,
-            coupon_discount: 0,
-          };
-          setTicket(updatedTicketCart);
-        }
+        
 
         return updatedCart;
       }
