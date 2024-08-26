@@ -136,10 +136,19 @@ const EventSlider = (props) => {
   const mutation = useMutation({
     mutationFn: requestRefund,
     mutationKey: [requestRefund],
-    onSuccess: () => {
+    onSuccess: (data) => {
+      let  msg= "";
+      if(data.data === 1){
+        msg = "A refund request has already been applied for this order.";
+      
+      }
+      else{
+        msg = "Your refund request has been sent successfully.";
+      }
+
       Swal.fire({
         title: "Success!",
-        text: "Your refund request has been sent.",
+        text: msg,
         icon: "success",
         confirmButtonText: "OK",
       }).then(() => {
