@@ -96,6 +96,7 @@ const Checkout = ({ cartData }) => {
     mutationFn: createOrders,
     mutationKey: ["createOrders"],
     onSuccess: (data) => {
+    
       if (data.success === true) {
         // console.log('console'+JSON.stringify(data.msg, null, 2));
         navigate("/events");

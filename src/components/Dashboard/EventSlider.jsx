@@ -55,7 +55,7 @@ const EventSlider = (props) => {
 
   //for tickets modal
   const openModal = (event) => {
-    console.log(event);
+    // console.log(event);
     setModalIsOpen(true);
     setCurrentSlide(0);
     setEventInfo(event);
@@ -138,6 +138,7 @@ const EventSlider = (props) => {
     mutationKey: [requestRefund],
     onSuccess: (data) => {
       let  msg= "";
+      
       if(data.data === 1){
         msg = "A refund request has already been applied for this order.";
       
