@@ -103,8 +103,9 @@ const Checkout = ({ cartData }) => {
         Swal.fire({
           icon: "success",
           title: "Success",
-          text: "Order Create successfully!",
-          timer: 2000,
+          text: "Order Created Successfully!",
+          confirmButtonText: "OK",
+          timer: 10000,
         });
       } else {
         Swal.fire({

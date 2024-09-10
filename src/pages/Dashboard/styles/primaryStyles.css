@@ -1469,6 +1469,28 @@ button.delete.ml-auto {
   align-items: flex-start;
 }
 
+.input-with-suffix {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-width: 100%;
+}
+
+.input-with-suffix .popupInput {
+  padding-right: 2rem;
+}
+
+.input-with-suffix .suffix {
+  position: absolute;
+  right: 5px;
+  padding: 0 1rem;
+  color: #888;
+  background-color: #fff;
+  border-left: 1px solid #ccc;
+  font-size: 19px;
+}
+
+
 @media (max-width: 1600px) {
   .hostSection {
     margin-right: 40px;

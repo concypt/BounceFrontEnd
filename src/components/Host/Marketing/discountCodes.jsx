@@ -177,6 +177,16 @@ const HostTicketOrders = ({ coupons, onDeleteCampaign, events }) => {
         ),
       },
       {
+        Header: "Discount",
+        accessor: "discount",
+        sortType: "basic",
+        Cell: ({ value }) => (
+          <div>
+            {value ? `${value}%` : ''}
+          </div>
+        ),
+      },
+      {
         Header: "Events",
         accessor: "events",
         sortType: "basic",
@@ -407,15 +417,18 @@ const HostTicketOrders = ({ coupons, onDeleteCampaign, events }) => {
                   />
                 </div>
                 <div className="label-with-button">
-                  <input
-                    type="number"
-                    placeholder="Discount"
-                    name="discount"
-                    required
-                    value={formData.discount}
-                    onChange={handleInputChange}
-                    className="popupInput"
-                  />
+                  <div className="input-with-suffix">
+                    <input
+                      type="number"
+                      placeholder="Discount"
+                      name="discount"
+                      required
+                      value={formData.discount}
+                      onChange={handleInputChange}
+                      className="popupInput"
+                    />
+                    <span className="suffix">%</span>
+                  </div>
                 </div>
               </div>
               <div className="label-with-button">
