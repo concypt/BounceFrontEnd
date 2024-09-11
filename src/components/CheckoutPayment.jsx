@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import styles from "./CheckoutPayment.module.css";
@@ -7,7 +7,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-
+import { UserContext } from "../contexts/UserProvider";
 import { createOrders } from "../api/publicService";
 //images
 import cardIcon from "../assets/images/checkout-card-icon.svg";
@@ -32,10 +32,12 @@ const CARD_ELEMENT_OPTIONS = {
 
 const schema = z.object({
   cardName: z.string().min(1, "Card Name is required"),
-  email: z.string().email("Invalid email address"),
+  
 });
 
 const Checkout = ({ cartData }) => {
+  const { user } = useContext(UserContext);
+  const isUserNav = localStorage.getItem("isUserNav");
   const [error, setError] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const stripe = useStripe();
@@ -48,6 +50,8 @@ const Checkout = ({ cartData }) => {
     first_name: "",
     last_name: "",
     email: "",
+    email2:"",
+    cardName:"",
     phone: "",
     payment: cartData.total_price,
     coupon_discount: cartData.coupon_discount || 0,
@@ -59,11 +63,35 @@ const Checkout = ({ cartData }) => {
     instagram: "",
     org_commission: cartData.total_price / commission,
   });
+  const [isReadOnly, setIsReadOnly] = useState({
+    first_name: true,
+    last_name: true,
+    email: true,
+    phone: true,
+    instagram: true,
+  });
   useEffect(() => {
     if (clientSecret) {
       // Reset any errors when a new clientSecret is received
       setError(null);
     }
+    
+    setFormData(prevData => ({
+      ...prevData,
+      first_name: user?.first_name || "",
+    last_name: user?.last_name || "",
+    email: user?.email || "",
+    phone: user?.phone || "",
+    instagram: user?.instagram || "",
+  
+    }));
+    setIsReadOnly({
+      first_name: !!user?.first_name,
+      last_name: !!user?.last_name,
+      email: !!user?.email,
+      phone: !!user?.phone,
+      instagram: !!user?.instagram,
+    });
   }, [clientSecret]);
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -158,10 +186,12 @@ const Checkout = ({ cartData }) => {
           <div className="billingDetails">
             <h5 className={styles.textWithLines}>Billing Details</h5>
             <div className={styles.formGroup}>
-              <input {...register("cardName")} placeholder="Name on Card" />
+              <input {...register("cardName")} value={formData.cardName}
+                onChange={handleChange} placeholder="Name on Card" />
             </div>
             <div className={styles.formGroup}>
-              <input {...register("email2")} placeholder="Email" />
+              <input {...register("email2")} value={formData.email2}
+                onChange={handleChange} placeholder="Email" />
             </div>
             <div className={styles.cardElementWrapper}>
               <CardElement options={CARD_ELEMENT_OPTIONS} />
@@ -184,52 +214,62 @@ const Checkout = ({ cartData }) => {
               />
             </div>
           </div>
+
           <div className="userDetails">
-            <h5 className={styles.textWithLines}>User Details</h5>
-            <div className={styles.twoFormGroups}>
-              <div className={styles.formGroup}>
-                <input
-                  {...register("first_name")}
-                  value={formData.first_name}
-                  onChange={handleChange}
-                  placeholder="First Name"
-                />
-              </div>
-              <div className={styles.formGroup}>
-                <input
-                  {...register("last_name")}
-                  value={formData.last_name}
-                  onChange={handleChange}
-                  placeholder="Last Name"
-                />
-              </div>
-            </div>
-            <div className={styles.twoFormGroups}>
-              <div className={styles.formGroup}>
-                <input
-                  {...register("email")}
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="Email"
-                />
-              </div>
-              <div className={styles.formGroup}>
-                <input
-                  {...register("phone")}
-                  value={formData.phone}
-                  onChange={handleChange}
-                  placeholder="Phone"
-                />
-              </div>
+
+         
+          <h5 className={styles.textWithLines}>User Details</h5>
+          <div className={styles.twoFormGroups}>
+            <div className={styles.formGroup}>
+              <input
+                {...register("first_name")}
+                value={formData.first_name}
+                onChange={handleChange}
+                placeholder="First Name"
+                readOnly={isReadOnly.first_name}
+              />
             </div>
             <div className={styles.formGroup}>
               <input
-                {...register("instagram")}
-                value={formData.instagram}
+                {...register("last_name")}
+                value={formData.last_name}
                 onChange={handleChange}
-                placeholder="Instagram Handle"
+                placeholder="Last Name"
+                readOnly={isReadOnly.last_name}
               />
             </div>
+          </div>
+          <div className={styles.twoFormGroups}>
+            <div className={styles.formGroup}>
+              <input
+                {...register("email")}
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Email"
+                readOnly={isReadOnly.email}
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <input
+                {...register("phone")}
+                value={formData.phone}
+                onChange={handleChange}
+                placeholder="Phone"
+                readOnly={isReadOnly.phone}
+              />
+            </div>
+          </div>
+          <div className={styles.formGroup}>
+            <input
+              {...register("instagram")}
+              value={formData.instagram}
+              onChange={handleChange}
+              readOnly={isReadOnly.instagram}
+              placeholder="Instagram Handle"
+              required
+            />
+          </div>
+       
             <button
               className="loginButton remove-margin"
               type="submit"
